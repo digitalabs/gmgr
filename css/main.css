@@ -22,7 +22,9 @@ body
 	border-top: 3px solid #C9E0ED;
 	color:#ffffff;
 }
-
+.j a{
+  color:#FF0000;
+}
 #content
 {
     padding: 20px;
@@ -59,7 +61,7 @@ body
 	padding:6px 20px 5px 20px;
 	margin:0px;
 	color:#FF6600;
-	background-color:#FFA319;
+	background-color:#1b1b1b;
 }
 
 #mainmenu ul li
@@ -71,7 +73,7 @@ body
 
 #mainmenu ul li a
 {
-	color:#101010;
+	color:#808080;
 	background-color:transparent;
 	font-size:12px;
 	font-weight:bold;
@@ -237,3 +239,40 @@ div.search-form
 {
 	background: #80CFFF;
 }
+
+.node {
+  cursor: pointer;
+}
+
+.node circle {
+  fill: #fff;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+.node rectangle {
+  fill: #fff;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+.node text {
+  font: 15px sans-serif;
+  background-color: #7A5ECE;
+  color: #36789C;
+}
+
+.link {
+  fill: none;
+  stroke: #FF0000;
+  stroke-width: 2px;
+}
+
+.node rect {
+  cursor: pointer;
+  fill: #fff;
+  fill-opacity: .5;
+  stroke: #3182bd;
+  stroke-width: 1.5px;
+}
+

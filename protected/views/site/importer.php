@@ -1,3 +1,12 @@
+<?php if($uploaded):?>
+<p>File was uploaded. Check <?php echo $dir?>.</p>
+<?php endif ?>
+<?php /*echo CHtml::beginForm('','post',array 
+   ('enctype'=>'multipart/form-data'))*/?>
+   <?php //echo CHtml::error($model, 'file')?>
+   <?php //echo CHtml::activeFileField($model, 'file')?>
+   <?php //echo CHtml::submitButton('Upload')?>
+<?php // echo CHtml::endForm()?>
 <?php
 /* @var $this SiteController */
 /* @var $model LoginForm */
@@ -18,50 +27,64 @@ $this->breadcrumbs=array(
 $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     'id'=>'pedigreeImport',
     'type'=>'horizontal',
+    'enableClientValidation'=>true,
+	'clientOptions'=>array(
+		'validateOnSubmit'=>true,
+	   ),
+    'htmlOptions' => array('class'=>'well','enctype' => 'multipart/form-data'),
 )); ?>
 
-<!--<div class="breadcrumb">
-  <span>
- <?php if(isset($this->breadcrumbs)):?> 
-<?php $this->widget('bootstrap.widgets.TbBreadcrumbs', array(
-       'links'=>array('Pedigree Import')
-       ));
-?>
-<?php endif?>
-  </span>
-</div>-->
 
 <div class="row">
 
   <div class="span11">
     <div class="row">
-     <form action="getFile.php" method="POST" enctype="multipart/form-data">
+     <!--<form action="../../modules/getFile.php" method="POST" enctype="multipart/form-data">-->
         <div class="span6">
            <fieldset>
               <legend>Upload File</legend>
                 <br>
-                <table width="100%">
-                    <tr><td> Load Sample File:<br>&nbsp;</td><td><b>germplasmList.csv</b><br>&nbsp;</td></tr>
+                <!--<table width="100%">-->
+					
+					
+                    <!--<tr><td> Load Sample File:&nbsp;</td><td><b>germplasmList.csv</b><br>&nbsp;</td></tr>-->
+                    <!--<tr><td>--><?php
+                        //$this->widget('bootstrap.widgets.TbFileUpload',array($model,'file'));
+                         echo CHtml::error($model, 'file');
+                         echo CHtml::activeFileField($model, 'file');?>
+                    <!--</td></tr>
                     <tr>
                         <td>Location</td>
-                        <td><?php 
-                                //Yii::setPathOfAlias('local','path/to/local-folder');
-                                $myfile =Yii::setPathOfAlias('local',dirname(__FILE__).'/../files/location.csv');
-                                echo $myfile;
-                                $fin = $this->fopen($myfile, 'r');
-                                $line = fgetcsv($fin, 10000);
-
+                        <td>-->
+                        <label>Location</label>
+                        <?php 
+                              
+                                $myfile =dirname(__FILE__).'/../../modules/location.csv';
+                               
+                             
+                                $fin = fopen($myfile, 'r');
+                               
                                 echo '<select name="location" style="width:490px;" >';
+                                
                                 while ($line = fgetcsv($fin, 0, "#")) {
+									if(count($line) !=3)
+									{
+										print_r($line);
+									}
                                     echo '<option name="location[]" value="' . $line[0] . '">' . $line[2] . ': '.$line[1].'</option>';
                                 }
                                 fclose($fin);
-                                echo "</select>"; 
-                                ?></td>
+                                echo "</select></br>"; 
+                            ?>
+                    <!--    </td>
                     </tr>
-                </table>
+                </table>-->
                <!-- <div class="form-actions">-->
-                    <?php $this->widget('bootstrap.widgets.TbButton',array('buttonType'=>'submit','type'=>'primary','label'=>'Upload list'));?>
+                  
+                    <?php 
+                       echo "</br>";
+                        $this->widget('bootstrap.widgets.TbButton',array('buttonType'=>'submit','type'=>'primary','label'=>'Upload list')); 
+                    ?>
                 <!--</div>-->
            </fieldset><br>
         </div>
@@ -69,13 +92,14 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
         <div class="span4">
                  <fieldset>
                     <legend>Select List Type</legend>
-                    <!--<input type="radio" name="group1" value="BreedersCrossHistories" checked> Breeders Cross Histories &nbsp; &nbsp;<a href="/PedigreeImport/NomenclatureRules.htm">Nomenclature Rules</a> <br>
+                    <input type="radio" name="group1" value="BreedersCrossHistories" checked> Breeders Cross Histories &nbsp; &nbsp;<a href="Nomenclature Rules/NomenclatureRules.htm">Nomenclature Rules</a> <br>
                     
                     <input type="radio" name="group1" value="CultivarList" disabled="true"> Cultivar List<br>
-                    <input type="radio" name="group1" value="Accession" disabled="true"> Accession-->
-                    <?php //echo $form->radioButtonListRow($model,'radioButtons',array ('Breeders Cross Histories','Cultivar List','Accession'));
+                    <input type="radio" name="group1" value="Accession" disabled="true"> Accession
+                    <?php 
+                       //echo $form->radioButtonListRow($model,'rButtons',array ('Breeders Cross Histories','Cultivar List','Accession'));   
 					?>
-		
+					
                     <br>
                     <br>
                     <br>
@@ -88,10 +112,13 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                     <br>
                 </fieldset><br>
         </div>
-    </form>
+    <!--</form>-->
 	</div>
  </div>
 </div>
+<!--<script src="bootstrap-fileupload.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+-->
 
 <?php $this->endWidget(); ?>
 

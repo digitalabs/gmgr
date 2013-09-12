@@ -23,50 +23,56 @@
 
 <div class="container" id="page">
 
+<!--
 	<div id="header">
-		<div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?></div>
-	</div><!-- header -->
-	<br><br><br><br>
+		<div id="logo"><?php //echo CHtml::encode(Yii::app()->name); ?></div>
+	</div><!-- header 
+-->
 	<div id="mainmenu">
 	
-		<?php $this->widget('bootstrap.widgets.TbNavbar', array(
-		    'type'=>'inverse', // null or 'inverse'
-		    'brand'=>"<img src='/GMGR/images/logoHeader.png'>",
-		    'brandUrl'=>'http://irri.org',
-		    'collapse'=>true, // requires bootstrap-responsive.css
-			'htmlOptions'=>array('class'=>'pull-right'),
-		    'items'=>array(
-		        array(
-		            'class'=>'bootstrap.widgets.TbMenu',
-					'htmlOptions'=>array('class'=>'pull-right'),
-		            'items'=>array(
-		              //  array('label'=>'Login', 'url'=>'#', 'active'=>true),
-		            ),
-		        ),
-				
-		        //'<form class="navbar-search pull-left" action=""><input type="text" class="search-query span2" placeholder="Search"></form>',
-		        array(
-		            'class'=>'bootstrap.widgets.TbMenu',
-		            'htmlOptions'=>array('class'=>'pull-right'),
-		            'items'=>array(
-		                //array('label'=>'Login', 'url'=>array('/site/login')),
-		            ),
-		        ),
-				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
-		    ),
-		)); ?>
-		 <?php $this->widget('zii.widgets.CMenu',array(
-		 
-			'items'=>array( 'htmlOptions'=>array('class'=>'pull-right'),
-				array('label'=>'Home', 'url'=>array('/site/index')),
+	<?php $this->widget('bootstrap.widgets.TbNavbar', array(
+    'type'=>'inverse', // null or 'inverse'
+    'brand'=>'Genealogy Manager',
+    'brandUrl'=>'#',
+    'collapse'=>true, // requires bootstrap-responsive.css
+    'items'=>array(
+        array(
+            'class'=>'bootstrap.widgets.TbMenu',
+            'items'=>array(
+                array('label'=>'Home', 'url'=>array('/site/index')),
 				//array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
 				//array('label'=>'Contact', 'url'=>array('/site/contact')),
-				array('htmlOptions'=>array('class'=>'pull-right'),'label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
+				//array('htmlOptions'=>array('class'=>'pull-right'),'label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
 				array('label'=>'Pedigree Importer', 'url'=>array('/site/importer'), 'visible'=>!Yii::app()->user->isGuest),
 				array('label'=>'Pedigree Editor', 'url'=>array('/site/editor'), 'visible'=>!Yii::app()->user->isGuest),
-				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
-			),
-		)); ?>
+				//array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
+               
+            ),
+        ),
+        array(
+            'class'=>'bootstrap.widgets.TbMenu',
+            'htmlOptions'=>array('class'=>'pull-right'),
+            'items'=>array(
+                array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
+                array('htmlOptions'=>array('class'=>'pull-right'),'label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
+            ),
+        ),
+    ),
+)); ?>
+<!--
+		<p class="nav navbar-text">GM</p>
+-->
+		 <?php //$this->widget('zii.widgets.CMenu',array(
+			//'items'=>array( 'htmlOptions'=>array('class'=>'pull-right'),
+				//array('label'=>'Home', 'url'=>array('/site/index')),
+				////array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
+				////array('label'=>'Contact', 'url'=>array('/site/contact')),
+				//array('htmlOptions'=>array('class'=>'pull-right'),'label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
+				//array('label'=>'Pedigree Importer', 'url'=>array('/site/importer'), 'visible'=>!Yii::app()->user->isGuest),
+				//array('label'=>'Pedigree Editor', 'url'=>array('/site/editor'), 'visible'=>!Yii::app()->user->isGuest),
+				//array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
+			//),
+		//)); ?>
 	</div><!-- mainmenu -->
 	<?php if(isset($this->breadcrumbs)):?>
 		<?php $this->widget('zii.widgets.CBreadcrumbs', array(
@@ -85,7 +91,10 @@
 		)); ?>
 	</div><!-- footer -->
 
-</div><!-- page -->
+</div>
+
+
+<!-- page -->
 
 </body>
 </html>
