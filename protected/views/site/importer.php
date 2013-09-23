@@ -39,7 +39,29 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 
   <div class="span11">
     <div class="row">
-     <!--<form action="../../modules/getFile.php" method="POST" enctype="multipart/form-data">-->
+	       <div class="span4">
+                 <fieldset>
+                    <legend>Select List Type</legend>
+                    <input type="radio" name="group1" value="BreedersCrossHistories" checked> Breeders Cross Histories &nbsp; &nbsp;<a href="Nomenclature Rules/NomenclatureRules.htm">Nomenclature Rules</a> <br>
+                    
+                    <input type="radio" name="group1" value="CultivarList" disabled="true"> Cultivar List<br>
+                    <input type="radio" name="group1" value="Accession" disabled="true"> Accession
+                    <?php 
+                       //echo $form->radioButtonListRow($model,'rButtons',array ('Breeders Cross Histories','Cultivar List','Accession'));   
+					?>
+					
+                    <br>
+                    <br>
+                    <br>
+                </fieldset><br>
+                <fieldset>
+                    <legend>Options</legend>
+                    <input type="radio" name="group2" value="singleHit" checked> Accept single hit search<br>
+                    <br>
+                    <br>
+                    <br>
+                </fieldset><br>
+        </div>
         <div class="span6">
            <fieldset>
               <legend>Upload File</legend>
@@ -89,29 +111,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
            </fieldset><br>
         </div>
        <!-- <div class="divider"></div>-->
-        <div class="span4">
-                 <fieldset>
-                    <legend>Select List Type</legend>
-                    <input type="radio" name="group1" value="BreedersCrossHistories" checked> Breeders Cross Histories &nbsp; &nbsp;<a href="Nomenclature Rules/NomenclatureRules.htm">Nomenclature Rules</a> <br>
-                    
-                    <input type="radio" name="group1" value="CultivarList" disabled="true"> Cultivar List<br>
-                    <input type="radio" name="group1" value="Accession" disabled="true"> Accession
-                    <?php 
-                       //echo $form->radioButtonListRow($model,'rButtons',array ('Breeders Cross Histories','Cultivar List','Accession'));   
-					?>
-					
-                    <br>
-                    <br>
-                    <br>
-                </fieldset><br>
-                <fieldset>
-                    <legend>Options</legend>
-                    <input type="radio" name="group2" value="singleHit" checked> Accept single hit search<br>
-                    <br>
-                    <br>
-                    <br>
-                </fieldset><br>
-        </div>
+ 
     <!--</form>-->
 	</div>
  </div>

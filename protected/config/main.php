@@ -17,7 +17,7 @@ return array(
         ),
     ),
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'',
+	'name'=>'Genealogy Manager',
 
 	// preloading 'log' component
 	'preload'=>array('log','bootstrap',),
@@ -26,6 +26,7 @@ return array(
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
+		'application.extensions.*'
 	),
 
 	'modules'=>array(
@@ -36,7 +37,7 @@ return array(
 			'password'=>'',
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
 			'ipFilters'=>array('127.0.0.1','::1'),
-			            'generatorPaths' => array('bootstrap.gii'),
+			            'generatorPaths' => array('ext.bootstrap.gii'),
 		),
 		
 	),
