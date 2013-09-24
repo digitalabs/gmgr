@@ -1,0 +1,114 @@
+.custom-h4 {
+	font-family: 'Pontano Sans', sans-serif;
+	font-size:18px;
+	font-weight:100;
+}
+
+.nav-list > .active > a,
+.nav-list > .active > a:hover,
+.nav-list > .active > a:focus {
+  color: #ffffff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
+  background-color: #018401!important;
+}
+
+
+#sidemenu
+{
+
+	/*border-top:1px solid #d4d4d4;
+	border-bottom:1px solid #d4d4d4;*/
+	padding:3px 0;
+	font-family: 'Pontano Sans', sans-serif;
+	
+}
+
+#sidemenu ul
+{
+	border-width: 1px 1px 1px 1px;
+	border-style: solid;
+	border-color: #cfcfcf;
+	margin:0px;
+}
+
+
+#sidemenu ul li a
+{
+	color:#555;
+	background-color:transparent;
+	font-size:14px;
+	text-decoration:none;
+	padding:5px 8px;
+	display: block;
+}
+
+#sidemenu ul li.active a
+{
+
+	color: #ffffff;
+  	background-color: #018401;
+  	text-shadow: #333333 0 1px 0;
+  	display: block;
+  	font-weight: bold;
+}
+
+.navbuttons
+{
+	display: block;
+	position: absolute;
+	bottom: 20px; 
+	left: 0px;
+	width: 100%;
+}
+
+.column1 {
+	float:left;
+	width: 30%;
+	margin-left: 20px;
+}
+
+.column2 {
+	float:right;
+	text-align: right;
+	width: 60%;
+	margin-right: 20px;
+}
+
+.submit-button
+{
+	position: relative;
+	right: 70px;
+	display: inline-block;
+	float:right;
+	margin-top:10px;
+}
+
+.extended-tooltip 
+{
+	position: absolute;
+	left: 440px;
+	top: 215px;
+}
+
+label 
+{
+	width: 150px;
+	font-weight: bold;
+}
+
+
+
+.grid-view table.items th a {
+	display: block;
+	position: relative;
+	color: #526d40;
+        
+}
+
+#studyBrowser-grid table thead th {
+	color: #526d40;
+}
+
+thead th {
+	background: #EDF2EA;
+}

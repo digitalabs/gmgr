@@ -1,0 +1,12 @@
+
+
+<div id="footer">
+<p>
+
+&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+<a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+</p>
+</div>
+
+</body>
+</html>

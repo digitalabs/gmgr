@@ -1,0 +1,218 @@
+<?php
+define("UPLOADEDFILES","");
+function callCurl_createdGID($term,$pedigree,$id,$choose,$fid,$mid,$female,$male){
+
+
+	 $myfile = 'existingTerm.csv';
+    $fin = fopen($myfile, 'r');
+    $data = array();
+	   while ($line = fgetcsv($fin, 0)) {
+        if ($line[2] === $choose) {
+            $data[] = $line; //existingTerm data
+        }
+    }
+    /* echo"<br> Data: ";
+      print_r($data);
+      echo"<br>";
+     */
+    fclose($fin);
+
+    $myfile = 'createdGID.csv';
+    $fin = fopen($myfile, 'r');
+    $data2 = array();
+    $data4 = array();
+
+    while ($line = fgetcsv($fin, 0)) {
+//echo join(', ', $line).'<br>';
+        for ($i = 0, $k = count($line); $i < $k; $i++) {
+            if ($line[0] === $id && $line[2] == $term) {
+
+//echo "<br>LINE: "; print_r($line);
+
+                $line[3] = $data[0][6];
+                $line[4] = $data[0][7];
+                $line[5] = $data[0][8];
+                $line[6] = $data[0][9];
+                $line[7] = $data[0][10];
+                $line[8] = $data[0][2];
+                $line[9] = $data[0][4];
+
+                $data4 = $line; //data 4 is the details of the chosen GID				
+//echo "<br>DATA: "; print_r($data);
+//echo "<br>";
+            }
+        }
+        $data2[] = $line; // data2: edited CreatedGID data
+    }
+    fclose($fin);
+
+    $fout = fopen($myfile, 'w');
+    foreach ($data2 as $line) {
+        fputcsv($fout, $line);
+    }
+    fclose($fout);
+
+    $myfile = 'createdGID.csv';
+    $fin = fopen($myfile, 'r');
+    $rows = array();
+    while (($line = fgetcsv($fin)) !== FALSE) {
+        array_push($rows, $line);
+    }
+
+    for ($i = 0; $i < count($rows); $i++) {
+        if ($rows[$i][0] === $fid . "/" . $mid) {
+            $cross = $rows[$i][2];
+        }
+    }fclose($fin);
+
+    if ($fid === $choose) {
+        $is_female = true;
+    } else {
+        $is_female = false;
+    }
+    if ($id === $mid) {
+        $data3["parent2ID"] = $fid;
+        $data3["parent2"] = $female;
+    } else {
+        $data3["parent2ID"] = $mid;
+        $data3["parent2"] = $male;
+    }
+    $jsonfile = UPLOADEDFILES . "term.json";
+
+    $data3["parent1"] = $pedigree; // data 3 is the container for json file
+    $data3["term"] = $term;
+    $data3["germplasm"] = $data4;
+    $data3["cross"] = $cross;
+    $data3["is_female"] = $is_female;
+    $jsonText = json_encode($data3);
+    file_put_contents($jsonfile, $jsonText);
+    $url = "http://localhost:8080/ws/standardization/term/chooseGID";
+
+    $handle = curl_init();
+    curl_setopt($handle, CURLOPT_URL, $url);
+    curl_setopt($handle, CURLOPT_RETURNTRANSFER, 1);
+    $response = curl_exec($handle);
+    $code = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+
+}
+function updateCorrectedFile($fid,$mid,$checked){
+	$myfile = 'createdGID.csv';
+	$fin = fopen($myfile, 'r');
+	$data = array();
+
+	//echo "choose: ". $choose;
+	
+		while ($line = fgetcsv($fin, 0)) {
+			for($i = 0; $i < count($checked); $i++) {
+				if($checked[$i]===$fid){
+					if($line[0]===$fid."/".$mid){
+						$data[] = $line;	//existingTerm data
+					}
+				}
+			}
+		}
+	fclose($fin);
+
+	$myfile = 'corrected.csv';
+	$fin = fopen($myfile, 'r');
+	$data2 = array();
+	$data4 = array();
+
+	while ($line = fgetcsv($fin, 0)) {
+		//echo join(', ', $line).'<br>';
+		for($i = 0, $k = count($line); $i < $k; $i++) {
+			if($line[2]==$fid){
+				
+				//echo "<br>LINE: "; print_r($line);
+				
+				$line[0]=$data[0][3];
+
+				$data4=$line;	//data 4 is the details of the chosen GID				
+				//echo "<br>DATA: "; print_r($data);
+				//echo "<br>";
+			}
+		}
+		$data2[] = $line;	// data2: edited CreatedGID data
+	}
+	fclose($fin);
+
+	$fout = fopen($myfile, 'w');
+	foreach ($data2 as $line) {
+			fputcsv($fout, $line);
+		}
+	fclose($fout);
+}
+//function save_document_info_json($file){
+function save_document_info_json(){
+	$jsonfile = UPLOADEDFILES."docinfo.json";
+	
+	//$f = fopen($_FILES["file"]["name"], "r");
+	$f = fopen("germplasmList.csv", "r");
+	//echo $_FILES["file"]["name"];
+
+	//$fr = fread($f, filesize($_FILES["file"]["name"]));
+	$fr = fread($f, filesize("germplasmList.csv"));
+	fclose($f);
+	$lines = array();
+	$lines = explode("\n",$fr); // IMPORTANT the delimiter here just the "new line" \n 
+	$dataString=array();
+	for($i=0;$i<count($lines);$i++)
+	{
+		$cells = array();
+		$cells = explode(";",$lines[$i]); // use the cell/row delimiter ;
+		for($k=0;$k<count($cells)-1;$k++)
+		{
+			array_push($dataString,$cells[$k]);
+		}// for k end	
+	}
+	
+	$a=array('list'=>$dataString);
+	$jsonText=json_encode($a);
+	file_put_contents($jsonfile, $jsonText);
+	
+	$url= "http://localhost:8080/ws/standardization/term/parse";   
+			
+	$handle=curl_init();
+	curl_setopt($handle, CURLOPT_URL, $url);
+	curl_setopt($handle, CURLOPT_RETURNTRANSFER, 1);
+	$response= curl_exec($handle);
+	$code= curl_getinfo($handle,CURLINFO_HTTP_CODE);
+			
+	//echo "<br>HTTP CODE ERROR: ".$code ."<br>";
+	//echo $jsonText;
+	//echo "<br> cURL: WELCOME! ".$response."</outercode>"; 
+	//echo '<br>RESULT: '.print_r($response,1);
+	//echo "<br> END</outercode>";
+}
+
+function save_json_checkedbox($checked){
+	
+	$jsonfile = UPLOADEDFILES."checked.json";
+		
+	$a=array('checked'=>$checked);
+	$jsonText=json_encode($a);
+	file_put_contents($jsonfile, $jsonText);
+	
+	$url= "http://localhost:8080/ws/standardization/term/createGID";   
+			
+	$handle=curl_init();
+	curl_setopt($handle, CURLOPT_URL, $url);
+	curl_setopt($handle, CURLOPT_RETURNTRANSFER, 1);
+	$response= curl_exec($handle);
+	$code= curl_getinfo($handle,CURLINFO_HTTP_CODE);
+	
+			
+	echo "<br>HTTP CODE ERROR: ".$code ."<br>";
+}
+
+function save_json_choose($choose){
+	$jsonfile = UPLOADEDFILES."choose.json";
+		
+	$a=array('choose'=>$choose);
+	$jsonText=json_encode($a);
+	file_put_contents($jsonfile, $jsonText);
+}
+
+
+
+?>

@@ -1,0 +1,17 @@
+/* 
+    Document   : databrowser.css
+    Created on : Apr 5, 2013, 4:35:48 PM
+    Author     : JLagare
+    Description:
+        This stylesheet customizes the styling of the data browsers in the application.
+        It includes both specific styling rules and general rules.
+*/
+
+#studyBrowser-grid table thead th{ 
+    width: auto;
+    text-align: center;
+}
+
+#studyBrowser-grid.grid-view{ 
+    width: 1000px;
+}

@@ -1,0 +1,131 @@
+{
+    "name": "IR 2193",
+    "gid": "- 3",
+    "location": "IRRI - Philippines",
+    "children": [
+        {
+            "name": "IR 09324",
+            "gid": "- 3",
+            "location": "IRRI - Philippines",
+            "children": [
+                
+                {
+                    "name": "IR 847",
+                    "location": "IRRI - Philippines",
+                    "children": [
+                        {
+                            "name": "IR 3445",
+                            "location": "IRRI - Philippines"
+                        },
+                        {
+                            "name": "IR 46573",
+                            "location": "IRRI - Philippines"
+                        },
+                        {
+                            "name": "IR 3924",
+                            "location": "IRRI - Philippines"
+                        }
+                    ]
+                },
+                {
+                    "name": "IR 4328",
+                    "location": "IRRI - Philippines",
+                    "children": [
+                        {
+                            "name": "IR 29245",
+                            "location": "IRRI - Philippines"
+                        },
+                        {
+                            "name": "IR 66095",
+                            "location": "IRRI - Philippines"
+                        },
+                        {
+                            "name": "IR 76252",
+                            "location": "IRRI - Philippines"
+                        }
+                    ]
+                },
+                {
+                    "name": "IR 30987",
+                    "location": "IRRI - Philippines",
+                    "children": [
+                        {
+                            "name": "IR 21376",
+                            "location": "IRRI - Philippines"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "IR 23476",
+            "location": "IRRI - Philippines",
+            "children": [
+                {
+                    "name": "IR 8745",
+                    "location": "IRRI - Philippines",
+                    "children": [
+                        {
+                            "name": "IR 237652",
+                            "location": "IRRI - Philippines"
+                        },
+                        {
+                            "name": "IR 48732",
+                            "location": "IRRI - Philippines"
+                        }
+                    ]
+                },
+                {
+                    "name": "IR 24587",
+                    "location": "IRRI - Philippines",
+                    "children": [
+                        {
+                            "name": "IR 49831",
+                            "location": "IRRI - Philippines"
+                        },
+                        {
+                            "name": "IR 8",
+                            "location": "IRRI - Philippines"
+                        },
+                        {
+                            "name": "IR 1",
+                            "location": "IRRI - Philippines"
+                        }
+                    ]
+                },
+                {
+                    "name": "IR 094521",
+                    "location": "IRRI - Philippines",
+                    "children": [
+                        {
+                            "name": "IR 21987",
+                            "location": "IRRI - Philippines"
+                        },
+                        {
+                            "name": "IR 12874",
+                            "location": "IRRI - Philippines"
+                        },
+                        {
+                            "name": "IR 249871",
+                            "location": "IRRI - Philippines"
+                        }
+                    ]
+                },
+                {
+                    "name": "IR 4251",
+                    "location": "IRRI - Philippines",
+                    "children": [
+                        {
+                            "name": "IR 36662",
+                            "location": "IRRI - Philippines"
+                        },
+                        {
+                            "name": "IR 9874",
+                            "location": "IRRI - Philippines"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
