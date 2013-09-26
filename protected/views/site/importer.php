@@ -1,6 +1,6 @@
-<?php if($uploaded):?>
-<p>File was uploaded. Check <?php echo $dir?>.</p>
-<?php endif ?>
+<?php //if($uploaded):?>
+<!--<p>File was uploaded. Check <?php //echo //$dir?>.</p>
+<?php //endif ?>-->
 <?php /*echo CHtml::beginForm('','post',array 
    ('enctype'=>'multipart/form-data'))*/?>
    <?php //echo CHtml::error($model, 'file')?>
@@ -66,18 +66,19 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
            <fieldset>
               <legend>Upload File</legend>
                 <br>
-                <!--<table width="100%">-->
-					
-					
-                    <!--<tr><td> Load Sample File:&nbsp;</td><td><b>germplasmList.csv</b><br>&nbsp;</td></tr>-->
-                    <!--<tr><td>--><?php
-                        //$this->widget('bootstrap.widgets.TbFileUpload',array($model,'file'));
-                         echo CHtml::error($model, 'file');
-                         echo CHtml::activeFileField($model, 'file');?>
-                    <!--</td></tr>
-                    <tr>
-                        <td>Location</td>
-                        <td>-->
+                      <?php
+                        /* $file1 =dirname(__FILE__).'/../../modules/germplasmList.csv';
+						echo CHtml::error($model, 'file');
+						echo CHtml::activeFileField($model, 'file');*/
+                      ?>
+                        <div class="form-horizontal">
+                         <?php 
+							$model->LoadSampleFile='germplasmList.csv';
+							//echo $form->labelEx($model,'LoadSampleFile'); 
+							echo $form->textFieldRow( $model, 'LoadSampleFile',array('class'=>'input-medium','readOnly'=>true)); 
+                         ?>
+                      </div>
+					   
                         <label>Location</label>
                         <?php 
                               
@@ -98,11 +99,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                                 fclose($fin);
                                 echo "</select></br>"; 
                             ?>
-                    <!--    </td>
-                    </tr>
-                </table>-->
-               <!-- <div class="form-actions">-->
-                  
+				  
                     <?php 
                        echo "</br>";
                         $this->widget('bootstrap.widgets.TbButton',array('buttonType'=>'submit','type'=>'primary','label'=>'Upload list')); 

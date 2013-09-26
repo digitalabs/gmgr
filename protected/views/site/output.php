@@ -106,17 +106,7 @@
 ));
  ?>
  </div>
- <div id="eventnamelist"></div>
- <?php
- //assign GID button
-  /*($this->widget('bootstrap.widgets.TbButton',array(
-    'id' =>'assignGID',
-    'label' => 'Assign GID',
-    'type' => 'primary',
-    //'buttonType' =>'submit',
-     'url'=> array('/site/showGID'),
-     )));*/
- ?>
+
  <div class="assign">
 <?php $url = Yii::app()->createUrl('site/createdGID'); ?>
 <?php echo CHtml::ajaxSubmitButton('AssignGID', Yii::app()->createUrl("site/createdGID"),
@@ -137,26 +127,6 @@
  ?>
 </div>
 
-<?php
- /*  echo CHtml::ajaxLink('Somelink',Yii::app()->createUrl('site/showGID'),
-        array(
-           'type'=>'POST',
-           'data'=>'js:{theIds : $.fn.yiiGridView.getChecked("pedigreeGrid","selectedIds").toString(),fid:4,mid:5}',
-        )
-    );*/
-?>
-<!--<div id="selected-keys">Selected:-->
-
 </div>
 <?php $this->endWidget();?>
 
-<script>
-
-	$(document).ready(function(){
-		$("#assignGID").bind('click', function(){
-                      alert("Hello");
-		       //  $("#table1").hide();
-	     });
-	     
-        });     
-</script>

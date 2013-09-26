@@ -25,6 +25,9 @@ body
 .j a{
   color:#FF0000;
 }
+.row-align-left{
+   margin:0;
+}
 #content
 {
     padding: 20px;

@@ -310,8 +310,8 @@ class file_toArray {
                 $unselected[] = $fid;
             }
         endforeach;
-        echo "unselected:";
-        print_r($unselected);
+        //echo "unselected:";
+        //print_r($unselected);
         return $unselected;
     }
         public function csv_corrected_GID() {

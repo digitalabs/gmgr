@@ -27,7 +27,7 @@
             'type'=>'primary', 
             'label'=>'Save Changes',
             'buttonType'=>'submit',
-           // 'url'=>array('/site/savegermplasm'),
+            'url'=>array('/site/savegermplasm'),
          )); ?>
        
 </fieldset>	 

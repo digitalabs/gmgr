@@ -1,6 +1,5 @@
 
 <?php 
-//include_once(dirname(__FILE__)."/../../modules/configDB.php");
  Yii::import('application.modules.configDB');
 /*
 if (!$model->CheckLogin()) {
@@ -8,15 +7,12 @@ if (!$model->CheckLogin()) {
     exit;
 }*/
 
-//include("top1.txt");
-//define("UPLOADEDFILES", "");
 if (isset($_POST["editGermplasmForm"]['newGermplasmName'])) {
     $germplasm = $_POST["editGermplasmForm"]['germplasmName'];
     $new = $_POST["editGermplasmForm"]['newGermplasmName'];
-    //echo "new: " . $new;
-
+    $myfile = dirname(__FILE__).'/../../modules/corrected.csv';
+    //echo $myfile;
     if (callCurl($new) == true) {
-        //echo "<br>String in standardized format.<br>";
         $myfile = dirname(__FILE__).'/../../modules/newString.csv';
 
 		
@@ -31,9 +27,10 @@ if (isset($_POST["editGermplasmForm"]['newGermplasmName'])) {
             echo "gid: " . $gid . "<br>";
         }
         fclose($fin);
-
+        
+        //open corrected.csv and process
         $myfile = dirname(__FILE__).'/../../modules/corrected.csv';
-
+        
         $fin = fopen($myfile, 'r');
         $data = array();
 
@@ -59,13 +56,14 @@ if (isset($_POST["editGermplasmForm"]['newGermplasmName'])) {
             $data[] = $line;
         }
         fclose($fin);
-
+        //print_r($data);
+        
         $fout = fopen($myfile, 'w');
         foreach ($data as $line) {
             fputcsv($fout, $line);
         }
-        fclose($fout);
-       header("Location: /GMGR/index.php?r=site/output");
+       fclose($fout);
+       header("Location: /GMGR/index.php?r=site/standardTable");
        // Yii::app()->createUrl("site/standardTable");
         die();
     } else { 
@@ -92,22 +90,21 @@ if (isset($_POST["editGermplasmForm"]['newGermplasmName'])) {
 }
 
 function callCurl($new) {
-
+    echo "new:".$new;
     $jsonfile = dirname(__FILE__)."/../../modules/docinfo.json";
     
     $a = array('new' => $new);
     $jsonText = json_encode($a);
     file_put_contents($jsonfile, $jsonText);
-
+    
     $url = "http://localhost:8080/ws/standardization/term/checkEditedString";
-
+    
     $handle = curl_init();
     curl_setopt($handle, CURLOPT_URL, $url);
     curl_setopt($handle, CURLOPT_RETURNTRANSFER, 1);
     $response = curl_exec($handle);
     $code = curl_getinfo($handle, CURLINFO_HTTP_CODE);
-    //echo "<br>HTTP CODE ERROR: ".$code ."<br>";
-
+   
     $myfile = dirname(__FILE__).'/../../modules/newString.csv';
 
     $fin = fopen($myfile, 'r');
@@ -123,26 +120,6 @@ function callCurl($new) {
     return false;
 }
 ?>
-
-<!--<h3>Edit Germplasm Name</h3>-->
-<!--
-<form action="saveGermplasm.php" method="POST" enctype="multipart/form-data">	
-    <table>
-        <tr>
-            <td>Germplasm Name:</td> 
-            <td><input type="text" name="germplasm" size="20" value="<?php// echo $_POST['newGermplasmName']; ?>"><pre><kbd><?php //echo $error; ?></kbd></pre><td>
-		
-	</tr><tr>
-		<td>New Germplasm Name:</td> 
-		<td><input type="text" name="newGermplasmName" size="20" value=""></td>
-		<input type="hidden" name="germplasm" value="<?php //echo $germplasm; ?>">
-	</tr>
-	</table>
-<div class="form-actions">
-  				<button type="submit" class="btn btn-primary">Save changes</button>
-			</div>
-</form>	
--->
 
 
 </body>

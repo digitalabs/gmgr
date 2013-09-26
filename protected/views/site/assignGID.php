@@ -15,8 +15,8 @@ if (isset($_GET['yes'])) {
     Yii::import('application.modules.file_toArray');
     $unselected = $file_toArray->get_unselected_rows();
     $standardized = $file_toArray->checkIf_standardize($unselected);
-    echo "standardize unselected:";
-    print_r($standardized);
+    //echo "standardize unselected:";
+    //print_r($standardized);
     Yii::import('application.modules.json');
     $json = new json($standardized);
     $json->checkedBox();
@@ -101,7 +101,7 @@ if (isset($_POST['checked'])) {
                 $rows[] = $row;
             }
             fclose($fp);
-           echo "rows:";
+          // echo "rows:";
          
           $checked = $rows;
     
@@ -173,7 +173,7 @@ if (count($final)) {
         $GID_rows = $file_toArray->csv_corrected_GID();
         //echo "GID_rows:".count($GID_rows);
         $var2 = count($GID_rows);
-        echo count($GID_rows) . " created GID(s)<br>";
+        //echo count($GID_rows) . " created GID(s)<br>";
         ?>
 
 
@@ -208,7 +208,7 @@ if (count($final)) {
                                        $female_id=$pages[0][0];
                                        $i=0;
                                        $male_id = $file_toArray->output_tree_json($pages); // get what ith element in the array is the male parent
-                                       //for ($i = 0; $i < count($pages[0]); $i++) {
+                                   
                                            foreach ($pages[0] as $r) : list($id, $nval, $term, $GID, $methodID, $method, $locID, $location) = $r;
                                               
                                            if ($i==0) {
@@ -241,7 +241,7 @@ if (count($final)) {
                                                    }
                                                }$i++;
                                            endforeach;
-                                       //}
+                                  
                                        ?>
                                    </div>
                                    
@@ -278,17 +278,7 @@ if (count($final)) {
                                    
                                             foreach ($pages[0] as $r) : list($id, $nval, $term, $GID, $methodID, $method, $locID, $location) = $r;
                                                 echo '<tr>';
-                                                
-                                                //condition 1
-                                               /* if ($i === 0) {
-													echo "<td bgcolor='#FFE4E1'><img src='images/glyphicons_247_female2.png'></td>";
-												}elseif ($i === $male_id) {
-													 echo "<td bgcolor='#E6E6FA'><img src='images/glyphicons_246_male2.png'></td>";
-												}elseif ($i === count($pages[0]) - 1) { //crossed
-                                                   echo "<td bgcolor='#90EE90'><img src='images/glyphicons_197_remove2.png'></td>";
-												   echo "<td bgcolor='#90EE90'>" . $term . "</td>";
-                                                }*/
-												
+                                             	
 												//condition 2
 												if($id==$femIdArr[0] ){ //female 
 													 if ($i === 0) {
