@@ -43,7 +43,7 @@ if (isset($_GET['yes'])) {
 
     header("Location: " . $values['path'] . "?" . $values['query'] . "");
 }
-/*
+
 if (isset($_POST['checked'])) {
     $checked = $_POST['checked'];
     $cross = $_POST['cross'];
@@ -64,7 +64,7 @@ if (isset($_POST['checked'])) {
 // update createdGID.csv
     $file_toArray = new file_toArray();
     $file_toArray->update_csv_correctedGID($fid, $mid, $checked);
-}*/
+}
 
  if (isset($_POST['choose'])) {
     echo "choose:".$_POST['choose'];
@@ -277,45 +277,45 @@ if (count($final)) {
 										 $i = 0;
                                    
                                             foreach ($pages[0] as $r) : list($id, $nval, $term, $GID, $methodID, $method, $locID, $location) = $r;
+<<<<<<< HEAD
                                                 echo '<tr>';
                                              	
 												//condition 2
+=======
+                                               if($id==$femIdArr[0] ){
+											   echo '<tr bgcolor='#FFE4E1'> ';
+                                               }else if($id==$femIdArr[0]){
+											   echo '<tr bgcolor='#E6E6FA'> ';
+											   }else{
+											    echo '<tr bgcolor='#90EE90'> ';
+											   }
+                                               
+>>>>>>> d790bf99914e9261c3908ed688cb133622098874
 												if($id==$femIdArr[0] ){ //female 
 													 if ($i === 0) {
-														 echo "<td bgcolor='#FFE4E1'><img src='images/glyphicons_247_female2.png'></td>";
-														 echo "<td bgcolor='#FFE4E1'>". $term . "</td>";
+														 echo "<td><img src='images/glyphicons_247_female2.png'></td>";
+														 echo "<td>". $term . "</td>";
 													 }
 													 else{
-														 echo "<td  bgcolor='#FFE4E1'></td><td bgcolor='#FFE4E1'>". $term . "</td>";
+														 echo "<td  bgcolor='#FFE4E1'></td><td>". $term . "</td>";
 													 }
                                                     
 											    }else if($id==$maleIdArr[0]) //male
 											    {
 													if ($i === $male_id) {
-													  echo "<td bgcolor='#E6E6FA'><img src='images/glyphicons_246_male2.png'></td>";
-													  echo "<td bgcolor='#E6E6FA'>". $term . "</td>";
+													  echo "<td><img src='images/glyphicons_246_male2.png'></td>";
+													  echo "<td>". $term . "</td>";
 												    }else{
-													  echo "<td bgcolor='#E6E6FA'></td><td bgcolor='#E6E6FA'>". $term . "</td>";
+													  echo "<td></td><td>". $term . "</td>";
 													}  
 												}else if(strpos($id,'/')){ //crossed
-													  echo "<td bgcolor='#90EE90'><img src='images/glyphicons_197_remove2.png'></td>";
+													  echo "<tdimg src='images/glyphicons_197_remove2.png'></td>";
 													  echo "<td bgcolor='#90EE90'>" . $term . "</td>";
 												}
 												 $i++;
                                                 if ($GID === "CHOOSE GID") {
-                                                    if($id==$femIdArr[0]){ //female
-														
-														echo "<td bgcolor='#FFE4E1'><a  data-toggle='modal' href='#form-content' >Choose GID</a></td>";
-                                                                                                            
-													}else if($id==$maleIdArr[0]){ //male
-														echo "<td bgcolor='#E6E6FA'><a  data-toggle='modal' href='#form-content' >Choose GID</a></td>";
-                                                                                                              
-													}
-													else if(strpos($id,'/')){ //crossed
-														
-														echo "<td bgcolor='#90EE90'><a  data-toggle='modal' href='#form-content' >Choose GID</a></td>";
-                                                 
-													}
+														echo "<td><a  data-toggle='modal' href='#form-content' >Choose GID</a></td>";
+                                                   
 													    $m_term = $term;
 														$m_id = $id;
 														$m_pedigree = $nval;
@@ -326,40 +326,24 @@ if (count($final)) {
 														$m_male = $male; 
 														
 												} elseif ($GID === "DUPLICATE" || $GID === "NOT SET") {
-													 if($id==$femIdArr[0]){ //female
-														echo "<td bgcolor='#FFE4E1'><b><i>" . $GID . "</i></b></td>";
-												     }else if($id==$maleIdArr[0]){ //male
-														 echo "<td bgcolor='#E6E6FA'><b><i>" . $GID . "</i></b></td>";
-													 }else if(strpos($id,'/')){ //crossed
-														  echo "<td bgcolor='#90EE90'><b><i>" . $GID . "</i></b></td>";
+													
+														  echo "<td><b><i>" . $GID . "</i></b></td>";
 													 }
 												     
                                                 } else {
-													 if($id==$femIdArr[0]){ //female
-														echo "<td bgcolor='#FFE4E1'>" . $GID . "</td>";
-													 }else if($id==$maleIdArr[0]){ //male
-														 echo "<td bgcolor='#E6E6FA'>" . $GID . "</td>";
-													 }else if(strpos($id,'/')){ //parent
-														  echo "<td bgcolor='#90EE90'>" . $GID . "</td>";
-													 }
+													
+														 echo "<td>" . $GID . "</td>";
+													
                                                 }
                                                 //Methods
-                                                 if($id==$femIdArr[0]){ //female
-													  echo "<td bgcolor='#FFE4E1'>(" . $methodID . ")&nbsp; " . $method . "</td>";
-												 }else if($id==$maleIdArr[0]){ //male
-													  echo "<td bgcolor='#E6E6FA'>(" . $methodID . ")&nbsp; " . $method . "</td>";
-												 }else if(strpos($id,'/')){ //parent
-													 echo "<td bgcolor='#90EE90'> (" . $methodID . ")&nbsp; " . $method . "</td>";
-												 }
+                                                
+													  echo "<td>(" . $methodID . ")&nbsp; " . $method . "</td>";
+												 
                                               
                                                 //locations
-                                                 if($id==$femIdArr[0]){ //female
-													  echo "<td bgcolor='#FFE4E1'>(" . $locID . ")&nbsp; " . $location . "</td>";
-												 }else if($id==$maleIdArr[0]){ //male
-													   echo "<td bgcolor='#E6E6FA'>(" . $locID . ")&nbsp; " . $location . "</td>";
-												 }else if(strpos($id,'/')){ //parent
-													  echo "<td  bgcolor='#90EE90'>(" . $locID . ")&nbsp; " . $location . "</td>";
-												 }
+                                          
+													  echo "<td>(" . $locID . ")&nbsp; " . $location . "</td>";
+												
                                                
                                                 echo '</tr>';
 
