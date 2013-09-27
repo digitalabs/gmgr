@@ -11,6 +11,22 @@ $model = new model();
 $file_toArray = new file_toArray();
 
 $unselected=0;
+if (isset($_POST['selectMethod'])) {
+    $selected_radio = $_POST['selectMethod'];
+    if ($selected_radio === "changeMethod") {
+       //echo $_POST['bondId'];
+       //print $selected_radio;
+	   $array=array(
+	   "id"=>$_POST['bondId'],
+	   "gid"=>$_POST['gid']
+	   );
+	   $json = new json($array);
+	   $json->create_changeMethod();
+    } else {
+        print $selected_radio;
+    }
+}
+
 if (isset($_GET['yes'])) {
     Yii::import('application.modules.file_toArray');
     $unselected = $file_toArray->get_unselected_rows();
@@ -185,11 +201,9 @@ if (count($final)) {
             <link href="assets/pnotify-1.2.0/jquery.pnotify.default.icons.css" rel="stylesheet" type="text/css">
 
             <div class="container" >
-
                 <div class="page-points">
                     <br>
                 </div>
-
 
                 <div id="sections">
               
@@ -277,11 +291,9 @@ if (count($final)) {
 										 $i = 0;
                                    
                                             foreach ($pages[0] as $r) : list($id, $nval, $term, $GID, $methodID, $method, $locID, $location) = $r;
-<<<<<<< HEAD
                                                 echo '<tr>';
                                              	
 												//condition 2
-=======
                                                if($id==$femIdArr[0] ){
 											   echo '<tr bgcolor='#FFE4E1'> ';
                                                }else if($id==$femIdArr[0]){
@@ -290,7 +302,6 @@ if (count($final)) {
 											    echo '<tr bgcolor='#90EE90'> ';
 											   }
                                                
->>>>>>> d790bf99914e9261c3908ed688cb133622098874
 												if($id==$femIdArr[0] ){ //female 
 													 if ($i === 0) {
 														 echo "<td><img src='images/glyphicons_247_female2.png'></td>";
@@ -337,7 +348,44 @@ if (count($final)) {
                                                 }
                                                 //Methods
                                                 
-													  echo "<td>(" . $methodID . ")&nbsp; " . $method . "</td>";
+													if ((count($pages[0])) == $i) {
+
+
+                                                $existing = $file_toArray->csv_methods();
+                                                //print_r($existing);
+                                                $s = "";
+                                                foreach ($existing as $r) : list($mid, $m, $methodType, $methodDesc) = $r;
+                                                    //echo $s.$mid.",".$methodType.", ".$methodDesc."<br>";
+                                                    $data[] = $mid . "," . $methodType . ", " . $methodDesc . ",";
+                                                endforeach;
+                                                ?><td>
+                                                        <form action="" method="POST" enctype="multipart/form-data">
+                                                            <input type="radio" name="selectMethod" id="r1" value="no"/>
+												<?php
+												echo "(" . $methodID . ")&nbsp; " . $method;
+												?>
+                                                            <br/>
+                                                            <input type="radio" name="selectMethod" id="r2" value="changeMethod"  />
+                                                            <input
+                                                                id="other"
+                                                                type="text"
+                                                                class="span4 typeahead"
+                                                                placeholder="Type the method id/type/code/name"
+                                                                autocomplete="off"
+                                                                data-provide="typeahead"
+                                                                
+                                                            />
+                                                            <br/>
+                                                            <input type="hidden" name="bondId" id="bondId" value="" />
+															<input type="hidden" name="gid" id="gid" value="<?php echo $GID; ?>" />
+                                                            <input type="submit" name="submit" id="submitMethod" value="Set Method" class="btn btn-primary" ><br><br>
+                                                        </form>
+
+														<?php
+														//";
+														}else {
+															echo "<td>(" . $methodID . ")&nbsp; " . $method . "</td>";
+														}
 												 
                                               
                                                 //locations
@@ -521,6 +569,94 @@ if (count($final)) {
     </div>    
 
     <script type="text/javascript" src="assets/bootstrap.min.js"></script>
+	    <script type="text/javascript" src="./assets/underscore.js"></script>
+
+
+
+
+    <script type="text/javascript">
+    /*function disableTxt(id) {
+        document.getElementById("other").disabled = true;
+		document.getElementById(id).disabled = true;
+    }
+    function enableTxt(id) {
+        document.getElementById("other").disabled = false;
+		document.getElementById(id).disabled = false;
+    }
+	*/
+	$(":radio[name='selectMethod']").click(function(){
+  var value = $(this).val();
+  $("#other").attr("disabled", "disabled");
+	  $("#submitMethod").attr("disabled", "disabled");
+  if(value === "changeMethod"){
+  $("#submitMethod").removeAttr("disabled");
+    $("#other").removeAttr("disabled");
+    return;
+  }
+      
+    
+}).click();
+	
+
+    $(function() {
+
+        var bondObjs = {};
+        var bondNames = [];
+
+        //get the data to populate the typeahead (plus an id value)
+        var throttledRequest = _.debounce(function(query, process) {
+            //get the data to populate the typeahead (plus an id value)
+            $.ajax({
+                url: "<?php echo Yii::app()->request->baseUrl;?>"+'/assets/methods.json'
+                        , cache: false
+                        , success: function(data) {
+                    //reset these containers every time the user searches
+                    //because we're potentially getting entirely different results from the api
+                    bondObjs = {};
+                    bondNames = [];
+
+                    //Using underscore.js for a functional approach at looping over the returned data.
+                    _.each(data, function(item, ix, list) {
+
+                        //for each iteration of this loop the "item" argument contains
+                        //1 bond object from the array in our json, such as:
+                        // { "id":7, "name":"Pierce Brosnan" }
+
+                        //add the label to the display array
+                        bondNames.push(item.mid + "," + item.mcode + "," + item.mtype + "," + item.mname);
+                        //bondNames.push(  );
+
+                        //also store a hashmap so that when bootstrap gives us the selected
+                        //name we can map that back to an id value
+                        bondObjs[ item.mid + "," + item.mcode + "," + item.mtype + "," + item.mname] = item.mid;
+                    });
+
+                    //send the array of results to bootstrap for display
+                    process(bondNames);
+                }
+            });
+        });
+
+
+        $(".typeahead").typeahead({
+            source: function(query, process) {
+
+                //here we pass the query (search) and process callback arguments to the throttled function
+                throttledRequest(query, process);
+
+            }
+            , updater: function(selectedName) {
+
+                //save the id value into the hidden field
+                $("#bondId").val(bondObjs[ selectedName ]);
+
+                //return the string you want to go into the textbox (the name)
+                return selectedName;
+            }
+        });
+    });
+    </script>
+	
     <script type="text/javascript" src="./assets/pnotify-1.2.0/jquery.pnotify.js"></script>
     <script type="text/javascript">
 
