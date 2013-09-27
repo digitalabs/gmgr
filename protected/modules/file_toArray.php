@@ -392,6 +392,14 @@ class file_toArray {
        $json->create_tree();
        return $fid_i;
    }
+   public function csv_methods() {
+        $fp = fopen(dirname(__FILE__)."/methods.csv", "r");
+        while (($row = fgetcsv($fp)) !== FALSE) {
+            $rows[] = $row;
+        }
+        fclose($fp);
+        return $rows;
+    }
   
 
 }
