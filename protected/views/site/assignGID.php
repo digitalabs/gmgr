@@ -17,11 +17,19 @@ if (isset($_POST['selectMethod'])) {
        //echo $_POST['bondId'];
        //print $selected_radio;
 	   $array=array(
-	   "id"=>$_POST['bondId'],
-	   "gid"=>$_POST['gid']
+	   "mid"=>$_POST['bondId'],
+	   "gid"=>$_POST['gid'],
+	   "id"=>$_POST['id'],
+	   
 	   );
+	   //create changeMethod.json
 	   $json = new json($array);
 	   $json->create_changeMethod();
+	   
+	   //call curl: function updateMethod
+    Yii::import('application.modules.curl');
+    $curl = new curl();
+    $curl->updateMethod();
     } else {
         print $selected_radio;
     }
@@ -348,7 +356,7 @@ if (count($final)) {
                                                 }
                                                 //Methods
                                                 
-													if ((count($pages[0])) == $i) {
+													if ((count($pages[0])) == $i && $GID !== "NOT SET") {
 
 
                                                 $existing = $file_toArray->csv_methods();
@@ -378,6 +386,7 @@ if (count($final)) {
                                                             <br/>
                                                             <input type="hidden" name="bondId" id="bondId" value="" />
 															<input type="hidden" name="gid" id="gid" value="<?php echo $GID; ?>" />
+															<input type="hidden" name="id" id="id" value="<?php echo $id; ?>" />
                                                             <input type="submit" name="submit" id="submitMethod" value="Set Method" class="btn btn-primary" ><br><br>
                                                         </form>
 
