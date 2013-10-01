@@ -28,6 +28,23 @@ body
 .row-align-left{
    margin:0;
 }
+
+#ajax-loading-indicator {
+  z-index:9999999;
+  position:fixed;
+  margin:-50px 0 0 -50px;
+  top:50%;
+  left:50%;
+  background:transparent url(../images/ajax-loader.gif) no-repeat center center;
+  width:100px;
+  height:100px;
+  display:none;
+  color:'default';
+}
+.ajax-processing #ajax-loading-indicator { 
+    display:block; 
+}
+
 #content
 {
     padding: 20px;

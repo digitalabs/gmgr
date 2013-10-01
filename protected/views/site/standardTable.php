@@ -59,7 +59,7 @@
 							//return "<font style='color:#FF6600; font-weight:bold;'>".CHtml::encode($data["female"])."</font>";
 							 
 							return "<div class='j'><font style='color:#FF6600; font-weight:bold;'>".CHtml::link( CHtml::encode($data["female"]),
-                       Yii::app()->createUrl( "site/editGermplasm", array("germplasm"=>$data["female"],"error"=>$data["fremarks"]) ))."</font></div>";
+                       Yii::app()->createUrl( "site/editGermplasm", array("germplasm"=>$data["female"],"error"=>$data["fremarks"])),array('title' => CHtml::encode($data["fremarks"]), 'class'=>'tooltipster'))."</font></div>";
                                                         
                                                         //echo CHtml::hiddenField('hiddenFid',CHtml::encode($data["female"]));
                                          }
@@ -79,7 +79,7 @@
 						else{
 							//echo CHtml::hiddenField('hiddenMid',CHtml::encode($data["male"]));
 							return "<div class='j'><font style='color:#FF6600; font-weight:bold;'>".CHtml::link( CHtml::encode($data["male"]),
-                       Yii::app()->createUrl( "site/editGermplasm", array("germplasm"=>$data["male"],"error"=>$data["mremarks"]) ))."</font></div>";
+							Yii::app()->createUrl( "site/editGermplasm", array("germplasm"=>$data["male"],"error"=>$data["mremarks"])),array('title' => CHtml::encode($data["mremarks"]), 'class'=>'tooltipster'))."</font></div>";
 						}
                                         echo CHtml::hiddenField('hiddenMid',CHtml::encode($data["male"]));        
 				   },

@@ -14,7 +14,8 @@
 
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css" />
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
-
+    
+	
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 	<?php echo Yii::app()->bootstrap->init();?>
 </head>
@@ -23,11 +24,36 @@
 
 <div class="container" id="page">
 
-<!--
-	<div id="header">
-		<div id="logo"><?php //echo CHtml::encode(Yii::app()->name); ?></div>
-	</div><!-- header 
--->
+   <?php $this->widget('ext.tooltipster.tooltipster',
+			array(
+            'options'=>array('position'=>'right',
+			'animation'=>'fade',
+			'arrow'=>true,
+			'arrowColor'=>'',
+			'content'=>'',
+			'delay'=>'200',
+			'fixedWidth'=>'300',
+			'functionBefore'=>'js:function(origin, continueTooltip) { continueTooltip(); }',
+			'functionAfter'=>'js:function(origin) {}',
+			'icon'=>'(?)',
+			'iconTheme'=>'.tooltipster-icon',
+			'iconDesktop'=>false,
+			'iconTouch'=>false,
+			'interactive'=>false,
+			'interactiveTolerance'=>'350',
+			'offsetX'=>'5',
+			'offsetY'=>'5',
+			'onlyOne'=>true,
+			'position'=>'top',
+			'speed'=>'350',
+			'timer'=>'0',
+			'theme'=>'.tooltipster-default',
+			'touchDevices'=>true,
+			'trigger'=>'hover'
+			)
+         ));
+      
+   ?>
 	<div id="mainmenu">
 	
 	<?php $this->widget('bootstrap.widgets.TbNavbar', array(
@@ -83,7 +109,7 @@
 	<?php echo $content; ?>
 
 	<div id="footer">
-		<!--Copyright &copy; <?php echo date('Y'); ?> by My Company.<br/>
+		<!--Copyright &copy; <?php //echo date('Y'); ?> by My Company.<br/>
 		All Rights Reserved.<br/>-->
 		<?php //echo Yii::powered(); ?>
 		<?php $this->widget('bootstrap.widgets.TbBreadcrumbs', array(

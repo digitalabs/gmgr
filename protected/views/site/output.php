@@ -1,3 +1,6 @@
+<span id="ajax-loading-indicator">
+  <img src="./images/ajax-loader.gif" />
+</span>
 <div id="tableEvent"></div>
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     'id'=>'standardTable',
@@ -15,6 +18,11 @@
     <i><p ><strong>Note:</strong>&nbsp; 
             Germplasm names not in standardized format are in red color.Hover the mouse over the germplasm names to see the error and click to correct it.
         </p></i>
+		
+<?php
+   //Dropdown Pagination
+   $pageSize=Yii::app()->user->getState('pageSize',Yii::app()->params['defaultPageSize']); 
+?>
  <?php
  $this->widget('ext.selgridview.BootSelGridView', array(
      'id' => 'pedigreeGrid',
@@ -22,6 +30,7 @@
 	 'filter'=>$filtersForm,
 	 'selectableRows' => 2,
      'columns'=>array(
+
                 array(
                     'id' => 'selectedIds',  //checked[]
                     'class'=>'CCheckBoxColumn', 
@@ -49,7 +58,7 @@
                    'name'=>'female',
                    'type'=> 'raw', 
                    /*'value'=>'CHtml::link( CHtml::encode($data["female"]),
-                       Yii::app()->createUrl( "site/editGermplasm", array("germplasm"=>$data["female"]) ))',*/
+							Yii::app()->createUrl( "site/editGermplasm", array("germplasm"=>$data["female"]) ))',*/
                    'value'=> function ($data){
 					   if (strcmp(CHtml::encode($data["fremarks"]),"in standardized format")==0){
 					               
@@ -59,10 +68,12 @@
 							//return "<font style='color:#FF6600; font-weight:bold;'>".CHtml::encode($data["female"])."</font>";
 							 
 							return "<div class='j'><font style='color:#FF6600; font-weight:bold;'>".CHtml::link( CHtml::encode($data["female"]),
-                       Yii::app()->createUrl( "site/editGermplasm", array("germplasm"=>$data["female"],"error"=>$data["fremarks"]) ))."</font></div>";
+							Yii::app()->createUrl( "site/editGermplasm", array("germplasm"=>$data["female"],"error"=>$data["fremarks"])),array('title' => CHtml::encode($data["fremarks"]), 'class'=>'tooltipster'))."</font></div>";
                                                         
                                                         //echo CHtml::hiddenField('hiddenFid',CHtml::encode($data["female"]));
-                                         }
+                        }
+						
+
                                         
 				   },
 							
@@ -79,7 +90,7 @@
 						else{
 							//echo CHtml::hiddenField('hiddenMid',CHtml::encode($data["male"]));
 							return "<div class='j'><font style='color:#FF6600; font-weight:bold;'>".CHtml::link( CHtml::encode($data["male"]),
-                       Yii::app()->createUrl( "site/editGermplasm", array("germplasm"=>$data["male"],"error"=>$data["mremarks"]) ))."</font></div>";
+							Yii::app()->createUrl( "site/editGermplasm", array("germplasm"=>$data["male"],"error"=>$data["mremarks"])),array('title' => CHtml::encode($data["mremarks"]), 'class'=>'tooltipster'))."</font></div>";
 						}
                                         echo CHtml::hiddenField('hiddenMid',CHtml::encode($data["male"]));        
 				   },
@@ -105,6 +116,7 @@
       ),
 ));
  ?>
+
  </div>
 
  <div class="assign">
@@ -129,4 +141,14 @@
 
 </div>
 <?php $this->endWidget();?>
-
+<script type="text/javascript">
+$(document).ready(function() {
+ // $("#uploadFile").click(function (){
+	$('#ajax-loading-indicator').bind('ajaxStart', function(){
+     $(this).show();
+    }).bind('ajaxStop', function(){
+      $(this).hide();
+	});
+ // });
+});
+</script>

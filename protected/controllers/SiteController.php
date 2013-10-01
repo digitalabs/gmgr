@@ -80,8 +80,8 @@ class SiteController extends Controller {
             $model->attributes = $_POST['LoginForm'];
             // validate user input and redirect to the previous page if valid
             if ($model->validate() && $model->login())
-                $this->redirect(Yii::app()->user->returnUrl);
-            //$this->redirect(array('/site/contact'));
+               // $this->redirect(Yii::app()->user->returnUrl);
+                $this->redirect(array('/site/importer'));
         }
         // display the login form
         $this->render('login', array('model' => $model));
@@ -100,18 +100,54 @@ class SiteController extends Controller {
     }
 
     public function actionImporter() {
-        //$dir = Yii::getPathOfAlias('application.modules');
-       // $uploaded = false;
+       
          $model = new ImporterForm;
 	     $file = dirname(__FILE__).'/../modules/germplasmList.csv';
-         echo "File:".$file;
+         
          
         //Collect user input form
         if (isset($_POST['ImporterForm'])) {
            // $model->attributes = $_POST['ImporterForm'];
            /// $file = CUploadedFile::getInstance($model, 'file');
-           echo "location:".$_POST['location'];
-          
+      
+	    //Delete existing files  
+		$exists = file_exists(dirname(__FILE__).'/../modules/createdGID.csv');
+		if ($exists) {
+			unlink(dirname(__FILE__).'/../modules/createdGID.csv');
+		}
+		$exists = file_exists(dirname(__FILE__)."/../modules/sample.csv");
+		if ($exists) {
+			unlink(dirname(__FILE__)."/../modules/sample.csv");
+		}
+		$exists = file_exists(dirname(__FILE__)."/../modules/output.csv");
+		if ($exists) {
+			unlink(dirname(__FILE__)."/../modules/output.csv");
+		}
+		$exists = file_exists(dirname(__FILE__)."/../modules/newString.csv");
+		if ($exists) {
+			unlink(dirname(__FILE__)."/../modules/newString.csv");
+		}
+		$exists = file_exists(dirname(__FILE__)."/../modules/corrected.csv");
+		if ($exists) {
+			unlink(dirname(__FILE__)."/../modules/corrected.csv");
+		}
+		$exists = file_exists(dirname(__FILE__)."/../modules/checked.json");
+		if ($exists) {
+			unlink(dirname(__FILE__)."/../modules/checked.json");
+		}
+		$exists = file_exists(dirname(__FILE__)."/../modules/docinfo.json");
+		if ($exists) {
+			unlink(dirname(__FILE__)."/../modules/docinfo.json");
+		}
+		$exists = file_exists(dirname(__FILE__)."/../modules/existingTerm.csv");
+		if ($exists) {
+			unlink(dirname(__FILE__)."/../modules/existingTerm.csv");
+		}
+		$exists = file_exists(dirname(__FILE__)."/../modules/checked.csv");
+		if ($exists) {
+		    unlink(dirname(__FILE__)."/../modules/checked.csv");
+		}
+		
             if ($model->validate()) {
                 echo $_POST['location'];
                 //import json class

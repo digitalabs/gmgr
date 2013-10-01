@@ -18,7 +18,7 @@ return array(
     ),
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'Genealogy Manager',
-
+	'defaultController' => 'login',
 	// preloading 'log' component
 	'preload'=>array('log','bootstrap',),
 

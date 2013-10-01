@@ -277,20 +277,20 @@ if (count($final)) {
 										 $i = 0;
                                    
                                             foreach ($pages[0] as $r) : list($id, $nval, $term, $GID, $methodID, $method, $locID, $location) = $r;
-<<<<<<< HEAD
+//<<<<<<< HEAD
                                                 echo '<tr>';
                                              	
 												//condition 2
-=======
+//=======
                                                if($id==$femIdArr[0] ){
-											   echo '<tr bgcolor='#FFE4E1'> ';
+											   echo '<tr bgcolor="#FFE4E1"> ';
                                                }else if($id==$femIdArr[0]){
-											   echo '<tr bgcolor='#E6E6FA'> ';
+											   echo '<tr bgcolor="#E6E6FA"> ';
 											   }else{
-											    echo '<tr bgcolor='#90EE90'> ';
+											    echo '<tr bgcolor="#90EE90"> ';
 											   }
                                                
->>>>>>> d790bf99914e9261c3908ed688cb133622098874
+//>>>>>>> d790bf99914e9261c3908ed688cb133622098874
 												if($id==$femIdArr[0] ){ //female 
 													 if ($i === 0) {
 														 echo "<td><img src='images/glyphicons_247_female2.png'></td>";
@@ -325,10 +325,10 @@ if (count($final)) {
 														$m_female = $female;
 														$m_male = $male; 
 														
-												} elseif ($GID === "DUPLICATE" || $GID === "NOT SET") {
+												} else if ($GID === "DUPLICATE" || $GID === "NOT SET") {
 													
 														  echo "<td><b><i>" . $GID . "</i></b></td>";
-													 }
+													 
 												     
                                                 } else {
 													

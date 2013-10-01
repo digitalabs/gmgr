@@ -1,3 +1,18 @@
+<html>
+  <!--<head>
+      <link href="css/Indicator.css" rel="stylesheet" type="text/css">
+	  <script src="js/Indicator.js" type="text/javascript"></script>
+  </head>-->
+  
+  <body>
+  <!--<div id="busy_indicator">
+	<div class="indicator">
+		<img src="images/loading.gif">
+		<br><br>
+		Loading...
+	 </div>
+ </div>
+ -->
 <?php //if($uploaded):?>
 <!--<p>File was uploaded. Check <?php //echo //$dir?>.</p>
 <?php //endif ?>-->
@@ -23,6 +38,10 @@ $this->breadcrumbs=array(
 //include_once($_SERVER['DOCUMENT_ROOT'] . "/PedigreeImport/model/configDB.php");
 
 ?>
+
+<span id="ajax-loading-indicator">
+  <img src="./images/ajax-loader.gif" />
+</span>
 <?php /** @var BootActiveForm $form */
 $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     'id'=>'pedigreeImport',
@@ -102,7 +121,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 				  
                     <?php 
                        echo "</br>";
-                        $this->widget('bootstrap.widgets.TbButton',array('buttonType'=>'submit','type'=>'primary','label'=>'Upload list')); 
+                        $this->widget('bootstrap.widgets.TbButton',array('buttonType'=>'submit','id'=>'uploadFile','type'=>'primary','label'=>'Upload list')); 
                     ?>
                 <!--</div>-->
            </fieldset><br>
@@ -118,4 +137,32 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 -->
 
 <?php $this->endWidget(); ?>
+</body></html>
+<script type="text/javascript">
+$(document).ready(function() {
+  $("#uploadFile").click(function (){
+	$('#ajax-loading-indicator').bind('ajaxStart', function(){
+     $(this).show();
+    }).bind('ajaxStop', function(){
+      $(this).hide();
+	});
+  });
+});
+  /*
+$.oldAjax = $.ajax;
+$.ajax = function(opt) {
 
+	opt = opt || {};
+	$(document.body).addClass("ajax-processing");
+
+	return $.oldAjax( $.extend({},opt, {
+		complete : function(jqXHR, textStatus) {
+			$(document.body).removeClass("ajax-processing");
+			if (opt.complete)
+				opt.complete(jqXHR, textStatus);
+		}
+	}));
+}
+*/
+
+</script>

@@ -1,4 +1,7 @@
-			<div id="chooseGIDList">
+<span id="ajax-loading-indicator">
+  <img src="./images/ajax-loader.gif" />
+</span>	
+	<div id="chooseGIDList">
                  <?php
                     include( dirname(__FILE__). "/assignGID.php");
                 ?>
@@ -90,6 +93,15 @@ $this->beginWidget('zii.widgets.jui.CJuiDialog',array(
                 ),
                 ));
 $this->endWidget();
-
-
 ?>
+<script type="text/javascript">
+$(document).ready(function() {
+ // $("#uploadFile").click(function (){
+	$('#ajax-loading-indicator').bind('ajaxStart', function(){
+     $(this).show();
+    }).bind('ajaxStop', function(){
+      $(this).hide();
+	});
+ // });
+});
+</script>
