@@ -403,6 +403,40 @@ if (count($final)) {
 												
                                                
                                                 echo '</tr>';
+												
+												$array=$file_toArray->search_createdGID2($term);
+			
+			echo "<br>".print_r($array)."<br>";
+			foreach ($array as $r) : list($root_id,$id_c, $nval_c, $term_c, $GID_c, $methodID_c, $method_c, $locID_c, $location_c) = $r;
+			if ($root_id == $femIdArr[0]) {
+                echo "<tr bgcolor='#FFE4E1'> ";
+            } elseif ($root_id == $maleIdArr[0]) {
+                echo "<tr bgcolor='#E6E6FA'> ";
+            }
+			echo "<td></td><td>" . $term_c . "</td>";
+			if ($GID_c === "CHOOSE GID") {
+                echo "<td><a  data-toggle='modal' href='#form-content' >Choose GID</a></td>";
+
+                /*$m_term = $term_c;
+                $m_id = $id_c;
+                $m_pedigree = $nval_c;
+                $m_nval = $nval_c;
+                $m_mid = $mid_c;
+                $m_fid = $fid_c;
+                $m_female = $female_c;
+                $m_male = $male_c;
+				*/
+            } elseif ($GID_c === "DUPLICATE" || $GID_c === "NOT SET") {
+
+                echo "<td><b><i>" . $GID_c . "</i></b></td>";
+            } else {
+                echo "<td>" . $GID_c . "</td>";
+            }
+			echo "<td>(" . $methodID_c . ")&nbsp; " . $method_c . "</td>";
+			echo "<td>(" . $locID_c . ")&nbsp; " . $location_c . "</td>";
+			
+			echo "</tr>";
+			endforeach;
 
                                             endforeach;
                                        // }
