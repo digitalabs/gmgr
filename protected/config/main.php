@@ -90,8 +90,8 @@ return array(
 		    'class'=>'CDbConnection',
 			'connectionString' => 'mysql:host=127.0.0.1;port=3306;dbname=iris_myisam_20121002',
 			'emulatePrepare' => true,
-			'username' => 'root',
-			'password' => '',
+			'username' => 'datasourceuser',
+			'password' => 'ici$rule$',
 			'charset' => 'utf8',
 		),
 		
