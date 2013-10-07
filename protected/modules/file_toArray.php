@@ -400,6 +400,31 @@ class file_toArray {
         fclose($fp);
         return $rows;
     }
+	
+	public function csv_createdGID2() {
+        $fp = fopen(dirname(__FILE__)."/createdGID2.csv", "r");
+		
+        while (($row = fgetcsv($fp)) !== FALSE) {
+            $rows[] = $row;
+			
+        }
+        fclose($fp);
+        return $rows;
+    }
+	
+	public function search_createdGID2($pedigree) {
+	
+        $row=$this->csv_createdGID2();
+		$array=array();
+        foreach ($row as $r) : list($root_id, $id, $nval) = $r;
+		if($nval===$pedigree){
+			
+			$array[]=$r;
+		}
+		endforeach;
+        //var_dump($array);
+        return $array;
+    }
   
 
 }
