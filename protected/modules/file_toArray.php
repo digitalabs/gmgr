@@ -274,15 +274,14 @@ class file_toArray {
        function checkIf_standardize($checked) {
         //echo "checked count:".count($checked);
         $rows=$this->csv_corrected();
-        $selected = array();
+        
         foreach ($rows as $row) : list($GID, $nval, $fid, $fremarks, $female, $femalename, $mid, $mremarks, $male, $malename) = $row;
-        //echo "jksjkdj"."<br>";
-        //echo $fid;
+        
             for ($i = 0; $i < count($checked); $i++) {
           //      echo $fremarks." ".$mremarks."<br>";
           //      echo $fid." ".$checked[$i]."<br>";
                 if ($fremarks === "in standardized format" && $fid === $checked[$i] && $mremarks === "in standardized format") {
-                    $selected[$i] = $fid;
+                    $selected[] = $fid;
                 }
             }
 
