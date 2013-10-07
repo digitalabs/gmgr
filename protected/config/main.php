@@ -84,6 +84,16 @@ return array(
 			'password' => 'phenibqpass',
 			'charset' => 'utf8',
 		),
+		*/
+		
+		'db'=>array(
+		    'class'=>'CDbConnection',
+			'connectionString' => 'mysql:host=127.0.0.1;port=8005;dbname=iris_myisam_20121002',
+			'emulatePrepare' => true,
+			'username' => 'phenibquser',
+			'password' => 'phenibqpass',
+			'charset' => 'utf8',
+		),
 		
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors
