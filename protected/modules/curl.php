@@ -31,22 +31,22 @@ class curl {
     }
 
     public function parse() {
-        $url = "http://172.29.4.99:8080/ws/standardization/term/parse";
+        $url = "http://172.29.4.99:8083/ws/standardization/term/parse";
         $this->exec($url);
     }
 
     public function standardize() {
-        $url = "http://172.29.4.99:8080/ws/standardization/term/standardize";
+        $url = "http://172.29.4.99:8083/ws/standardization/term/standardize";
         $this->exec($url);
     }
 
      public function createGID() {
-        $url = "http://172.29.4.99:8080/ws/standardization/term/createGID";
+        $url = "http://172.29.4.99:8083/ws/standardization/term/createGID";
         $this->exec($url);
     }
     
     public function chooseGID() {
-        $url = "http://172.29.4.99:8080/ws/standardization/term/chooseGID";
+        $url = "http://172.29.4.99:8083/ws/standardization/term/chooseGID";
         $this->exec($url);
     }
 
