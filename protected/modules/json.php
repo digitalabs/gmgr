@@ -22,7 +22,10 @@ class json {
 
     public function toFile($jsonfile, $data) {
         $jsonText = json_encode($data);
+        chmod($jsonfile, 0777);
         file_put_contents($jsonfile, $jsonText);
+        
+        
     }
 
     public function location() {
