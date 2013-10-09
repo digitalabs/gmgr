@@ -103,7 +103,10 @@ class SiteController extends Controller {
     }
 
     public function actionImporter() {
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1ac55b28b876a7e55874149580ff09904c3a2887
     $exists = file_exists(dirname(__FILE__).'/../modules/createdGID.csv');
 		if ($exists) {
 			unlink(dirname(__FILE__).'/../modules/createdGID.csv');

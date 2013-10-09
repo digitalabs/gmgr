@@ -77,7 +77,11 @@ return array(
 			
 		),
 <<<<<<< HEAD
+<<<<<<< HEAD
 		 /*
+=======
+		
+>>>>>>> 1ac55b28b876a7e55874149580ff09904c3a2887
 =======
 		
 >>>>>>> 1ac55b28b876a7e55874149580ff09904c3a2887
@@ -102,6 +106,9 @@ return array(
 			'password' => 'ici$rule$',
 			'charset' => 'utf8',
 		),
+<<<<<<< HEAD
+>>>>>>> 1ac55b28b876a7e55874149580ff09904c3a2887
+=======
 >>>>>>> 1ac55b28b876a7e55874149580ff09904c3a2887
 		
 		'errorHandler'=>array(
