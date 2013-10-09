@@ -1,6 +1,5 @@
-
 <?php 
- Yii::import('application.modules.configDB');
+ //Yii::import('application.modules.configDB');
 /*
 if (!$model->CheckLogin()) {
     $model->RedirectToURL("login.php");

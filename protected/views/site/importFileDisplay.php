@@ -6,9 +6,13 @@
         </i>
         <br><br>
     </p>
+<!--div to grey out the screen while loading indicator is on-->
+<div id='screen'>
+</div>
 <span id="ajax-loading-indicator">
-  <img src="./images/ajax-loader.gif" />
 </span>
+<!---End for loading indicators-->
+
 <?php /** @var BootActiveForm $form */ 
     $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 	'id'=>'standardLink',
@@ -20,6 +24,7 @@
 CHtml::hiddenField('standardize','yes');
 $this->widget('bootstrap.widgets.TbButton',array(
     'label' => 'Click to Standardize Germplasm',
+	'id'=> 'btnStandard',
     'type' => 'primary',
      'url'=> array('/site/output'),
      ));
@@ -40,13 +45,12 @@ $this->widget('bootstrap.widgets.TbButton',array(
 	'dataProvider'=>$arrayDataProvider,
 	//'filter'=>$model,
 	'template'=>"{items}{pager}",//strcmp($fremarks, 'in standardized format')
-     'columns'=>array(
+        'columns'=>array(
                 array(
                     'header'=>'Cross Name',
                     'value'=>'CHtml::encode($data["nval"])',
                     'htmlOptions'=>array(
                         'style'=>'width:50px;',
-                        'title'=>'tooltip sample'
                         )
                     ),
                 array(
@@ -107,12 +111,11 @@ $this->widget('bootstrap.widgets.TbButton',array(
 ?>
 <script type="text/javascript">
 $(document).ready(function() {
- // $("#uploadFile").click(function (){
-	$('#ajax-loading-indicator').bind('ajaxStart', function(){
-     $(this).show();
-    }).bind('ajaxStop', function(){
-      $(this).hide();
-	});
- // });
+  var pop = function(){
+        $('#screen').css({ opacity: 0.4, 'width':$(document).width(),'height':$(document).height()});
+        $('body').css({'overflow':'hidden'});
+        $('#ajax-loading-indicator').css({'display': 'block'});
+ }
+ $('#btnStandard').click(pop);
 });
 </script>

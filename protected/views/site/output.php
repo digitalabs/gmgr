@@ -1,18 +1,13 @@
+<!--div to grey out the screen while loading indicator is on-->
+<div id='screen'>
+</div>
 <span id="ajax-loading-indicator">
-  <img src="./images/ajax-loader.gif" />
 </span>
+<!---End for loading indicators-->
+
 <div id="tableEvent"></div>
-<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-    'id'=>'standardTable',
-    'type'=>'horizontal',
-    'enableClientValidation'=>true,
-	'clientOptions'=>array(
-		'validateOnSubmit'=>true,
-	   ),
-    'htmlOptions' => array('class'=>'well','enctype' => 'multipart/form-data'),
-        )); 
- ?>
- 
+
+ <br>
  <div id='table1'>
 	     <h3>Germplasm List</h3>
     <i><p ><strong>Note:</strong>&nbsp; 
@@ -23,12 +18,24 @@
    //Dropdown Pagination
    $pageSize=Yii::app()->user->getState('pageSize',Yii::app()->params['defaultPageSize']); 
 ?>
+<br>
+<!--<div class="selection">
+	<button onclick="Ext.getCmp('test_grid').getPlugin('pagingSelectionPersistence').clearPersistedSelection()">Clear All</button>
+	<button onclick="return selectAll()">Select All</button>
+</div>-->
  <?php
+ 
+ $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+	'type' => 'horizontal',
+	'id' => 'assign-gid-form',
+	'action' => array('/site/assignGID'),
+ ));
  $this->widget('ext.selgridview.BootSelGridView', array(
      'id' => 'pedigreeGrid',
 	 'dataProvider'=> $dataProvider,
 	 'filter'=>$filtersForm,
-	 'selectableRows' => 2,
+	 'selectableRows' => 10,
+	 'enablePagination'=>true,
      'columns'=>array(
 
                 array(
@@ -43,7 +50,6 @@
                     'filter'=>CHtml::textField('FilterPedigreeForm[nval]',isset($_GET['FilterPedigreeForm']['nval]'])? $_GET['FilterPedigreeForm']['nval']:''),
                     'htmlOptions'=>array(
                         'style'=>'width:50px;',
-                        'title'=>'tooltip sample'
                         )
                 ),
                 array(
@@ -120,35 +126,89 @@
  </div>
 
  <div class="assign">
-<?php $url = Yii::app()->createUrl('site/createdGID'); ?>
-<?php echo CHtml::ajaxSubmitButton('AssignGID', Yii::app()->createUrl("site/createdGID"),
-     array(
-            'type'=>'POST',
-            'update'=>'#table1',
-            //'data'=>'js{selectedIds: $.fn.yiiGridView.getSelection("pedigreeGrid")}',
-           // 'data'=>'js:jQuery(thid).parents("form").serialize()+"&isAjaxREquest=1"',
-            'success'=>'function(html){$("#table1").replaceWith(html); $("#ajaxSubmit").hide();
-                   window.location="'.$url.'";
-                  }'
-        ),
-     array(//'update'=>'#table1'
-         'id'=>'ajaxSubmit',
-         'name'=>'ajaxSubmit'
-     )  
-     );
- ?>
-</div>
+	
+	       <?php 
+			$url = Yii::app()->createUrl('site/assignGID');
+			$this->widget('bootstrap.widgets.TbButton', array(
+						'type'=>'primary',
+                        'label'=>'AssignGID',
+                        //'url' =>array('site/assignGID'),
+                        'htmlOptions' => array(
+							'onclick' => 'js:
+							
+								var selected = $("#pedigreeGrid").selGridView("getAllSelection");
+								$("#germplasm-id").val(selected);
+								$("#submit-btn").click();
+								/*var selected = $("#pedigreeGrid").selGridView("getAllSelection"); 
+								alert(selected);
+								$.ajax({
+									type: "POST",
+									data: {selectedIds:selected},
+									url: "'. $url .'",
+									success: function(response){
+										//window.location="'.$url.'";
+									}
+								});*/
+							',
+                        ),
+                )); 
+               echo CHtml::textField('Germplasm[gid]','',array(
+					'id' => 'germplasm-id',
+					'form' => 'assign-gid-form',
+					'class' => 'hidden',
+                 ));
+					echo CHtml::submitButton('Submit', array(
+						'id' => 'submit-btn',
+						'class' => 'hidden',
+						'form' => 'assign-gid-form',
+						//'onclick' => 'js: alert("hello");',
+					));
+					
+					$this->endWidget();
+                ?>
 
 </div>
-<?php $this->endWidget();?>
+<div id="eventlist"></div>
+<?php //$this->endWidget();?>
 <script type="text/javascript">
 $(document).ready(function() {
- // $("#uploadFile").click(function (){
-	$('#ajax-loading-indicator').bind('ajaxStart', function(){
-     $(this).show();
-    }).bind('ajaxStop', function(){
-      $(this).hide();
-	});
- // });
+
+ //triggers  the activity loading indicator
+ var pop = function(){
+        var selected = $.fn.yiiGridView.getSelection("pedigreeGrid"); 
+		if ( ! selected.length)
+			{
+				alert('Please select atleast one germplasm');
+				return false;
+            }
+		else
+		{	
+			$('#screen').css({ opacity: 0.4, 'width':$(document).width(),'height':$(document).height()});
+			$('body').css({'overflow':'hidden'});
+			$('#ajax-loading-indicator').css({'display': 'block'});
+		}
+ }
+ $('#ajaxSubmit').click(pop);
+ function callCreateGID(){
+	 var selectedArr = new array();
+	 alert("call");
+ }
+ //checkboxes
+// $("#ajaxSubmit").click(function(){
+        //$(".selection").show();
+		//alert( $.fn.yiiGridView.getSelection("pedigreeGrid"));
+		//var arr = $("#pedigreeGrid").selGridView("getAllSelection");
+		//alert(arr);
+		
+ //});
+ /* function selectAll(){
+    var inputs = document.getElementsByTagName("input");
+    var checkboxes = [];
+    for (var i = 0; i < inputs.length; i++) {
+        if (inputs[i].type == "checkbox") {
+            inputs[i].checked = true;
+        }
+    }
+  }*/
 });
 </script>

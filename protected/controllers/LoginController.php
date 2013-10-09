@@ -81,10 +81,6 @@ array('allow',  // allow all users to perform 'index' and 'view' actions
             // validate user input and redirect to the previous page if valid
             if($model->validate() && $model->login())
             {       
-                    //Yii::app()->user->setId($model->getUserId());
-                    //Yii::app()->user->name = $model->getUserId();
-                    //Yii::app()->user->id = $model->getUserId();
-                   // $this->redirect(Yii::app()->user->returnUrl);      
                 $this->redirect($this->createUrl('/site/importer'));
             }
         }

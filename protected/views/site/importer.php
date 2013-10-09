@@ -1,18 +1,7 @@
 <html>
-  <!--<head>
-      <link href="css/Indicator.css" rel="stylesheet" type="text/css">
-	  <script src="js/Indicator.js" type="text/javascript"></script>
-  </head>-->
-  
+ 
   <body>
-  <!--<div id="busy_indicator">
-	<div class="indicator">
-		<img src="images/loading.gif">
-		<br><br>
-		Loading...
-	 </div>
- </div>
- -->
+
 <?php //if($uploaded):?>
 <!--<p>File was uploaded. Check <?php //echo //$dir?>.</p>
 <?php //endif ?>-->
@@ -32,6 +21,7 @@ $this->breadcrumbs=array(
 	'Importer',
 );
 ?>
+
 <?php
 /* @var $this SiteController */
 
@@ -40,7 +30,6 @@ $this->breadcrumbs=array(
 ?>
 
 <span id="ajax-loading-indicator">
-  <img src="./images/ajax-loader.gif" />
 </span>
 <?php /** @var BootActiveForm $form */
 $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
@@ -53,6 +42,10 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     'htmlOptions' => array('class'=>'well','enctype' => 'multipart/form-data'),
 )); ?>
 
+<!--div to grey out the screen while loading indicator is on-->
+<div id='screen'>
+   
+</div>
 
 <div class="row">
 
@@ -132,37 +125,29 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 	</div>
  </div>
 </div>
-<!--<script src="bootstrap-fileupload.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
--->
+<?php if(Yii::app()->user->hasFlash('success')):?>
+    <div class="info">
+        <?php echo Yii::app()->user->getFlash('success'); ?>
+    </div>
+<?php endif; ?>
 
 <?php $this->endWidget(); ?>
 </body></html>
 <script type="text/javascript">
 $(document).ready(function() {
-  $("#uploadFile").click(function (){
-	$('#ajax-loading-indicator').bind('ajaxStart', function(){
-     $(this).show();
-    }).bind('ajaxStop', function(){
-      $(this).hide();
-	});
-  });
+  var pop = function(){
+        $('#screen').css({ opacity: 0.4, 'width':$(document).width(),'height':$(document).height()});
+        $('body').css({'overflow':'hidden'});
+        $('#ajax-loading-indicator').css({'display': 'block'});
+ }
+ $('#uploadFile').click(pop);
+
 });
-  /*
-$.oldAjax = $.ajax;
-$.ajax = function(opt) {
-
-	opt = opt || {};
-	$(document.body).addClass("ajax-processing");
-
-	return $.oldAjax( $.extend({},opt, {
-		complete : function(jqXHR, textStatus) {
-			$(document.body).removeClass("ajax-processing");
-			if (opt.complete)
-				opt.complete(jqXHR, textStatus);
-		}
-	}));
-}
-*/
-
+<?php
+Yii::app()->clientScript->registerScript(
+   'myHideEffect',
+   '$(".info").animate({opacity: 1.0}, 3000).fadeOut("slow");',
+   CClientScript::POS_READY
+);
+?>
 </script>

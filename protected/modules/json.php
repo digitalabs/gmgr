@@ -43,22 +43,14 @@ class json {
     }
 
     function checkedBox() {
-        $exists = file_exists(dirname(__FILE__)."/checked.json");
-        
-        if ($exists) {
-            
-            $filepath=Yii::app()->basePath.'/modules/checked.json';
-           
-            //unlink($filepath);
-            
-        }
+        $exists = dirname(__FILE__)."/checked.json";
        
         $jsonfile = dirname(__FILE__)."/checked.json";
-        //echo "jsonfile:".$jsonfile;
-       // echo "**"."<br>";
-        //print_r($this->data);
+       /* echo "jsonfile:".$jsonfile;
+        echo "**"."<br>";
+        print_r($this->data);*/
         $xdata = array('checked' => $this->data);
-       // print_r($xdata);
+        print_r($xdata);
         $this->toFile($jsonfile, $xdata);
     }
 
@@ -73,6 +65,11 @@ class json {
 
        $this->toFile($jsonfile, $this->data);
    }
+   function create_changeMethod() {
+        $jsonfile = dirname(__FILE__)."/changeMethod.json";
+
+        $this->toFile($jsonfile, $this->data);
+    }
 
 }
 

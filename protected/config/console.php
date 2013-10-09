@@ -22,8 +22,10 @@ return array(
 			'username' => 'root',
 			'password' => '',
 			'charset' => 'utf8',
+			
 		),
-		/*
+		Yii::app()->db->close();
+		    /*
 			'db'=>array(
 		    'class'=>'CDbConnection',
 			'connectionString' => 'mysql:host=127.0.0.1;port=5528;dbname=iris_myisam_20121002',
@@ -31,8 +33,8 @@ return array(
 			'username' => 'phenibquser',
 			'password' => 'phenibqpass',
 			'charset' => 'utf8',
-		),
-		*/
+		),*/
+		
 		'log'=>array(
 			'class'=>'CLogRouter',
 			'routes'=>array(

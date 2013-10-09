@@ -22,12 +22,12 @@ class curl {
         curl_setopt($handle, CURLOPT_RETURNTRANSFER, 1);
         $response = curl_exec($handle);
           $code = curl_getinfo($handle, CURLINFO_HTTP_CODE);
-          /*echo "<br>HTTP CODE ERROR: ".$code ."<br>";
+          //echo "<br>HTTP CODE ERROR: ".$code ."<br>";
           //echo $jsonText;
-          echo "<br> cURL: WELCOME! ".$response."</outercode>";
-          echo '<br>RESULT: '.print_r($response,1);
-          echo "<br> END</outercode>";
-         */
+         // echo "<br> cURL: WELCOME! ".$response."</outercode>";
+         // echo '<br>RESULT: '.print_r($response,1);
+         // echo "<br> END</outercode>";
+         
     }
 
     public function parse() {
