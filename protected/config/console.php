@@ -31,11 +31,11 @@ return array(
 =======
 		),*/
 		
->>>>>>> 1ac55b28b876a7e55874149580ff09904c3a2887
+/*>>>>>>> 1ac55b28b876a7e55874149580ff09904c3a2887
 =======
 		),*/
 		
->>>>>>> 1ac55b28b876a7e55874149580ff09904c3a2887
+//>>>>>>> 1ac55b28b876a7e55874149580ff09904c3a2887
 			'db'=>array(
 		    'class'=>'CDbConnection',
 			'connectionString' => 'mysql:host=127.0.0.1;port=5528;dbname=iris_myisam_20121002',
@@ -43,14 +43,14 @@ return array(
 			'username' => 'phenibquser',
 			'password' => 'phenibqpass',
 			'charset' => 'utf8',
-<<<<<<< HEAD
-		),*/
-=======
+//<<<<<<< HEAD
+//		),*/
+//=======
 		),
-<<<<<<< HEAD
->>>>>>> 1ac55b28b876a7e55874149580ff09904c3a2887
+//<<<<<<< HEAD
+/*>>>>>>> 1ac55b28b876a7e55874149580ff09904c3a2887
 =======
->>>>>>> 1ac55b28b876a7e55874149580ff09904c3a2887
+>>>>>>> 1ac55b28b876a7e55874149580ff09904c3a2887*/
 		
 		'log'=>array(
 			'class'=>'CLogRouter',
