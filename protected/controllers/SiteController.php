@@ -314,7 +314,7 @@ class SiteController extends Controller {
 			Yii::import('application.modules.json');
 			Yii::import('application.modules.curl');
 			
-			if(!empty($_POST['Germplasm']['gid']))
+			if(!empty($_POST['Germplasm']['gid'])){
 				$selected = $_POST['Germplasm']['gid'];
 				//var_dump($selected);
 					
@@ -324,7 +324,8 @@ class SiteController extends Controller {
 				  $id = strtr($id, array('["'=>'','"]'=>''));
 				 //echo intval($id)."<br/>";
 				 $arrSelectedIds[$index] = (int)($id);
-			 }
+			   }
+		    }
 	        // print_r($arrSelectedIds);
   
 				 $file_toArray = new file_toArray();
