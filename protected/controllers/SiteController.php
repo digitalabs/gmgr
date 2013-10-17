@@ -306,7 +306,7 @@ class SiteController extends Controller {
         //$this->render('createdGID', array('dataProvider' => $dataProvider,'GdataProvider'=>$GdataProvider));
        
     }
-   public function actionAssignGID(){
+ /*  public function actionAssignGID(){
 	    $arrSelectedIds = array();
 	    if(isset($_POST['Germplasm']['gid']) && ($_POST['Germplasm']['gid'] != ''))
 		{
@@ -342,7 +342,7 @@ class SiteController extends Controller {
 		   // print_r($file_toArray->csv_createdGID());
 		}
 	               /*Open corrected.csv and process file*/
-            $myfile = dirname(__FILE__).'/../modules/corrected.csv';
+       /*     $myfile = dirname(__FILE__).'/../modules/corrected.csv';
             
             $fp = fopen($myfile, 'r');
             $rows = array();
@@ -353,7 +353,7 @@ class SiteController extends Controller {
            
             
             /*If we have an array with items*/
-            if(count($rows)){
+      /*      if(count($rows)){
                 foreach ($rows as $i => $row) : list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male) = $row;
                     $arr2[] = array('id' => $i+1, 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks);
                     
@@ -361,7 +361,7 @@ class SiteController extends Controller {
             }
         
             /*DataProvider for the lower table, Germplasm List*/
-            $GdataProvider = new CArrayDataProvider($arr2, array(
+   /*         $GdataProvider = new CArrayDataProvider($arr2, array(
                   'keyField'=> 'id',
                     'pagination' => array(
                          'pageSize' => 5,
@@ -388,7 +388,7 @@ class SiteController extends Controller {
 				'selected' => $checked,'GdataProvider'=>$GdataProvider
 			));
 		}
-   }
+   }*/
 
    public function actionOutput(){
 	   
