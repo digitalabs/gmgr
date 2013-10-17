@@ -314,7 +314,7 @@ class SiteController extends Controller {
 			Yii::import('application.modules.json');
 			Yii::import('application.modules.curl');
 			
-			if(!empty($_POST['Germplasm']['gid']))
+			if(!empty($_POST['Germplasm']['gid'])){
 				$selected = $_POST['Germplasm']['gid'];
 				//var_dump($selected);
 					
@@ -389,93 +389,6 @@ class SiteController extends Controller {
 		}
    }
 
-    public function actionShowGID(){
-		
-		
-         $filtersForm = new FilterPedigreeForm;
-
-         /**
-          * Added by Joanie Antonio
-          */
-       if (isset($_POST['checked'])) {
-        $checked = $_POST['checked'];
-        $fid = $_POST['fid'];
-        $mid = $_POST['mid'];
-        
-        //json file of checked boxes
-        $json = new json($_POST['checked']);
-        $json->checkedBox();
-
-        //call curl: function createdGID
-        $curl = new curl();
-        $curl->createdGID();
-
-    
-       }
-       
-       if (isset($_POST['standardize'])) {
-        //call curl: function standardization
-         $curl = new curl();
-         $curl->standardize();
-       }
-         /*End*/
-
-        // $fid = $_POST['fid'];
-        //$mid = $_POST['mid'];
-        //import json class
-        Yii::import('application.modules.json');
-
-        //json file of checked boxes
-        //$json = new json($_POST['checked']);
-        // $json->checkedBox();
-        //import curl class
-        Yii::import('application.modules.curl');
-
-        //call curl: function standardization
-        $curl = new curl();
-        $curl->standardize();
-
-
-        //import file_toArray class
-        Yii::import('application.modules.file_toArray');
-        // array from file output.csv
-        $file_toArray = new file_toArray();
-        $rows = $file_toArray->csv_corrected();
-     
-        foreach ($rows as $i => $row) :
-            //foreach ($rows as $row) :
-            list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male) = $row;
-
-            CHtml::hiddenField('hiddenMid', $mid);
-            CHtml::hiddenField('hiddenFid', $fid);
-            /* For reference, pls do not delete
-             * developer: J.Antonio */
-            // $arr[] = array('id'=>CJSON::encode(array('nval'=>$nval,'gid'=>$GID,'female'=>$female,'male'=>$male,'fgid'=>$fgid,'mgid'=>$mgid,'fremarks'=>$fremarks,'mremarks'=>$mremarks)),'nval'=>$nval,'gid'=>$GID,'female'=>$female,'male'=>$male,'fgid'=>$fgid,'mgid'=>$mgid,'fremarks'=>$fremarks,'mremarks'=>$mremarks);
-            $arr[] = array('id' => CJSON::encode(array($fid, $mid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks);
-
-        //$arr[] = array('id'=>$i+1,'nval'=>$nval,'gid'=>$GID,'female'=>$female,'male'=>$male,'mgid'=>$mgid,'fremarks'=>$fremarks);
-        // $arr[] = array('id'=>$i+1,'nval'=>$nval,'gid'=>$GID,'female'=>$female,'male'=>$male,'mgid'=>$mgid,'fgid'=>$fgid,'fremarks'=>$fremarks,'mremarks'=>$mremarks);
-        endforeach;
-
-
-        if (isset($_GET['FilterPedigreeForm']))
-            $filtersForm->filters = $_GET['FilterPedigreeForm'];
-
-        //get array data and create dataProvider
-        $filteredData = $filtersForm->filter($arr);
-        $dataProvider = new CArrayDataProvider($filteredData, array(
-            'pagination' => array(
-                'pageSize' => 5,
-            ),
-                )
-        );
-
-        //render
-        $this->render('standardTable', array(
-            'filtersForm' => $filtersForm,
-            'dataProvider' => $dataProvider,
-        ));
-    }
    public function actionOutput(){
 	   
 	   $filtersForm = new FilterPedigreeForm;
