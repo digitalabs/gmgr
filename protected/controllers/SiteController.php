@@ -104,46 +104,6 @@ class SiteController extends Controller {
 
     public function actionImporter() {
 
-    $exists = file_exists(dirname(__FILE__).'/../modules/createdGID.csv');
-		if ($exists) {
-			unlink(dirname(__FILE__).'/../modules/createdGID.csv');
-		}
-		$exists = file_exists(dirname(__FILE__)."/../modules/sample.csv");
-		if ($exists) {
-			unlink(dirname(__FILE__)."/../modules/sample.csv");
-		}
-		$exists = file_exists(dirname(__FILE__)."/../modules/output.csv");
-		if ($exists) {
-			unlink(dirname(__FILE__)."/../modules/output.csv");
-		}
-		$exists = file_exists(dirname(__FILE__)."/../modules/newString.csv");
-		if ($exists) {
-			unlink(dirname(__FILE__)."/../modules/newString.csv");
-		}
-		$exists = file_exists(dirname(__FILE__)."/../modules/corrected.csv");
-		if ($exists) {
-			unlink(dirname(__FILE__)."/../modules/corrected.csv");
-		}
-		$exists = file_exists(dirname(__FILE__)."/../modules/checked.json");
-		if ($exists) {
-			unlink(dirname(__FILE__)."/../modules/checked.json");
-		}
-		$exists = file_exists(dirname(__FILE__)."/../modules/docinfo.json");
-		if ($exists) {
-			unlink(dirname(__FILE__)."/../modules/docinfo.json");
-		}
-		$exists = file_exists(dirname(__FILE__)."/../modules/existingTerm.csv");
-		if ($exists) {
-			unlink(dirname(__FILE__)."/../modules/existingTerm.csv");
-		}
-		$exists = file_exists(dirname(__FILE__)."/../modules/checked.csv");
-		if ($exists) {
-		    unlink(dirname(__FILE__)."/../modules/checked.csv");
-		}
-		$exists = file_exists(dirname(__FILE__)."/../modules/createdGID2.csv");
-		if ($exists) {
-		    unlink(dirname(__FILE__)."/../modules/createdGID2.csv");
-		}
         //$dir = Yii::getPathOfAlias('application.modules');
        // $uploaded = false;
 
