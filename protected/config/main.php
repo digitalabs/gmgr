@@ -76,26 +76,18 @@ return array(
 			'charset' => 'utf8',
 			
 		),
-<<<<<<< HEAD
-<<<<<<< HEAD
-		 /*
-=======
-		
->>>>>>> 1ac55b28b876a7e55874149580ff09904c3a2887
-=======
-		
->>>>>>> 1ac55b28b876a7e55874149580ff09904c3a2887
-			'db'=>array(
+         */
+		/*	'db'=>array(
 		    'class'=>'CDbConnection',
 			'connectionString' => 'mysql:host=127.0.0.1;port=5528;dbname=iris_myisam_20121002',
 			'emulatePrepare' => true,
 			'username' => 'phenibquser',
 			'password' => 'phenibqpass',
 			'charset' => 'utf8',
-<<<<<<< HEAD
-		),*/
 
 		),
+          */
+		//),
 		
 		
 		'db'=>array(
@@ -106,10 +98,7 @@ return array(
 			'password' => 'ici$rule$',
 			'charset' => 'utf8',
 		),
-/*<<<<<<< HEAD
->>>>>>> 1ac55b28b876a7e55874149580ff09904c3a2887
-=======
->>>>>>> 1ac55b28b876a7e55874149580ff09904c3a2887*/
+
 		
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors
