@@ -74,7 +74,7 @@ return array(
 			'charset' => 'utf8',
 			
 		),
-<<<<<<< HEAD
+
          */
 		/*	'db'=>array(
 =======
@@ -94,8 +94,7 @@ return array(
 		//),
 		
 		
-=======
->>>>>>> 0e7142074d70d534a1934ea5b7cc723fa22a6077
+
 		'db'=>array(
 		    'class'=>'CDbConnection',
 			'connectionString' => 'mysql:host=127.0.0.1;port=3306;dbname=iris_mysiam_20121002',
@@ -103,14 +102,13 @@ return array(
 			'username' => 'datasourceuser',
 			'password' => 'ici$rule$',
 			'charset' => 'utf8',
-<<<<<<< HEAD
+
 		),
 
 		
-=======
+
 		),*/
 
->>>>>>> 0e7142074d70d534a1934ea5b7cc723fa22a6077
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors
 			'errorAction'=>'site/error',
