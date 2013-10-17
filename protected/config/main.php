@@ -64,8 +64,13 @@ return array(
 		*/
 	
 		// uncomment the following to use a MySQL database
+<<<<<<< HEAD
 		/*
 		'db'=>array(
+=======
+		
+		/*'db'=>array(
+>>>>>>> e0b462364ca1c6b9af1d3e1e637d6e0aabb3ba4f
 		    'class'=>'CDbConnection',
 			'connectionString' => 'mysql:host=localhost;dbname=central',
 			'emulatePrepare' => true,
