@@ -11,22 +11,81 @@ $model = new model();
 $file_toArray = new file_toArray();
 
 $unselected=0;
+<<<<<<< HEAD
+
+
+   /* $arrSelectedIds = array();
+	
+	$idArr = explode(',',$selected);
+	//var_dump($idArr);
+	foreach($idArr as $index => $id){
+		$id = strtr($id, array('["'=>'','"]'=>''));
+		//echo intval($id)."<br/>";
+		$arrSelectedIds[$index] = (int)($id);
+	}
+	print_r($arrSelectedIds);
+*/
+	/*	
+if (isset($arrSelectedIds)) {
+   
+    $standardized = $file_toArray->checkIf_standardize($arrSelectedIds);
+
+//json fil['e of checked boxes
+    $json = new json($standardized);
+    $json->checkedBox();
+
+//call curl: function createdGID
+    $curl = new curl();
+    $curl->createGID();
+
+// update createdGID.csv
+   // $file_toArray = new file_toArray();
+   // $file_toArray->update_csv_correctedGID($fid, $mid, $checked);
+}*/
+	
+
+=======
+>>>>>>> 1ac55b28b876a7e55874149580ff09904c3a2887
+if (isset($_POST['selectMethod'])) {
+    $selected_radio = $_POST['selectMethod'];
+    if ($selected_radio === "changeMethod") {
+       //echo $_POST['bondId'];
+       //print $selected_radio;
+	   $array=array(
+	   "mid"=>$_POST['bondId'],
+	   "gid"=>$_POST['gid'],
+	   "id"=>$_POST['id'],
+	   
+	   );
+	   //create changeMethod.json
+	   $json = new json($array);
+	   $json->create_changeMethod();
+	   
+	   //call curl: function updateMethod
+    Yii::import('application.modules.curl');
+    $curl = new curl();
+    $curl->updateMethod();
+    } else {
+        print $selected_radio;
+    }
+}
+
 if (isset($_GET['yes'])) {
-    Yii::import('application.modules.file_toArray');
     $unselected = $file_toArray->get_unselected_rows();
     $standardized = $file_toArray->checkIf_standardize($unselected);
-    //echo "standardize unselected:";
-    //print_r($standardized);
-    Yii::import('application.modules.json');
+    echo "standardize unselected:";
+    print_r($standardized);
+	echo "count stan:".count($standardized);
+   
     $json = new json($standardized);
     $json->checkedBox();
     
     //call curl: function createdGID
-    Yii::import('application.modules.curl');
+ 
     $curl = new curl();
     $curl->createGID();
 
-    Yii::import('application.modules.model');
+  
     $url = $model->curPageURL();
     $values = parse_url($url);
    
@@ -44,28 +103,7 @@ if (isset($_GET['yes'])) {
     header("Location: " . $values['path'] . "?" . $values['query'] . "");
 }
 
-if (isset($_POST['checked'])) {
-    $checked = $_POST['checked'];
-    $cross = $_POST['cross'];
-    //echo $cross;
-    $fid = $_POST['fid'];
-    $mid = $_POST['mid'];
-
-    $standardized = $file_toArray->checkIf_standardize($checked);
-
-//json fil['e of checked boxes
-    $json = new json($standardized);
-    $json->checkedBox();
-
-//call curl: function createdGID
-    $curl = new curl();
-    $curl->createGID();
-
-// update createdGID.csv
-    $file_toArray = new file_toArray();
-    $file_toArray->update_csv_correctedGID($fid, $mid, $checked);
-}
-
+				  
  if (isset($_POST['choose'])) {
     echo "choose:".$_POST['choose'];
     $term = strip_tags($_POST['term']);
@@ -115,9 +153,11 @@ $checked = $file_toArray->json_checked();
 
 // final is the array containing arrays of the pedigree lines (from the checkedboxes)
 $final = $file_toArray->getPedigreeLine();
-
+//echo "count of final:".count($final);
 // If we have an array with items
 if (count($final)) {
+   
+   
 // Create the pagination object
     $pagination = new pagination($final, (isset($_GET['pagea']) ? $_GET['pagea'] : 1), 1);
 // Decide if the first and last links should show
@@ -126,7 +166,8 @@ if (count($final)) {
 // $pagination->setMainSeperator(' | ');
 // Parse through the pagination class
     $pages = $pagination->getResults();
-
+	//echo "pages:".count($pages);
+    //print_r($pages);
 // If we have items 
     if (count($pages) != 0) {
 // Create the page numbers
@@ -134,7 +175,7 @@ if (count($final)) {
 
         $count = 0;
 // echo "count: " . count($pages);
-        Yii::import('application.modules.file_toArray');
+      
         $checked = $file_toArray->csv_checked2();
 
         foreach ($pages[0] as $r) : list($id, $nval, $term, $GID, $methodID, $method, $locID, $location) = $r;
@@ -160,7 +201,7 @@ if (count($final)) {
         //echo $count_tobe_processed . " remaining rows to be processed<br>";
         $var1 = $count_tobe_processed;
 
-		Yii::import('application.modules.file_toArray');
+		
         $unselected = $file_toArray->get_unselected_rows();
         $unstandardized = $file_toArray->checkIf_standardize($checked);
        
@@ -169,7 +210,7 @@ if (count($final)) {
       //  echo (count($checked) - (count($unselected) - 1)) . " row(s) selected with unstandardized germplasm name(s)<br>";
         $var3 = (count($checked) - (count($unselected) - 1));
          
-        Yii::import('application.modules.file_toArray'); 
+     
         $GID_rows = $file_toArray->csv_corrected_GID();
         //echo "GID_rows:".count($GID_rows);
         $var2 = count($GID_rows);
@@ -185,11 +226,9 @@ if (count($final)) {
             <link href="assets/pnotify-1.2.0/jquery.pnotify.default.icons.css" rel="stylesheet" type="text/css">
 
             <div class="container" >
-
                 <div class="page-points">
                     <br>
                 </div>
-
 
                 <div id="sections">
               
@@ -278,28 +317,40 @@ if (count($final)) {
                                    
                                             foreach ($pages[0] as $r) : list($id, $nval, $term, $GID, $methodID, $method, $locID, $location) = $r;
 <<<<<<< HEAD
+
                                                 echo '<tr>';
                                              	
 												//condition 2
+
+                                                echo '<tr>';
+                                             	
+												//condition 2
+
 =======
+                                                echo '<tr>';
+                                             	
+												//condition 2
+>>>>>>> 1ac55b28b876a7e55874149580ff09904c3a2887
                                                if($id==$femIdArr[0] ){
-											   echo '<tr bgcolor='#FFE4E1'> ';
+											   echo '<tr bgcolor="#FFE4E1"> ';
                                                }else if($id==$femIdArr[0]){
-											   echo '<tr bgcolor='#E6E6FA'> ';
+											   echo '<tr bgcolor="#E6E6FA"> ';
 											   }else{
-											    echo '<tr bgcolor='#90EE90'> ';
+											    echo '<tr bgcolor="#90EE90"> ';
 											   }
+<<<<<<< HEAD
+      
+=======
                                                
->>>>>>> d790bf99914e9261c3908ed688cb133622098874
+>>>>>>> 1ac55b28b876a7e55874149580ff09904c3a2887
 												if($id==$femIdArr[0] ){ //female 
 													 if ($i === 0) {
 														 echo "<td><img src='images/glyphicons_247_female2.png'></td>";
 														 echo "<td>". $term . "</td>";
 													 }
 													 else{
-														 echo "<td  bgcolor='#FFE4E1'></td><td>". $term . "</td>";
+														 echo "<td bgcolor='#FFE4E1'></td><td>". $term . "</td>";
 													 }
-                                                    
 											    }else if($id==$maleIdArr[0]) //male
 											    {
 													if ($i === $male_id) {
@@ -309,7 +360,7 @@ if (count($final)) {
 													  echo "<td></td><td>". $term . "</td>";
 													}  
 												}else if(strpos($id,'/')){ //crossed
-													  echo "<tdimg src='images/glyphicons_197_remove2.png'></td>";
+													  echo "<td img src='images/glyphicons_197_remove2.png'></td>";
 													  echo "<td bgcolor='#90EE90'>" . $term . "</td>";
 												}
 												 $i++;
@@ -325,10 +376,10 @@ if (count($final)) {
 														$m_female = $female;
 														$m_male = $male; 
 														
-												} elseif ($GID === "DUPLICATE" || $GID === "NOT SET") {
+												} else if ($GID === "DUPLICATE" || $GID === "NOT SET") {
 													
 														  echo "<td><b><i>" . $GID . "</i></b></td>";
-													 }
+													 
 												     
                                                 } else {
 													
@@ -337,7 +388,45 @@ if (count($final)) {
                                                 }
                                                 //Methods
                                                 
-													  echo "<td>(" . $methodID . ")&nbsp; " . $method . "</td>";
+													if ((count($pages[0])) == $i && $GID !== "NOT SET") {
+
+
+                                                $existing = $file_toArray->csv_methods();
+                                                //print_r($existing);
+                                                $s = "";
+                                                foreach ($existing as $r) : list($mid, $m, $methodType, $methodDesc) = $r;
+                                                    //echo $s.$mid.",".$methodType.", ".$methodDesc."<br>";
+                                                    $data[] = $mid . "," . $methodType . ", " . $methodDesc . ",";
+                                                endforeach;
+                                                ?><td>
+                                                        <form action="" method="POST" enctype="multipart/form-data">
+                                                            <input type="radio" name="selectMethod" id="r1" value="no"/>
+												<?php
+												echo "(" . $methodID . ")&nbsp; " . $method;
+												?>
+                                                            <br/>
+                                                            <input type="radio" name="selectMethod" id="r2" value="changeMethod"  />
+                                                            <input
+                                                                id="other"
+                                                                type="text"
+                                                                class="span4 typeahead"
+                                                                placeholder="Type the method id/type/code/name"
+                                                                autocomplete="off"
+                                                                data-provide="typeahead"
+                                                                
+                                                            />
+                                                            <br/>
+                                                            <input type="hidden" name="bondId" id="bondId" value="" />
+															<input type="hidden" name="gid" id="gid" value="<?php echo $GID; ?>" />
+															<input type="hidden" name="id" id="id" value="<?php echo $id; ?>" />
+                                                            <input type="submit" name="submit" id="submitMethod" value="Set Method" class="btn btn-primary" ><br><br>
+                                                        </form>
+
+														<?php
+														//";
+														}else {
+															echo "<td>(" . $methodID . ")&nbsp; " . $method . "</td>";
+														}
 												 
                                               
                                                 //locations
@@ -371,7 +460,11 @@ if (count($final)) {
                         </div>
 
                     </div>	
-            
+                     <?php
+				   //<!----********************FOR  ASSIGN GID PORTION*******************--->
+                     include( dirname(__FILE__). "/createdGID.php");
+					// Yii::import(dirname(__FILE__). "/createdGID.php");
+			   ?>   
             </div>
                  
         </div
@@ -509,7 +602,7 @@ if (count($final)) {
             <a class="close" data-dismiss="modal">×</a>
             <h3>Assign GID for <font style="color:#08c;"><?php echo $m_term ?> </font></h3>
         </div>
-        <div class="modal-body">
+        <div class="modal-body" style="z-index:10;">
             <center>
 			<br>
 			<br>
@@ -521,6 +614,94 @@ if (count($final)) {
     </div>    
 
     <script type="text/javascript" src="assets/bootstrap.min.js"></script>
+	    <script type="text/javascript" src="./assets/underscore.js"></script>
+
+
+
+
+    <script type="text/javascript">
+    /*function disableTxt(id) {
+        document.getElementById("other").disabled = true;
+		document.getElementById(id).disabled = true;
+    }
+    function enableTxt(id) {
+        document.getElementById("other").disabled = false;
+		document.getElementById(id).disabled = false;
+    }
+	*/
+	$(":radio[name='selectMethod']").click(function(){
+  var value = $(this).val();
+  $("#other").attr("disabled", "disabled");
+	  $("#submitMethod").attr("disabled", "disabled");
+  if(value === "changeMethod"){
+  $("#submitMethod").removeAttr("disabled");
+    $("#other").removeAttr("disabled");
+    return;
+  }
+      
+    
+}).click();
+	
+
+    $(function() {
+
+        var bondObjs = {};
+        var bondNames = [];
+
+        //get the data to populate the typeahead (plus an id value)
+        var throttledRequest = _.debounce(function(query, process) {
+            //get the data to populate the typeahead (plus an id value)
+            $.ajax({
+                url: "<?php echo Yii::app()->request->baseUrl;?>"+'/assets/methods.json'
+                        , cache: false
+                        , success: function(data) {
+                    //reset these containers every time the user searches
+                    //because we're potentially getting entirely different results from the api
+                    bondObjs = {};
+                    bondNames = [];
+
+                    //Using underscore.js for a functional approach at looping over the returned data.
+                    _.each(data, function(item, ix, list) {
+
+                        //for each iteration of this loop the "item" argument contains
+                        //1 bond object from the array in our json, such as:
+                        // { "id":7, "name":"Pierce Brosnan" }
+
+                        //add the label to the display array
+                        bondNames.push(item.mid + "," + item.mcode + "," + item.mtype + "," + item.mname);
+                        //bondNames.push(  );
+
+                        //also store a hashmap so that when bootstrap gives us the selected
+                        //name we can map that back to an id value
+                        bondObjs[ item.mid + "," + item.mcode + "," + item.mtype + "," + item.mname] = item.mid;
+                    });
+
+                    //send the array of results to bootstrap for display
+                    process(bondNames);
+                }
+            });
+        });
+
+
+        $(".typeahead").typeahead({
+            source: function(query, process) {
+
+                //here we pass the query (search) and process callback arguments to the throttled function
+                throttledRequest(query, process);
+
+            }
+            , updater: function(selectedName) {
+
+                //save the id value into the hidden field
+                $("#bondId").val(bondObjs[ selectedName ]);
+
+                //return the string you want to go into the textbox (the name)
+                return selectedName;
+            }
+        });
+    });
+    </script>
+	
     <script type="text/javascript" src="./assets/pnotify-1.2.0/jquery.pnotify.js"></script>
     <script type="text/javascript">
 

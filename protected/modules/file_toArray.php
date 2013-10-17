@@ -98,7 +98,6 @@ class file_toArray {
     }
 
     public function json_checked() {
-        //echo "checked dir:".dirname(__FILE__)."/checked.json";
         $json = file_get_contents(dirname(__FILE__)."/checked.json");
         $jsonIterator = new RecursiveIteratorIterator(
                 new RecursiveArrayIterator(json_decode($json, TRUE)), RecursiveIteratorIterator::SELF_FIRST);
@@ -268,35 +267,39 @@ class file_toArray {
             array_push($final, $final_rows);
             $final_rows = array();
         }
+		//echo "count final:".count($final);
+		//print_r($final);
         return $final;
     }
     
        function checkIf_standardize($checked) {
+	    //print_r($checked);
         //echo "checked count:".count($checked);
         $rows=$this->csv_corrected();
-        $selected = array();
+        //$selected = array();
         foreach ($rows as $row) : list($GID, $nval, $fid, $fremarks, $female, $femalename, $mid, $mremarks, $male, $malename) = $row;
         //echo "jksjkdj"."<br>";
         //echo $fid;
             for ($i = 0; $i < count($checked); $i++) {
-          //      echo $fremarks." ".$mremarks."<br>";
-          //      echo $fid." ".$checked[$i]."<br>";
-                if ($fremarks === "in standardized format" && $fid === $checked[$i] && $mremarks === "in standardized format") {
-                    $selected[$i] = $fid;
+               // echo $fremarks." ".$mremarks."<br>";
+               // echo $fid." ".$checked[$i]."<br>";
+                if ($fremarks == "in standardized format" && $fid == $checked[$i] && $mremarks == "in standardized format") {
+                    $selected[] = $fid;
+				
                 }
             }
-
+        //echo "count selected:".count($selected);
         endforeach;
-       /* echo "<br>selected: ";
-        print_r($selected);
-        echo "<br>--selected: ";
-        */
+       // echo "<br>selected: ";
+       // print_r($selected);
+       // echo "<br>--selected: ";
+        
         return $selected;
     }
      function get_unselected_rows() {
         $checked = $this->csv_checked();
-        //echo "<br>";
-        //print_r($checked);
+     
+       // print_r($checked);
 
         $fp = fopen(dirname(__FILE__)."/corrected.csv", "r");
         while (($row = fgetcsv($fp)) !== FALSE) {
@@ -388,10 +391,19 @@ class file_toArray {
        );
        //echo "<br>";
        //print_r($tree);
+	   Yii::import('application.modules.json'); 
        $json = new json($tree);
        $json->create_tree();
        return $fid_i;
    }
+   public function csv_methods() {
+        $fp = fopen(dirname(__FILE__)."/methods.csv", "r");
+        while (($row = fgetcsv($fp)) !== FALSE) {
+            $rows[] = $row;
+        }
+        fclose($fp);
+        return $rows;
+    }
   
 
 }

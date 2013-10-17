@@ -1,6 +1,5 @@
-
 <?php 
- Yii::import('application.modules.configDB');
+ //Yii::import('application.modules.configDB');
 /*
 if (!$model->CheckLogin()) {
     $model->RedirectToURL("login.php");
@@ -97,7 +96,7 @@ function callCurl($new) {
     $jsonText = json_encode($a);
     file_put_contents($jsonfile, $jsonText);
     
-    $url = "http://localhost:8080/ws/standardization/term/checkEditedString";
+    $url = "http://172.29.4.99:8083/ws/standardization/term/checkEditedString";
     
     $handle = curl_init();
     curl_setopt($handle, CURLOPT_URL, $url);

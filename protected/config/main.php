@@ -18,7 +18,7 @@ return array(
     ),
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'Genealogy Manager',
-
+	'defaultController' => 'login',
 	// preloading 'log' component
 	'preload'=>array('log','bootstrap',),
 
@@ -66,7 +66,7 @@ return array(
 			'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
 		),*/
 		// uncomment the following to use a MySQL database
-		
+		/*
 		'db'=>array(
 		    'class'=>'CDbConnection',
 			'connectionString' => 'mysql:host=localhost;dbname=central',
@@ -74,8 +74,17 @@ return array(
 			'username' => 'root',
 			'password' => '',
 			'charset' => 'utf8',
+			
 		),
-		/*
+<<<<<<< HEAD
+<<<<<<< HEAD
+		 /*
+=======
+		
+>>>>>>> 1ac55b28b876a7e55874149580ff09904c3a2887
+=======
+		
+>>>>>>> 1ac55b28b876a7e55874149580ff09904c3a2887
 			'db'=>array(
 		    'class'=>'CDbConnection',
 			'connectionString' => 'mysql:host=127.0.0.1;port=5528;dbname=iris_myisam_20121002',
@@ -83,8 +92,25 @@ return array(
 			'username' => 'phenibquser',
 			'password' => 'phenibqpass',
 			'charset' => 'utf8',
+<<<<<<< HEAD
+		),*/
+
 		),
-		*/
+		
+		
+		'db'=>array(
+		    'class'=>'CDbConnection',
+			'connectionString' => 'mysql:host=127.0.0.1;port=3306;dbname=iris_mysiam_20121002',
+			'emulatePrepare' => true,
+			'username' => 'datasourceuser',
+			'password' => 'ici$rule$',
+			'charset' => 'utf8',
+		),
+/*<<<<<<< HEAD
+>>>>>>> 1ac55b28b876a7e55874149580ff09904c3a2887
+=======
+>>>>>>> 1ac55b28b876a7e55874149580ff09904c3a2887*/
+		
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors
 			'errorAction'=>'site/error',

@@ -1,3 +1,4 @@
+ 
  <h3>Germplasm List</h3>
     <p >
         <i><strong>Note:</strong>&nbsp; 
@@ -5,6 +6,12 @@
         </i>
         <br><br>
     </p>
+<!--div to grey out the screen while loading indicator is on-->
+<div id='screen'>
+</div>
+<span id="ajax-loading-indicator">
+</span>
+<!---End for loading indicators-->
 
 <?php /** @var BootActiveForm $form */ 
     $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
@@ -17,6 +24,7 @@
 CHtml::hiddenField('standardize','yes');
 $this->widget('bootstrap.widgets.TbButton',array(
     'label' => 'Click to Standardize Germplasm',
+	'id'=> 'btnStandard',
     'type' => 'primary',
      'url'=> array('/site/output'),
      ));
@@ -37,13 +45,12 @@ $this->widget('bootstrap.widgets.TbButton',array(
 	'dataProvider'=>$arrayDataProvider,
 	//'filter'=>$model,
 	'template'=>"{items}{pager}",//strcmp($fremarks, 'in standardized format')
-     'columns'=>array(
+        'columns'=>array(
                 array(
                     'header'=>'Cross Name',
                     'value'=>'CHtml::encode($data["nval"])',
                     'htmlOptions'=>array(
                         'style'=>'width:50px;',
-                        'title'=>'tooltip sample'
                         )
                     ),
                 array(
@@ -54,12 +61,12 @@ $this->widget('bootstrap.widgets.TbButton',array(
                    'header'=>'Female Parent',
                    'type'=> 'raw',
                    'value'=> function ($data){
+				     
 					   if (strcmp(CHtml::encode($data["fremarks"]),"in standardized format")==0)
 							return CHtml::encode($data["female"]);
 						else
-							return "<font style='color:#FF6600; font-weight:bold;'>".CHtml::encode($data["female"])."</font>";
-				   },
-							
+							return "<font style='color:#FF6600; font-weight:bold;'>".CHtml::tag("span", array("title"=>CHtml::encode($data["fremarks"]), "class"=>"tooltipster"),CHtml::encode($data["female"]))."</font>";
+				   },		
                ),     
                array(
                    'header'=>'Male Parent',
@@ -68,7 +75,7 @@ $this->widget('bootstrap.widgets.TbButton',array(
 					   if (strcmp(CHtml::encode($data["mremarks"]),"in standardized format")==0)
 							return CHtml::encode($data["male"]);
 						else
-							return "<font style='color:#FF6600; font-weight:bold;'>".CHtml::encode($data["male"])."</font>";
+							return "<font style='color:#FF6600; font-weight:bold;'>".CHtml::tag("span", array("title"=>CHtml::encode($data["mremarks"]), "class"=>"tooltipster"),CHtml::encode($data["male"]))."</font>";
 				   },
                ),
                array(
@@ -103,12 +110,12 @@ $this->widget('bootstrap.widgets.TbButton',array(
 //echo CHtml::endForm();
 ?>
 <script type="text/javascript">
-	/*
-	$("#standardize").click( function(){
-		 $("#GermplasmList").show();
-		 $("#table1").hide();
-	});
-	function showStandardTable(evt){
-		
-	}*/
+$(document).ready(function() {
+  var pop = function(){
+        $('#screen').css({ opacity: 0.4, 'width':$(document).width(),'height':$(document).height()});
+        $('body').css({'overflow':'hidden'});
+        $('#ajax-loading-indicator').css({'display': 'block'});
+ }
+ $('#btnStandard').click(pop);
+});
 </script>
