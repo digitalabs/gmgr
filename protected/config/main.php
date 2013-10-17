@@ -65,7 +65,7 @@ return array(
 	
 		// uncomment the following to use a MySQL database
 		
-		'db'=>array(
+		/*'db'=>array(
 		    'class'=>'CDbConnection',
 			'connectionString' => 'mysql:host=localhost;dbname=central',
 			'emulatePrepare' => true,
@@ -107,7 +107,7 @@ return array(
 
 		
 
-		),*/
+		//),*/
 
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors
