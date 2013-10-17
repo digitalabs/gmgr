@@ -324,7 +324,8 @@ class SiteController extends Controller {
 				  $id = strtr($id, array('["'=>'','"]'=>''));
 				 //echo intval($id)."<br/>";
 				 $arrSelectedIds[$index] = (int)($id);
-			 }
+			   }
+		    }
 	        // print_r($arrSelectedIds);
   
 				 $file_toArray = new file_toArray();
