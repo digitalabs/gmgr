@@ -64,13 +64,9 @@ return array(
 		*/
 	
 		// uncomment the following to use a MySQL database
-<<<<<<< HEAD
-		/*
-		'db'=>array(
-=======
 		
-		/*'db'=>array(
->>>>>>> e0b462364ca1c6b9af1d3e1e637d6e0aabb3ba4f
+        /*  'db'=>array(
+
 		    'class'=>'CDbConnection',
 			'connectionString' => 'mysql:host=localhost;dbname=central',
 			'emulatePrepare' => true,
@@ -78,14 +74,11 @@ return array(
 			'password' => '',
 			'charset' => 'utf8',
 			
-		),
+		),*/
 
-         */
+        
 		/*	'db'=>array(
-=======
 
-		/*'db'=>array(
->>>>>>> 0e7142074d70d534a1934ea5b7cc723fa22a6077
 		    'class'=>'CDbConnection',
 			'connectionString' => 'mysql:host=127.0.0.1;port=5528;dbname=iris_myisam_20121002',
 			'emulatePrepare' => true,
@@ -93,11 +86,7 @@ return array(
 			'password' => 'phenibqpass',
 			'charset' => 'utf8',
 
-		),
-<<<<<<< HEAD
-          */
-		//),
-		
+		),*/
 
 		'db'=>array(
 		    'class'=>'CDbConnection',
@@ -111,7 +100,7 @@ return array(
 
 		
 
-		//),*/
+	
 
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors
