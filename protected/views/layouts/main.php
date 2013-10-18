@@ -85,8 +85,7 @@
 				//array('label'=>'Contact', 'url'=>array('/site/contact')),
 				//array('htmlOptions'=>array('class'=>'pull-right'),'label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
 				array('label'=>'Pedigree Importer', 'url'=>array('/site/importer'),'visible'=>!Yii::app()->user->isGuest),
-				array('label'=>'Pedigree Editor', 'url'=>array('/site/editor'), 'visible'=>!Yii::app()->user->isGuest),
-				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
+				array('label'=>'Pedigree Editor', 'url'=>array('/site/editor'), 'visible'=>!Yii::app()->user->isGuest)
                
             ),
         ),
