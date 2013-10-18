@@ -331,6 +331,15 @@ class SiteController extends Controller {
 				 $file_toArray = new file_toArray();
 				 $standardized = $file_toArray->checkIf_standardize($arrSelectedIds);
 
+                //delete files if page reloads
+                $exists = file_exists(dirname(__FILE__).'/../../csv_files/createdGID.csv');
+				if ($exists) {
+					unlink(dirname(__FILE__).'/../../csv_files/createdGID.csv');
+				}
+				$exists = file_exists(dirname(__FILE__).'/../../csv_files/checked.csv');
+				if ($exists) {
+					unlink(dirname(__FILE__).'/../../csv_files/checked.csv');
+				}
 				//json fil['e of checked boxes
 				$json = new json($standardized);
 				$json->checkedBox();
