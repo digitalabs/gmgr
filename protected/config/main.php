@@ -64,6 +64,13 @@ return array(
 		*/
 	
 		// uncomment the following to use a MySQL database
+<<<<<<< HEAD
+=======
+
+		/*
+		'db'=>array(
+=======
+>>>>>>> 7d140f191d585d4a59aa54425fd98a78d7b14322
 		
         /*  'db'=>array(
 

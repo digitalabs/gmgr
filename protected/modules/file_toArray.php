@@ -18,7 +18,7 @@ class file_toArray {
 
     public function uploadedFile() {
         //$f = fopen($_FILES["file"]["name"], "r");
-        $filePath = dirname(__FILE__).'/germplasmList.csv';
+        $filePath = dirname(__FILE__).'/../../csv_files/germplasmList.csv';
         $f = fopen($filePath, "r");
         //echo $_FILES["file"]["name"];
         //$fr = fread($f, filesize($_FILES["file"]["name"]));
@@ -38,7 +38,7 @@ class file_toArray {
     }
 
     public function csv_output() {
-        $fp = fopen(dirname(__FILE__)."/output.csv", "r");
+        $fp = fopen(dirname(__FILE__)."/../../csv_files/output.csv", "r");
        
         while (($row = fgetcsv($fp)) !== FALSE) {
             $rows[] = $row;
@@ -48,7 +48,7 @@ class file_toArray {
     }
 
     public function csv_corrected() {
-        $fp = fopen(dirname(__FILE__)."/corrected.csv", "r");
+        $fp = fopen(dirname(__FILE__)."/../../csv_files/corrected.csv", "r");
         
         while (($row = fgetcsv($fp)) !== FALSE) {
             $rows[] = $row;
@@ -58,7 +58,7 @@ class file_toArray {
     }
 
     public function csv_createdGID() {
-        $fp = fopen(dirname(__FILE__)."/createdGID.csv", "r");
+        $fp = fopen(dirname(__FILE__)."/../../csv_files/createdGID.csv", "r");
         while (($row = fgetcsv($fp)) !== FALSE) {
             $rows[] = $row;
         }
@@ -67,7 +67,7 @@ class file_toArray {
     }
 
     public function csv_checked() {
-        $fp = fopen(dirname(__FILE__)."/checked.csv", "r");
+        $fp = fopen(dirname(__FILE__)."/../../csv_files/checked.csv", "r");
         while (($row = fgetcsv($fp)) !== FALSE) {
             $rows[] = $row;
         }
@@ -76,7 +76,7 @@ class file_toArray {
     }
 
     public function csv_checked2() {
-        $fp = fopen(dirname(__FILE__)."/checked.csv", "r");
+        $fp = fopen(dirname(__FILE__)."/../../csv_files/checked.csv", "r");
         //$checked=array();
         while (($row = fgetcsv($fp)) !== FALSE) {
             $checked = $row;
@@ -86,7 +86,7 @@ class file_toArray {
     }
 
     public function csv_existingTerm() {
-        $myfile = dirname(__FILE__).'/existingTerm.csv';
+        $myfile = dirname(__FILE__).'/../../csv_files/existingTerm.csv';
 
         $fin = fopen($myfile, 'r');
         $existing = array();
@@ -98,7 +98,7 @@ class file_toArray {
     }
 
     public function json_checked() {
-        $json = file_get_contents(dirname(__FILE__)."/checked.json");
+        $json = file_get_contents(dirname(__FILE__)."/../../json_files/checked.json");
         $jsonIterator = new RecursiveIteratorIterator(
                 new RecursiveArrayIterator(json_decode($json, TRUE)), RecursiveIteratorIterator::SELF_FIRST);
         $checked = array();
@@ -117,7 +117,7 @@ class file_toArray {
 
     public function update_csv_correctedGID($fid, $mid, $checked) {
         //echo "checked count:".count($checked);
-        $myfile = dirname(__FILE__).'/createdGID.csv';
+        $myfile = dirname(__FILE__).'/../../csv_files/createdGID.csv';
         $fin = fopen($myfile, 'r');
         $data = array();
        //print_r($fid); print_r($mid);
@@ -131,7 +131,7 @@ class file_toArray {
         }
         fclose($fin);
 
-        $myfile = dirname(__FILE__).'/corrected.csv';
+        $myfile = dirname(__FILE__).'/../../csv_files/corrected.csv';
         $fin = fopen($myfile, 'r');
         $data2 = array();   // data2: edited CreatedGID data
         $data3 = array();   //data 3 is the details of the chosen GID
@@ -168,7 +168,7 @@ class file_toArray {
     }
 
     public function updateGID_createdGID($term, $pedigree, $id, $choose, $fid, $mid, $female, $male) {
-        $existingTerm = dirname(__FILE__).'/existingTerm.csv';
+        $existingTerm = dirname(__FILE__).'/../../csv_files/existingTerm.csv';
         $fin = fopen($existingTerm, 'r');
         $data = array();
         while ($line = fgetcsv($fin, 0)) {
@@ -178,7 +178,7 @@ class file_toArray {
         }
         fclose($fin);
 
-        $createdGID = dirname(__FILE__).'/createdGID.csv';
+        $createdGID = dirname(__FILE__).'/../../csv_files/createdGID.csv';
         $fin = fopen($createdGID, 'r');
         $data2 = array();
         $data4 = array();
@@ -243,7 +243,7 @@ class file_toArray {
         // array from checked.csv file
         $rows_checked = $this->csv_checked();
 
-        $csv_createdGID = dirname(__FILE__).'/createdGID.csv';
+        $csv_createdGID = dirname(__FILE__).'/../../csv_files/createdGID.csv';
         $final = array();
 
         for ($i = 0; $i < count($rows_checked[0]) - 1; $i++) {
@@ -301,7 +301,7 @@ class file_toArray {
      
        // print_r($checked);
 
-        $fp = fopen(dirname(__FILE__)."/corrected.csv", "r");
+        $fp = fopen(dirname(__FILE__)."/../../csv_files/corrected.csv", "r");
         while (($row = fgetcsv($fp)) !== FALSE) {
             $rows[] = $row;
         }
@@ -319,7 +319,7 @@ class file_toArray {
     }
         public function csv_corrected_GID() {
         $rows = array();
-        $fp = fopen(dirname(__FILE__)."/corrected.csv", "r");
+        $fp = fopen(dirname(__FILE__)."/../../csv_files/corrected.csv", "r");
        
         while (($row = fgetcsv($fp)) !== FALSE) {
             if ($row[0] != "N/A") {
@@ -397,7 +397,7 @@ class file_toArray {
        return $fid_i;
    }
    public function csv_methods() {
-        $fp = fopen(dirname(__FILE__)."/methods.csv", "r");
+        $fp = fopen(dirname(__FILE__)."/../../csv_files/methods.csv", "r");
         while (($row = fgetcsv($fp)) !== FALSE) {
             $rows[] = $row;
         }

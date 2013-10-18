@@ -94,7 +94,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                         <label>Location</label>
                         <?php 
                               
-                                $myfile =dirname(__FILE__).'/../../modules/location.csv';
+                                $myfile =dirname(__FILE__).'/../../../csv_files/location.csv';
                                
                              
                                 $fin = fopen($myfile, 'r');

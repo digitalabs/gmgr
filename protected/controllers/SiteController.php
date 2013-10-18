@@ -108,7 +108,7 @@ class SiteController extends Controller {
        // $uploaded = false;
 
          $model = new ImporterForm;
-	     $file = dirname(__FILE__).'/../modules/germplasmList.csv';
+	     $file = dirname(__FILE__).'/../../csv_files/germplasmList.csv';
          
          
         //Collect user input form
@@ -117,41 +117,41 @@ class SiteController extends Controller {
            /// $file = CUploadedFile::getInstance($model, 'file');
       
 	   //Delete existing files  
-		$exists = file_exists(dirname(__FILE__).'/../modules/createdGID.csv');
+		$exists = file_exists(dirname(__FILE__).'/../../csv_files/createdGID.csv');
 		if ($exists) {
-			unlink(dirname(__FILE__).'/../modules/createdGID.csv');
+			unlink(dirname(__FILE__).'/../../csv_files/createdGID.csv');
 		}
-		$exists = file_exists(dirname(__FILE__)."/../modules/sample.csv");
+		$exists = file_exists(dirname(__FILE__)."/../../csv_files/sample.csv");
 		if ($exists) {
-			unlink(dirname(__FILE__)."/../modules/sample.csv");
+			unlink(dirname(__FILE__)."/../../csv_files/sample.csv");
 		}
-		$exists = file_exists(dirname(__FILE__)."/../modules/output.csv");
+		$exists = file_exists(dirname(__FILE__)."/../../csv_files/output.csv");
 		if ($exists) {
-			unlink(dirname(__FILE__)."/../modules/output.csv");
+			unlink(dirname(__FILE__)."/../../csv_files/output.csv");
 		}
-		$exists = file_exists(dirname(__FILE__)."/../modules/newString.csv");
+		$exists = file_exists(dirname(__FILE__)."/../../csv_files/newString.csv");
 		if ($exists) {
-			unlink(dirname(__FILE__)."/../modules/newString.csv");
+			unlink(dirname(__FILE__)."/../../csv_files/newString.csv");
 		}
-		$exists = file_exists(dirname(__FILE__)."/../modules/corrected.csv");
+		$exists = file_exists(dirname(__FILE__)."/../../csv_files/corrected.csv");
 		if ($exists) {
-			unlink(dirname(__FILE__)."/../modules/corrected.csv");
+			unlink(dirname(__FILE__)."/../../csv_files/corrected.csv");
 		}
-		$exists = file_exists(dirname(__FILE__)."/../modules/checked.json");
+		$exists = file_exists(dirname(__FILE__)."/../../json_files/checked.json");
 		if ($exists) {
-			unlink(dirname(__FILE__)."/../modules/checked.json");
+			unlink(dirname(__FILE__)."/../../json_files/checked.json");
 		}
-		$exists = file_exists(dirname(__FILE__)."/../modules/docinfo.json");
+		$exists = file_exists(dirname(__FILE__)."/../../json_files/docinfo.json");
 		if ($exists) {
-			unlink(dirname(__FILE__)."/../modules/docinfo.json");
+			unlink(dirname(__FILE__)."/../../json_files/docinfo.json");
 		}
-		$exists = file_exists(dirname(__FILE__)."/../modules/existingTerm.csv");
+		$exists = file_exists(dirname(__FILE__)."/../../csv_files/existingTerm.csv");
 		if ($exists) {
-			unlink(dirname(__FILE__)."/../modules/existingTerm.csv");
+			unlink(dirname(__FILE__)."/../../csv_files/existingTerm.csv");
 		}
-		$exists = file_exists(dirname(__FILE__)."/../modules/checked.csv");
+		$exists = file_exists(dirname(__FILE__)."/../../csv_files/checked.csv");
 		if ($exists) {
-		    unlink(dirname(__FILE__)."/../modules/checked.csv");
+		    unlink(dirname(__FILE__)."/../../csv_files/checked.csv");
 		}
 		
             if ($model->validate()) {
@@ -273,7 +273,7 @@ class SiteController extends Controller {
 				}*/
 	   
             /*Open corrected.csv and process file*/
-            $myfile = dirname(__FILE__).'/../modules/corrected.csv';
+            $myfile = dirname(__FILE__).'/../../csv_files/corrected.csv';
             
             $fp = fopen($myfile, 'r');
             $rows = array();
@@ -306,7 +306,7 @@ class SiteController extends Controller {
         //$this->render('createdGID', array('dataProvider' => $dataProvider,'GdataProvider'=>$GdataProvider));
        
     }
- /*  public function actionAssignGID(){
+   public function actionAssignGID(){
 	    $arrSelectedIds = array();
 	    if(isset($_POST['Germplasm']['gid']) && ($_POST['Germplasm']['gid'] != ''))
 		{
@@ -342,7 +342,7 @@ class SiteController extends Controller {
 		   // print_r($file_toArray->csv_createdGID());
 		}
 	               /*Open corrected.csv and process file*/
-       /*     $myfile = dirname(__FILE__).'/../modules/corrected.csv';
+            $myfile = dirname(__FILE__).'/../../csv_files/corrected.csv';
             
             $fp = fopen($myfile, 'r');
             $rows = array();
@@ -353,7 +353,7 @@ class SiteController extends Controller {
            
             
             /*If we have an array with items*/
-      /*      if(count($rows)){
+            if(count($rows)){
                 foreach ($rows as $i => $row) : list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male) = $row;
                     $arr2[] = array('id' => $i+1, 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks);
                     
@@ -361,7 +361,7 @@ class SiteController extends Controller {
             }
         
             /*DataProvider for the lower table, Germplasm List*/
-   /*         $GdataProvider = new CArrayDataProvider($arr2, array(
+           $GdataProvider = new CArrayDataProvider($arr2, array(
                   'keyField'=> 'id',
                     'pagination' => array(
                          'pageSize' => 5,
@@ -373,7 +373,7 @@ class SiteController extends Controller {
 			));
 		}else{
 		      //open and store checked boxes
-			$myfile = dirname(__FILE__).'/../modules/checked.json';
+			$myfile = dirname(__FILE__).'/../../json_files/checked.json';
             
             $fp = fopen($myfile, 'r');
             $rows = array();
@@ -388,7 +388,7 @@ class SiteController extends Controller {
 				'selected' => $checked,'GdataProvider'=>$GdataProvider
 			));
 		}
-   }*/
+   }
 
    public function actionOutput(){
 	   

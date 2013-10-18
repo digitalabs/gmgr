@@ -11,7 +11,7 @@ $model = new model();
 $file_toArray = new file_toArray();
 
 $unselected=0;
-<<<<<<< HEAD
+
 
 
    /* $arrSelectedIds = array();
@@ -44,8 +44,6 @@ if (isset($arrSelectedIds)) {
 }*/
 	
 
-=======
->>>>>>> 1ac55b28b876a7e55874149580ff09904c3a2887
 if (isset($_POST['selectMethod'])) {
     $selected_radio = $_POST['selectMethod'];
     if ($selected_radio === "changeMethod") {
@@ -131,7 +129,7 @@ if (isset($_GET['yes'])) {
     $curl->chooseGID();
     
     //open and store checked boxes
-     $myfile = dirname(__FILE__).'/../../modules/checked.json';
+     $myfile = dirname(__FILE__).'/../../../json_files/checked.json';
             
             $fp = fopen($myfile, 'r');
             $rows = array();
@@ -316,7 +314,7 @@ if (count($final)) {
 										 $i = 0;
                                    
                                             foreach ($pages[0] as $r) : list($id, $nval, $term, $GID, $methodID, $method, $locID, $location) = $r;
-<<<<<<< HEAD
+
 
                                                 echo '<tr>';
                                              	
@@ -326,11 +324,11 @@ if (count($final)) {
                                              	
 												//condition 2
 
-=======
+
                                                 echo '<tr>';
                                              	
 												//condition 2
->>>>>>> 1ac55b28b876a7e55874149580ff09904c3a2887
+
                                                if($id==$femIdArr[0] ){
 											   echo '<tr bgcolor="#FFE4E1"> ';
                                                }else if($id==$femIdArr[0]){
@@ -338,11 +336,11 @@ if (count($final)) {
 											   }else{
 											    echo '<tr bgcolor="#90EE90"> ';
 											   }
-<<<<<<< HEAD
+
       
-=======
+
                                                
->>>>>>> 1ac55b28b876a7e55874149580ff09904c3a2887
+
 												if($id==$femIdArr[0] ){ //female 
 													 if ($i === 0) {
 														 echo "<td><img src='images/glyphicons_247_female2.png'></td>";
