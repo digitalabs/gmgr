@@ -309,7 +309,7 @@ class file_toArray {
 
         foreach ($rows as $row) : list($GID, $nval, $fid) = $row;
 
-            if ($this->hasChecked($checked, $fid) === false) {
+            if ($this->hasChecked($checked[0], $fid) === false) {
                 $unselected[] = $fid;
             }
         endforeach;
