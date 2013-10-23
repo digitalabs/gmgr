@@ -32,6 +32,10 @@ svg {
   stroke-width: 2px;
 }
 
+.link.warning{
+	stroke: orange;
+} 
+
 .node rect {
   cursor: pointer;
   fill: #fff;
