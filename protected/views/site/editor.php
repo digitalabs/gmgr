@@ -20,7 +20,7 @@ Yii::import("ext.graphviz.widgets.*");
     <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap.min.css" />
 
 	<br><br><br><br>    
-        <div class="horizontal-form" style="text-align:right;vertical-align:right;margin-left:200px;margin-right: 230px;">    
+        <div class="horizontal-form" style="text-align:right;vertical-align:right;margin-left:200px;margin-right: 5px;">    
 
                     
                     <div class="input-append">    
@@ -31,7 +31,7 @@ Yii::import("ext.graphviz.widgets.*");
         </div>
             
             
-            <div style="vertical-align:middle;margin-left:20px;margin-right: 20px;">
+            <div style="vertical-align:middle;margin-left:5px;margin-right: 5px;">
                 <div class="well" style="position:relative;border:1px solid; padding: 0px; height:670px">
                     <div id="graphDiv2" style="position:absolute;top:0px;right:0px;left:202px;overflow-x:scroll;overflow-y:scroll;padding: 0px; text-align: right; vertical-align: right; width: 710px; height: 630px;vertical-align:right;">
 					<svg style="width:500px;height:800px;overflow-x:hidden;overflow-y:hidden;position:absolute;z-index:2;">
