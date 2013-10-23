@@ -13,10 +13,10 @@ Yii::import("ext.graphviz.widgets.*");
 
 <html>
 <head>
+<body>
 <meta charset="utf-8">
 	<!-- blueprint CSS framework -->
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/editor.css" />
-    <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap.min.css" />
 
 	<br><br> 
@@ -34,9 +34,9 @@ Yii::import("ext.graphviz.widgets.*");
             <div style="vertical-align:middle;margin-left:5px;margin-right: 5px;">
                 <div class="well" style="position:relative;border:1px solid; padding: 0px; height:670px">
                     <div id="graphDiv2" style="position:absolute;top:0px;right:0px;left:202px;overflow-x:scroll;overflow-y:scroll;padding: 0px; text-align: right; vertical-align: right; width: 910px; height: 630px;vertical-align:right;">
-					<svg style="width:500px;height:800px;overflow-x:hidden;overflow-y:hidden;position:absolute;z-index:2;">
+					<!--<svg style="width:500px;height:800px;overflow-x:hidden;overflow-y:hidden;position:absolute;z-index:2;">
 							<g id="vis"></g>
-					</svg>
+					</svg>-->
 						<div id="graphDiv" width="5000" style="width:2000px;"></div>
 					</div> 
                     <div class="div-gradient" style="padding-left: 0px; width: 200px;height:670px;text-align: justify;position:static;bottom:10px">
@@ -53,7 +53,10 @@ Yii::import("ext.graphviz.widgets.*");
                           <small><input type="checkbox"><a data-placement="right" data-toggle="tooltip" title="The pedigree graph can label its edges by the name of germplasm methods.">Show Method</a></input></small>
                         </label>
                         
-                        <br><div style="padding-left: 5px;padding-right: 5px; text-align: right;"><button type="button" class="btn btn-mini btn-primary" onclick="graph2();">Load</button></div>
+                        <br><div style="padding-left: 5px;padding-right: 5px; text-align: right;">
+							<button type="button" class="btn btn-mini btn-primary" onclick="graph2();">Load</button>
+							<button id="savePNG" type="button" class="btn btn-mini btn-success">Save as PNG</button>
+						</div>
                         <div style="padding-left:5px;padding-right:5px;"><hr></div>
                         <center><div style="padding-left:5px;padding-right:5px;">Germplasm Information</div></center> <br>
                         <small>
@@ -89,17 +92,26 @@ Yii::import("ext.graphviz.widgets.*");
             <br><br>
         <!-- end editor content -->   
         
-        <script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/bootstrap.min2.js"></script>
         <script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/d3.v3.min.js"></script>
         <script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/editor5.js"></script>
+		<script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/html2canvas.js"></script>
         <script type="text/javascript">
-          $(document).ready(function(){
-            $('.combobox').combobox();
-          });
+		  
+		  $(document).ready(function() {
+				$("#savePNG").click(function () {
+					html2canvas($("#graphDiv"), {
+						background: "red",
+						onrendered: function (canvas) {
+							var imgSrc = canvas.toDataURL();
+							var popup = window.open(imgSrc);
+						}
+					});
+				});
+			});
+
+
         </script>
-	
-<body>
-	
+
 </body>
 
 </html>
