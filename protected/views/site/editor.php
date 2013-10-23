@@ -99,8 +99,10 @@ Yii::import("ext.graphviz.widgets.*");
 		  
 		  $(document).ready(function() {
 				$("#savePNG").click(function () {
-					html2canvas($("#graphDiv"), {
+					html2canvas($("#graphDiv2"), {
 						background: "red",
+						width:1000,
+						height:1000,
 						onrendered: function (canvas) {
 							var imgSrc = canvas.toDataURL();
 							var popup = window.open(imgSrc);
