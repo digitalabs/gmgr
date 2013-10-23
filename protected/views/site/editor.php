@@ -19,7 +19,7 @@ Yii::import("ext.graphviz.widgets.*");
     <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap.min.css" />
 
-	<br><br><br><br>    
+	<br><br> 
         <div class="horizontal-form" style="text-align:right;vertical-align:right;margin-left:200px;margin-right: 5px;">    
 
                     
