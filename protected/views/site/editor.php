@@ -55,7 +55,7 @@ Yii::import("ext.graphviz.widgets.*");
                         
                         <br><div style="padding-left: 5px;padding-right: 5px; text-align: right;">
 							<button type="button" class="btn btn-mini btn-primary" onclick="graph2();">Load</button>
-							<button id="savePNG" type="button" class="btn btn-mini btn-success">Save as PNG</button>
+							<button id="savePNG" type="button" class="btn btn-mini btn-success">Save image</button>
 						</div>
                         <div style="padding-left:5px;padding-right:5px;"><hr></div>
                         <center><div style="padding-left:5px;padding-right:5px;">Germplasm Information</div></center> <br>
