@@ -11,7 +11,7 @@ var data = (function () {
     $.ajax({
         'async': false,
         'global': false,
-        'url': "/../GMGR_restructure/json/tree6.json",
+        'url': "/../GMGR/json/tree6.json",
         'dataType': "json",
         'success': function (data) {
             jason = data;
