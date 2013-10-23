@@ -90,10 +90,8 @@ Yii::import("ext.graphviz.widgets.*");
         <!-- end editor content -->   
         
         <script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/bootstrap.min2.js"></script>
-        <script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/pnotify-1.2.0/jquery.pnotify.js"></script>
-        <script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/assets/d3.v3.min.js"></script>
+        <script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/d3.v3.min.js"></script>
         <script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/editor5.js"></script>
-        <script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/assets/bootstrap-combobox.js"></script>
         <script type="text/javascript">
           $(document).ready(function(){
             $('.combobox').combobox();
