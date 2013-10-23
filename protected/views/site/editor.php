@@ -33,7 +33,7 @@ Yii::import("ext.graphviz.widgets.*");
             
             <div style="vertical-align:middle;margin-left:5px;margin-right: 5px;">
                 <div class="well" style="position:relative;border:1px solid; padding: 0px; height:670px">
-                    <div id="graphDiv2" style="position:absolute;top:0px;right:0px;left:202px;overflow-x:scroll;overflow-y:scroll;padding: 0px; text-align: right; vertical-align: right; width: 850px; height: 630px;vertical-align:right;">
+                    <div id="graphDiv2" style="position:absolute;top:0px;right:0px;left:202px;overflow-x:scroll;overflow-y:scroll;padding: 0px; text-align: right; vertical-align: right; width: 950px; height: 630px;vertical-align:right;">
 					<svg style="width:500px;height:800px;overflow-x:hidden;overflow-y:hidden;position:absolute;z-index:2;">
 							<g id="vis"></g>
 					</svg>
