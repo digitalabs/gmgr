@@ -28,10 +28,10 @@ Yii::import("ext.graphviz.widgets.*");
                       <button class="btn btn-primary" type="button" onclick="graph2();">GO</button>
                     </div>  
                              
-            </div>
+        </div>
             
             
-            <div style="vertical-align:middle;margin-left:210px;margin-right: 230px;">
+            <div style="vertical-align:middle;margin-left:20px;margin-right: 20px;">
                 <div class="well" style="position:relative;border:1px solid; padding: 0px; height:670px">
                     <div id="graphDiv2" style="position:absolute;top:0px;right:0px;left:202px;overflow-x:scroll;overflow-y:scroll;padding: 0px; text-align: right; vertical-align: right; width: 710px; height: 630px;vertical-align:right;">
 					<svg style="width:500px;height:800px;overflow-x:hidden;overflow-y:hidden;position:absolute;z-index:2;">
