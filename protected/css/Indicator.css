@@ -1,0 +1,17 @@
+#busy_indicator {
+	display: none;
+	z-index: 99;
+	position:absolute;
+	width:100%;
+}
+ 
+div.indicator {
+	background-color:#000;
+	padding-top:10px;
+	padding-bottom:10px;
+	height:65px;
+	width:100%;
+	color:#FFF;
+	font-family:Arial, Helvetica, sans-serif;
+	text-align:center;
+}

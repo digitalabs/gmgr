@@ -28,6 +28,44 @@ body
 .row-align-left{
    margin:0;
 }
+  .modal {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    left: 10px;
+    width: auto;
+    margin: 0;
+	z-index: 10;
+  }
+  .modal.fade.in {
+    top: auto;
+  }
+  .modal-header .close {
+    padding: 10px;
+    margin: -10px;
+  }
+#ajax-loading-indicator {
+  z-index:9999999;
+  position:fixed;
+  margin:-50px 0 0 -50px;
+  top:50%;
+  left:50%;
+  background:transparent url(../images/ajax-loader.gif) no-repeat center center;
+  width:100px;
+  height:100px;
+  display:none;
+  color:'default';
+}
+.ajax-processing #ajax-loading-indicator { 
+    display:block; 
+}
+#screen
+{
+        position: absolute;
+        left: 0;
+        top: 0;
+        background: #A9A9A9;
+}
 #content
 {
     padding: 20px;

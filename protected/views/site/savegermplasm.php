@@ -1,6 +1,5 @@
-
 <?php 
- Yii::import('application.modules.configDB');
+ //Yii::import('application.modules.configDB');
 /*
 if (!$model->CheckLogin()) {
     $model->RedirectToURL("login.php");
@@ -10,10 +9,10 @@ if (!$model->CheckLogin()) {
 if (isset($_POST["editGermplasmForm"]['newGermplasmName'])) {
     $germplasm = $_POST["editGermplasmForm"]['germplasmName'];
     $new = $_POST["editGermplasmForm"]['newGermplasmName'];
-    $myfile = dirname(__FILE__).'/../../modules/corrected.csv';
+    $myfile = dirname(__FILE__).'/../../../csv_files/corrected.csv';
     //echo $myfile;
     if (callCurl($new) == true) {
-        $myfile = dirname(__FILE__).'/../../modules/newString.csv';
+        $myfile = dirname(__FILE__).'/../../../csv_files/newString.csv';
 
 		
         $fin = fopen($myfile, 'r');
@@ -29,7 +28,7 @@ if (isset($_POST["editGermplasmForm"]['newGermplasmName'])) {
         fclose($fin);
         
         //open corrected.csv and process
-        $myfile = dirname(__FILE__).'/../../modules/corrected.csv';
+        $myfile = dirname(__FILE__).'/../../../csv_files/corrected.csv';
         
         $fin = fopen($myfile, 'r');
         $data = array();
@@ -71,7 +70,7 @@ if (isset($_POST["editGermplasmForm"]['newGermplasmName'])) {
         echo "</br></br></br><p class='important'><strong>ERROR:</strong>&nbsp; 
 				Germplasm name is not in standardized format. Please edit the germplasm name. Hint is next to germplasm name text box
 			  </p>";
-       $myfile = dirname(__FILE__).'/../../modules/newString.csv';
+       $myfile = dirname(__FILE__).'/../../../csv_files/newString.csv';
 
         $fin = fopen($myfile, 'r');
         $data = array();
@@ -91,13 +90,13 @@ if (isset($_POST["editGermplasmForm"]['newGermplasmName'])) {
 
 function callCurl($new) {
     echo "new:".$new;
-    $jsonfile = dirname(__FILE__)."/../../modules/docinfo.json";
+    $jsonfile = dirname(__FILE__)."/../../../json_files/docinfo.json";
     
     $a = array('new' => $new);
     $jsonText = json_encode($a);
     file_put_contents($jsonfile, $jsonText);
     
-    $url = "http://localhost:8080/ws/standardization/term/checkEditedString";
+    $url = "http://172.29.4.99:8083/ws/standardization/term/checkEditedString";
     
     $handle = curl_init();
     curl_setopt($handle, CURLOPT_URL, $url);
@@ -105,7 +104,7 @@ function callCurl($new) {
     $response = curl_exec($handle);
     $code = curl_getinfo($handle, CURLINFO_HTTP_CODE);
    
-    $myfile = dirname(__FILE__).'/../../modules/newString.csv';
+    $myfile = dirname(__FILE__).'/../../../csv_files/newString.csv';
 
     $fin = fopen($myfile, 'r');
 

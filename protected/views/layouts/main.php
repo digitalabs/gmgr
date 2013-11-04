@@ -14,7 +14,8 @@
 
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css" />
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
-
+    
+	
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 	<?php echo Yii::app()->bootstrap->init();?>
 </head>
@@ -22,12 +23,52 @@
 <body>
 
 <div class="container" id="page">
+<?php
+  /*$flashMessages = Yii::app()->user->getFlashes();
+		if ($flashMessages) {
+			echo '<ul class="flashes">';
+			foreach($flashMessages as $key => $message) {
+				echo '<li><div class="flash-' . $key . '">' . $message . "</div></li>\n";
+			}
+			echo '</ul>';
+		}*/
+	$this->widget('ext.PNotify.PNotify',
+          array(
+              'flash_messages_only' => true,
+          )
+  );
+?>
 
-<!--
-	<div id="header">
-		<div id="logo"><?php //echo CHtml::encode(Yii::app()->name); ?></div>
-	</div><!-- header 
--->
+   <?php $this->widget('ext.tooltipster.tooltipster',
+			array(
+            'options'=>array('position'=>'right',
+			'animation'=>'fade',
+			'arrow'=>true,
+			'arrowColor'=>'',
+			'content'=>'',
+			'delay'=>'200',
+			'fixedWidth'=>'300',
+			'functionBefore'=>'js:function(origin, continueTooltip) { continueTooltip(); }',
+			'functionAfter'=>'js:function(origin) {}',
+			'icon'=>'(?)',
+			'iconTheme'=>'.tooltipster-icon',
+			'iconDesktop'=>false,
+			'iconTouch'=>false,
+			'interactive'=>false,
+			'interactiveTolerance'=>'350',
+			'offsetX'=>'5',
+			'offsetY'=>'5',
+			'onlyOne'=>true,
+			'position'=>'top',
+			'speed'=>'350',
+			'timer'=>'0',
+			'theme'=>'.tooltipster-default',
+			'touchDevices'=>true,
+			'trigger'=>'hover'
+			)
+         ));
+      
+   ?>
 	<div id="mainmenu">
 	
 	<?php $this->widget('bootstrap.widgets.TbNavbar', array(
@@ -43,9 +84,8 @@
 				//array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
 				//array('label'=>'Contact', 'url'=>array('/site/contact')),
 				//array('htmlOptions'=>array('class'=>'pull-right'),'label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
-				array('label'=>'Pedigree Importer', 'url'=>array('/site/importer'), 'visible'=>!Yii::app()->user->isGuest),
-				//array('label'=>'Pedigree Editor', 'url'=>array('/site/editor'), 'visible'=>!Yii::app()->user->isGuest),
-				//array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
+				array('label'=>'Pedigree Importer', 'url'=>array('/site/importer'),'visible'=>!Yii::app()->user->isGuest),
+				array('label'=>'Pedigree Editor', 'url'=>array('/site/editor'), 'visible'=>!Yii::app()->user->isGuest)
                
             ),
         ),
@@ -83,7 +123,7 @@
 	<?php echo $content; ?>
 
 	<div id="footer">
-		<!--Copyright &copy; <?php echo date('Y'); ?> by My Company.<br/>
+		<!--Copyright &copy; <?php //echo date('Y'); ?> by My Company.<br/>
 		All Rights Reserved.<br/>-->
 		<?php //echo Yii::powered(); ?>
 		<?php $this->widget('bootstrap.widgets.TbBreadcrumbs', array(

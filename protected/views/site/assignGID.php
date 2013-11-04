@@ -11,6 +11,39 @@ $model = new model();
 $file_toArray = new file_toArray();
 
 $unselected=0;
+
+
+
+   /* $arrSelectedIds = array();
+	
+	$idArr = explode(',',$selected);
+	//var_dump($idArr);
+	foreach($idArr as $index => $id){
+		$id = strtr($id, array('["'=>'','"]'=>''));
+		//echo intval($id)."<br/>";
+		$arrSelectedIds[$index] = (int)($id);
+	}
+	print_r($arrSelectedIds);
+*/
+	/*	
+if (isset($arrSelectedIds)) {
+   
+    $standardized = $file_toArray->checkIf_standardize($arrSelectedIds);
+
+//json fil['e of checked boxes
+    $json = new json($standardized);
+    $json->checkedBox();
+
+//call curl: function createdGID
+    $curl = new curl();
+    $curl->createGID();
+
+// update createdGID.csv
+   // $file_toArray = new file_toArray();
+   // $file_toArray->update_csv_correctedGID($fid, $mid, $checked);
+}*/
+	
+
 if (isset($_POST['selectMethod'])) {
     $selected_radio = $_POST['selectMethod'];
     if ($selected_radio === "changeMethod") {
@@ -36,21 +69,21 @@ if (isset($_POST['selectMethod'])) {
 }
 
 if (isset($_GET['yes'])) {
-    Yii::import('application.modules.file_toArray');
     $unselected = $file_toArray->get_unselected_rows();
     $standardized = $file_toArray->checkIf_standardize($unselected);
-    //echo "standardize unselected:";
-    //print_r($standardized);
-    Yii::import('application.modules.json');
+    echo "standardize unselected:";
+    print_r($standardized);
+	echo "count stan:".count($standardized);
+   
     $json = new json($standardized);
     $json->checkedBox();
     
     //call curl: function createdGID
-    Yii::import('application.modules.curl');
+ 
     $curl = new curl();
     $curl->createGID();
 
-    Yii::import('application.modules.model');
+  
     $url = $model->curPageURL();
     $values = parse_url($url);
    
@@ -68,28 +101,7 @@ if (isset($_GET['yes'])) {
     header("Location: " . $values['path'] . "?" . $values['query'] . "");
 }
 
-if (isset($_POST['checked'])) {
-    $checked = $_POST['checked'];
-    $cross = $_POST['cross'];
-    //echo $cross;
-    $fid = $_POST['fid'];
-    $mid = $_POST['mid'];
-
-    $standardized = $file_toArray->checkIf_standardize($checked);
-
-//json fil['e of checked boxes
-    $json = new json($standardized);
-    $json->checkedBox();
-
-//call curl: function createdGID
-    $curl = new curl();
-    $curl->createGID();
-
-// update createdGID.csv
-    $file_toArray = new file_toArray();
-    $file_toArray->update_csv_correctedGID($fid, $mid, $checked);
-}
-
+				  
  if (isset($_POST['choose'])) {
     echo "choose:".$_POST['choose'];
     $term = strip_tags($_POST['term']);
@@ -117,7 +129,7 @@ if (isset($_POST['checked'])) {
     $curl->chooseGID();
     
     //open and store checked boxes
-     $myfile = dirname(__FILE__).'/../../modules/checked.json';
+     $myfile = dirname(__FILE__).'/../../../json_files/checked.json';
             
             $fp = fopen($myfile, 'r');
             $rows = array();
@@ -139,9 +151,11 @@ $checked = $file_toArray->json_checked();
 
 // final is the array containing arrays of the pedigree lines (from the checkedboxes)
 $final = $file_toArray->getPedigreeLine();
-
+//echo "count of final:".count($final);
 // If we have an array with items
 if (count($final)) {
+   
+   
 // Create the pagination object
     $pagination = new pagination($final, (isset($_GET['pagea']) ? $_GET['pagea'] : 1), 1);
 // Decide if the first and last links should show
@@ -150,7 +164,8 @@ if (count($final)) {
 // $pagination->setMainSeperator(' | ');
 // Parse through the pagination class
     $pages = $pagination->getResults();
-
+	//echo "pages:".count($pages);
+    //print_r($pages);
 // If we have items 
     if (count($pages) != 0) {
 // Create the page numbers
@@ -158,7 +173,7 @@ if (count($final)) {
 
         $count = 0;
 // echo "count: " . count($pages);
-        Yii::import('application.modules.file_toArray');
+      
         $checked = $file_toArray->csv_checked2();
 
         foreach ($pages[0] as $r) : list($id, $nval, $term, $GID, $methodID, $method, $locID, $location) = $r;
@@ -184,7 +199,7 @@ if (count($final)) {
         //echo $count_tobe_processed . " remaining rows to be processed<br>";
         $var1 = $count_tobe_processed;
 
-		Yii::import('application.modules.file_toArray');
+		
         $unselected = $file_toArray->get_unselected_rows();
         $unstandardized = $file_toArray->checkIf_standardize($checked);
        
@@ -193,7 +208,7 @@ if (count($final)) {
       //  echo (count($checked) - (count($unselected) - 1)) . " row(s) selected with unstandardized germplasm name(s)<br>";
         $var3 = (count($checked) - (count($unselected) - 1));
          
-        Yii::import('application.modules.file_toArray'); 
+     
         $GID_rows = $file_toArray->csv_corrected_GID();
         //echo "GID_rows:".count($GID_rows);
         $var2 = count($GID_rows);
@@ -299,26 +314,41 @@ if (count($final)) {
 										 $i = 0;
                                    
                                             foreach ($pages[0] as $r) : list($id, $nval, $term, $GID, $methodID, $method, $locID, $location) = $r;
+
+
                                                 echo '<tr>';
                                              	
 												//condition 2
+
+                                                echo '<tr>';
+                                             	
+												//condition 2
+
+
+                                                echo '<tr>';
+                                             	
+												//condition 2
+
                                                if($id==$femIdArr[0] ){
-											   echo '<tr bgcolor='#FFE4E1'> ';
+											   echo '<tr bgcolor="#FFE4E1"> ';
                                                }else if($id==$femIdArr[0]){
-											   echo '<tr bgcolor='#E6E6FA'> ';
+											   echo '<tr bgcolor="#E6E6FA"> ';
 											   }else{
-											    echo '<tr bgcolor='#90EE90'> ';
+											    echo '<tr bgcolor="#90EE90"> ';
 											   }
+
+      
+
                                                
+
 												if($id==$femIdArr[0] ){ //female 
 													 if ($i === 0) {
 														 echo "<td><img src='images/glyphicons_247_female2.png'></td>";
 														 echo "<td>". $term . "</td>";
 													 }
 													 else{
-														 echo "<td  bgcolor='#FFE4E1'></td><td>". $term . "</td>";
+														 echo "<td bgcolor='#FFE4E1'></td><td>". $term . "</td>";
 													 }
-                                                    
 											    }else if($id==$maleIdArr[0]) //male
 											    {
 													if ($i === $male_id) {
@@ -328,7 +358,7 @@ if (count($final)) {
 													  echo "<td></td><td>". $term . "</td>";
 													}  
 												}else if(strpos($id,'/')){ //crossed
-													  echo "<tdimg src='images/glyphicons_197_remove2.png'></td>";
+													  echo "<td img src='images/glyphicons_197_remove2.png'></td>";
 													  echo "<td bgcolor='#90EE90'>" . $term . "</td>";
 												}
 												 $i++;
@@ -344,10 +374,10 @@ if (count($final)) {
 														$m_female = $female;
 														$m_male = $male; 
 														
-												} elseif ($GID === "DUPLICATE" || $GID === "NOT SET") {
+												} else if ($GID === "DUPLICATE" || $GID === "NOT SET") {
 													
 														  echo "<td><b><i>" . $GID . "</i></b></td>";
-													 }
+													 
 												     
                                                 } else {
 													
@@ -462,7 +492,11 @@ if (count($final)) {
                         </div>
 
                     </div>	
-            
+                     <?php
+				   //<!----********************FOR  ASSIGN GID PORTION*******************--->
+                     include( dirname(__FILE__). "/createdGID.php");
+					// Yii::import(dirname(__FILE__). "/createdGID.php");
+			   ?>   
             </div>
                  
         </div
@@ -600,7 +634,7 @@ if (count($final)) {
             <a class="close" data-dismiss="modal">×</a>
             <h3>Assign GID for <font style="color:#08c;"><?php echo $m_term ?> </font></h3>
         </div>
-        <div class="modal-body">
+        <div class="modal-body" style="z-index:10;">
             <center>
 			<br>
 			<br>

@@ -16,23 +16,24 @@ return array(
 		),*/
 		// uncomment the following to use a MySQL database
 		
-		'db'=>array(
+		/*'db'=>array(
 			'connectionString' => 'mysql:host=localhost;dbname=central',
 			'emulatePrepare' => true,
 			'username' => 'root',
 			'password' => '',
-			'charset' => 'utf8',
-		),
-		/*
+			'charset' => 'utf8',	
+		),*/
+     
 			'db'=>array(
 		    'class'=>'CDbConnection',
 			'connectionString' => 'mysql:host=127.0.0.1;port=5528;dbname=iris_myisam_20121002',
 			'emulatePrepare' => true,
-			'username' => 'phenibquser',
+			'username' => 'datasourceuser',
 			'password' => 'phenibqpass',
 			'charset' => 'utf8',
+
 		),
-		*/
+
 		'log'=>array(
 			'class'=>'CLogRouter',
 			'routes'=>array(

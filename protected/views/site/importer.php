@@ -1,3 +1,7 @@
+<html>
+ 
+  <body>
+
 <?php //if($uploaded):?>
 <!--<p>File was uploaded. Check <?php //echo //$dir?>.</p>
 <?php //endif ?>-->
@@ -17,12 +21,16 @@ $this->breadcrumbs=array(
 	'Importer',
 );
 ?>
+
 <?php
 /* @var $this SiteController */
 
 //include_once($_SERVER['DOCUMENT_ROOT'] . "/PedigreeImport/model/configDB.php");
 
 ?>
+
+<span id="ajax-loading-indicator">
+</span>
 <?php /** @var BootActiveForm $form */
 $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     'id'=>'pedigreeImport',
@@ -34,6 +42,10 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     'htmlOptions' => array('class'=>'well','enctype' => 'multipart/form-data'),
 )); ?>
 
+<!--div to grey out the screen while loading indicator is on-->
+<div id='screen'>
+   
+</div>
 
 <div class="row">
 
@@ -82,7 +94,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                         <label>Location</label>
                         <?php 
                               
-                                $myfile =dirname(__FILE__).'/../../modules/location.csv';
+                                $myfile =dirname(__FILE__).'/../../../csv_files/location.csv';
                                
                              
                                 $fin = fopen($myfile, 'r');
@@ -102,7 +114,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 				  
                     <?php 
                        echo "</br>";
-                        $this->widget('bootstrap.widgets.TbButton',array('buttonType'=>'submit','type'=>'primary','label'=>'Upload list')); 
+                        $this->widget('bootstrap.widgets.TbButton',array('buttonType'=>'submit','id'=>'uploadFile','type'=>'primary','label'=>'Upload list')); 
                     ?>
                 <!--</div>-->
            </fieldset><br>
@@ -113,9 +125,29 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 	</div>
  </div>
 </div>
-<!--<script src="bootstrap-fileupload.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
--->
+<?php if(Yii::app()->user->hasFlash('success')):?>
+    <div class="info">
+        <?php echo Yii::app()->user->getFlash('success'); ?>
+    </div>
+<?php endif; ?>
 
 <?php $this->endWidget(); ?>
+</body></html>
+<script type="text/javascript">
+$(document).ready(function() {
+  var pop = function(){
+        $('#screen').css({ opacity: 0.4, 'width':$(document).width(),'height':$(document).height()});
+        $('body').css({'overflow':'hidden'});
+        $('#ajax-loading-indicator').css({'display': 'block'});
+ }
+ $('#uploadFile').click(pop);
 
+});
+<?php
+Yii::app()->clientScript->registerScript(
+   'myHideEffect',
+   '$(".info").animate({opacity: 1.0}, 3000).fadeOut("slow");',
+   CClientScript::POS_READY
+);
+?>
+</script>
