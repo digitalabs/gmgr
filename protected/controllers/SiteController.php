@@ -153,11 +153,10 @@ class SiteController extends Controller {
             }
 
             if ($model->validate()) {
-                echo $_POST['location'];
+                echo "location:".$_POST['location'];
                 //import json class
                 Yii::import('application.modules.json');
                 //json file of the locationID
-
                 $json = new json($_POST['location']);
                 $json->location();
                 $json->getFile();
@@ -176,7 +175,7 @@ class SiteController extends Controller {
 
 
                 //call php file
-               // $this->redirect(array('site/importFileDisplay'));
+                $this->redirect(array('site/importFileDisplay'));
                //$this->actionImportFileDisplay();
             }
         } else {

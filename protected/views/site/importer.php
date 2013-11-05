@@ -36,7 +36,6 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     'id'=>'pedigreeImport',
     'type'=>'horizontal',
     'enableClientValidation'=>true,
-	'action'=> array('/site/importFileDisplay'),
 	'clientOptions'=>array(
 		'validateOnSubmit'=>true,
 	   ),

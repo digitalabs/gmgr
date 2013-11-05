@@ -691,7 +691,7 @@ if (count($final)) {
 
             return false;
         });
-		$('#dataConfirmOK').click(function(){
+		$('a[dataConfirmOK]').click(function(){
 		    alert("Hello");
 		    $('#dataConfirmModal').hide();
 			$this.modal = false;

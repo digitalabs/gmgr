@@ -54,8 +54,7 @@
             //rows selected by GET
             var checkedInQuery = (params[selVar]) ? params[selVar] : [];
             if(!$.isArray(checkedInQuery)) checkedInQuery = [checkedInQuery];
-            
-			alert(checkedInQuery);
+
             //rows selected on current page
             var checkedInPage = this.yiiGridView('getSelection');
 
