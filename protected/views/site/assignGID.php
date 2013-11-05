@@ -492,7 +492,6 @@ if (count($final)) {
                                     echo '</ul>';
                                     echo "</div>";
 
-                                                        <?php
                                                         $j++;
                                                         //echo "::" . $j;
                                                         //";
