@@ -80,8 +80,8 @@ return array(
 		    'class'=>'CDbConnection',
 			'connectionString' => 'mysql:host=127.0.0.1;port=3306;dbname=iris_mysiam_20121002',
 			'emulatePrepare' => true,
-			'username' => 'phenibquser',
-			'password' => 'phenibqpass',
+		    'username' => 'datasourceuser',
+			'password' => 'ici$rule$',
 			'charset' => 'utf8',
 		),
 		
