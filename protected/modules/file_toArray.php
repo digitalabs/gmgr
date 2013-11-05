@@ -276,26 +276,25 @@ class file_toArray {
 	    //print_r($checked);
         //echo "checked count:".count($checked);
         $rows=$this->csv_corrected();
-<<<<<<< HEAD
+
         
-=======
+
         //$selected = array();
->>>>>>> 036b16c44f362c89b8fbf0746eecfaa315e5f9b2
+
         foreach ($rows as $row) : list($GID, $nval, $fid, $fremarks, $female, $femalename, $mid, $mremarks, $male, $malename) = $row;
         
             for ($i = 0; $i < count($checked); $i++) {
-<<<<<<< HEAD
+
           //      echo $fremarks." ".$mremarks."<br>";
           //      echo $fid." ".$checked[$i]."<br>";
                 if ($fremarks === "in standardized format" && $fid === $checked[$i] && $mremarks === "in standardized format") {
                     $selected[] = $fid;
-=======
+
                // echo $fremarks." ".$mremarks."<br>";
                // echo $fid." ".$checked[$i]."<br>";
                 if ($fremarks == "in standardized format" && $fid == $checked[$i] && $mremarks == "in standardized format") {
                     $selected[] = $fid;
-				
->>>>>>> 036b16c44f362c89b8fbf0746eecfaa315e5f9b2
+
                 }
             }
         //echo "count selected:".count($selected);
