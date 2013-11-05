@@ -354,7 +354,7 @@ class SiteController extends Controller {
 			  }
 		     }
 			   //Deletes existing checked germplasm in case the page reloads and to avoid duplication of createdGID for the checked items.
-			   	/*$exists = file_exists(dirname(__FILE__)."/../../json_files/checked.json");
+			   	$exists = file_exists(dirname(__FILE__)."/../../json_files/checked.json");
 				if ($exists) {
 					unlink(dirname(__FILE__)."/../../json_files/checked.json");
 				}
@@ -365,7 +365,7 @@ class SiteController extends Controller {
 				$exists = file_exists(dirname(__FILE__)."/../../csv_files/createdGID.csv");
 				if ($exists) {
 					unlink(dirname(__FILE__)."/../../csv_files/createdGID.csv");
-				}*/
+				}
 				
 				 $file_toArray = new file_toArray();
 				 $standardized = $file_toArray->checkIf_standardize($arrSelectedIds);
