@@ -16,17 +16,23 @@
                         $this->widget('ext.selgridview.BootSelGridView', array(
                                  'id' => 'germplasmList',   
                                  'dataProvider' => $GdataProvider,
+								 'filter'=>$filtersForm,
+								 'enablePagination'=>true,
                                  'columns'=> array(
                                      array(
-                                       'header'=>'Cross Name',
-                                       'value'=>'CHtml::encode($data["nval"])',
+									        'header'=>'Cross Name', 
+											'value'=>'CHtml::encode($data["nval"])',
+											'name'=>'',
+											'filter'=>CHtml::textField('FilterPedigreeForm[nval]',isset($_GET['FilterPedigreeForm']['nval]'])? $_GET['FilterPedigreeForm']['nval']:''),
                                      ), 
                                      array(
                                          'header'=>'GID',
+										 'name' => 'gid',
                                          'value'=>'CHtml::encode($data["gid"])',
                                      ),
                                      array(
                                          'header'=>'Female Parent',
+										 'name' =>'female',
                                          'type'=>'raw',
                                          'value'=>function($data){
                                                $line = array();
@@ -46,6 +52,7 @@
                                      ),
                                      array(
                                          'header'=>'Male Parent',
+										 'name' => 'male',
                                          'type'=>'raw',
                                          'value'=>function($data){
                                               $line = array();
@@ -100,7 +107,7 @@ $this->beginWidget('zii.widgets.jui.CJuiDialog',array(
                 ));
 $this->endWidget();
 ?>
- <script type="text/javascript" src="assets/bootstrap.min.js"></script>
+ <!--<script type="text/javascript" src="assets/bootstrap.min.js"></script>-->
  <script type="text/javascript" src="./assets/pnotify-1.2.0/jquery.pnotify.js"></script>
 <script type="text/javascript">
 /*

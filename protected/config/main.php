@@ -66,12 +66,15 @@ return array(
 		// uncomment the following to use a MySQL database
 
 		/*
+<<<<<<< HEAD
 		'db'=>array(
 =======
 
 
+=======
+>>>>>>> gmgr_restructure-dev
 		
-        /*  'db'=>array(
+         'db'=>array(
 
 >>>>>>> 036b16c44f362c89b8fbf0746eecfaa315e5f9b2
 		    'class'=>'CDbConnection',
@@ -91,39 +94,7 @@ return array(
 			'password' => 'phenibqpass',
 			'charset' => 'utf8',
 		),
-		/*
-			'db'=>array(
-=======
-			
-		),*/
-
-        
-		/*	'db'=>array(
-
->>>>>>> 036b16c44f362c89b8fbf0746eecfaa315e5f9b2
-		    'class'=>'CDbConnection',
-			'connectionString' => 'mysql:host=127.0.0.1;port=5528;dbname=iris_myisam_20121002',
-			'emulatePrepare' => true,
-			'username' => 'phenibquser',
-			'password' => 'phenibqpass',
-			'charset' => 'utf8',
-
-		),*/
-
-		'db'=>array(
-		    'class'=>'CDbConnection',
-			'connectionString' => 'mysql:host=127.0.0.1;port=3306;dbname=iris_mysiam_20121002',
-			'emulatePrepare' => true,
-			'username' => 'datasourceuser',
-			'password' => 'ici$rule$',
-			'charset' => 'utf8',
-
-		),
-
 		
-
-	
-
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors
 			'errorAction'=>'site/error',

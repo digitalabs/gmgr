@@ -15,16 +15,7 @@ return array(
 			'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
 		),*/
 		// uncomment the following to use a MySQL database
-		
-		/*'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=central',
-			'emulatePrepare' => true,
-			'username' => 'root',
-			'password' => '',
-			'charset' => 'utf8',	
-		),*/
-     
-			'db'=>array(
+		'db'=>array(
 		    'class'=>'CDbConnection',
 			'connectionString' => 'mysql:host=127.0.0.1;port=3306;dbname=iris_mysiam_20121002',
 			'emulatePrepare' => true,
@@ -33,6 +24,22 @@ return array(
 			'charset' => 'utf8',
 
 		),
+		/*'db'=>array(
+			'connectionString' => 'mysql:host=localhost;dbname=central',
+			'emulatePrepare' => true,
+			'username' => 'root',
+			'password' => '',
+			'charset' => 'utf8',	
+		),*/
+		/*	'db'=>array(
+		    'class'=>'CDbConnection',
+			'connectionString' => 'mysql:host=127.0.0.1;port=3306;dbname=iris_mysiam_20121002',
+			'emulatePrepare' => true,
+			'username' => 'datasourceuser',
+			'password' => 'ici$rule$',
+			'charset' => 'utf8',
+
+		),*/
 
 		'log'=>array(
 			'class'=>'CLogRouter',

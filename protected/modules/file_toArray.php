@@ -123,16 +123,18 @@ class file_toArray {
        //print_r($fid); print_r($mid);
         while ($line = fgetcsv($fin, 0)) {
             for ($i = 0; $i < count($checked); $i++) {
-                if ($line[0] === $fid[$i] . "/" . $mid[$i]) {
+                if ($line[0] === $fid . "/" . $mid) {
                  //   echo "HERE*******";
                     $data[] = $line; //existingTerm data
                 }
             }
         }
+        echo "createdGID:";
+        print_r($data);
         fclose($fin);
 
-        $myfile = dirname(__FILE__).'/../../csv_files/corrected.csv';
-        $fin = fopen($myfile, 'r');
+        $correctedCsv = dirname(__FILE__).'/../../csv_files/corrected.csv';
+        $fin = fopen($correctedCsv, 'r');
         $data2 = array();   // data2: edited CreatedGID data
         $data3 = array();   //data 3 is the details of the chosen GID
 
@@ -151,7 +153,7 @@ class file_toArray {
         }
         fclose($fin);
 
-        $fout = fopen($myfile, 'w');
+        $fout = fopen($correctedCsv, 'w');
         foreach ($data2 as $line) {
             fputcsv($fout, $line);
         }
@@ -199,7 +201,7 @@ class file_toArray {
             $data2[] = $line; // data2: edited CreatedGID data
         }
         fclose($fin);
-
+	
         $fout = fopen($createdGID, 'w');
         foreach ($data2 as $line) {
             fputcsv($fout, $line);
@@ -244,6 +246,7 @@ class file_toArray {
         $rows_checked = $this->csv_checked();
 
         $csv_createdGID = dirname(__FILE__).'/../../csv_files/createdGID.csv';
+        //echo $csv_createdGID;
         $final = array();
 
         for ($i = 0; $i < count($rows_checked[0]) - 1; $i++) {
@@ -258,7 +261,7 @@ class file_toArray {
                 $b = $rows[$j][0];
                 $a = $e . "/" . ($c);
 
-                if ($rows_checked[0][$i] === $rows[$j][0] || $c === $e || $b === $a) {
+                if ($rows_checked[0][$i] == $rows[$j][0] || $c == $e || $b == $a) {
                     $final_rows[] = $line;
                 }
                 $j++;
@@ -267,39 +270,29 @@ class file_toArray {
             array_push($final, $final_rows);
             $final_rows = array();
         }
-		//echo "count final:".count($final);
-		//print_r($final);
+        //print_r($final);
         return $final;
     }
     
        function checkIf_standardize($checked) {
 	    //print_r($checked);
-        //echo "checked count:".count($checked);
+       // echo "checked count:".count($checked);
         $rows=$this->csv_corrected();
-
-        
-
-        //$selected = array();
-
+        $selected = array();
         foreach ($rows as $row) : list($GID, $nval, $fid, $fremarks, $female, $femalename, $mid, $mremarks, $male, $malename) = $row;
-        
+        //echo "jksjkdj"."<br>";
+        //echo $fid;
             for ($i = 0; $i < count($checked); $i++) {
-
-          //      echo $fremarks." ".$mremarks."<br>";
-          //      echo $fid." ".$checked[$i]."<br>";
-                if ($fremarks === "in standardized format" && $fid === $checked[$i] && $mremarks === "in standardized format") {
-                    $selected[] = $fid;
-
                // echo $fremarks." ".$mremarks."<br>";
                // echo $fid." ".$checked[$i]."<br>";
                 if ($fremarks == "in standardized format" && $fid == $checked[$i] && $mremarks == "in standardized format") {
                     $selected[] = $fid;
-
+				
                 }
             }
         //echo "count selected:".count($selected);
         endforeach;
-       // echo "<br>selected: ";
+        //echo "<br>selected: ";
        // print_r($selected);
        // echo "<br>--selected: ";
         
@@ -412,31 +405,6 @@ class file_toArray {
         }
         fclose($fp);
         return $rows;
-    }
-	
-	public function csv_createdGID2() {
-        $fp = fopen(dirname(__FILE__)."/createdGID2.csv", "r");
-		
-        while (($row = fgetcsv($fp)) !== FALSE) {
-            $rows[] = $row;
-			
-        }
-        fclose($fp);
-        return $rows;
-    }
-	
-	public function search_createdGID2($pedigree) {
-	
-        $row=$this->csv_createdGID2();
-		$array=array();
-        foreach ($row as $r) : list($root_id, $id, $nval) = $r;
-		if($nval===$pedigree){
-			
-			$array[]=$r;
-		}
-		endforeach;
-        //var_dump($array);
-        return $array;
     }
   
 
