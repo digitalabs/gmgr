@@ -130,8 +130,8 @@
 			$this->widget('bootstrap.widgets.TbButton', array(
 						'type'=>'primary',
                         'label'=>'AssignGID',
-                        //'url' =>array('site/assignGID'),
-                       'htmlOptions' => array(
+                        'url' =>array('site/assignGID'),
+                        'htmlOptions' => array(
 							'onclick' => 'js:
 							
 								var selected = $("#pedigreeGrid").selGridView("getAllSelection");
