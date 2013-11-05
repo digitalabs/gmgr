@@ -284,7 +284,7 @@ class file_toArray {
 
                 if ($fremarks == "in standardized format" && $fid == $checked[$i] && $mremarks == "in standardized format") {
                     $selected[] = $fid;
-
+                }
             }
         //echo "count selected:".count($selected);
         endforeach;
