@@ -1,3 +1,9 @@
+<!--div to grey out the screen while loading indicator is on-->
+<div id='screen'>
+</div>
+<span id="ajax-loading-indicator">
+</span>
+<!---End for loading indicators-->
 <?php
 Yii::import('application.modules.file_toArray');
 Yii::import('application.modules.json');
@@ -12,74 +18,43 @@ $file_toArray = new file_toArray();
 
 $unselected=0;
 
-
-
-   /* $arrSelectedIds = array();
-	
-	$idArr = explode(',',$selected);
-	//var_dump($idArr);
-	foreach($idArr as $index => $id){
-		$id = strtr($id, array('["'=>'','"]'=>''));
-		//echo intval($id)."<br/>";
-		$arrSelectedIds[$index] = (int)($id);
-	}
-	print_r($arrSelectedIds);
-*/
-	/*	
-if (isset($arrSelectedIds)) {
-   
-    $standardized = $file_toArray->checkIf_standardize($arrSelectedIds);
-
-//json fil['e of checked boxes
-    $json = new json($standardized);
-    $json->checkedBox();
-
-//call curl: function createdGID
-    $curl = new curl();
-    $curl->createGID();
-
-// update createdGID.csv
-   // $file_toArray = new file_toArray();
-   // $file_toArray->update_csv_correctedGID($fid, $mid, $checked);
-}*/
-	
-
 if (isset($_POST['selectMethod'])) {
+
     $selected_radio = $_POST['selectMethod'];
+    //echo "<br><br><br><br><br><br><br><br>bondId:" . $selected_radio;
     if ($selected_radio === "changeMethod") {
-       //echo $_POST['bondId'];
-       //print $selected_radio;
-	   $array=array(
-	   "mid"=>$_POST['bondId'],
-	   "gid"=>$_POST['gid'],
-	   "id"=>$_POST['id'],
-	   
-	   );
-	   //create changeMethod.json
-	   $json = new json($array);
-	   $json->create_changeMethod();
-	   
-	   //call curl: function updateMethod
-    Yii::import('application.modules.curl');
-    $curl = new curl();
-    $curl->updateMethod();
+        //  echo "<br><br><br><br><br><br><br><br>bondId:" . $_POST['bondId'];
+        //  print $selected_radio;
+        $array = array(
+            "mid" => $_POST['bondId'],
+            "gid" => $_POST['gid'],
+            "id" => $_POST['id'],
+        );
+        //create changeMethod.json
+        $json = new json($array);
+        $json->create_changeMethod();
+
+        //call curl: function updateMethod
+
+        $curl = new curl();
+        $curl->updateMethod();
     } else {
-        print $selected_radio;
+        //print $selected_radio;
     }
 }
-
 if (isset($_GET['yes'])) {
     $unselected = $file_toArray->get_unselected_rows();
     $standardized = $file_toArray->checkIf_standardize($unselected);
-    echo "standardize unselected:";
-    print_r($standardized);
-	echo "count stan:".count($standardized);
+    //echo "standardize unselected:";
+    //print_r($standardized);
+	//echo "count stan:".count($standardized);
    
+    
     $json = new json($standardized);
     $json->checkedBox();
     
     //call curl: function createdGID
- 
+
     $curl = new curl();
     $curl->createGID();
 
@@ -120,7 +95,7 @@ if (isset($_GET['yes'])) {
 	//update the createdGID.csv with the chosen GID among the existing germplasm names
     $data = $file_toArray->updateGID_createdGID($term, $pedigree, $id, $choose, $fid, $mid, $female, $male);
 
-	//json file of the details of the chosen GID among existing terms
+	//json file of the details of the chosen GID among existing terms; creates a term.json file
     $json = new json($data);
     $json->chosenGID();
 
@@ -141,21 +116,19 @@ if (isset($_GET['yes'])) {
          
           $checked = $rows;
     
-	// update createdGID.csv
+	// update corrected.csv
     $file_toArray->update_csv_correctedGID($fid, $mid, $checked);
 }
 
 $file_toArray = new file_toArray();
 $checked = $file_toArray->json_checked();
 
-
+echo "<br>";
 // final is the array containing arrays of the pedigree lines (from the checkedboxes)
 $final = $file_toArray->getPedigreeLine();
 //echo "count of final:".count($final);
 // If we have an array with items
 if (count($final)) {
-   
-   
 // Create the pagination object
     $pagination = new pagination($final, (isset($_GET['pagea']) ? $_GET['pagea'] : 1), 1);
 // Decide if the first and last links should show
@@ -191,281 +164,330 @@ if (count($final)) {
             }
         endforeach;
 
-       $var4 = (count($checked) - 1);
-        //echo (count($checked) - 1) . " rows selected<br>";
-        $tobe_processed = $file_toArray->csv_corrected();
-		//echo "<br><br><br><br><br><br><br><br><br><br>".count($tobe_processed);
-        $count_tobe_processed = (count($tobe_processed) - (count($checked) - 1));
-        //echo $count_tobe_processed . " remaining rows to be processed<br>";
-        $var1 = $count_tobe_processed;
+      /*
+          count all rows
+         */
+        $row_count = count($file_toArray->csv_corrected());
+        // echo "<br><br><br><br><br><br><br><br><br><br>all:".$row_count;
+        /* END count all rows */
 
-		
+        /*
+          count for rows that are done processing
+         */
+        $processed = count($checked) - 1;
+        //echo "<br>".$processed . " rows selected<br>";
+        /* END count for rows that are done processing */
+
+
+        /*
+          count for unstandardized germplasm names
+         */
         $unselected = $file_toArray->get_unselected_rows();
-        $unstandardized = $file_toArray->checkIf_standardize($checked);
-       
-       // echo "<br><br>" . count($unstandardized);
-        //echo "<br><br>" . count($checked);
-      //  echo (count($checked) - (count($unselected) - 1)) . " row(s) selected with unstandardized germplasm name(s)<br>";
-        $var3 = (count($checked) - (count($unselected) - 1));
-         
-     
+        $standard = count($file_toArray->checkIf_standardize($unselected));
+        $not_standard = count($unselected) - $standard;
+
+        //echo "<br>unselected: " . count($unselected);
+        //echo "<br><br>standard:" . $standard;
+        //echo "<br><br>not standard:" . $not_standard;
+        /*
+          END count for unstandardized germplasm names
+         */
+
+        /* count new GID created for cross names
+         */
         $GID_rows = $file_toArray->csv_corrected_GID();
-        //echo "GID_rows:".count($GID_rows);
-        $var2 = count($GID_rows);
-        //echo count($GID_rows) . " created GID(s)<br>";
+        $newGID_count = count($GID_rows);
+        //echo "<br>".count($GID_rows) . " created GID(s)<br>";
+
+        /* END count new GID created for cross names */
         ?>
 
 
 
-        <body id="page" data-spy="scroll"  onload="show(<?php echo $var1; ?>,<?php echo $var2; ?>,<?php echo $var3; ?>,<?php echo $var4; ?>);">
-           <link href="assets/bootstrap-responsive.css" rel="stylesheet" type="text/css">
+        <body id="page" data-spy="scroll"  onload="show(<?php echo $row_count; ?>,<?php echo $newGID_count; ?>,<?php echo $not_standard; ?>,<?php echo $processed; ?>);">
+           <!--<link href="assets/bootstrap-responsive.css" rel="stylesheet" type="text/css">-->
 
-            <link href="assets/pnotify-1.2.0/jquery.pnotify.default.css" rel="stylesheet" type="text/css">
-            <link href="assets/pnotify-1.2.0/jquery.pnotify.default.icons.css" rel="stylesheet" type="text/css">
+            <link href="./assets/pnotify-1.2.0/jquery.pnotify.default.css" rel="stylesheet" type="text/css">
+            <link href="./assets/pnotify-1.2.0/jquery.pnotify.default.icons.css" rel="stylesheet" type="text/css">
 
             <div class="container" >
+
                 <div class="page-points">
                     <br>
                 </div>
 
+
                 <div id="sections">
               
-                    <div id="data">
-                            <div class="panel panel-default" style="width:90%; font-size: 12px;text-align: left;">
-                                <div class="panel-heading">
-                                   
-								<h3 style=" border-bottom: 0px solid #999; color:#666">Created GID for cross <font style="color:#e13300; "> <?php echo $pages[0][count($pages[0]) - 1][2]; ?></font></h3>
-                                 
-                                </div>
-                                <div class="panel-body">
-								 <?php $male_id = $file_toArray->output_tree_json($pages);// get what ith element in the array is the male parent?>
+                   <div class="row-fluid">
+                            <div class="span10">
 
-									<div class="alert alert-block">
-                                       <?php
-                                       $female_id=$pages[0][0];
-                                       $i=0;
-                                       $male_id = $file_toArray->output_tree_json($pages); // get what ith element in the array is the male parent
-                                   
-                                           foreach ($pages[0] as $r) : list($id, $nval, $term, $GID, $methodID, $method, $locID, $location) = $r;
-                                              
-                                           if ($i==0) {
-                                                   if ($GID === "CHOOSE GID") {
-                                                       if ($i + 1 == $male_id) {
-                                                           echo "The female parent <b>" . $term . "</b> has multiple matches in the database. Please click the link and choose a GID <br>";
-                                                       } else {
-                                                           echo "The female parent <b>" . $term . "</b> has multiple matches in the database. Please choose a GID to set the GID(s) of the preceeding pedigree(s)<br>";
-                                                       }
-                                                   } else {
-                                                       if ($i + 1 == $male_id) {
-                                                           echo "The female parent <b>" . $term . "</b> has a single hit search from the local or central database.<br>";
-                                                       } else {
-                                                           echo "The female parent <b>" . $term . "</b> has a single hit search from the local or central database. Sequentially, the preceeding line(s) is/are also set.<br>";
-                                                       }
-                                                   }
-                                               } else if ($i == $male_id) {
-                                                   if ($GID === "CHOOSE GID") {
-                                                       if (($i + 1) ==  count($pages[0])-1) {
-                                                           echo "The male parent <b>" . $term . "</b> has multiple matches in the database. Please click the link and choose a GID<br>";
-                                                       } else {
-                                                           echo "The male parent <b>" . $term . "</b> has multiple matches in the database. Please choose a GID to set the GID(s) of the preceeding pedigree(s)<br>";
-                                                       }
-                                                   } else {
-                                                       if (($i + 1) ==  count($pages[0])-1) {
-                                                           echo "The male parent <b>" . $term . "</b> has a single hit search from the local or central database.";
-                                                       } else  {
-                                                           echo "The male parent <b>" . $term . "</b> has a single hit search from the local or central database. Sequentially, the preceeding line(s) is/are also set.";
-                                                       }
-                                                   }
-                                               }$i++;
-                                           endforeach;
-                                  
-                                       ?>
-                                   </div>
-                                   
-                                    <table class="table table-hover ">
-                                        <tbody>
-                                        <thead>
-										<th width="15px"></th>	
-                                        <th>Germplasm Name</th>
-                                        <th>GID</th>
-                                        <th>Method </th>
-                                        <th>Location</th>
-
-                                        </thead>
-
-                                        <?php
-                                        //Get and Store female ID's and male ID's as gender indicators
-                                         $femIdArr = array(); $maleIdArr=array();
-                                         
-                                         for ($i = 0; $i < count($pages); $i++) {
-                                            foreach ($pages[$i] as $r) : list($id, $nval, $term, $GID, $methodID, $method, $locID, $location) = $r;
-                                            if(strpos($id,'/')){
-													
-													$data1 = explode("/",$id);
-													$femIdArr[0] = $data1[0];
-													$maleIdArr[0] = $data1[1];
-                                                    
-												}
-                                            endforeach;
-                                         }
-                                         
-                                         //End
-                                        
-										 $i = 0;
-                                   
-                                            foreach ($pages[0] as $r) : list($id, $nval, $term, $GID, $methodID, $method, $locID, $location) = $r;
-
-
-                                                echo '<tr>';
-                                             	
-												//condition 2
-
-                                                echo '<tr>';
-                                             	
-												//condition 2
-
-
-                                                echo '<tr>';
-                                             	
-												//condition 2
-
-                                               if($id==$femIdArr[0] ){
-											   echo '<tr bgcolor="#FFE4E1"> ';
-                                               }else if($id==$femIdArr[0]){
-											   echo '<tr bgcolor="#E6E6FA"> ';
-											   }else{
-											    echo '<tr bgcolor="#90EE90"> ';
-											   }
-
-      
-
-                                               
-
-												if($id==$femIdArr[0] ){ //female 
-													 if ($i === 0) {
-														 echo "<td><img src='images/glyphicons_247_female2.png'></td>";
-														 echo "<td>". $term . "</td>";
-													 }
-													 else{
-														 echo "<td bgcolor='#FFE4E1'></td><td>". $term . "</td>";
-													 }
-											    }else if($id==$maleIdArr[0]) //male
-											    {
-													if ($i === $male_id) {
-													  echo "<td><img src='images/glyphicons_246_male2.png'></td>";
-													  echo "<td>". $term . "</td>";
-												    }else{
-													  echo "<td></td><td>". $term . "</td>";
-													}  
-												}else if(strpos($id,'/')){ //crossed
-													  echo "<td img src='images/glyphicons_197_remove2.png'></td>";
-													  echo "<td bgcolor='#90EE90'>" . $term . "</td>";
-												}
-												 $i++;
-                                                if ($GID === "CHOOSE GID") {
-														echo "<td><a  data-toggle='modal' href='#form-content' >Choose GID</a></td>";
-                                                   
-													    $m_term = $term;
-														$m_id = $id;
-														$m_pedigree = $nval;
-														$m_nval = $nval;
-														$m_mid = $mid;
-														$m_fid = $fid;
-														$m_female = $female;
-														$m_male = $male; 
-														
-												} else if ($GID === "DUPLICATE" || $GID === "NOT SET") {
-													
-														  echo "<td><b><i>" . $GID . "</i></b></td>";
-													 
-												     
-                                                } else {
-													
-														 echo "<td>" . $GID . "</td>";
-													
-                                                }
-                                                //Methods
+                                <!--<div class="span8">
+                                    <div class="area">
+                                -->
+                                <div id="data">
+                                    <div class="panel panel-default" style="font-size: 11px;text-align: left;">
+                                        <div class="panel-heading">
+                                            <h3 style=" border-bottom: 0px solid #999; color:#666">Created GID for cross <font style="color:#e13300; "> <?php echo $pages[0][count($pages[0]) - 1][2]; ?></font></h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            
+											
+											<div class="bs-callout bs-callout-warning">
+											<div class="close" data-dismiss="alert">&times;</div>
+											<h4>Summary info</h4>
+											<p>
                                                 
-													if ((count($pages[0])) == $i && $GID !== "NOT SET") {
+                                                <?php
+                                                $female_id = (int) $pages[0][0][0];
+                                                $i = 0;
+                                                $male_id = $file_toArray->output_tree_json($pages); // get what ith element in the array is the male parent
+                                                //$male_id = (int) $female_id + 1;
+                                                //for ($i = 0; $i < count($pages[0]); $i++) {
+                                                foreach ($pages[0] as $r) : list($id, $nval, $term, $GID, $methodID, $method, $locID, $location, $gpid1, $gpid2, $newGID) = $r;
 
-
-                                                $existing = $file_toArray->csv_methods();
-                                                //print_r($existing);
-                                                $s = "";
-                                                foreach ($existing as $r) : list($mid, $m, $methodType, $methodDesc) = $r;
-                                                    //echo $s.$mid.",".$methodType.", ".$methodDesc."<br>";
-                                                    $data[] = $mid . "," . $methodType . ", " . $methodDesc . ",";
+                                                    if ($i == 0) {
+                                                        if ($GID === "CHOOSE GID") {
+                                                            if ($i + 1 == $male_id) {
+                                                                echo "The female parent <b>" . $term . "</b> has multiple matches in the database. Please click the link and choose a GID <br>";
+                                                            } else {
+                                                                echo "The female parent <b>" . $term . "</b> has multiple matches in the database. Please choose a GID to set the GID(s) of the preceeding pedigree(s)<br>";
+                                                            }
+                                                        } else {
+														if ($newGID === "new") {
+														echo "The female parent <b>" . $term . "</b> has been added to the local database with a suggested method of <b>(".$methodID.")".$method."</b>. You may change the method type by 
+															typing the method id, type, code, or name and clicking the update button.
+															<br>";
+														}else{
+                                                            if ($i + 1 == $male_id) {
+                                                                echo "The female parent <b>" . $term . "</b> has a single hit search from the local or central database.<br>";
+                                                            } else {
+                                                                echo "The female parent <b>" . $term . "</b> has a single hit search from the local or central database. Sequentially, the preceeding line(s) is/are also set.<br>";
+                                                            }
+														}
+                                                        }
+                                                    } else if ($i == $male_id) {
+                                                        if ($GID === "CHOOSE GID") {
+                                                            if (($i + 1) == count($pages[0]) - 1) {
+                                                                echo "The male parent <b>" . $term . "</b> has multiple matches in the database. Please click the link and choose a GID<br>";
+                                                            } else {
+                                                                echo "The male parent <b>" . $term . "</b> has multiple matches in the database. Please choose a GID to set the GID(s) of the preceeding pedigree(s)<br>";
+                                                            }
+                                                        } else {
+														if ($newGID === "new") {
+														echo "The male parent <b>" . $term . "</b> has been added to the local database with a suggested method of <b>(".$methodID.")".$method."</b>. You may change the method type by 
+															typing the method id, type, code, or name and clicking the update button.
+															<br>";
+														}else{
+                                                            if (($i + 1) == count($pages[0]) - 1) {
+                                                                echo "The male parent <b>" . $term . "</b> has a single hit search from the local or central database.<br>";
+                                                            } else {
+                                                                echo "The male parent <b>" . $term . "</b> has a single hit search from the local or central database. Sequentially, the preceeding line(s) is/are also set.<br>";
+                                                            }
+														}
+                                                        }
+                                                    }$i++;
+													
+													if($id== $fid."/".$mid){
+														if ($newGID === "new") {
+															echo "The cross <b>".$term."</b> has been added to the local database with a suggested method of <b>(".$methodID.")".$method."</b>. You may change the method type by 
+															typing the method id, type, code, or name and clicking the update button.
+															<br>";
+														}else{
+															echo "The cross <b>".$term."</b> is already existing in the local or central database.<br>";
+														}
+														
+													}
                                                 endforeach;
-                                                ?><td>
-                                                        <form action="" method="POST" enctype="multipart/form-data">
-                                                            <input type="radio" name="selectMethod" id="r1" value="no"/>
-												<?php
-												echo "(" . $methodID . ")&nbsp; " . $method;
-												?>
+                                                //}
+                                                ?>
+												</p>
+                                            </div>			
+                                        </div>
+                                        <table class="table table-hover table-condensed">
+
+                                            <thead>
+                                            <th></th>
+                                            <th></th>
+                                            <th>Germplasm Name</th>
+                                            <th>GID</th>
+                                            <th>Method </th>
+                                            <th>Location</th>
+
+                                            </thead>
+                                            <tbody>
+
+                                                <?php
+                                                $i = 0;
+                                                $j = 0;
+                                                foreach ($pages[0] as $r) : list($id, $nval, $term, $GID, $methodID, $method, $locID, $location, $gpid1, $gpid2, $newGID) = $r;
+                                                    
+													if ($i == 0) {
+														echo '<tr style="border-left: 4px solid #f38787; /*background-color:rgba(243, 135, 135, 0.10);*/" > ';
+														
+													} elseif ($i == $male_id) {
+														echo '<tr style="border-left: 4px solid #65c465; /*background-color:rgba(0, 167, 83, 0.1)*/"> ';
+														
+													} else{
+														echo "<tr>";
+														
+													}
+													if($id===$fid){
+														echo ' ';
+													}elseif ($id===$mid){
+														echo '';
+													}elseif ($id === $fid . "/" . $mid) {
+														echo '<tr style="border-left: 4px solid #f1e7bc; background-color:#fefbed; ">';
+														
+													}else{
+														echo '';
+													}
+													
+													
+                                                    if ($newGID === "new") {
+													
+                                                        echo "<td width='20px;'><span class='label label-important'>New</span></td>";
+                                                    } else {
+                                                        echo "<td width='20px;'><span></span></td>";
+                                                    }
+
+                                                    if ((count($pages[0])) == $i) {
+                                                        echo "<td width='20px;'></td>";
+                                                    }
+                                                    if ($i == 0) {
+                                                        echo "<td width='20px;'><img  style='display: inline-block;width: 11px;height: 19px; '
+														src='images/glyphicons_247_female2.png' /></td><td>" . $term . "</td>";
+                                                    } elseif ($i == $male_id) {
+                                                        echo "<td width='20px;'><img  style='display: inline-block;width: 16px;height: '
+														src='images/glyphicons_246_male2.png' /></td><td>" . $term . "</td>";
+                                                    } else {
+                                                        echo "<td width='20px;'></td><td> " . $term . "</td>";
+                                                    }
+                                                    $i++;
+                                                    if ($GID === "CHOOSE GID") {
+                                                        //echo "<td><a  data-toggle='modal' href='?term=" . $term . "&id=" . $id . "&pedigree=" . $nval . "&mid=" . $mid . "&fid=" . $fid . "&female=" . $female . "&male=" . $male . "#form-content' >Choose GID</a></td>";
+														echo "<td><a  data-toggle='modal' href='#new-Modal' class='open-dialog' data-id='$term'>Choose GID</a></td>";
+                                                        echo "<input type='hidden' class='$term' name='m_id' id='m_id' value='$id'>";
+														  echo "<input type='hidden' class='$term' name='m_pedigree' id='m_pedigree' value='$nval'>";
+														  echo "<input type='hidden' class='$term' name='m_nval' id='m_val' value='$nval'>";
+														  echo "<input type='hidden' class='$term' name='m_mid' value='$mid'>";
+														  echo "<input type='hidden' class='$term' name='m_fid' value='$fid'>"; 
+													      echo "<input type='hidden' class='$term' name='m_female' value='$female'>"; 
+														  echo "<input type='hidden' class='$term' name='m_male' value='$male'>"; 
+                                                        $m_term = $term;
+                                                        $m_id = $id;
+                                                        $m_pedigree = $nval;
+                                                        $m_nval = $nval;
+                                                        $m_mid = $mid;
+                                                        $m_fid = $fid;
+                                                        $m_female = $female;
+                                                        $m_male = $male;
+                                                    } elseif ($GID === "DUPLICATE" || $GID === "NOT SET" || $GID === "Does not exist") {
+														if($GID === "Does not exist"){
+														echo "<td><span class='label label-inverse'>" . $GID . "</span></td>";
+														}elseif($GID === "NOT SET"){
+                                                        echo "<td class='muted'><font><b><i>" . $GID . "</i></b></font></td>";
+														}
+                                                    } else {
+                                                        echo "<td>" . $GID . "</td>";
+                                                    }
+                                                    //Methods
+
+                                                    if ($newGID == "new") {
+                                                        ?><td>
+                                                        <form action="" method="post">
+                                                            <input type="radio" name="selectMethod" id="r1" value="false" class="select-method" />
+                                                            <?php
+                                                            $line = array();
+                                                            $line = explode("#", $method);
+                                                            $line = implode(",", $line);
+                                                            $$method = $line;
+                                                            echo "(" . $methodID . ")&nbsp; " . $method;
+                                                            ?>
                                                             <br/>
-                                                            <input type="radio" name="selectMethod" id="r2" value="changeMethod"  />
+                                                            <input type="radio" name="selectMethod" id="r2" value="changeMethod" class="select-method" />
                                                             <input
-                                                                id="other"
+                                                                id="other<?php echo $j; ?>"
                                                                 type="text"
-                                                                class="span4 typeahead"
+                                                                class="ta"
                                                                 placeholder="Type the method id/type/code/name"
                                                                 autocomplete="off"
                                                                 data-provide="typeahead"
-                                                                
-                                                            />
+                                                                value=""
+                                                                />
                                                             <br/>
-                                                            <input type="hidden" name="bondId" id="bondId" value="" />
-															<input type="hidden" name="gid" id="gid" value="<?php echo $GID; ?>" />
-															<input type="hidden" name="id" id="id" value="<?php echo $id; ?>" />
-                                                            <input type="submit" name="submit" id="submitMethod" value="Set Method" class="btn btn-primary" ><br><br>
+
+                                                            <input type="hidden" name="bondId" id="bondId<?php echo $j; ?>" value="" />
+
+
+                                                            <input type="hidden" name="gid" id="gid" value="<?php echo $GID; ?>" />
+                                                            <input type="hidden" name="id" id="id" value="<?php echo $id; ?>" />
+                                                            <div id="instruction" class="muted" style="font-size:10px;"></div>
+                                                            <input type="submit" id="submitMethod<?php echo $j; ?>" class="btn btn-primary btn-mini" value="Update"><br><br>
                                                         </form>
 
-														<?php
-														//";
-														}else {
-															echo "<td>(" . $methodID . ")&nbsp; " . $method . "</td>";
-														}
-												 
-                                              
-                                                //locations
-                                          
-													  echo "<td>(" . $locID . ")&nbsp; " . $location . "</td>";
-												
-                                               
-                                                echo '</tr>';
 
-                                            endforeach;
-                                       // }
-                                      
-                                        ?>
-                                        </tbody>
-                                    </table>
+                                                        <?php
+                                                        $j++;
+                                                        //echo "::" . $j;
+                                                        //";
+                                                    } else {
+                                                        $line = array();
+                                                        $line = explode("#", $method);
+                                                        $line = implode(",", $line);
+                                                        $$method = $line;
+                                                        echo "<td>(" . $methodID . ")&nbsp; " . $method . "</td>";
+                                                    }
+                                                    $line = array();
+                                                    $line = explode("#", $location);
+                                                    $line = implode(",", $line);
+                                                    $location = $line;
+                                                    echo "<td>(" . $locID . ")&nbsp; " . $location . "</td>";
+                                                    echo '</tr>';
 
-                                    <?php
-                                    // print out the page numbers beneath the results
-                                    //print_r($_GET);
-                                   // print_r($count_tobe_processed);
-                                    $pageNumbers = $pagination->getLinks2($_GET, $count_tobe_processed);
-                                    echo " <div class='panel-footer'>";
-                                    echo "<ul class='pager'>";
-                                    echo $pageNumbers;
-                                    echo '</ul>';
-                                    echo "</div>";
+                                                endforeach;
+                                                ?>
+                                                </tbody>
+                                        </table>
+
+                                        <?php
+                                        // print out the page numbers beneath the results
+                                        $pageNumbers = $pagination->getLinks2($_GET, $processed, $row_count);
+                                        echo " <div class='panel-footer'>";
+                                        echo "<ul class='pager'>";
+                                        echo $pageNumbers;
+                                        echo '</ul>';
+                                        echo "</div>";
+                                    }
                                 }
-                            }
-                         
+                                ?>
+
+                            </div>	
+                        </div>
+                        <!-- </div>
+                     </div>
+                        -->
+
+
+                        <!-- <div class="span7">
+                             <div class="area">
+                        -->
+                        <br>
+                        <br><br>
+                       
+                        <div id="GermplasmList">
+                            <?php
+                            //include($_SERVER['DOCUMENT_ROOT'] . "/PedigreeImport/list.php");
+							include(dirname(__FILE__)."/createdGID.php");
                             ?>
                         </div>
-
-                    </div>	
-                     <?php
-				   //<!----********************FOR  ASSIGN GID PORTION*******************--->
-                     include( dirname(__FILE__). "/createdGID.php");
-					// Yii::import(dirname(__FILE__). "/createdGID.php");
-			   ?>   
-            </div>
-                 
-        </div
+                        <!--  </div>
+                      </div>
+                        -->
+                    </div>
+                </div>
+                  
+        </div>
     </div>
            
     <style type="text/css">
@@ -510,203 +532,21 @@ if (count($final)) {
         }
     </style>  
 
-    <?php 
-        //Get existing terms
-          $existing = $file_toArray->csv_existingTerm();
-                          
-     ?>
-   <!--Modal-->
-    <div id="form-content" class="modal hide fade in" style="display: none;">
-       
-        <div class="modal-header">
-             <a class="close" data-dismiss="modal">×</a>
-            <?php 
-               if(!isset($m_term))
-				{
-					 $m_term = "";
-				}
-            ?>
-            <h3>Assign GID for <font style="color:#08c;"><?php echo $m_term ?> </font></h3>
-        </div>
-        <div class="modal-body">
-            <form class="contact" name="contact">
-
-                <table class="table table-hover">
-                    <tbody><thead>
-                        <tr>
-                            <th></th>
-                            <th>GPID1</th>
-                            <th>GPID2</th>
-                            <th>GID</th>
-                            <th>Method Type</th>
-                            <th>Location</th>
-                        </tr>
-                    </thead>
-
-                    <?php
-                      for ($j = 0; $j < count($existing); $j++) {
-                        if ($m_term === $existing[$j][1] && $existing[$j][0] === $m_id) {
-                            echo '<tr>';
-                            echo "<td>";
-                            echo '<input type = "radio" name="choose" value="' . $existing[$j][2] . '">' . '</option>';
-                            echo '<input type="hidden" name="term" value="' . $m_term . '" />';
-                            echo '<input type="hidden" name="id" value="' . $m_id . '" />';
-                            echo '<input type="hidden" name="pedigree" value="' . $m_pedigree . '" />';
-                            echo '<input type="hidden" name="fid" value="' . $m_fid . '" />';
-                            echo '<input type="hidden" name="mid" value="' . $m_mid . '" />';
-                            echo '<input type="hidden" name="female" value="' . $m_female . '" />';
-                            echo '<input type="hidden" name="male" value="' . $m_male . '" />';
-                            echo "</td>";
-                            echo "<td>(" . $existing[$j][2] . ")&nbsp; " . $existing[$j][3] . "</td>";
-                            echo "<td>(" . $existing[$j][4] . ")&nbsp; " . $existing[$j][5] . "</td>";
-                            echo "<td>" . $existing[$j][6] . "</td>";
-                            echo "<td>(" . $existing[$j][7] . ")&nbsp; " . $existing[$j][8] . "</td>";
-                            echo "<td>(" . $existing[$j][9] . ")&nbsp;" . $existing[$j][10] . "</td>";
-                            echo '</tr>';
-                        }
-                    }
-                    ?>
-                    </tbody> 
-                </table>
-            </form>
-        </div>
-        <div class="modal-footer">
-            <input class="btn btn-primary" type="submit" value="Assign" id="submit">
-
-            <a href="#" class="btn" data-dismiss="modal">Cancel</a>
-        </div>
+   <!--***************************Modal****************************-->
+    <div id="new-Modal" class="modal hide fade in" style="display: none;">
+           
     </div>
 
-    <div id="form-confirm" class="modal hide fade in" style="display: none;">
-        <div class="modal-header">
-            <a class="close" data-dismiss="modal">×</a>
-
-        </div>
-        <div class="modal-body">
-            <form class="confirm" name="contact">
-                <input type="hidden" name="yes" value="1" />
-            </form>
-        </div>
-        <div class="modal-footer">
-            <input class="btn btn-primary" type="submit" value="Yes" id="submit">
-
-            <a href="#" class="btn" data-dismiss="modal">Cancel</a>
-        </div>
-    </div>
-
-
-    <div id="wait" class="modal1" >
-        <div class="modal-header">
-            <a class="close" data-dismiss="modal">×</a>
-            <h3>Assign GID for <font style="color:#08c;"><?php echo $m_term ?> </font></h3>
-        </div>
-        <div class="modal-body" style="z-index:10;">
-            <center>
-			<br>
-			<br>
-			<br>
-			<br><br>
-                <img src="./images/loading.gif" />
-            </center>
-        </div>
-    </div>    
-
-    <script type="text/javascript" src="assets/bootstrap.min.js"></script>
-	    <script type="text/javascript" src="./assets/underscore.js"></script>
-
-
-
-
-    <script type="text/javascript">
-    /*function disableTxt(id) {
-        document.getElementById("other").disabled = true;
-		document.getElementById(id).disabled = true;
-    }
-    function enableTxt(id) {
-        document.getElementById("other").disabled = false;
-		document.getElementById(id).disabled = false;
-    }
-	*/
-	$(":radio[name='selectMethod']").click(function(){
-  var value = $(this).val();
-  $("#other").attr("disabled", "disabled");
-	  $("#submitMethod").attr("disabled", "disabled");
-  if(value === "changeMethod"){
-  $("#submitMethod").removeAttr("disabled");
-    $("#other").removeAttr("disabled");
-    return;
-  }
-      
-    
-}).click();
-	
-
-    $(function() {
-
-        var bondObjs = {};
-        var bondNames = [];
-
-        //get the data to populate the typeahead (plus an id value)
-        var throttledRequest = _.debounce(function(query, process) {
-            //get the data to populate the typeahead (plus an id value)
-            $.ajax({
-                url: "<?php echo Yii::app()->request->baseUrl;?>"+'/assets/methods.json'
-                        , cache: false
-                        , success: function(data) {
-                    //reset these containers every time the user searches
-                    //because we're potentially getting entirely different results from the api
-                    bondObjs = {};
-                    bondNames = [];
-
-                    //Using underscore.js for a functional approach at looping over the returned data.
-                    _.each(data, function(item, ix, list) {
-
-                        //for each iteration of this loop the "item" argument contains
-                        //1 bond object from the array in our json, such as:
-                        // { "id":7, "name":"Pierce Brosnan" }
-
-                        //add the label to the display array
-                        bondNames.push(item.mid + "," + item.mcode + "," + item.mtype + "," + item.mname);
-                        //bondNames.push(  );
-
-                        //also store a hashmap so that when bootstrap gives us the selected
-                        //name we can map that back to an id value
-                        bondObjs[ item.mid + "," + item.mcode + "," + item.mtype + "," + item.mname] = item.mid;
-                    });
-
-                    //send the array of results to bootstrap for display
-                    process(bondNames);
-                }
-            });
-        });
-
-
-        $(".typeahead").typeahead({
-            source: function(query, process) {
-
-                //here we pass the query (search) and process callback arguments to the throttled function
-                throttledRequest(query, process);
-
-            }
-            , updater: function(selectedName) {
-
-                //save the id value into the hidden field
-                $("#bondId").val(bondObjs[ selectedName ]);
-
-                //return the string you want to go into the textbox (the name)
-                return selectedName;
-            }
-        });
-    });
-    </script>
-	
+   
+    <script type="text/javascript" src="./assets/bootstrap.min.js"></script>
     <script type="text/javascript" src="./assets/pnotify-1.2.0/jquery.pnotify.js"></script>
     <script type="text/javascript">
 
-    function show(var1, var2, var3, var4) {
+    function show(row_count, newGID_count, not_standard, to_process) {
         $.pnotify(
                 {
-                    text: var4 + "/" + var1 + " rows selected",
+                    text: to_process + "/" + row_count + " rows selected",
+                    //text: ,
                     type: "info",
                     hide: false,
                     //shadow: false,
@@ -714,34 +554,55 @@ if (count($final)) {
                     //nonblock: true,
                     //nonblock_opacity: .2
                 });
-
         $.pnotify(
                 {
-                    text: var2 + " created GID(s)",
+                    text: newGID_count + " created GID(s)",
+                    //text:,
+
                     type: "success",
                     hide: false,
                     //shadow: false,
                     //nonblock: true,
                     //nonblock_opacity: .2
                 });
+        if (not_standard > 0) {
+            $.pnotify(
+                    {
+                        text: not_standard + " row(s) <br>" + "<b>not in standard form</b>",
+                        type: "error",
+                        hide: false,
+                        //shadow: false,
+                        //opacity: .8
+                    });
+        }
 
-      
     }
     ;
 	
 
     $(document).ready(function() {
+	   var pop = function(){
+		   $('#new-Modal').css({'z-index': '1000'});
+           $('#screen').css({ opacity: 0.4, 'width':$(document).width(),'height':$(document).height()});
+           $('body').css({'overflow':'hidden'});
+           $('#ajax-loading-indicator').css({'display': 'block'});
+        
+		}
+      $('#submit').click(pop);
+		
+		
         $("input#submit").click(function() {
             $.ajax({
                 type: "POST",
                 data: $('form.contact').serialize(),
                 beforeSend: function() {
-                    //$("#form-content").modal('hide');
-                    $('#wait').show();
+                    $("#new-Modal").modal('hide');
+                   // $('#wait').show();
                 },
                 success: function() {
-                    //$("#GermplasmList").submit();
-                    $('#wait').hide();
+                    $("#GermplasmList").submit();
+                    //$('#wait').hide();
+                   $('#new-Modal').css({'z-index': '1000'});
                     document.location.reload();
                 },
                 error: function() {
@@ -756,7 +617,7 @@ if (count($final)) {
         $('a[data-confirm]').click(function(ev) {
             var href = $(this).attr('href');
             if (!$('#dataConfirmModal').length) {
-                $('body').append('<div id="dataConfirmModal" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><div id="dataConfirmLabel">You have reached the last row selected.Do you want to proceed to the next entry?</div></div><div class="modal-body"></div><div class="modal-footer"><button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button><a class="btn btn-primary" id="dataConfirmOK">OK</a></div></div>');
+                $('body').append('<div id="dataConfirmModal" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">Ã—</button><div id="dataConfirmLabel">You have reached the last row selected.Do you want to proceed to the next entry?</div></div><div class="modal-body"></div><div class="modal-footer"><button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button><a class="btn btn-primary" id="dataConfirmOK">OK</a></div></div>');
             }
             $('#dataConfirmModal').find('.modal-body').text($().attr('data-confirm'));
             $('#dataConfirmOK').attr('href', href);
@@ -765,5 +626,133 @@ if (count($final)) {
 
             return false;
         });
+		$('#dataConfirmOK').click(function(){
+		    alert("Hello");
+		    $('#dataConfirmModal').hide();
+			$this.modal = false;
+		});
+    });
+	    //************For opening a modal dialog***************
+    $(document).on("click", ".open-dialog", function() {
+        //*****the term to be placed on the heading in the modal
+       
+        var term = $(this).data("id");
+        var arr = document.getElementsByClassName(term);
+       
+        var m_values = new Array();
+        m_values.length = 0;
+        for(var i=0;i<arr.length;i++){
+            m_values.push(arr[i].value);
+        }
+      
+        //******assign the obtained value for h4 in the modal*****
+        $.ajax({
+         cache:false,
+         type: 'POST',
+         url:  'modules_folder/chooseGID.php',
+         data:  {termId:term, arr_terms:m_values},
+         success: function(data){
+               $("#new-Modal").html(data);
+            
+         }
+         });
     });
     </script>
+	
+	
+	
+	<script type="text/javascript">
+    /*TYPEAHEAD*/
+	
+	/*function disableTxt(id) {
+     document.getElementById("other").disabled = true;
+     document.getElementById(id).disabled = true;
+     }
+     function enableTxt(id) {
+     document.getElementById("other").disabled = false;
+     document.getElementById(id).disabled = false;
+     }
+     */
+
+    /* $(function() {
+     $("input[type=submit]").addClass("hidden");
+     });
+     */
+
+    $(document).ready(function() {
+        $.each(document.getElementsByClassName("ta"), function(index, value) {
+            //console.log(value['id']);
+            $('#' + value['id']).typeahead({
+                source: function(query, process) {
+
+                    $.ajax({
+                        url: 'methods.json'
+                                , cache: false
+                                , success: function(data) {
+
+                            objects = [];
+                            map = {};
+                            $.each(data, function(i, object) {
+
+                                //for each iteration of this loop the "object" argument contains
+                                //1 bond object from the array in our json, such as:
+                                // { "id":7, "name":"Pierce Brosnan" }
+
+                                //add the label to the display array
+
+                                //also store a hashmap so that when bootstrap gives us the selected
+                                //name we can map that back to an id value
+
+                                map[object.mid + "," + object.mcode + "," + object.mtype + "," + object.mname] = object;
+                                objects.push(object.mid + "," + object.mcode + "," + object.mtype + "," + object.mname);
+                            });
+
+                            //send the array of results to bootstrap for display
+                            process(objects);
+                        }
+                    });
+                },
+                updater: function(object) {
+                    // $('#getSelection<?php echo $i; ?>').val(map[object].label);
+                    $('#bondId' + index).val(map[object].mid);
+                    return object;
+                }
+            });
+
+        });
+    });
+
+    $(document).ready(function() {
+        $.each(document.getElementsByClassName("select-method"), function(index, value) {
+            console.log(value['id']);
+            var radio_checked = $('input:radio[name=selectMethod]:checked').val();
+            if (radio_checked === "false") {
+                $("#submitMethod" + index).attr("disabled", "disabled");
+                $("#other" + index).attr("disabled", "disabled");
+
+            }
+            if (radio_checked === "changeMethod") {
+                $("#submitMethod" + index).removeAttr("disabled");
+                $("#other" + index).removeAttr("disabled");
+
+            }
+
+
+            /*$(":radio[name='selectMethod']").click(function() {
+             var value = $(this).val();
+             $("#other<?php //echo $id;   ?>").attr("disabled", "disabled");
+             $("#submitMethod<?php //echo $id;   ?>").attr("disabled", "disabled");
+             //$("#instruction<?php //echo $id;                 ?>").html('');
+             if (value === "changeMethod") {
+             $("#submitMethod<?php //echo $id;   ?>").removeAttr("disabled");
+             $("#other<?php //echo $id;   ?>").removeAttr("disabled");
+             //$("#instruction<?php //echo $id;                 ?>").html('Press "Enter" to update');
+             return;
+             }
+             
+             });
+             */
+        });
+    });
+
+</script>

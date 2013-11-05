@@ -38,27 +38,33 @@ $this->widget('bootstrap.widgets.TbButton',array(
        //include( dirname(__FILE__). "/output.php");
   ?>
  <?php
-  echo "<div id='table1'>";
-  $this->widget('bootstrap.widgets.TbJsonGridView', array(
-    'id' => 'pedigree',
-    'type'=>'striped bordered condensed',
-	'dataProvider'=>$arrayDataProvider,
-	//'filter'=>$model,
-	'template'=>"{items}{pager}",//strcmp($fremarks, 'in standardized format')
-        'columns'=>array(
+ // echo "<div id='table1'>";
+  $this->widget('ext.selgridview.BootSelGridView', array(
+   'id' => 'pedigreeGrid',
+   'dataProvider' => $dataProvider,
+   'filter' => $filtersForm,
+   'selectableRows' => 10,
+   //'enablePagination' => true,
+   'columns'=>array(
                 array(
                     'header'=>'Cross Name',
+					'name' => '',
+					'type' => 'raw',
                     'value'=>'CHtml::encode($data["nval"])',
+					 'filter' => CHtml::textField('FilterPedigreeForm[nval]', isset($_GET['FilterPedigreeForm']['nval]']) ? $_GET['FilterPedigreeForm']['nval'] : ''),
                     'htmlOptions'=>array(
                         'style'=>'width:50px;',
                         )
                     ),
                 array(
                     'header'=>'GID',
+					'name' => 'gid',
+					'type' => 'raw',
                     'value'=>'CHtml::encode($data["gid"])'
                     ),
                array(
                    'header'=>'Female Parent',
+				   'name' => 'female',
                    'type'=> 'raw',
                    'value'=> function ($data){
 				     
@@ -70,6 +76,7 @@ $this->widget('bootstrap.widgets.TbButton',array(
                ),     
                array(
                    'header'=>'Male Parent',
+				   'name' => 'male',
                    'type'=> 'raw',
                    'value'=> function ($data){
 					   if (strcmp(CHtml::encode($data["mremarks"]),"in standardized format")==0)
@@ -97,18 +104,13 @@ $this->widget('bootstrap.widgets.TbButton',array(
 						}
                ),
       ),
-	'template'=>'{summary}{items}{pager}',
-    //'enablePagination' => true,
-    'summaryText' => false,
-    'cacheTTL' => 10, // cache will be stored 10 seconds (see cacheTTLType)
-	'cacheTTLType' => 's', // type can be of seconds, minutes or hours
+
+  
 ));
 
- echo "</div>";
+ //echo "</div>";
 ?> 
-<?php $this->endWidget(); 
-//echo CHtml::endForm();
-?>
+
 <script type="text/javascript">
 $(document).ready(function() {
   var pop = function(){
@@ -119,3 +121,6 @@ $(document).ready(function() {
  $('#btnStandard').click(pop);
 });
 </script>
+<?php $this->endWidget(); 
+//echo CHtml::endForm();
+?>

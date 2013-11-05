@@ -1,5 +1,1 @@
-<<<<<<< HEAD
-{"parent2ID":"0","parent2":"IR 88888-UBN 3-4","parent1":"IR 64-64-4B","term":"IR 64-64-4B","germplasm":["1","IR 64-64-4B","IR 64-64-4B","-15","206","Selected bulk","201","Saint Vincent and the Grenadines","-9","-11"],"cross":"Sample1","is_female":false}
-=======
-{"parent2ID":"0","parent2":"IR 88888-UBN 3-4","parent1":"IR 64-64-4B","term":"IR 64-64-4B","germplasm":["1","IR 64-64-4B","IR 64-64-4B","-37","206","Selected bulk","33","Myanmar","-35","-36"],"cross":"Sample1","is_female":false}
->>>>>>> 1e3abc102eabf9a91f49f1602526ae22ad9e9841
+{"parent2ID":"0","parent2":"IR 88888-UBN 3-4B-897","parent1":"IR 64-64-4B","term":"IR 64-64-4B","germplasm":["1","IR 64-64-4B","IR 64-64-4B","-15","206","Selected bulk","201","Saint Vincent and the Grenadines","-9","-11","false"],"cross":"Sample1","is_female":false}

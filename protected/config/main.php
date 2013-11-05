@@ -65,9 +65,9 @@ return array(
 	
 		// uncomment the following to use a MySQL database
 
-
+		/*
 		
-        /*  'db'=>array(
+         'db'=>array(
 
 		    'class'=>'CDbConnection',
 			'connectionString' => 'mysql:host=localhost;dbname=central',
@@ -76,8 +76,8 @@ return array(
 			'password' => '',
 			'charset' => 'utf8',
 			
-		),*/
-
+		),
+        */
         
 		/*	'db'=>array(
 

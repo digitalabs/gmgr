@@ -196,7 +196,8 @@ class pagination {
         return;
     }
 
-    public function getLinks2($params = array(), $count) {
+    public function getLinks2($params = array(), $count, $row_count, $not_standard) {
+	//echo "****count: ".$count;
 // Initiate the links array
         $plinks = array();
         $links = array();
@@ -213,9 +214,12 @@ class pagination {
 // If we have more than one pages
         if (($this->pages) > 1) {
 // Assign the 'previous page' link into the array if we are not on the first page
-            if ($this->page == 1) {
-                $slinks[] = '<li><a href="?pagea=' . ($this->page + 1) . $queryUrl . '#created-GID"> Next Entry &rarr; </a> </li>
-                ';
+            if ($this->page == 1 && $count>0) {
+                $slinks[] = '<li> 
+               <a href="?pagea=' . ($this->page + 1) . $queryUrl . '">Next Entry &rarr;</a>
+			   </li>
+';
+				
             }
             if ($this->page != 1 && $this->page != $this->pages) {
 
@@ -226,24 +230,40 @@ class pagination {
 
                 if ($count == 0) {
                     $plinks[] = '<li><a href="?pagea=' . ($this->page - 1) . $queryUrl . '"> &larr; Previous </a> </li>
-                ';
-                } else {
-                    $plinks[] = '
-                        <li><a href="?pagea=' . ($this->page - 1) . $queryUrl . '"> &larr; Previous </a> 
-                    <a href="?yes=1&pagea=' . ($this->page + 1) . $queryUrl . '" data-confirm="You have reached the last row selected.Do you want to proceed to next entry?">Next Entry &rarr;</a>
-                  
-    <script>
-    
-    </script>
-';
+                ';}
+                else if($count!=$row_count){
+					
+					if(($row_count-$count)===$not_standard){
+						//echo "dddl".($row_count-$count)."<br>".$not_standard;
+						$plinks[] = '      
+					   <li><a href="?pagea=' . ($this->page - 1) . $queryUrl . '"> &larr; Previous </a> 
+                        <a href="#">Next Entry &rarr;</a>
+					';
+					}else{
+						//echo "heres";
+					$plinks[] = '      
+					   <li><a href="?pagea=' . ($this->page - 1) . $queryUrl . '"> &larr; Previous </a> 
+                        <a href="?yes=1&pagea=' . ($this->page + 1) . $queryUrl . '" data-confirm="You have reached the last row selected.Do you want to proceed to next entry?">Next Entry &rarr;</a>
+					';
+					}
+				}
+                 
+
                 }
-            }
+            
 
             // Push the array into a string using any some glue
             //print_r($plinks);
             //print_r($slinks);
             return implode(' ', $plinks) . implode(' ', $slinks);
-        }
+        }else{
+		if($count!=$row_count){
+		$slinks[] = '<li>
+               <a href="?yes=1&pagea=' . ($this->page + 1) . $queryUrl . '" data-confirm="You have reached the last row selected.Do you want to proceed to next entry?">Next Entry &rarr;</a>
+			   </li>';
+			   return implode(' ', $plinks) . implode(' ', $slinks);
+			   }
+		}
         return;
     }
 
@@ -251,3 +271,4 @@ class pagination {
 
 // <a data-toggle="modal" href="?yes=1&pagea=' . ($this->page + 1) . $queryUrl . '#form-confirm" >Next Entry &rarr;</a>
 ?>
+

@@ -18,7 +18,7 @@ class file_toArray {
 
     public function uploadedFile() {
         //$f = fopen($_FILES["file"]["name"], "r");
-        $filePath = dirname(__FILE__).'/../../csv_files/germplasmList.csv';
+        $filePath = dirname(__FILE__) . '/../../csv_files/germplasmList.csv';
         $f = fopen($filePath, "r");
         //echo $_FILES["file"]["name"];
         //$fr = fread($f, filesize($_FILES["file"]["name"]));
@@ -38,8 +38,8 @@ class file_toArray {
     }
 
     public function csv_output() {
-        $fp = fopen(dirname(__FILE__)."/../../csv_files/output.csv", "r");
-       
+        $fp = fopen(dirname(__FILE__) . "/../../csv_files/output.csv", "r");
+
         while (($row = fgetcsv($fp)) !== FALSE) {
             $rows[] = $row;
         }
@@ -48,8 +48,8 @@ class file_toArray {
     }
 
     public function csv_corrected() {
-        $fp = fopen(dirname(__FILE__)."/../../csv_files/corrected.csv", "r");
-        
+        $fp = fopen(dirname(__FILE__) . "/../../csv_files/corrected.csv", "r");
+
         while (($row = fgetcsv($fp)) !== FALSE) {
             $rows[] = $row;
         }
@@ -58,7 +58,7 @@ class file_toArray {
     }
 
     public function csv_createdGID() {
-        $fp = fopen(dirname(__FILE__)."/../../csv_files/createdGID.csv", "r");
+        $fp = fopen(dirname(__FILE__) . "/../../csv_files/createdGID.csv", "r");
         while (($row = fgetcsv($fp)) !== FALSE) {
             $rows[] = $row;
         }
@@ -67,7 +67,7 @@ class file_toArray {
     }
 
     public function csv_checked() {
-        $fp = fopen(dirname(__FILE__)."/../../csv_files/checked.csv", "r");
+        $fp = fopen(dirname(__FILE__) . "/../../csv_files/checked.csv", "r");
         while (($row = fgetcsv($fp)) !== FALSE) {
             $rows[] = $row;
         }
@@ -76,7 +76,7 @@ class file_toArray {
     }
 
     public function csv_checked2() {
-        $fp = fopen(dirname(__FILE__)."/../../csv_files/checked.csv", "r");
+        $fp = fopen(dirname(__FILE__) . "/../../csv_files/checked.csv", "r");
         //$checked=array();
         while (($row = fgetcsv($fp)) !== FALSE) {
             $checked = $row;
@@ -86,7 +86,7 @@ class file_toArray {
     }
 
     public function csv_existingTerm() {
-        $myfile = dirname(__FILE__).'/../../csv_files/existingTerm.csv';
+        $myfile = dirname(__FILE__) . '/../../csv_files/existingTerm.csv';
 
         $fin = fopen($myfile, 'r');
         $existing = array();
@@ -98,7 +98,7 @@ class file_toArray {
     }
 
     public function json_checked() {
-        $json = file_get_contents(dirname(__FILE__)."/../../json_files/checked.json");
+        $json = file_get_contents(dirname(__FILE__) . "/../../json_files/checked.json");
         $jsonIterator = new RecursiveIteratorIterator(
                 new RecursiveArrayIterator(json_decode($json, TRUE)), RecursiveIteratorIterator::SELF_FIRST);
         $checked = array();
@@ -110,29 +110,31 @@ class file_toArray {
                 array_push($checked, $val);
             }
         }
-    //    fclose($json);
+        //    fclose($json);
 //echo count($checked);
         return $checked;
     }
 
     public function update_csv_correctedGID($fid, $mid, $checked) {
         //echo "checked count:".count($checked);
-        $myfile = dirname(__FILE__).'/../../csv_files/createdGID.csv';
+        $myfile = dirname(__FILE__) . '/../../csv_files/createdGID.csv';
         $fin = fopen($myfile, 'r');
         $data = array();
-       //print_r($fid); print_r($mid);
+        //print_r($fid); print_r($mid);
         while ($line = fgetcsv($fin, 0)) {
             for ($i = 0; $i < count($checked); $i++) {
-                if ($line[0] === $fid[$i] . "/" . $mid[$i]) {
-                 //   echo "HERE*******";
+                if ($line[0] === $fid . "/" . $mid) {
+                    //   echo "HERE*******";
                     $data[] = $line; //existingTerm data
                 }
             }
         }
+        echo "createdGID:";
+        print_r($data);
         fclose($fin);
 
-        $myfile = dirname(__FILE__).'/../../csv_files/corrected.csv';
-        $fin = fopen($myfile, 'r');
+        $correctedCsv = dirname(__FILE__) . '/../../csv_files/corrected.csv';
+        $fin = fopen($correctedCsv, 'r');
         $data2 = array();   // data2: edited CreatedGID data
         $data3 = array();   //data 3 is the details of the chosen GID
 
@@ -151,7 +153,7 @@ class file_toArray {
         }
         fclose($fin);
 
-        $fout = fopen($myfile, 'w');
+        $fout = fopen($correctedCsv, 'w');
         foreach ($data2 as $line) {
             fputcsv($fout, $line);
         }
@@ -168,7 +170,7 @@ class file_toArray {
     }
 
     public function updateGID_createdGID($term, $pedigree, $id, $choose, $fid, $mid, $female, $male) {
-        $existingTerm = dirname(__FILE__).'/../../csv_files/existingTerm.csv';
+        $existingTerm = dirname(__FILE__) . '/../../csv_files/existingTerm.csv';
         $fin = fopen($existingTerm, 'r');
         $data = array();
         while ($line = fgetcsv($fin, 0)) {
@@ -178,7 +180,7 @@ class file_toArray {
         }
         fclose($fin);
 
-        $createdGID = dirname(__FILE__).'/../../csv_files/createdGID.csv';
+        $createdGID = dirname(__FILE__) . '/../../csv_files/createdGID.csv';
         $fin = fopen($createdGID, 'r');
         $data2 = array();
         $data4 = array();
@@ -243,7 +245,8 @@ class file_toArray {
         // array from checked.csv file
         $rows_checked = $this->csv_checked();
 
-        $csv_createdGID = dirname(__FILE__).'/../../csv_files/createdGID.csv';
+        $csv_createdGID = dirname(__FILE__) . '/../../csv_files/createdGID.csv';
+        //echo $csv_createdGID;
         $final = array();
 
         for ($i = 0; $i < count($rows_checked[0]) - 1; $i++) {
@@ -258,7 +261,7 @@ class file_toArray {
                 $b = $rows[$j][0];
                 $a = $e . "/" . ($c);
 
-                if ($rows_checked[0][$i] === $rows[$j][0] || $c === $e || $b === $a) {
+                if ($rows_checked[0][$i] == $rows[$j][0] || $c == $e || $b == $a) {
                     $final_rows[] = $line;
                 }
                 $j++;
@@ -267,41 +270,40 @@ class file_toArray {
             array_push($final, $final_rows);
             $final_rows = array();
         }
-		//echo "count final:".count($final);
-		//print_r($final);
+        //print_r($final);
         return $final;
     }
-    
-       function checkIf_standardize($checked) {
-	    //print_r($checked);
-        //echo "checked count:".count($checked);
-        $rows=$this->csv_corrected();
-        //$selected = array();
+
+    function checkIf_standardize($checked) {
+        //print_r($checked);
+        // echo "checked count:".count($checked);
+        $rows = $this->csv_corrected();
+        $selected = array();
         foreach ($rows as $row) : list($GID, $nval, $fid, $fremarks, $female, $femalename, $mid, $mremarks, $male, $malename) = $row;
-        //echo "jksjkdj"."<br>";
-        //echo $fid;
+            //echo "jksjkdj"."<br>";
+            //echo $fid;
             for ($i = 0; $i < count($checked); $i++) {
-               // echo $fremarks." ".$mremarks."<br>";
-               // echo $fid." ".$checked[$i]."<br>";
+                // echo $fremarks." ".$mremarks."<br>";
+                 //echo $fid." ".$checked[$i]."<br>";
                 if ($fremarks == "in standardized format" && $fid == $checked[$i] && $mremarks == "in standardized format") {
                     $selected[] = $fid;
-				
                 }
             }
         //echo "count selected:".count($selected);
         endforeach;
-       // echo "<br>selected: ";
-       // print_r($selected);
-       // echo "<br>--selected: ";
-        
+        //echo "<br>selected: ";
+         //print_r($selected);
+        // echo "<br>--selected: ";
+
         return $selected;
     }
-     function get_unselected_rows() {
-        $checked = $this->csv_checked();
-     
-       // print_r($checked);
 
-        $fp = fopen(dirname(__FILE__)."/../../csv_files/corrected.csv", "r");
+    function get_unselected_rows() {
+        $checked = $this->csv_checked();
+
+        // print_r($checked);
+
+        $fp = fopen(dirname(__FILE__) . "/../../csv_files/corrected.csv", "r");
         while (($row = fgetcsv($fp)) !== FALSE) {
             $rows[] = $row;
         }
@@ -309,7 +311,7 @@ class file_toArray {
 
         foreach ($rows as $row) : list($GID, $nval, $fid) = $row;
 
-            if ($this->hasChecked($checked, $fid) === false) {
+            if ($this->hasChecked($checked[0], $fid) === false) {
                 $unselected[] = $fid;
             }
         endforeach;
@@ -317,94 +319,96 @@ class file_toArray {
         //print_r($unselected);
         return $unselected;
     }
-        public function csv_corrected_GID() {
+
+    public function csv_corrected_GID() {
         $rows = array();
-        $fp = fopen(dirname(__FILE__)."/../../csv_files/corrected.csv", "r");
-       
+        $fp = fopen(dirname(__FILE__) . "/../../csv_files/corrected.csv", "r");
+
         while (($row = fgetcsv($fp)) !== FALSE) {
             if ($row[0] != "N/A") {
                 $rows[] = $row;
             }
         }
         fclose($fp);
-         
+
         return $rows;
     }
-    
-   public function array_push_assoc($array, $key, $value) {
-       $array[$key] = $value;
-       return $array;
-   }
+
+    public function array_push_assoc($array, $key, $value) {
+        $array[$key] = $value;
+        return $array;
+    }
+
     public function output_tree_json($pages) {
 
-       /* create array for tree.json */
-       $mid = (int) ($pages[0][0][0]) + 1;
-       for ($i = (count($pages[0]) - 2); $i >= 0; $i--) {
-           if ($mid === (int) $pages[0][$i][0]) {
-               if ($i === count($pages[0]) - 2) {
-                   $male_arr = array(
-                       "name" => $pages[0][$i][2],
-                       "gid" => $pages[0][$i][3],
-                       "location" => $pages[0][$i][7]
-                   );
-                   //print_r($male_arr);
-                   //echo "<br>";
-               } else {
-                   $male1_arr = array(
-                       "name" => $pages[0][$i][2],
-                       "gid" => $pages[0][$i][3],
-                       "location" => $pages[0][$i][7]
-                   );
-                   $male1_arr = $this->array_push_assoc($male1_arr, 'children', array($male_arr));
-                   $male_arr = $male1_arr;
-               }
-               $fid_i = $i;
-           } else {
-               if ($i === (int) $fid_i - 1) {
-                   $female_arr = array(
-                       "name" => $pages[0][$i][2],
-                       "gid" => $pages[0][$i][3],
-                       "location" => $pages[0][$i][7]
-                   );
-                   //print_r($female_arr);
-                   //echo "HERE<br>";
-               } else {
-                   //$female=array();
-                   $female1_arr = array(
-                       "name" => $pages[0][$i][2],
-                       "gid" => $pages[0][$i][3],
-                       "location" => $pages[0][$i][7]
-                   );
-                   //echo "<br>";
-                   //print_r($female1_arr);
-                   $female1_arr =$this->array_push_assoc($female1_arr, 'children', array($female_arr));
-                   $female_arr = $female1_arr;
-               }
-           }
-       }
+        /* create array for tree.json */
+        $mid = (int) ($pages[0][0][0]) + 1;
+        for ($i = (count($pages[0]) - 2); $i >= 0; $i--) {
+            if ($mid === (int) $pages[0][$i][0]) {
+                if ($i === count($pages[0]) - 2) {
+                    $male_arr = array(
+                        "name" => $pages[0][$i][2],
+                        "gid" => $pages[0][$i][3],
+                        "location" => $pages[0][$i][7]
+                    );
+                    //print_r($male_arr);
+                    //echo "<br>";
+                } else {
+                    $male1_arr = array(
+                        "name" => $pages[0][$i][2],
+                        "gid" => $pages[0][$i][3],
+                        "location" => $pages[0][$i][7]
+                    );
+                    $male1_arr = $this->array_push_assoc($male1_arr, 'children', array($male_arr));
+                    $male_arr = $male1_arr;
+                }
+                $fid_i = $i;
+            } else {
+                if ($i === (int) $fid_i - 1) {
+                    $female_arr = array(
+                        "name" => $pages[0][$i][2],
+                        "gid" => $pages[0][$i][3],
+                        "location" => $pages[0][$i][7]
+                    );
+                    //print_r($female_arr);
+                    //echo "HERE<br>";
+                } else {
+                    //$female=array();
+                    $female1_arr = array(
+                        "name" => $pages[0][$i][2],
+                        "gid" => $pages[0][$i][3],
+                        "location" => $pages[0][$i][7]
+                    );
+                    //echo "<br>";
+                    //print_r($female1_arr);
+                    $female1_arr = $this->array_push_assoc($female1_arr, 'children', array($female_arr));
+                    $female_arr = $female1_arr;
+                }
+            }
+        }
 
-       $tree = array(
-           "name" => $pages[0][count($pages[0]) - 1][2],
-           "gid" => $pages[0][count($pages[0]) - 1][3],
-           "location" => $pages[0][count($pages[0]) - 1][7],
-           "children" => array($female_arr, $male_arr)
-       );
-       //echo "<br>";
-       //print_r($tree);
-	   Yii::import('application.modules.json'); 
-       $json = new json($tree);
-       $json->create_tree();
-       return $fid_i;
-   }
-   public function csv_methods() {
-        $fp = fopen(dirname(__FILE__)."/../../csv_files/methods.csv", "r");
+        $tree = array(
+            "name" => $pages[0][count($pages[0]) - 1][2],
+            "gid" => $pages[0][count($pages[0]) - 1][3],
+            "location" => $pages[0][count($pages[0]) - 1][7],
+            "children" => array($female_arr, $male_arr)
+        );
+        //echo "<br>";
+        //print_r($tree);
+        Yii::import('application.modules.json');
+        $json = new json($tree);
+        $json->create_tree();
+        return $fid_i;
+    }
+
+    public function csv_methods() {
+        $fp = fopen(dirname(__FILE__) . "/../../csv_files/methods.csv", "r");
         while (($row = fgetcsv($fp)) !== FALSE) {
             $rows[] = $row;
         }
         fclose($fp);
         return $rows;
     }
-  
 
 }
 

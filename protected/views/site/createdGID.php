@@ -122,72 +122,8 @@ $(document).ready(function() {
 });*/
 
 
-/*****************************************SCRIPT for ASSIGN GID**********************************/
-
-    function show(var1, var2, var3, var4) {
-        $.pnotify(
-                {
-                    text: var4 + "/" + var1 + " rows selected",
-                    type: "info",
-                    hide: false,
-                    //shadow: false,
-                    //opacity: .8
-                    //nonblock: true,
-                    //nonblock_opacity: .2
-                });
-
-        $.pnotify(
-                {
-                    text: var2 + " created GID(s)",
-                    type: "success",
-                    hide: false,
-                    //shadow: false,
-                    //nonblock: true,
-                    //nonblock_opacity: .2
-                });
-
-      
-    }
-    ;
 	
-
-    $(document).ready(function() {
-        $("input#submit").click(function() {
-            $.ajax({
-                type: "POST",
-                data: $('form.contact').serialize(),
-                beforeSend: function() {
-                    //$("#form-content").modal('hide');
-                    $('#wait').show();
-                },
-                success: function() {
-                    //$("#GermplasmList").submit();
-                    $('#wait').hide();
-                    document.location.reload();
-                },
-                error: function() {
-                    alert("failure");
-                }
-            });
-            return false;
-        });
-    });
-    $(document).ready(function() {
-        var msg = 'You have reached the last row selected.Do you want to proceed to next entry?';
-        $('a[data-confirm]').click(function(ev) {
-            var href = $(this).attr('href');
-            if (!$('#dataConfirmModal').length) {
-                $('body').append('<div id="dataConfirmModal" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><div id="dataConfirmLabel">You have reached the last row selected.Do you want to proceed to the next entry?</div></div><div class="modal-body"></div><div class="modal-footer"><button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button><a class="btn btn-primary" id="dataConfirmOK">OK</a></div></div>');
-            }
-            $('#dataConfirmModal').find('.modal-body').text($().attr('data-confirm'));
-            $('#dataConfirmOK').attr('href', href);
-
-            $('#dataConfirmModal').modal({show: true});
-
-            return false;
-        });
-		
-    });
+	
 $(document).ajaxSend(function(event, request, settings) {
     $('#loading-indicator').show();
 });
