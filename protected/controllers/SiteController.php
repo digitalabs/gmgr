@@ -299,7 +299,7 @@ class SiteController extends Controller {
 		));
 	}
 	
-    /*public function actionCreatedGID() {
+    public function actionCreatedGID() {
             //Open corrected.csv and process file
             $myfile = dirname(__FILE__).'/../../csv_files/corrected.csv';
             
@@ -379,7 +379,7 @@ class SiteController extends Controller {
 		   // print_r($file_toArray->csv_createdGID());
 		}
             //Open corrected.csv and process file*/
-        /*    $myfile = dirname(__FILE__).'/../../csv_files/corrected.csv';
+            $myfile = dirname(__FILE__).'/../../csv_files/corrected.csv';
             
             $fp = fopen($myfile, 'r');
             $rows = array();
@@ -425,7 +425,7 @@ class SiteController extends Controller {
 				'selected' => $checked,'GdataProvider'=>$GdataProvider
 			));
 		}
-   }*/
+   }
 
    public function actionOutput(){
 	   
