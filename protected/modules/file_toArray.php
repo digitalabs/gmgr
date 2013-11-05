@@ -280,26 +280,11 @@ class file_toArray {
         $rows=$this->csv_corrected();
         $selected = array();
         foreach ($rows as $row) : list($GID, $nval, $fid, $fremarks, $female, $femalename, $mid, $mremarks, $male, $malename) = $row;
-        //echo "jksjkdj"."<br>";
-        //echo $fid;
             for ($i = 0; $i < count($checked); $i++) {
-               // echo $fremarks." ".$mremarks."<br>";
-               // echo $fid." ".$checked[$i]."<br>";
+
                 if ($fremarks == "in standardized format" && $fid == $checked[$i] && $mremarks == "in standardized format") {
                     $selected[] = $fid;
 
-          //      echo $fremarks." ".$mremarks."<br>";
-          //      echo $fid." ".$checked[$i]."<br>";
-                if ($fremarks === "in standardized format" && $fid === $checked[$i] && $mremarks === "in standardized format") {
-                        $selected[] = $fid;
-
-               // echo $fremarks." ".$mremarks."<br>";
-               // echo $fid." ".$checked[$i]."<br>";
-                    if ($fremarks == "in standardized format" && $fid == $checked[$i] && $mremarks == "in standardized format") {
-                        $selected[] = $fid;
-
-                    }
-                }
             }
         //echo "count selected:".count($selected);
         endforeach;
