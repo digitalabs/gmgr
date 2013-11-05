@@ -131,7 +131,24 @@
 						'type'=>'primary',
                         'label'=>'AssignGID',
                         //'url' =>array('site/assignGID'),
-                       
+                       'htmlOptions' => array(
+							'onclick' => 'js:
+							
+								var selected = $("#pedigreeGrid").selGridView("getAllSelection");
+								$("#germplasm-id").val(selected);
+								$("#submit-btn").click();
+								/*var selected = $("#pedigreeGrid").selGridView("getAllSelection"); 
+								alert(selected);
+								$.ajax({
+									type: "POST",
+									data: {selectedIds:selected},
+									url: "'. $url .'",
+									success: function(response){
+										//window.location="'.$url.'";
+									}
+								});*/
+							',
+                        ),
                 )); 
                echo CHtml::textField('Germplasm[gid]','',array(
 					'id' => 'germplasm-id',
