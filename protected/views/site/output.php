@@ -130,7 +130,7 @@
 			$this->widget('bootstrap.widgets.TbButton', array(
 						'type'=>'primary',
                         'label'=>'AssignGID',
-                        'url' =>array('site/assignGID'),
+                        //'url' =>array('site/assignGID'),
                         'htmlOptions' => array(
 							'onclick' => 'js:
 							
