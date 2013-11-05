@@ -72,6 +72,11 @@ class json {
 
        $this->toFile($jsonfile, $this->data);
    }
+    function create_changeMethod() {
+        $jsonfile = dirname(__FILE__)."/../../json_files/changeMethod.json";
+
+        $this->toFile($jsonfile, $this->data);
+    }
 
 }
 
