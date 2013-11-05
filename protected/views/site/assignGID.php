@@ -426,7 +426,6 @@ if (count($final)) {
                                                             <input type="submit" id="submitMethod<?php echo $j; ?>" class="btn btn-primary btn-mini" value="Update"><br><br>
                                                         </form>
 
-<<<<<<< HEAD
 														<?php
 														//";
 														}else {
@@ -492,7 +491,6 @@ if (count($final)) {
                                     echo $pageNumbers;
                                     echo '</ul>';
                                     echo "</div>";
-=======
 
                                                         <?php
                                                         $j++;
@@ -526,7 +524,6 @@ if (count($final)) {
                                         echo '</ul>';
                                         echo "</div>";
                                     }
->>>>>>> gmgr_restructure-dev
                                 }
                                 ?>
 
