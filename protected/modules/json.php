@@ -22,7 +22,11 @@ class json {
 
     public function toFile($jsonfile, $data) {
         $jsonText = json_encode($data);
+<<<<<<< HEAD
         //chmod($jsonfile,0777);
+=======
+        chmod($jsonfile, 0777);
+>>>>>>> 43c07efb29ee0f4572c5f659dd6912e27fa7333b
         file_put_contents($jsonfile, $jsonText);
     }
 

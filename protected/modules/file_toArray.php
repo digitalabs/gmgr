@@ -283,11 +283,26 @@ class file_toArray {
         //echo "jksjkdj"."<br>";
         //echo $fid;
             for ($i = 0; $i < count($checked); $i++) {
+<<<<<<< HEAD
                // echo $fremarks." ".$mremarks."<br>";
                // echo $fid." ".$checked[$i]."<br>";
                 if ($fremarks == "in standardized format" && $fid == $checked[$i] && $mremarks == "in standardized format") {
                     $selected[] = $fid;
 				
+=======
+
+          //      echo $fremarks." ".$mremarks."<br>";
+          //      echo $fid." ".$checked[$i]."<br>";
+                if ($fremarks === "in standardized format" && $fid === $checked[$i] && $mremarks === "in standardized format") {
+                        $selected[] = $fid;
+
+               // echo $fremarks." ".$mremarks."<br>";
+               // echo $fid." ".$checked[$i]."<br>";
+                    if ($fremarks == "in standardized format" && $fid == $checked[$i] && $mremarks == "in standardized format") {
+                        $selected[] = $fid;
+
+                    }
+>>>>>>> 43c07efb29ee0f4572c5f659dd6912e27fa7333b
                 }
             }
         //echo "count selected:".count($selected);
