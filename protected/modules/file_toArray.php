@@ -288,13 +288,14 @@ class file_toArray {
           //      echo $fremarks." ".$mremarks."<br>";
           //      echo $fid." ".$checked[$i]."<br>";
                 if ($fremarks === "in standardized format" && $fid === $checked[$i] && $mremarks === "in standardized format") {
-                    $selected[] = $fid;
+                        $selected[] = $fid;
 
                // echo $fremarks." ".$mremarks."<br>";
                // echo $fid." ".$checked[$i]."<br>";
-                if ($fremarks == "in standardized format" && $fid == $checked[$i] && $mremarks == "in standardized format") {
-                    $selected[] = $fid;
+                    if ($fremarks == "in standardized format" && $fid == $checked[$i] && $mremarks == "in standardized format") {
+                        $selected[] = $fid;
 
+                    }
                 }
             }
         //echo "count selected:".count($selected);
