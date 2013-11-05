@@ -151,6 +151,10 @@ class SiteController extends Controller {
             if ($exists) {
                 unlink(dirname(__FILE__) . "/../../csv_files/checked.csv");
             }
+             $exists = file_exists(dirname(__FILE__) . "/../../json_files/location.json");
+            if ($exists) {
+                unlink(dirname(__FILE__) . "/../../json_files/location.json");
+            }
 
             if ($model->validate()) {
                 echo $_POST['location'];
