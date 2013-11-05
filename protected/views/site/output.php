@@ -36,7 +36,6 @@
 	 'filter'=>$filtersForm,
 	 'selectableRows' => 2,
      'columns'=>array(
-
                 array(
                     'id' => 'selectedIds',  //checked[]
                     'class'=>'CCheckBoxColumn', 
