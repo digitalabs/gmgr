@@ -103,7 +103,7 @@ class SiteController extends Controller {
     }
 
     public function actionImporter() {
-<<<<<<< HEAD
+
 	$exists = file_exists(dirname(__FILE__).'/../modules/createdGID.csv');
 		if ($exists) {
 			unlink(dirname(__FILE__).'/../modules/createdGID.csv');
@@ -141,9 +141,7 @@ class SiteController extends Controller {
 		    unlink(dirname(__FILE__)."/../modules/checked.csv");
 		}
 		
-=======
 
->>>>>>> 036b16c44f362c89b8fbf0746eecfaa315e5f9b2
         //$dir = Yii::getPathOfAlias('application.modules');
        // $uploaded = false;
 
