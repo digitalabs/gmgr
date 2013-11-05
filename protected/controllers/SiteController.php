@@ -379,7 +379,7 @@ class SiteController extends Controller {
 		   // print_r($file_toArray->csv_createdGID());
 		}
             //Open corrected.csv and process file*/
-            $myfile = dirname(__FILE__).'/../../csv_files/corrected.csv';
+        /*    $myfile = dirname(__FILE__).'/../../csv_files/corrected.csv';
             
             $fp = fopen($myfile, 'r');
             $rows = array();
@@ -389,7 +389,7 @@ class SiteController extends Controller {
             fclose($fp);
            
             
-            /*If we have an array with items*/
+            //If we have an array with items
             if(count($rows)){
                 foreach ($rows as $i => $row) : list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male) = $row;
                     $arr2[] = array('id' => $i+1, 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks);
@@ -397,7 +397,7 @@ class SiteController extends Controller {
                 endforeach;
             }
         
-            //DataProvider for the lower table, Germplasm List*/
+            //DataProvider for the lower table, Germplasm List
            $GdataProvider = new CArrayDataProvider($arr2, array(
                   'keyField'=> 'id',
                     'pagination' => array(
