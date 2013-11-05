@@ -446,7 +446,7 @@ if (count($final)) {
 
                                     <?php
                                     // print out the page numbers beneath the results
-                                    $pageNumbers = $pagination->getLinks2($_GET, $processed, $row_count);
+                                    $pageNumbers = $pagination->getLinks2($_GET, $processed, $row_count, $not_standard);
                                     echo " <div class='panel-footer'>";
                                     echo "<ul class='pager'>";
                                     echo $pageNumbers;
