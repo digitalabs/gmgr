@@ -47,7 +47,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
    
 </div>
 
-<div style="margin-left:100px;" class="row">
+<div style="margin-left:70px;" class="row">
 
   <div class="span11">
     <div class="row">

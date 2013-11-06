@@ -5,13 +5,14 @@ var orientation = {
     y: function(node) { return height - node.y; }
   }, 
 };
-
+ 
+ 
 var data = (function () {
     var jason = null;
     $.ajax({
         'async': false,
         'global': false,
-        'url': "/../GMGR/json/tree6.json",
+        'url': "/../gmgr/json/tree6.json",
         'dataType': "json",
         'success': function (data) {
             jason = data;
