@@ -120,7 +120,7 @@ Yii::import("ext.graphviz.widgets.*");
         
         
         <script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/d3.v3.min.js"></script>
-        <script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/editor.js"></script>\
+        <script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/editor5.js"></script>\
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
 		<script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/html2canvas.js"></script>
         <script type="text/javascript">
