@@ -20,26 +20,34 @@ Yii::import("ext.graphviz.widgets.*");
     <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap.min.css" />
 
 	<br><br> 
-        <div class="horizontal-form" style="text-align:right;vertical-align:right;margin-left:200px;margin-right: 5px;">    
+        <div style="text-align:right;vertical-align:right;margin-left:10px;margin-right: 10px;">       <br>
 
-                    
-                    <div class="input-append">    
-                      <input class="span2" id="appendedInputButtons" type="text" placeholder="Search Germplasm">
+                    <!--<strong><small>Search Germplasm</small></strong>&nbsp;-->
+                    <div style="position:fixed;top:75px;right:40px" class="input-append">    
+                      <!--<div class="btn-group" data-toggle="buttons-checkbox">
+                          <button type="button" class="btn">Name</button>
+                          <button type="button" class="btn">GID</button>    
+                      </div>-->
+                      <input style="width:140px;" class="span2" id="appendedInputButtons" type="text" placeholder="Search Germplasm">
                       <button class="btn btn-primary" type="button" onclick="graph2();">GO</button>
                     </div>  
                              
-        </div>
+            </div>
             
             
-            <div style="vertical-align:middle;margin-left:5px;margin-right: 5px;">
+           <!-- <div style="vertical-align:middle;margin-left:5px;margin-right: 5px;">
                 <div class="well" style="position:relative;border:1px solid; padding: 0px; height:670px">
                     <div id="graphDiv2" style="position:absolute;top:0px;right:0px;left:202px;overflow-x:scroll;overflow-y:scroll;padding: 0px; text-align: right; vertical-align: right; width: 910px; height: 630px;vertical-align:right;">
 					<!--<svg style="width:500px;height:800px;overflow-x:hidden;overflow-y:hidden;position:absolute;z-index:2;">
 							<g id="vis"></g>
-					</svg>-->
+					</svg>
 						<div id="graphDiv" width="5000" style="width:2000px;"></div>
-					</div> 
-                    <div class="div-gradient" style="padding-left: 0px; width: 200px;height:670px;text-align: justify;position:static;bottom:10px">
+					</div> -->
+                    <div id="graphDiv" style="z-index:50;height: auto;width: auto;"></div>
+                    <div class="div-gradient" style="z-index:0;padding-left: 0px; width: 200px;height:650px;text-align: justify;position:fixed;right:40px;top:115px;bottom:20px;
+														-webkit-box-shadow: 3px 3px 16px rgba(50, 50, 50, 0.75);
+														-moz-box-shadow:    3px 3px 16px rgba(50, 50, 50, 0.75);
+														box-shadow:         3px 3px 16px rgba(50, 50, 50, 0.75);">
                         
                         <!--<div style="padding-left:5px;padding-right:5px;"><hr></div>-->
                         <br>
@@ -53,10 +61,10 @@ Yii::import("ext.graphviz.widgets.*");
                           <small><input type="checkbox"><a data-placement="right" data-toggle="tooltip" title="The pedigree graph can label its edges by the name of germplasm methods.">Show Method</a></input></small>
                         </label>
                         
-                        <br><div style="padding-left: 5px;padding-right: 5px; text-align: right;">
+					<div style="padding-left: 5px;padding-right: 5px; text-align: right;">
 							<button type="button" class="btn btn-mini btn-primary" onclick="graph2();">Load</button>
-							<button id="savePNG" type="button" class="btn btn-mini btn-success">Save image</button>
-						</div>
+							<button class="btn btn-mini btn-success" id="savePNG" value="">Save as PNG</button>
+							
                         <div style="padding-left:5px;padding-right:5px;"><hr></div>
                         <center><div style="padding-left:5px;padding-right:5px;">Germplasm Information</div></center> <br>
                         <small>
@@ -64,7 +72,9 @@ Yii::import("ext.graphviz.widgets.*");
                         <table style="border-collapse: separate !important;border-radius: 6px 6px 6px 6px;
 							-moz-border-radius: 6px 6px 6px 6px;
 							-webkit-border-radius: 6px 6px 6px 6px;
-							box-shadow: 0 1px 1px #CCCCCC;" class="table table-hover table-condensed">
+							box-shadow: 0 1px 1px #CCCCCC;
+							
+							" class="table table-hover table-condensed">
                             <tr><td width="50px" bgcolor="#0080FF" style="color: white;"><small>GID</td><td id="gid"  align="left" bgcolor="white" style=" vertical-align: left; text-align: left;"></td></tr>
                             <tr><td bgcolor="#0080FF" style="color: white;"><small>Name</td><td id="gname" bgcolor="white" style=" vertical-align: left; text-align: left;"></td></tr>
                             <tr><td bgcolor="#0080FF" style="color: white;"><small>Method</td><td id="gmethod" bgcolor="white" style=" vertical-align: left; text-align: left;"></td></tr>
@@ -76,30 +86,47 @@ Yii::import("ext.graphviz.widgets.*");
                             <tr><td bgcolor="#0080FF" style="color: white;"><small>Reference</td><td id="gref" bgcolor="white" style=" vertical-align: left; text-align: left;"></td></tr>
                             <tr><td bgcolor="#0080FF" style="color: white;"><small>GPID1</td><td id="gpid1" bgcolor="white" style=" vertical-align: left; text-align: left;"></td></tr>
                             <tr><td bgcolor="#0080FF" style="color: white;"><small>GPID2</td><td id="gpid2" bgcolor="white" style=" vertical-align: left; text-align: left;"></td></tr>
-                        </table><br>  
-                        <div style="vertical-align:top;text-align: left"><a style="color: white; text-decoration: none;"><img src='<?php echo Yii::app()->baseUrl;?>/images/legend.gif' width="185px" height="100px"></a></div> 
+                        </table>
+                        <div style="vertical-align:top;text-align: left"><a style="color: white; text-decoration: none;"><img src='images/legend.gif' width="185px" height="100px"></a></div> 
                         </div>   
                     </div>  
                        
                     <div style="vertical-align:right;text-align: right;">
-                        <p style="position:absolute;bottom:0px;right:0px;padding:5px;"><span class="label label-warning">Note</span> <small>Apply the <i>changes</i> made by clicking the <b>Update</b> button.
+						
+                        <p style="position:fixed;bottom:0px;left:40px;padding:5px;"><span class="label label-warning">Note</span> 
+							<small>Apply the <i>changes</i> made by clicking the <b>Update</b> button.
                                                 Click node to view germplasm information.</small>
                         </span>
                     </div>            
                 </div>
-            </div>
-            
-            <br><br>
+				<div style="position:fixed;left:40px;top:80px;">
+					<!--<span>Zoom</span>-->
+					<select class="selectpicker" style="width:80px" width="50px" id='zooming' onchange="zoomings (this);">
+						<option value="100%"  selected="selected">Zoom</option>
+						<option value="100%">------------</option>
+						<option value="25%">25%</option>
+						<option value="50%">50%</option>
+						<option value="75%">75%</option>
+						<option value="100%">100%</option>
+						<option value="150%">150%</option>
+						<option value="200%">200%</option>
+						<option value="250%">250%</option>
+						<option value="300%">300%</option>
+					</select>
+				</div>
+            <!--</div>-->
+            <br><br><br><br><br><br>
         <!-- end editor content -->   
         
+        
         <script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/d3.v3.min.js"></script>
-        <script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/editor5.js"></script>
+        <script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/editor.js"></script>\
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
 		<script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/html2canvas.js"></script>
         <script type="text/javascript">
-		  
-		  $(document).ready(function() {
+          $(document).ready(function() {
 				$("#savePNG").click(function () {
-					html2canvas($("#graphDiv2"), {
+					html2canvas($("#graphDiv"), {
 						background: "red",
 						width:1000,
 						height:1000,
@@ -110,8 +137,15 @@ Yii::import("ext.graphviz.widgets.*");
 					});
 				});
 			});
-
-
+			
+			function zoomings(optionSel)
+			{
+				var OptionSelected = optionSel.selectedIndex;
+				var val = optionSel.options[OptionSelected].text;
+				//alert(val);
+				var div = document.getElementById ("graphDiv");
+				div.style.zoom = val;
+			}
         </script>
 
 </body>
