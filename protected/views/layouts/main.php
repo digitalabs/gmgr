@@ -23,7 +23,7 @@
 
 <body>
 
-<div class="container" id="page">
+
 <?php
   /*$flashMessages = Yii::app()->user->getFlashes();
 		if ($flashMessages) {
@@ -123,16 +123,16 @@
 
 	<?php echo $content; ?>
 
-	<div id="footer">
+	<!--<div id="footer">
 		<!--Copyright &copy; <?php //echo date('Y'); ?> by My Company.<br/>
-		All Rights Reserved.<br/>-->
+		All Rights Reserved.<br/>
 		<?php //echo Yii::powered(); ?>
-		<?php $this->widget('bootstrap.widgets.TbBreadcrumbs', array(
-		    'links'=>array('About Us'=>'#', 'Contact Us'=>'#'),
-		)); ?>
-	</div><!-- footer -->
+		<?php //$this->widget('bootstrap.widgets.TbBreadcrumbs', array(
+		    //'links'=>array('About Us'=>'#', 'Contact Us'=>'#'),
+		//)); ?>
+	</div>--><!-- footer -->
 
-</div>
+
 
 
 <!-- page -->
