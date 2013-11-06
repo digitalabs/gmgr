@@ -47,13 +47,13 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
    
 </div>
 
-<div class="row">
+<div style="margin-left:100px;" class="row">
 
   <div class="span11">
     <div class="row">
 	       <div class="span4">
                  <fieldset>
-                    <legend>Select List Types</legend>
+                    <legend>Select List Type</legend>
                     <input type="radio" name="group1" value="BreedersCrossHistories" checked> Breeders Cross Histories &nbsp; &nbsp;<a href="Nomenclature Rules/NomenclatureRules.htm">Nomenclature Rules</a> <br>
                     
                     <input type="radio" name="group1" value="CultivarList" disabled="true"> Cultivar List<br>
