@@ -28,8 +28,8 @@ Yii::import("ext.graphviz.widgets.*");
                           <button type="button" class="btn">Name</button>
                           <button type="button" class="btn">GID</button>    
                       </div>-->
-                      <input style="width:140px;" class="span2" id="appendedInputButtons" type="text" placeholder="Search Germplasm">
-                      <button class="btn btn-primary" type="button" onclick="graph2();">GO</button>
+                      <input disabled="true" title="This feature is a work in progress" style="width:140px;" class="span2" id="appendedInputButtons" type="text" placeholder="Search Germplasm">
+                      <button disabled="true" title="This feature is a work in progress" class="btn btn-primary" type="button" onclick="graph2();">GO</button>
                     </div>  
                              
             </div>
@@ -52,18 +52,18 @@ Yii::import("ext.graphviz.widgets.*");
                         <!--<div style="padding-left:5px;padding-right:5px;"><hr></div>-->
                         <br>
                         <div class="form-horizontal" style="padding: 5px;">
-                            <input placeholder="All" style="width:50px;" value=" " id="maxStep" type="number" name="quantity" min="1" max="100"> 
+                            <input disabled="true" title="This feature is a work in progress" placeholder="All" style="width:50px;" value=" " id="maxStep" type="number" name="quantity" min="1" max="100"> 
 							
                             <small><a data-toggle="tooltip" title="By default, a regular pedigree for a particular germplasm is created up to the certain number of known parents. You can, however, choose to show a smaller number of parental generations (steps), or to choose all." data-placement="right">Maximum Steps</a></small>
                         </div><br>
                         <label class="checkbox" style="padding-left: 30px;">
-                          <small><input type="checkbox"><a data-placement="right" data-toggle="tooltip" title="Derivative and maintenance steps will be included in the pedigree.">Show Selection History</a></input></small><br>
-                          <small><input type="checkbox"><a data-placement="right" data-toggle="tooltip" title="The pedigree graph can label its edges by the name of germplasm methods.">Show Method</a></input></small>
+                          <small><input disabled="true" title="This feature is a work in progress" type="checkbox"><a data-placement="right" data-toggle="tooltip" title="Derivative and maintenance steps will be included in the pedigree.">Show Selection History</a></input></small><br>
+                          <small><input disabled="true" title="This feature is a work in progress" type="checkbox"><a data-placement="right" data-toggle="tooltip" title="The pedigree graph can label its edges by the name of germplasm methods.">Show Method</a></input></small>
                         </label>
                         
 					<div style="padding-left: 5px;padding-right: 5px; text-align: right;">
 							<button type="button" class="btn btn-mini btn-primary" onclick="graph2();">Load</button>
-							<button class="btn btn-mini btn-success" id="savePNG" value="">Save as PNG</button>
+							<button disabled="true" title="This feature is a work in progress" class="btn btn-mini btn-success" id="savePNG" value="">Save as PNG</button>
 							
                         <div style="padding-left:5px;padding-right:5px;"><hr></div>
                         <center><div style="padding-left:5px;padding-right:5px;">Germplasm Information</div></center> <br>
@@ -113,18 +113,27 @@ Yii::import("ext.graphviz.widgets.*");
 						<option value="250%">250%</option>
 						<option value="300%">300%</option>
 					</select>
-				</div>
+					<button class="btn btn-mini btn-success" id="generate" value="">Save as PNG</button>
+					<a href="#" id="generate">Download preview</a>
+				</div> 
             <!--</div>-->
             <br><br><br><br><br><br>
-        <!-- end editor content -->   
-        
+        <!-- end editor content -->
+		
+				<!-- Hidden <FORM> to submit the SVG data to the server, which will convert it to SVG/PDF/PNG downloadable file.
+			 The form is populated and submitted by the JavaScript below. -->
+		<form id="svgform" method="post" action="download.pl">
+		 <input type="hidden" id="output_format" name="output_format" value="">
+		 <input type="hidden" id="data" name="data" value="">
+		</form>
         
         <script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/d3.v3.min.js"></script>
         <script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/editor5.js"></script>\
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
 		<script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/html2canvas.js"></script>
+		<script src="<?php echo Yii::app()->baseUrl;?>/js/vkbeautify.0.99.00.beta.js"></script>
         <script type="text/javascript">
-          $(document).ready(function() {
+            /*$(document).ready(function() {
 				$("#savePNG").click(function () {
 					html2canvas($("#graphDiv"), {
 						background: "red",
@@ -136,8 +145,27 @@ Yii::import("ext.graphviz.widgets.*");
 						}
 					});
 				});
+			});*/
+			$(document).ready(function() {
+				$("#generate").click(function () {
+					alert('test');
+					writeDownloadLink();
+				});
+				//create_d3js_drawing();
+
+				// on first visit, randomize the positions & colors
+				//randomize.click();
+
+				// Attached actions to the buttons
+				//$("#show_svg_code").click(function() { show_svg_code(); });
+
+				//$("#save_as_svg").click(function() { submit_download_form("svg"); });
+
+				//$("#save_as_pdf").click(function() { submit_download_form("pdf"); });
+
+				$("#savePNG").click(function() { submit_download_form("png"); });
 			});
-			
+
 			function zoomings(optionSel)
 			{
 				var OptionSelected = optionSel.selectedIndex;
@@ -145,6 +173,35 @@ Yii::import("ext.graphviz.widgets.*");
 				//alert(val);
 				var div = document.getElementById ("graphDiv");
 				div.style.zoom = val;
+			}
+			
+			function writeDownloadLink(){
+				alert('test');
+				var html = d3.select("svg")
+					.attr("title", "test2")
+					.attr("version", 1.1)
+					.attr("xmlns", "http://www.w3.org/2000/svg")
+					.node().parentNode.innerHTML;
+
+				d3.select("body").append("div")
+					.attr("id", "download")
+					.style("top", event.clientY+20+"px")
+					.style("left", event.clientX+"px")
+					.html("Right-click on this preview and choose Save as<br />Left-Click to dismiss<br />")
+					.append("img")
+					.attr("src", "data:image/svg+xml;base64,"+ btoa(html));
+
+				d3.select("#download")
+					.on("click", function(){
+						if(event.button == 0){
+							d3.select(this).transition()
+								.style("opacity", 0)
+								.remove();
+						}
+					})
+					.transition()
+					.duration(500)
+					.style("opacity", 1);
 			}
         </script>
 
