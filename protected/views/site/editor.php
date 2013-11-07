@@ -113,8 +113,8 @@ Yii::import("ext.graphviz.widgets.*");
 						<option value="250%">250%</option>
 						<option value="300%">300%</option>
 					</select>
-					<button class="btn btn-mini btn-success" id="generate" value="">Save as PNG</button>
-					<a href="#" id="generate">Download preview</a>
+					<!--<button class="btn btn-mini btn-success" id="generate" value="">Save as PNG</button>
+					<a href="#" id="generate">Download preview</a>-->
 				</div> 
             <!--</div>-->
             <br><br><br><br><br><br>
