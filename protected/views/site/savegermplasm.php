@@ -1,5 +1,4 @@
 <?php 
-Yii::import('application.modules.curl');
  //Yii::import('application.modules.configDB');
 /*
 if (!$model->CheckLogin()) {
@@ -97,8 +96,13 @@ function callCurl($new) {
     $jsonText = json_encode($a);
     file_put_contents($jsonfile, $jsonText);
     
-	$curl = new curl();
-    $curl->editGermplasmName();
+    $url = "http://172.29.4.99:8083/ws/standardization/term/checkEditedString";
+    
+    $handle = curl_init();
+    curl_setopt($handle, CURLOPT_URL, $url);
+    curl_setopt($handle, CURLOPT_RETURNTRANSFER, 1);
+    $response = curl_exec($handle);
+    $code = curl_getinfo($handle, CURLINFO_HTTP_CODE);
    
     $myfile = dirname(__FILE__).'/../../../csv_files/newString.csv';
 
