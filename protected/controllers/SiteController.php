@@ -1,7 +1,10 @@
 <?php
 
 class SiteController extends Controller {
-
+    
+	public $data =array();
+	public $locationID;
+	
     public function actions() {
         return array(
             // captcha action renders the CAPTCHA image displayed on the contact page
@@ -24,11 +27,11 @@ class SiteController extends Controller {
     public function actionIndex() {
         // renders the view file 'protected/views/site/index.php'
         // using the default layout 'protected/views/layouts/main.php'
+     //* This is the action to handle external exceptions.
         $this->render('index');
     }
 
     /**
-     * This is the action to handle external exceptions.
      */
     public function actionError() {
         if ($error = Yii::app()->errorHandler->error) {
@@ -102,6 +105,7 @@ class SiteController extends Controller {
     }
 
     public function actionImporter() {
+	
 
         //$dir = Yii::getPathOfAlias('application.modules');
         // $uploaded = false;
@@ -167,25 +171,10 @@ class SiteController extends Controller {
             if ($model->validate()) {
                 echo "location:".$_POST['location'];
                 //import json class
-                Yii::import('application.modules.json');
+                
                 //json file of the locationID
-                $json = new json($_POST['location']);
-                $json->location();
-                $json->getFile();
-
-                //import curl class
-                Yii::import('application.modules.curl');
-                //call curl: function parse
-                $curl = new curl();
-                $curl->parse();
-
-                //import file_toArray class
-                Yii::import('application.modules.file_toArray');
-                // array from file output.csv
-                $file_toArray = new file_toArray();
-                $rows = $file_toArray->csv_output();
-
-
+				$this->locationID=$_POST['location'];
+                
                 //call php file
                 $this->redirect(array('site/importFileDisplay'));
                //$this->actionImportFileDisplay();
@@ -203,15 +192,30 @@ class SiteController extends Controller {
     }
 
     public function actionImportFileDisplay() {
-
+	
+	
         $arr = array();
 		$filtersForm = new FilterPedigreeForm;
 		
 		//import file_toArray class
         Yii::import('application.modules.file_toArray');
         // array from file output.csv
-        $file_toArray = new file_toArray();
-        $id = $file_toArray->csv_output();
+        //$file_toArray = new file_toArray();
+        //$id = $file_toArray->csv_output();
+		Yii::import('application.modules.json');
+		$json = new json($this->locationID);
+                
+                
+				$output=$json->getFile();
+
+                //import curl class
+                Yii::import('application.modules.curl');
+                //call curl: function parse
+                $curl = new curl();
+				
+                $this->data=$curl->parse($output);
+				
+		$id=$this->data;
 		
         foreach ($id as $row) :
             list($GID, $nval, $female, $fid, $fremarks, $fgid, $male, $mid, $mremarks, $mgid) = $row;
@@ -290,6 +294,9 @@ class SiteController extends Controller {
     }
 
    public function actionCreatedGID() {
+   echo "<br>GLOBAL: ".$this->data."<br>";
+	//$data="Joanie3";
+	echo "<br>GLOBAL: ".$this->data."<br>";
 	
             //Open corrected.csv and process file
           $myfile = dirname(__FILE__).'/../../csv_files/corrected.csv';
@@ -331,7 +338,7 @@ class SiteController extends Controller {
          
     }
        public function actionAssignGID(){
-	   
+	
 	     $arrSelectedIds = array();
 	     $filtersForm = new FilterPedigreeForm;
 	    if(isset($_POST['Germplasm']['gid']) && ($_POST['Germplasm']['gid']!=''))
@@ -364,6 +371,7 @@ class SiteController extends Controller {
 				}
 				$exists = file_exists(dirname(__FILE__)."/../../csv_files/createdGID.csv");
 				if ($exists) {
+
 					unlink(dirname(__FILE__)."/../../csv_files/createdGID.csv");
 				}
 				
@@ -492,7 +500,9 @@ class SiteController extends Controller {
     }
 
     public function actionStandardTable() {
-
+echo "<br>GLOBAL: ".$data."<br>";
+	//$data="Joanie";
+	echo "<br>GLOBAL: ".$data."<br>";
         $filtersForm = new FilterPedigreeForm;
 
         Yii::import('application.modules.file_toArray');
