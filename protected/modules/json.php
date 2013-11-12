@@ -20,9 +20,9 @@ class json {
         $this->data = $data;
     }
 
-    public function toFile($jsonfile, $data) {
-        $jsonText = json_encode($data);
-        file_put_contents($jsonfile, $jsonText);
+    public function toFile($data) {
+        return json_encode($data);
+        //file_put_contents($jsonfile, $jsonText);
     }
 
     public function location() {
@@ -32,13 +32,17 @@ class json {
     }
 
     function getFile() {
-        $jsonfile = dirname(__FILE__)."/../../json_files/docinfo.json";
+        //$jsonfile = dirname(__FILE__)."/../../json_files/docinfo.json";
         //echo $jsonfile;
         $file_toArray = new file_toArray();
         $array = $file_toArray->uploadedFile();
 
-        $a = array('list' => $array);
-        $this->toFile($jsonfile, $a);
+        $a = array('list' => $array,
+					'locationID' =>$this->data
+		);
+		
+        //$this->toFile($jsonfile, $a);
+		return $this->toFile( $a);
     }
 
     function checkedBox() {
