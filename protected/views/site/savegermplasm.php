@@ -62,7 +62,7 @@ if (isset($_POST["editGermplasmForm"]['newGermplasmName'])) {
             fputcsv($fout, $line);
         }
        fclose($fout);
-       header("Location: /GMGR/index.php?r=site/standardTable");
+       header("Location: /gmgr/index.php?r=site/standardTable");
        // Yii::app()->createUrl("site/standardTable");
         die();
     } else { 
