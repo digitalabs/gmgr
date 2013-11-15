@@ -54,6 +54,10 @@ class curl {
         $url = "http://172.29.4.99:8083/ws/standardization/term/chooseGID";
         $this->exec($url);
     }
+    public function updateMethod() {
+        $url = "http://172.29.4.99:8083/ws/standardization/term/updateMethod";
+        $this->exec($url);
+    }
 
 }
 

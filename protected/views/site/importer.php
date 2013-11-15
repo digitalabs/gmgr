@@ -53,7 +53,7 @@ $this->breadcrumbs=array(
    
 </div>
 
-<div class="row">
+<div style="margin-left:70px;" class="row">
 
   <div class="span11">
     <div class="row">

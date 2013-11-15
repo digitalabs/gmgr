@@ -5,7 +5,8 @@ var orientation = {
     y: function(node) { return height - node.y; }
   }, 
 };
-
+ 
+ 
 var data = (function () {
     var jason = null;
     $.ajax({
@@ -23,7 +24,7 @@ var data = (function () {
 
 var realWidth = window.innerWidth;
 var realHeight = window.innerHeight;
-var margin = {top: 100, right: 50, bottom: 200, left: 1360},
+var margin = {top: 400, right: 50, bottom: 100, left: 1560},
 	m = [100, 500, 100, 500],     
     width = 2000 - margin.left - margin.right,
     height = 5050 - margin.top - margin.bottom,
@@ -42,7 +43,7 @@ var customNodes = new Array(),
 		
 
 
-function graph2() {
+//function graph2() {
 	var ms = document.getElementById('maxStep').value;
 	//alert(ms);
 	
@@ -65,7 +66,7 @@ function graph2() {
             .attr("height", 4900)
             .append("svg:g")
 			.attr("class","drawarea")
-            .attr("transform", "translate(0, 1500)") // shift everything to the right
+            .attr("transform", "translate(-250, 1750)") // shift everything to the right
 
     var fakeTxtBox = depencencyChart.append("svg:text")
             .attr("id", "fakeTXT")
@@ -97,7 +98,7 @@ function graph2() {
     }
 
     data.children.forEach(collapse);
-}
+//}
 
 function updateNodesXOffset(){
     var x_offsets = new Array();

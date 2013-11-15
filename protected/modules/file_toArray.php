@@ -358,7 +358,7 @@ class file_toArray {
                }
                $fid_i = $i;
            } else {
-               if ($i === (int) $fid_i - 1) {
+               if ($i == (int) $fid_i - 1) {
                    $female_arr = array(
                        "name" => $pages[0][$i][2],
                        "gid" => $pages[0][$i][3],
