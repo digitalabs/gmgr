@@ -151,44 +151,48 @@ class SiteController extends Controller {
             if ($exists) {
                 unlink(dirname(__FILE__) . "/../../csv_files/checked.csv");
             }
-             $exists = file_exists(dirname(__FILE__) . "/../../json_files/location.json");
+            $exists = file_exists(dirname(__FILE__) . "/../../json_files/location.json");
             if ($exists) {
                 unlink(dirname(__FILE__) . "/../../json_files/location.json");
             }
-			  $exists = file_exists(dirname(__FILE__) . "/../../json_files/tree.json");
+            $exists = file_exists(dirname(__FILE__) . "/../../json_files/tree.json");
             if ($exists) {
                 unlink(dirname(__FILE__) . "/../../json_files/tree.json");
-            }	 
-			$exists = file_exists(dirname(__FILE__) . "/../../json_files/term.json");
+            }
+            $exists = file_exists(dirname(__FILE__) . "/../../json_files/term.json");
             if ($exists) {
                 unlink(dirname(__FILE__) . "/../../json_files/term.json");
             }
 
             if ($model->validate()) {
-                echo "location:".$_POST['location'];
-                //import json class
-                Yii::import('application.modules.json');
-                //json file of the locationID
-                $json = new json($_POST['location']);
-                $json->location();
-                $json->getFile();
+                /* echo "location:".$_POST['location'];
+                  //import json class
+                  Yii::import('application.modules.json');
+                  //json file of the locationID
+                  $json = new json($_POST['location']);
+                  $json->location();
+                  $json->getFile();
 
-                //import curl class
-                Yii::import('application.modules.curl');
-                //call curl: function parse
-                $curl = new curl();
-                $curl->parse();
+                  //import curl class
+                  Yii::import('application.modules.curl');
+                  //call curl: function parse
+                  $curl = new curl();
+                  $curl->parse();
 
-                //import file_toArray class
-                Yii::import('application.modules.file_toArray');
-                // array from file output.csv
-                $file_toArray = new file_toArray();
-                $rows = $file_toArray->csv_output();
-
-
-                //call php file
-                $this->redirect(array('site/importFileDisplay'));
-               //$this->actionImportFileDisplay();
+                  //import file_toArray class
+                  Yii::import('application.modules.file_toArray');
+                  // array from file output.csv
+                  $file_toArray = new file_toArray();
+                  $rows = $file_toArray->csv_output();
+                  $data = array(
+                  'sample1' => 1,
+                  'sample2' => 2
+                  );
+                  echo "<br>data1:";
+                  print_r($data);
+                  //call php file
+                  $this->redirect(array('site/importFileDisplay'));
+                 */
             }
         } else {
             /* $this->render('importer', array(
@@ -203,54 +207,68 @@ class SiteController extends Controller {
     }
 
     public function actionImportFileDisplay() {
+        
+            $arr = array();
+            $filtersForm = new FilterPedigreeForm;
+        if (isset($_POST['location']['id'])) {
+          
+            $selected = $_POST['location']['id'];
+            
+            Yii::import('application.modules.json');
+            //json file of the locationID
+             $json = new json($selected);
+             $json->location();
+             $json->getFile();
 
-        $arr = array();
-		$filtersForm = new FilterPedigreeForm;
-		
-		//import file_toArray class
-        Yii::import('application.modules.file_toArray');
-        // array from file output.csv
-        $file_toArray = new file_toArray();
-        $id = $file_toArray->csv_output();
-		
-        foreach ($id as $row) :
-            list($GID, $nval, $female, $fid, $fremarks, $fgid, $male, $mid, $mremarks, $mgid) = $row;
+             //import curl class
+             Yii::import('application.modules.curl');
+             //call curl: function parse
+              $curl = new curl();
+              $curl->parse();
+              
+            //import file_toArray class
+            Yii::import('application.modules.file_toArray');
+            // array from file output.csv
+            $file_toArray = new file_toArray();
+            $id = $file_toArray->csv_output();
 
-            //$arr[] = array('id'=>1,'nval'=>$nval,'gid'=>$GID,'female'=>$female,'male'=>$male,'mgid'=>$mgid,'fremarks'=>$fremarks);
-            //$arr[] = array('id' => 1, 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'mgid' => $mgid, 'fgid' => $fgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks);
-            $arr[] = array('id' => CJSON::encode(array($fid, $mid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks);
-        endforeach;
+            foreach ($id as $row) :
+                list($GID, $nval, $female, $fid, $fremarks, $fgid, $male, $mid, $mremarks, $mgid) = $row;
 
-		if (isset($_GET['FilterPedigreeForm'])){
-            $filtersForm->filters = $_GET['FilterPedigreeForm'];
-		}	
-        $filteredData = $filtersForm->filter($arr);
-        $dataProvider = new CArrayDataProvider($filteredData, array(
-            'pagination' => array(
-                'pageSize' => 10,
-            ),
-        ));
+                //$arr[] = array('id'=>1,'nval'=>$nval,'gid'=>$GID,'female'=>$female,'male'=>$male,'mgid'=>$mgid,'fremarks'=>$fremarks);
+                //$arr[] = array('id' => 1, 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'mgid' => $mgid, 'fgid' => $fgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks);
+                $arr[] = array('id' => CJSON::encode(array($fid, $mid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks);
+            endforeach;
 
-        /*$params = array(
-            'arrayDataProvider' => $arrayDataProvider,
-        );*/
-        /*if (!isset($_GET['ajax']))
-            $this->render('importFileDisplay', $params);
-        else
-            $this->renderPartial('importFileDisplay', $params);
-		*/	
-		if (!isset($_GET['ajax'])){
-			$this->render('importFileDisplay', array(
-				'filtersForm' => $filtersForm,
-				'dataProvider' => $dataProvider,
-			));
-		}else
-		{
-		    $this->render('importFileDisplay', array(
-				'filtersForm' => $filtersForm,
-				'dataProvider' => $dataProvider,
-			));
-		}
+            if (isset($_GET['FilterPedigreeForm'])) {
+                $filtersForm->filters = $_GET['FilterPedigreeForm'];
+            }
+            $filteredData = $filtersForm->filter($arr);
+            $dataProvider = new CArrayDataProvider($filteredData, array(
+                'pagination' => array(
+                    'pageSize' => 10,
+                ),
+            ));
+        }
+        /* $params = array(
+          'arrayDataProvider' => $arrayDataProvider,
+          ); */
+        /* if (!isset($_GET['ajax']))
+          $this->render('importFileDisplay', $params);
+          else
+          $this->renderPartial('importFileDisplay', $params);
+         */
+        if (!isset($_GET['ajax'])) {
+            $this->render('importFileDisplay', array(
+                'filtersForm' => $filtersForm,
+                'dataProvider' => $dataProvider,
+            ));
+        } else {
+            $this->render('importFileDisplay', array(
+                'filtersForm' => $filtersForm,
+                'dataProvider' => $dataProvider,
+            ));
+        }
     }
 
     public function actionEditGermplasm() {
@@ -270,11 +288,41 @@ class SiteController extends Controller {
     }
 
     public function actionSaveGermplasm($name) {
-
+        $model = new saveGermplasmForm;
         //<!---*******Notifications for any page changes******-->
-        Yii::app()->user->setFlash('success', array('title' => 'Edit Successful!', 'text' => 'You successfully edited parent.'));
+        //Yii::app()->user->setFlash('success', array('title' => 'Edit Successful!', 'text' => 'You successfully edited parent.'));
         //<!----*******************************************-->
-        $this->renderPartial('savegermplasm');
+        $this->renderPartial('savegermplasm', array('gerplasmName' => $name, 'model' => $model));
+    }
+
+    public function actionCurl($new) {
+        $jsonfile = dirname(__FILE__) . "/../../../json_files/docinfo.json";
+
+        $a = array('new' => $new);
+        $jsonText = json_encode($a);
+        file_put_contents($jsonfile, $jsonText);
+
+        $url = "http://localhost:8080/ws/standardization/term/checkEditedString";
+
+        $handle = curl_init();
+        curl_setopt($handle, CURLOPT_URL, $url);
+        curl_setopt($handle, CURLOPT_RETURNTRANSFER, 1);
+        $response = curl_exec($handle);
+        $code = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+
+        $myfile = dirname(__FILE__) . '/../../../csv_files/newString.csv';
+
+        $fin = fopen($myfile, 'r');
+
+        while ($line = fgetcsv($fin, 0)) {
+            if (strcmp($line[2], 'in standardized format') == 0) {
+                return true;
+            }
+            else
+                return false;
+        }
+        fclose($fin);
+        return false;
     }
 
     public function actionSampleAction() {
@@ -289,159 +337,155 @@ class SiteController extends Controller {
         ));
     }
 
-   public function actionCreatedGID() {
-	
-            //Open corrected.csv and process file
-          $myfile = dirname(__FILE__).'/../../csv_files/corrected.csv';
-          
-		 $filtersForm = new FilterPedigreeForm;
-            $fp = fopen($myfile, 'r');
-            $rows = array();
-            while(($row = fgetcsv($fp)) !== FALSE){
-                $rows[] = $row;
-            }
-            fclose($fp);
-           
-            
-            /*If we have an array with items*/
-            if(count($rows)){
-                foreach ($rows as $i => $row) : list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male) = $row;
-                    $arr2[] = array('id' => $i+1, 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks);
-                    
-                endforeach;
-            }
-			
-            if (isset($_GET['FilterPedigreeForm']))
-			
+    public function actionCreatedGID() {
+
+        //Open corrected.csv and process file
+        $myfile = dirname(__FILE__) . '/../../csv_files/corrected.csv';
+
+        $filtersForm = new FilterPedigreeForm;
+        $fp = fopen($myfile, 'r');
+        $rows = array();
+        while (($row = fgetcsv($fp)) !== FALSE) {
+            $rows[] = $row;
+        }
+        fclose($fp);
+
+
+        /* If we have an array with items */
+        if (count($rows)) {
+            foreach ($rows as $i => $row) : list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male) = $row;
+                $arr2[] = array('id' => $i + 1, 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks);
+
+            endforeach;
+        }
+
+        if (isset($_GET['FilterPedigreeForm']))
             $filtersForm->filters = $_GET['FilterPedigreeForm'];
 
         //get array data and create dataProvider
         $filteredData = $filtersForm->filter($arr2);
-            /*DataProvider for the lower table, Germplasm List*/
-          $GdataProvider = new CArrayDataProvider($filteredData, array(
-                  'keyField'=> 'id',
-                    'pagination' => array(
-                         'pageSize' => 5,
-                    ), 
-            ));
-     
-         //render page with ajax   
-         if(Yii::app()->request->isAjaxRequest) $this->renderPartial('createdGID', array( 'filtersForm' => $filtersForm,'GdataProvider'=>$GdataProvider),false,true);
-         else $this->render('createdGID', array(  'filtersForm' => $filtersForm,'GdataProvider'=>$GdataProvider));
-         
+        /* DataProvider for the lower table, Germplasm List */
+        $GdataProvider = new CArrayDataProvider($filteredData, array(
+            'keyField' => 'id',
+            'pagination' => array(
+                'pageSize' => 5,
+            ),
+        ));
+
+        //render page with ajax   
+        if (Yii::app()->request->isAjaxRequest)
+            $this->renderPartial('createdGID', array('filtersForm' => $filtersForm, 'GdataProvider' => $GdataProvider), false, true);
+        else
+            $this->render('createdGID', array('filtersForm' => $filtersForm, 'GdataProvider' => $GdataProvider));
     }
-       public function actionAssignGID(){
-	   
-	     $arrSelectedIds = array();
-	     $filtersForm = new FilterPedigreeForm;
-	    if(isset($_POST['Germplasm']['gid']) && ($_POST['Germplasm']['gid']!=''))
-		{
-			Yii::import('application.modules.file_toArray');
-			Yii::import('application.modules.json');
-			Yii::import('application.modules.curl');
-			
-			 if(!empty($_POST['Germplasm']['gid'])){
-				$selected = $_POST['Germplasm']['gid'];
-				//echo "selected:";
-				//var_dump($selected);
-					
-					$idArr = explode(',',$selected);
-					//var_dump($idArr);
-			   foreach($idArr as $index => $id){
-				  $id = strtr($id, array('["'=>'','"]'=>''));
-				 //echo intval($id)."<br/>";
-				 $arrSelectedIds[$index] = (int)($id);
-			  }
-		     }
-			   //Deletes existing checked germplasm in case the page reloads and to avoid duplication of createdGID for the checked items.
-			   	$exists = file_exists(dirname(__FILE__)."/../../json_files/checked.json");
-				if ($exists) {
-					unlink(dirname(__FILE__)."/../../json_files/checked.json");
-				}
-				$exists = file_exists(dirname(__FILE__)."/../../csv_files/checked.csv");
-				if ($exists) {
-					unlink(dirname(__FILE__)."/../../csv_files/checked.csv");
-				}
-				$exists = file_exists(dirname(__FILE__)."/../../csv_files/createdGID.csv");
-				if ($exists) {
-					unlink(dirname(__FILE__)."/../../csv_files/createdGID.csv");
-				}
-				
-				 $file_toArray = new file_toArray();
-				 $standardized = $file_toArray->checkIf_standardize($arrSelectedIds);
 
-				//json file of checked boxes
-				$json = new json($standardized);
-				$json->checkedBox();
+    public function actionAssignGID() {
 
-				//call curl: function createdGID
-				$curl = new curl();
-				$curl->createGID();
-				
-		   // echo "createdGID: <br>";
-		    //print_r($file_toArray->csv_createdGID());
-		   
-		}
-		
-	      //Open corrected.csv and process file
-          $myfile = dirname(__FILE__).'/../../csv_files/corrected.csv';
-            
-            $fp = fopen($myfile, 'r');
-            $rows = array();
-            while(($row = fgetcsv($fp)) !== FALSE){
-                $rows[] = $row;
+        $arrSelectedIds = array();
+        $filtersForm = new FilterPedigreeForm;
+        if (isset($_POST['Germplasm']['gid']) && ($_POST['Germplasm']['gid'] != '')) {
+            Yii::import('application.modules.file_toArray');
+            Yii::import('application.modules.json');
+            Yii::import('application.modules.curl');
+
+            if (!empty($_POST['Germplasm']['gid'])) {
+                $selected = $_POST['Germplasm']['gid'];
+                //echo "selected:";
+                //var_dump($selected);
+
+                $idArr = explode(',', $selected);
+                //var_dump($idArr);
+                foreach ($idArr as $index => $id) {
+                    $id = strtr($id, array('["' => '', '"]' => ''));
+                    //echo intval($id)."<br/>";
+                    $arrSelectedIds[$index] = (int) ($id);
+                }
             }
-            fclose($fp);
-           
-            
-            //If we have an array with items
-            if(count($rows)){
-                foreach ($rows as $i => $row) : list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male) = $row;
-                    $arr2[] = array('id' => $i+1, 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks);
-                    
-                endforeach;
+            //Deletes existing checked germplasm in case the page reloads and to avoid duplication of createdGID for the checked items.
+            $exists = file_exists(dirname(__FILE__) . "/../../json_files/checked.json");
+            if ($exists) {
+                unlink(dirname(__FILE__) . "/../../json_files/checked.json");
             }
-           if(isset($_GET['FilterPedigreeForm']))
-			
+            $exists = file_exists(dirname(__FILE__) . "/../../csv_files/checked.csv");
+            if ($exists) {
+                unlink(dirname(__FILE__) . "/../../csv_files/checked.csv");
+            }
+            $exists = file_exists(dirname(__FILE__) . "/../../csv_files/createdGID.csv");
+            if ($exists) {
+                unlink(dirname(__FILE__) . "/../../csv_files/createdGID.csv");
+            }
+
+            $file_toArray = new file_toArray();
+            $standardized = $file_toArray->checkIf_standardize($arrSelectedIds);
+
+            //json file of checked boxes
+            $json = new json($standardized);
+            $json->checkedBox();
+
+            //call curl: function createdGID
+            $curl = new curl();
+            $curl->createGID();
+
+            // echo "createdGID: <br>";
+            //print_r($file_toArray->csv_createdGID());
+        }
+
+        //Open corrected.csv and process file
+        $myfile = dirname(__FILE__) . '/../../csv_files/corrected.csv';
+
+        $fp = fopen($myfile, 'r');
+        $rows = array();
+        while (($row = fgetcsv($fp)) !== FALSE) {
+            $rows[] = $row;
+        }
+        fclose($fp);
+
+
+        //If we have an array with items
+        if (count($rows)) {
+            foreach ($rows as $i => $row) : list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male) = $row;
+                $arr2[] = array('id' => $i + 1, 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks);
+
+            endforeach;
+        }
+        if (isset($_GET['FilterPedigreeForm']))
             $filtersForm->filters = $_GET['FilterPedigreeForm'];
 
         //get array data and create dataProvider
         $filteredData = $filtersForm->filter($arr2);
-            //DataProvider for the lower table, Germplasm List
-          $GdataProvider = new CArrayDataProvider($filteredData, array(
-                  'keyField'=> 'id',
-                   'pagination' => array(
-                         'pageSize' => 5,
-                    ), 
-            ));
-            
+        //DataProvider for the lower table, Germplasm List
+        $GdataProvider = new CArrayDataProvider($filteredData, array(
+            'keyField' => 'id',
+            'pagination' => array(
+                'pageSize' => 5,
+            ),
+        ));
+
         //Render the page AssignGID.php   
-	  	if ( Yii::app()->request->getIsAjaxRequest() && isset($_GET["ajax"])) {
-				$this->render('assignGID', array('filtersForm' => $filtersForm,
-				'selected' => $arrSelectedIds,'GdataProvider'=>$GdataProvider
-			));
-		}else{
-		      //open and store checked boxes
-			$myfile2 = dirname(__FILE__).'/../../json_files/checked.json';
-            
+        if (Yii::app()->request->getIsAjaxRequest() && isset($_GET["ajax"])) {
+            $this->render('assignGID', array('filtersForm' => $filtersForm,
+                'selected' => $arrSelectedIds, 'GdataProvider' => $GdataProvider
+            ));
+        } else {
+            //open and store checked boxes
+            $myfile2 = dirname(__FILE__) . '/../../json_files/checked.json';
+
             $fp2 = fopen($myfile2, 'r');
             $rows2 = array();
-            while(($row2 = fgetcsv($fp2)) !== FALSE){
+            while (($row2 = fgetcsv($fp2)) !== FALSE) {
                 $rows2[] = $row2;
             }
             fclose($fp2);
-          // echo "rows:";
-         
-          $checked = $rows2;
+            // echo "rows:";
+
+            $checked = $rows2;
             $this->render('assignGID', array('filtersForm' => $filtersForm,
-				'selected' => $checked,'GdataProvider'=>$GdataProvider
-			));
-		}
-   }
-    
+                'selected' => $checked, 'GdataProvider' => $GdataProvider
+            ));
+        }
+    }
 
     public function actionOutput() {
-
         $filtersForm = new FilterPedigreeForm;
 
         //import curl class

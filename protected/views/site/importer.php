@@ -32,7 +32,12 @@ $this->breadcrumbs=array(
 <span id="ajax-loading-indicator">
 </span>
 <?php /** @var BootActiveForm $form */
-$form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+   $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+        'type' => 'horizontal',
+        'id' => 'pedigreeImport',
+        'action' => array('/site/importFileDisplay'),
+    ));
+/*$form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     'id'=>'pedigreeImport',
     'type'=>'horizontal',
     'enableClientValidation'=>true,
@@ -40,7 +45,8 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 		'validateOnSubmit'=>true,
 	   ),
     'htmlOptions' => array('class'=>'well','enctype' => 'multipart/form-data'),
-)); ?>
+    'action'=>array('site/importFileDisplay')
+));*/ ?>
 
 <!--div to grey out the screen while loading indicator is on-->
 <div id='screen'>
@@ -99,7 +105,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                              
                                 $fin = fopen($myfile, 'r');
                                
-                                echo '<select name="location" style="width:490px;" >';
+                                echo '<select name="location" id="location" class="ddlClass" style="width:490px;" >';
                                 
                                 while ($line = fgetcsv($fin, 0, "#")) {
 									if(count($line) !=3)
@@ -114,14 +120,35 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 				  
                     <?php 
                        echo "</br>";
-                        $this->widget('bootstrap.widgets.TbButton',array('buttonType'=>'submit','id'=>'uploadFile','type'=>'primary','label'=>'Upload list')); 
+                        $this->widget('bootstrap.widgets.TbButton',array(
+                            'buttonType'=>'submit',
+                            'id'=>'uploadFile',
+                            'type'=>'primary',
+                            'label'=>'Upload list',
+                            'htmlOptions'=>array(
+                                'onclick'=>'js:
+                                        var dataUser = $(".ddlClass option:selected").val();
+                                        $("#location-id").val(dataUser);
+                                        
+                                    ',
+                            ),
+                        )); 
                     ?>
                 <!--</div>-->
            </fieldset><br>
         </div>
-       <!-- <div class="divider"></div>-->
- 
-    <!--</form>-->
+      <?php
+           echo CHtml::textField('location[id]','',array(
+					'id' => 'location-id',
+					'form' => 'pedigreeImport',
+					'class' => 'hidden',
+                 ));
+           echo CHtml::submitButton('Submit',array(
+                  'id' => 'submit-btn',
+                  'class' => 'hidden',
+                  'form' => 'pedigreeImport'
+                ));
+      ?>
 	</div>
  </div>
 </div>
