@@ -98,7 +98,36 @@ class SiteController extends Controller {
     }
 
     public function actionEditor() {
-        $this->render('editor');
+		$model = new ImporterForm;
+		
+		if ($model->validate()) 
+		{
+			if (isset($_POST['searchBtn'])) 
+			{
+				Yii::import('application.modules.curl');
+				/*$gid = $_POST['inputGID'];
+				$a = array('GID'=>$gid);
+				$data = json_encode($a);
+				$ch = curl_init();
+				//$ch =curl_init($url);
+				curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");                                                                     
+				curl_setopt($ch, CURLOPT_POSTFIELDS, $data);                                                                  
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);                                                                      
+				curl_setopt($ch, CURLOPT_HTTPHEADER, array(                                                                          
+					'Content-Type: application/json',                                                                                
+					'Content-Length: ' . strlen($data))                                                                       
+				); 
+				$result = curl_exec($ch);
+				echo $gid;*/
+				$curl = new curl();
+				$arr = $curl->searchGID();
+				print_r($arr);
+				$this->redirect(array('/site/editor'));
+				
+			}
+		}
+		$this->render('editor');
+        
     }
 
     public function actionImporter() {

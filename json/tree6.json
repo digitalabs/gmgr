@@ -10,7 +10,7 @@
 		"name" : "IR 18348-36-3",
 		"gid" : "50532",
 		"id": "30",
-		"warning" : "true",
+		"method" : "true",
 		"layer": "1",
 		"location" : " ",
 		"children" : [
@@ -18,7 +18,7 @@
 			"name" : "IR 18348-36",
 			"gid" : "50531",
 			"id": "31",
-			"warning" : "true",
+			"method" : "true",
 			"layer": "2",
 			"location" : " ",
 			"children" : [
@@ -26,7 +26,7 @@
 				"name" : "IR 18348",
 				"gid" : "24489",
 				"id": "32",
-				"warning" : "true",
+				"method" : "true",
 				"layer": "3",
 				"location" : " ",
 				"children" : [
@@ -41,7 +41,7 @@
 						"name" : "IR 5657-33-2",
 						"gid" : "24453",
 						"id": "34",
-						"warning" : "true",
+						"method" : "true",
 						"layer": "5",
 						"location" : "IRTP 12164",
 						"children" : [
@@ -49,7 +49,7 @@
 							"name" : "IR 5657-33",
 							"gid" : "24452",
 							"id": "35",
-							"warning" : "true",
+							"method" : "true",
 							"layer": "6",
 							"location" : " ",
 							"children" : [
@@ -57,7 +57,7 @@
 								"name" : "IR 5657",
 								"gid" : "8709",
 								"id": "36",
-								"warning" : "true",
+								"method" : "true",
 								"layer": "7",
 								"location" : " ",
 								"children" : [
@@ -79,7 +79,7 @@
 											"name" : "IR 2055-475",
 											"gid" : "7325",
 											"id": "48",
-											"warning" : "true",
+											"method" : "true",
 											"layer": "10",
 											"location" : " ",
 											"children" : [
@@ -87,7 +87,7 @@
 												"name" : "IR 2055",
 												"gid" : "3698",
 												"id": "49",
-												"warning" : "true",
+												"method" : "true",
 												"layer": "11",
 												"location" : " ",
 												"children" : [
@@ -102,7 +102,7 @@
 														"name" : "BPI 121-407",
 														"gid" : "3680",
 														"id": "81",
-														"warning" : "true",
+														"method" : "true",
 														"layer": "13",
 														"location" : "IRGC 15762",
 														"children" : [
@@ -110,7 +110,7 @@
 															"name" : "BPI 121",
 															"gid" : "35418",
 															"id": "82",
-															"warning" : "true",
+															"method" : "true",
 															"layer": "14",
 															"location" : " ",
 															"children" : [
@@ -118,7 +118,7 @@
 																"name" : "BPI 121",
 																"gid" : "420649",
 																"id": "83",
-																"warning" : "true",
+																"method" : "true",
 																"layer": "15",
 																"location" : "ITP 4772"
 															}
@@ -146,7 +146,7 @@
 															"name" : "IR 1416-131",
 															"gid" : "3160",
 															"id": "84",
-															"warning" : "true",
+															"method" : "true",
 															"layer": "14",
 															"location" : " ",
 															"children" : [
@@ -154,7 +154,7 @@
 																"name" : "IR 1416",
 																"gid" : "2231",
 																"id": "85",
-																"warning" : "true",
+																"method" : "true",
 																"layer": "15",
 																"location" : " "
 															}
@@ -188,7 +188,7 @@
 											"name" : "IR 2061-465-1",
 											"gid" : "8300",
 											"id": "60",
-											"warning" : "true",
+											"method" : "true",
 											"layer": "10",
 											"location" : " ",
 											"children" : [
@@ -196,7 +196,7 @@
 												"name" : "IR 2061-465",
 												"gid" : "8299",
 												"id": "61",
-												"warning" : "true",
+												"method" : "true",
 												"layer": "11",
 												"location" : " ",
 												"children" : [
@@ -204,7 +204,7 @@
 													"name" : "IR 2061",
 													"gid" : "3708",
 													"id": "62",
-													"warning" : "true",
+													"method" : "true",
 													"layer": "12",
 													"location" : " ",
 													"children" : [
@@ -219,7 +219,7 @@
 															"name" : "IR 833-6-2-1",
 															"gid" : "3706",
 															"id": "64",
-															"warning" : "true",
+															"method" : "true",
 															"layer": "14",
 															"location" : "IRGC 32590"
 														}
@@ -243,7 +243,7 @@
 																"name" : "IR 1561-149",
 																"gid" : "3563",
 																"id": "68",
-																"warning" : "true",
+																"method" : "true",
 																"layer": "15",
 																"location" : " ",
 																"children" : [
@@ -251,7 +251,7 @@
 																	"name" : "IR 1561",
 																	"gid" : "2584",
 																	"id": "69",
-																	"warning" : "true",
+																	"method" : "true",
 																	"layer": "16",
 																	"location" : " "
 																}
@@ -346,7 +346,7 @@
 											"name" : "IR 2146-68",
 											"gid" : "8110",
 											"id": "47",
-											"warning" : "true",
+											"method" : "true",
 											"layer": "10",
 											"location" : " ",
 											"children" : [
@@ -354,7 +354,7 @@
 												"name" : "IR 2146",
 												"gid" : "3862",
 												"id": "65",
-												"warning" : "true",
+												"method" : "true",
 												"layer": "11",
 												"location" : " ",
 												"children" : [
@@ -437,7 +437,7 @@
 											"name" : "IR 2006-P3-31",
 											"gid" : "8081",
 											"id": "46",
-											"warning" : "true",
+											"method" : "true",
 											"layer": "10",
 											"location" : " ",
 											"children" : [
@@ -445,7 +445,7 @@
 												"name" : "IR 2006-P3",
 												"gid" : "8080",
 												"id": "54",
-												"warning" : "true",
+												"method" : "true",
 												"layer": "11",
 												"location" : " ",
 												"children" : [
@@ -453,7 +453,7 @@
 													"name" : "IR 2006",
 													"gid" : "3610",
 													"id": "55",
-													"warning" : "true",
+													"method" : "true",
 													"layer": "12",
 													"location" : " ",
 													"children" : [
@@ -532,7 +532,7 @@
 						"name" : "IR 2061-465-1-5",
 						"gid" : "11071",
 						"id": "45",
-						"warning" : "true",
+						"method" : "true",
 						"layer": "5",
 						"location" : " ",
 						"children" : [
@@ -540,7 +540,7 @@
 							"name" : "IR 2061-465-1",
 							"gid" : "8300",
 							"id": "60",
-							"warning" : "true",
+							"method" : "true",
 							"layer": "10",
 							"location" : " "
 						}

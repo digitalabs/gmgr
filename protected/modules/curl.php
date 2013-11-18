@@ -11,8 +11,10 @@
  * @author ncarumba
  */
 class curl {
-
-    public function __construct() {
+	
+	//$inputGID = $_GET['inputGID'];
+    public function __construct() 
+	{
         
     }
 
@@ -21,19 +23,19 @@ class curl {
         curl_setopt($handle, CURLOPT_URL, $url);
         curl_setopt($handle, CURLOPT_RETURNTRANSFER, 1);
         $response = curl_exec($handle);
-          $code = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+        $code = curl_getinfo($handle, CURLINFO_HTTP_CODE);
           /*echo "<br>HTTP CODE ERROR: ".$code ."<br>";
           //echo $jsonText;
           echo "<br> cURL: WELCOME! ".$response."</outercode>";
           echo '<br>RESULT: '.print_r($response,1);
           echo "<br> END</outercode>";*/
          
-		 if($code != 200){
+		 /*if($code != 200){
 		        header("Location: /GMGR/index.php?r=site/contactUs");
-		 }
+		 }*/
     }
 
-    public function parse() {
+    /*public function parse() {
 		//http://172.29.4.99:8083/ws/standardization/term/parse
         $url = "http://172.29.4.99:8083/ws/standardization/term/parse";
 
@@ -57,8 +59,38 @@ class curl {
     public function updateMethod() {
         $url = "http://172.29.4.99:8083/ws/standardization/term/updateMethod";
         $this->exec($url);
+    }*/
+	
+	public function searchGID() 
+	{
+        $url = "http://localhost:8081/ws/standardization/term/searchGID";
+        $this->exec($url);
+		
+		$gid = $_POST['inputGID'];
+		$a = array('GID'=>$gid);
+		$data = json_encode($a);
+		$ch = curl_init();
+		$ch =curl_init($url);
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");                                                                     
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $data);                                                                  
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);                                                                      
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array(                                                                          
+			'Content-Type: application/json',                                                                                
+			'Content-Length: ' . strlen($data))                                                                       
+		); 
+		
+		$result = curl_exec($ch);
+		$jsonfile = "trydocinfo.json";
+		json_decode($result, true);
+		//foreach($arr['GID'] as $GID){
+		//	file_put_contents($jsonfile, print_r($arr));
+			//echo "items: ". $GID;
+			//echo('<pre>');
+			//print_r($arr);
+			//echo('</pre>');
+		//};
+		//echo "success"; 
     }
-
 }
 
 ?>

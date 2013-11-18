@@ -5,14 +5,13 @@ var orientation = {
     y: function(node) { return height - node.y; }
   }, 
 };
- 
- 
+
 var data = (function () {
     var jason = null;
     $.ajax({
         'async': false,
         'global': false,
-        'url': "/../gmgr/json/tree6.json",
+        'url': "/../GMGR/json_files/tree.json",
         'dataType': "json",
         'success': function (data) {
             jason = data;
@@ -21,10 +20,9 @@ var data = (function () {
     return jason;
 })(); 
 
-
 var realWidth = window.innerWidth;
 var realHeight = window.innerHeight;
-var margin = {top: 400, right: 50, bottom: 100, left: 1560},
+var margin = {top: 950, right: 50, bottom: 200, left: 1500},
 	m = [100, 500, 100, 500],     
     width = 2000 - margin.left - margin.right,
     height = 5050 - margin.top - margin.bottom,
@@ -33,16 +31,14 @@ var margin = {top: 400, right: 50, bottom: 100, left: 1560},
     rectH = 100,
     i = 0,
     w = realWidth -m[0] -m[0];  
-	
+
 var customNodes = new Array(),
         tmpNodes,
-        label_w = 10,
-        branch_w = 50,
+        label_w = 8,
+        branch_w = 30,
         layer_wider_label = new Array(),
         depencencyChart;
 		
-
-
 //function graph2() {
 	var ms = document.getElementById('maxStep').value;
 	//alert(ms);
@@ -55,7 +51,7 @@ var customNodes = new Array(),
 		 'transform':'rotate(270deg)'
 	});
 	
-    tmpNodes = d3.layout.tree().size([1600, 500]).nodes(data)
+    tmpNodes = d3.layout.tree().size([1300, 500]).nodes(data)
 				 //.on("click", click)	;//;
 	
 					
@@ -66,7 +62,9 @@ var customNodes = new Array(),
             .attr("height", 4900)
             .append("svg:g")
 			.attr("class","drawarea")
-            .attr("transform", "translate(-250, 1750)") // shift everything to the right
+            .attr("transform", "translate(100, 2000)") // shift everything to the right
+			
+			
 
     var fakeTxtBox = depencencyChart.append("svg:text")
             .attr("id", "fakeTXT")
@@ -77,7 +75,7 @@ var customNodes = new Array(),
     depencencyChart.select("#fakeTXT").remove();
     data.y = getNodeY(data.id);
     data.x = 0;
-	
+			
     data.depth = parseInt(data.layer);
     customNodes.push(data);//.on("click", click);	
     prepareNodes(data.children);//.on("click", click(data));
@@ -160,7 +158,6 @@ function prepareNode(node) {
     customNodes.push(node);
 }
 
-
 function customSpline(d) {
     var p = new Array();
     p[0] = (d.source.x-35) + "," + d.source.y;
@@ -242,7 +239,7 @@ function drawChart(ms) {
                 st.source = node;
 //                        st.parent = node;
                 st.target = child;
-                st.warning = child.warning;
+                st.method = child.method;
                 links.push(st);
             })
 			.on("click", click);
@@ -252,7 +249,7 @@ function drawChart(ms) {
                     .data(links)
                     .enter().insert("svg:path", "g")
                     .attr("class", function(d) {
-                return d.warning === "true" ? "link warning" : "link"
+                return d.method === "true" ? "link method" : "link"
             })
                     .attr("d", customSpline)
 				
@@ -272,7 +269,7 @@ function drawChart(ms) {
 		
     });
 }
-	
+
 function drawChart2(node) {
 	
 	var cnt=0;
@@ -299,14 +296,23 @@ function drawChart2(node) {
 				.attr("class", "name")
                 .attr("dx", -19)
                 .attr("dy", -5)
-                .text(node.name)
+                .text("("+node.gid+")")//+" ("+node.gid+")")
+				.attr("transform", function(d) {
+						return "rotate(90)" 
+					})
+				.on("click", click)
+				
+				var txtW = txtBox.node().getComputedTextLength();
+			
+				nodeSVG.append("svg:text")
+				.attr("class", "name")
+				.attr("dx", -22)
+				.attr("dy", -24)
+				.text(node.name)
 				.attr("transform", function(d) {
 						return "rotate(90)" 
 					})
 				
-				
-				var txtW = txtBox.node().getComputedTextLength();
-			
 		//if(cnt <= ms){
         if (node.children) {
             node.x = node.x + txtW + 20;
@@ -317,7 +323,7 @@ function drawChart2(node) {
                 var st = new Object();
                 st.source = node;
                 st.target = child;
-                st.warning = child.warning;
+                st.method = child.method;
                 links.push(st);
 				
             })
@@ -328,7 +334,7 @@ function drawChart2(node) {
                     .data(links)
                     .enter().insert("svg:path", "g")
                     .attr("class", function(d) {
-                return d.warning === "true" ? "link warning" : "link"
+                return d.method === "true" ? "link method" : "link"
             })
                     .attr("d", customSpline)
 					
@@ -349,14 +355,13 @@ function drawChart2(node) {
     });
 }
 
-
 function zoom() {
     var scale = d3.event.scale,
         translation = d3.event.translate,
         tbound = -h * scale,
         bbound = h * scale,
-        lbound = (-w - m[1]) * scale,
-        rbound = (w - m[3]) * scale;
+        lbound = -w * scale,//lbound = (-w - m[1]) * scale,
+        rbound = w * scale;//rbound = (w - m[3]) * scale;
     // limit translation to thresholds
 	
     translation = [
