@@ -175,7 +175,7 @@ if (isset($_GET['searchBtn']))
 						document.getElementById("myForm").submit();
 					}
 				});
-			}
+			} 
 			
 			function validate()
 			{
