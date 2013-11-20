@@ -1,9 +1,9 @@
 var margin = 
 	{
-		top: 100,
+		top: 200,
 		right: 50,
 		bottom: 200,
-		left: 1370
+		left: 570 //1370
 	},
 	
 	customNodes = new Array(),
@@ -15,8 +15,8 @@ var margin =
 	realHeight = window.innerHeight,
 	h = realHeight,// -m[0] -m[2],
 	w = realWidth,// -m[0] -m[0], 
-	width = 3700 - margin.right - margin.left,
-	height = 2050 - margin.top - margin.bottom;
+	width = 500,// - margin.right - margin.left,//width = 3700 - margin.right - margin.left,
+	height = 500 - margin.top - margin.bottom;//height = 2050 - margin.top - margin.bottom;
 
 	var root = (function () {
 			var json = null;
