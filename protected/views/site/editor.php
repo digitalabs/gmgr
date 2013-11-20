@@ -9,6 +9,16 @@ $this->breadcrumbs=array(
 );
 Yii::import("ext.graphviz.components.*"); 
 Yii::import("ext.graphviz.widgets.*");
+Yii::import('application.modules.curl');
+Yii::import('application.modules.file_toArray');
+
+if (isset($_GET['searchBtn'])) 
+{
+	//foo();
+	echo "Success";
+}
+
+
 ?>
 
 <html>
@@ -23,17 +33,25 @@ Yii::import("ext.graphviz.widgets.*");
         <div style="text-align:right;vertical-align:right;margin-left:10px;margin-right: 10px;">       <br>
 
                     <!--<strong><small>Search Germplasm</small></strong>&nbsp;-->
-                    <div style="position:fixed;top:75px;right:40px" class="input-append">    
+                    <div style="z-index:4;position:fixed;top:75px;right:40px" class="input-append">    
                       <!--<div class="btn-group" data-toggle="buttons-checkbox">
                           <button type="button" class="btn">Name</button>
                           <button type="button" class="btn">GID</button>    
                       </div>-->
-                      <input disabled="true" title="This feature is a work in progress" style="width:140px;" class="span2" id="appendedInputButtons" type="text" placeholder="Search Germplasm">
-                      <button disabled="true" title="This feature is a work in progress" class="btn btn-primary" type="button" onclick="graph2();">GO</button>
-                    </div>  
+					  <form action="index.php?r=site/editor" method="post">
+						<input title="This feature is a work in progress" style="width:140px;" class="span2" id="inputGID" name="inputGID" type="text" placeholder="Search Germplasm">
+						<button name="searchBtn" id="searchBtn" title="This feature is a work in progress" class="btn btn-primary" onclick="validate()"type="submit">GO</button>
+					  </form>
+					  </div>  
                              
             </div>
-            
+			<span id="ajax-loading-indicator">
+			</span>
+			
+            <!--bg while loading indicator is on-->
+			<div style="z-index:100;" id='screen'>
+			   
+			</div>
             
            <!-- <div style="vertical-align:middle;margin-left:5px;margin-right: 5px;">
                 <div class="well" style="position:relative;border:1px solid; padding: 0px; height:670px">
@@ -52,18 +70,18 @@ Yii::import("ext.graphviz.widgets.*");
                         <!--<div style="padding-left:5px;padding-right:5px;"><hr></div>-->
                         <br>
                         <div class="form-horizontal" style="padding: 5px;">
-                            <input disabled="true" title="This feature is a work in progress" placeholder="All" style="width:50px;" value=" " id="maxStep" type="number" name="quantity" min="1" max="100"> 
+                            <input title="This feature is a work in progress" placeholder="All" style="width:50px;" value=" " id="maxStep" type="number" name="quantity" min="1" max="100"> 
 							
                             <small><a data-toggle="tooltip" title="By default, a regular pedigree for a particular germplasm is created up to the certain number of known parents. You can, however, choose to show a smaller number of parental generations (steps), or to choose all." data-placement="right">Maximum Steps</a></small>
                         </div><br>
                         <label class="checkbox" style="padding-left: 30px;">
-                          <small><input disabled="true" title="This feature is a work in progress" type="checkbox"><a data-placement="right" data-toggle="tooltip" title="Derivative and maintenance steps will be included in the pedigree.">Show Selection History</a></input></small><br>
-                          <small><input disabled="true" title="This feature is a work in progress" type="checkbox"><a data-placement="right" data-toggle="tooltip" title="The pedigree graph can label its edges by the name of germplasm methods.">Show Method</a></input></small>
+                          <small><input title="This feature is a work in progress" type="checkbox"><a data-placement="right" data-toggle="tooltip" title="Derivative and maintenance steps will be included in the pedigree.">Show Selection History</a></input></small><br>
+                          <small><input title="This feature is a work in progress" type="checkbox"><a data-placement="right" data-toggle="tooltip" title="The pedigree graph can label its edges by the name of germplasm methods.">Show Method</a></input></small>
                         </label>
                         
 					<div style="padding-left: 5px;padding-right: 5px; text-align: right;">
-							<button type="button" class="btn btn-mini btn-primary" onclick="graph2();">Load</button>
-							<button disabled="true" title="This feature is a work in progress" class="btn btn-mini btn-success" id="savePNG" value="">Save as PNG</button>
+							<button type="button" class="btn btn-mini btn-primary" onclick="graph2b();">Load</button>
+							<button title="This feature is a work in progress" class="btn btn-mini btn-success" id="savePNG" value="">Save as PNG</button>
 							
                         <div style="padding-left:5px;padding-right:5px;"><hr></div>
                         <center><div style="padding-left:5px;padding-right:5px;">Germplasm Information</div></center> <br>
@@ -128,11 +146,17 @@ Yii::import("ext.graphviz.widgets.*");
 		</form>
         
         <script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/d3.v3.min.js"></script>
-        <script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/editor5.js"></script>\
+        <script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/editor4.js"></script>
+		<!--<script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/editor5b.js"></script>-->
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
 		<script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/html2canvas.js"></script>
 		<script src="<?php echo Yii::app()->baseUrl;?>/js/vkbeautify.0.99.00.beta.js"></script>
         <script type="text/javascript">
+			function validate()
+			{
+				if(document.getElementById('searchBtn')=='' || document.getElementById('searchBtn')==' ' || document.getElementById('searchBtn')=='Search Germplasm')
+				alert('Error');
+			}
             /*$(document).ready(function() {
 				$("#savePNG").click(function () {
 					html2canvas($("#graphDiv"), {
@@ -203,6 +227,22 @@ Yii::import("ext.graphviz.widgets.*");
 					.duration(500)
 					.style("opacity", 1);
 			}
+			$(document).ready(function() {
+			  var pop = function(){
+					$('#screen').css({ opacity: 0.4, 'width':$(document).width(),'height':$(document).height()});
+					$('body').css({'overflow':'hidden'});
+					$('#ajax-loading-indicator').css({'display': 'block'});
+			 }
+			 $('#searchBtn').click(pop);
+
+			});
+			<?php
+			Yii::app()->clientScript->registerScript(
+			   'myHideEffect',
+			   '$(".info").animate({opacity: 1.0}, 3000).fadeOut("slow");',
+			   CClientScript::POS_READY
+			);
+			?>
         </script>
 
 </body>
