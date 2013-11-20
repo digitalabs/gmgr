@@ -17,6 +17,9 @@ class SiteController extends Controller {
         );
     }
 
+    public function actionLocalStore1() {
+        $this->render('localStore1');
+     }
     /**
      * This is the default 'index' action that is invoked
      * when an action is not explicitly requested by users.
