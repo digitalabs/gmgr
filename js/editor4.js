@@ -23,7 +23,7 @@ var margin =
 			$.ajax({
 				'async': false,
 				'global': false,
-				'url': "/GMGR/json_files/tree.json",
+				'url': "/../GMGR/json_files/tree.json",
 				'dataType': "json",
 				'success': function (data) {
 					json = data;
