@@ -7,7 +7,7 @@ echo "NIKKI"."<br>";
 <br>
 <body onload="applySetting()">
 <pre>
-<section><form onsubmit="javascript:setSettings()"><label>Select your BG color: </label>
+<section><form action="" onsubmit="javascript:setSettings()"><label>Select your BG color: </label>
 <input id="favcolor" type="color" value="#ffffff" />
 
 <label>Select Font Size: </label>
