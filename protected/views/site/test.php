@@ -1,7 +1,18 @@
+<?php
+/* @var $this SiteController */
+/* @var $model LoginForm */
+/* @var $form CActiveForm  */
+
+$this->pageTitle=Yii::app()->name . ' - Editor';
+$this->breadcrumbs=array(
+	'Editor',
+);
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
-<script type="text/javascript" src="http://mbostock.github.com/d3/d3.js"></script>
+<script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/d3.v3.min.js"></script>
 <title>Download SVG</title>
 <style type="text/css">
     a{
@@ -19,7 +30,7 @@
 <body>
 
 <div id="viz"></div>
-<a href="#" id="generate">Generate download preview</a>
+<a href="#" id="generate">Click to save as image</a>
 
 <script type="text/javascript">
 
