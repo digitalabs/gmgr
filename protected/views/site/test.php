@@ -64,8 +64,8 @@ function writeDownloadLink(){
         .style("top", event.clientY+20+"px")
         .style("left", event.clientX+"px")
         .html("Right-click on this preview and choose Save as<br />Left-Click to dismiss<br />")
-        .append("img")
-        .attr("src", "data:image/svg+xml;base64,"+ btoa(html));
+        .append("img");
+        //.attr("src", "data:image/svg+xml;base64,"+ btoa(svg));
 
     d3.select("#download")
         .on("click", function(){
