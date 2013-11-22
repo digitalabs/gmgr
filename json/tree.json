@@ -1,0 +1,558 @@
+{
+	"name" : "IR 64",
+	"gid" : "50533",
+	"id": "29",
+	"layer": "0",
+	"current": "true",
+	"location" : "IRTP 12158",
+	"children" : [
+	{
+		"name" : "IR 18348-36-3",
+		"gid" : "50532",
+		"id": "30",
+		"method" : "true",
+		"layer": "1",
+		"location" : " ",
+		"children" : [
+		{
+			"name" : "IR 18348-36",
+			"gid" : "50531",
+			"id": "31",
+			"method" : "true",
+			"layer": "2",
+			"location" : " ",
+			"children" : [
+			{
+				"name" : "IR 18348",
+				"gid" : "24489",
+				"id": "32",
+				"method" : "true",
+				"layer": "3",
+				"location" : " ",
+				"children" : [
+				{
+					"name" : "IR 5657-33-2-1",
+					"gid" : "24486",
+					"id": "33",
+					"layer": "4",
+					"location" : " ",
+					"children" : [
+					{
+						"name" : "IR 5657-33-2",
+						"gid" : "24453",
+						"id": "34",
+						"method" : "true",
+						"layer": "5",
+						"location" : "IRTP 12164",
+						"children" : [
+						{
+							"name" : "IR 5657-33",
+							"gid" : "24452",
+							"id": "35",
+							"method" : "true",
+							"layer": "6",
+							"location" : " ",
+							"children" : [
+							{
+								"name" : "IR 5657",
+								"gid" : "8709",
+								"id": "36",
+								"method" : "true",
+								"layer": "7",
+								"location" : " ",
+								"children" : [
+								{
+									"name" : "IR 5338",
+									"gid" : "8307",
+									"id": "37",
+									"layer": "8",
+									"location" : " ",
+									"children" : [
+									{
+										"name" : "IR 2055-475-2",
+										"gid" : "7326",
+										"id": "38",
+										"layer": "9",
+										"location" : "IRTP 4894",
+										"children" : [
+										{
+											"name" : "IR 2055-475",
+											"gid" : "7325",
+											"id": "48",
+											"method" : "true",
+											"layer": "10",
+											"location" : " ",
+											"children" : [
+											{
+												"name" : "IR 2055",
+												"gid" : "3698",
+												"id": "49",
+												"method" : "true",
+												"layer": "11",
+												"location" : " ",
+												"children" : [
+												{
+													"name" : "BPI 121-407",
+													"gid" : "3680",
+													"id": "50",
+													"layer": "12",
+													"location" : "IRGC 15762",
+													"children" : [
+													{
+														"name" : "BPI 121-407",
+														"gid" : "3680",
+														"id": "81",
+														"method" : "true",
+														"layer": "13",
+														"location" : "IRGC 15762",
+														"children" : [
+														{
+															"name" : "BPI 121",
+															"gid" : "35418",
+															"id": "82",
+															"method" : "true",
+															"layer": "14",
+															"location" : " ",
+															"children" : [
+															{
+																"name" : "BPI 121",
+																"gid" : "420649",
+																"id": "83",
+																"method" : "true",
+																"layer": "15",
+																"location" : "ITP 4772"
+															}
+															]
+														}
+														]
+													}
+													]
+												},
+												{
+													"name" : "IR 1833",
+													"gid" : "3199",
+													"id": "51",
+													"layer": "12",
+													"location" : " ",
+													"children" : [
+													{
+														"name" : "IR 1416-131-5",
+														"gid" : "3161",
+														"id": "52",
+														"layer": "13",
+														"location" : "IRTP 8123",
+														"children" : [
+														{
+															"name" : "IR 1416-131",
+															"gid" : "3160",
+															"id": "84",
+															"method" : "true",
+															"layer": "14",
+															"location" : " ",
+															"children" : [
+															{
+																"name" : "IR 1416",
+																"gid" : "2231",
+																"id": "85",
+																"method" : "true",
+																"layer": "15",
+																"location" : " "
+															}
+															]
+														}
+														]
+													},
+													{
+														"name" : "IR 22",
+														"gid" : "2722",
+														"id": "53",
+														"layer": "14",
+														"location" : "IRTP 197"
+													}
+													]
+												}
+												]
+											}
+											]
+										}
+										]
+									},
+									{
+										"name" : "IR 2061-465-1-4",
+										"gid" : "8301",
+										"id": "39",
+										"layer": "9",
+										"location" : " ",
+										"children" : [
+										{
+											"name" : "IR 2061-465-1",
+											"gid" : "8300",
+											"id": "60",
+											"method" : "true",
+											"layer": "10",
+											"location" : " ",
+											"children" : [
+											{
+												"name" : "IR 2061-465",
+												"gid" : "8299",
+												"id": "61",
+												"method" : "true",
+												"layer": "11",
+												"location" : " ",
+												"children" : [
+												{
+													"name" : "IR 2061",
+													"gid" : "3708",
+													"id": "62",
+													"method" : "true",
+													"layer": "12",
+													"location" : " ",
+													"children" : [
+													{
+														"name" : "IR 833-6-2-1-1",
+														"gid" : "3707",
+														"id": "63",
+														"layer": "13",
+														"location" : "IRTP 4227",
+														"children" : [
+														{
+															"name" : "IR 833-6-2-1",
+															"gid" : "3706",
+															"id": "64",
+															"method" : "true",
+															"layer": "14",
+															"location" : "IRGC 32590"
+														}
+														]
+													},
+													{
+														"name" : "IR 2040",
+														"gid" : "3661",
+														"id": "66",
+														"layer": "13",
+														"location" : " ",
+														"children" : [
+														{
+															"name" : "IR 1561-149-1",
+															"gid" : "3660",
+															"id": "67",
+															"layer": "14",
+															"location" : " ",
+															"children" : [
+															{
+																"name" : "IR 1561-149",
+																"gid" : "3563",
+																"id": "68",
+																"method" : "true",
+																"layer": "15",
+																"location" : " ",
+																"children" : [
+																{
+																	"name" : "IR 1561",
+																	"gid" : "2584",
+																	"id": "69",
+																	"method" : "true",
+																	"layer": "16",
+																	"location" : " "
+																}
+																]
+															}
+															]
+														},
+														{
+															"name" : "IR 1737",
+															"gid" : "3006",
+															"id": "70",
+															"layer": "15",
+															"location" : " ",
+															"children" : [
+															{
+																"name" : "IR 1721",
+																"gid" : "2983",
+																"id": "71",
+																"layer": "16",
+																"location" : " ",
+																"children" : [
+																{
+																	"name" : "IR 1704",
+																	"gid" : "2933",
+																	"id": "72",
+																	"layer": "17",
+																	"location" : " ",
+																	"children" : [
+																	{
+																		"name" : "IR 1641",
+																		"gid" : "2789",
+																		"id": "73",
+																		"layer": "18",
+																		"location" : " ",
+																		"children" : [
+																		{
+																			"name" : "IR 24",
+																			"gid" : "2444",
+																			"id": "74",
+																			"layer": "19",
+																			"location" : "IRTP 198"
+																		}
+																		]
+																	},
+																	{
+																		"name" : "IR 24",
+																		"gid" : "2444",
+																		"id": "74",
+																		"layer": "19",
+																		"location" : "IRTP 198"
+																	}
+																	]
+																}
+																]
+															},
+															{
+																"name" : "IR 24",
+																"gid" : "2444",
+																"id": "74",
+																"layer": "19",
+																"location" : "IRTP 198"
+															}
+															]
+														}
+														]
+													}
+													]
+												}
+												]
+											}
+											]
+										}
+										]	
+									}
+									]
+								},
+								{
+									"name" : "IR 5236",
+									"gid" : "8180",
+									"id": "41",
+									"layer": "8",
+									"location" : " ",
+									"children" : [
+									{
+										"name" : "IR 2146-68-1",
+										"gid" : "8111",
+										"id": "42",
+										"layer": "9",
+										"location" : " ",
+										"children" : [
+										{
+											"name" : "IR 2146-68",
+											"gid" : "8110",
+											"id": "47",
+											"method" : "true",
+											"layer": "10",
+											"location" : " ",
+											"children" : [
+											{
+												"name" : "IR 2146",
+												"gid" : "3862",
+												"id": "65",
+												"method" : "true",
+												"layer": "11",
+												"location" : " ",
+												"children" : [
+												{
+													"name" : "IR 1916",
+													"gid" : "3414",
+													"id": "75",
+													"layer": "12",
+													"location" : " ",
+													"children" : [
+													{
+														"name" : "IR 1915 B",
+														"gid" : "3413",
+														"id": "76",
+														"layer": "13",
+														"location" : " ",
+														"children" : [
+														{
+															"name" : "IR 773 A 1-36-2-1 / O Nivara",
+															"gid" : "3412",
+															"id": "77",
+															"layer": "14",
+															"location" : " ",
+															"children" : [
+															{
+																"name" : "O Nivara",
+																"gid" : "3257",
+																"id": "78",
+																"layer": "15",
+																"location" : " "
+															},
+															{
+																"name" : "IR 773 A 1-36-2-1",
+																"gid" : "3411",
+																"id": "79",
+																"layer": "15",
+																"location" : "IRGC 11374"
+															}
+															]
+														},
+														{
+															"name" : "IR 773 A 1-36-2-1",
+															"gid" : "3411",
+															"id": "79",
+															"layer": "15",
+															"location" : "IRGC 11374"
+														}
+														]
+													},
+													{
+														"name" : "IR 773 A 1-36-2-1",
+														"gid" : "3411",
+														"id": "79",
+														"layer": "15",
+														"location" : "IRGC 11374"
+													}
+													]
+												},
+												{
+													"name" : "IR 773 A 1-36-2-1",
+													"gid" : "3411",
+													"id": "79",
+													"layer": "15",
+													"location" : "IRGC 11374"
+												}
+												]
+											}
+											]
+										}
+										]
+									},
+									{
+										"name" : "IR 2006-P3-31-3",
+										"gid" : "8082",
+										"id": "43",
+										"layer": "9",
+										"location" : " ",
+										"children" : [
+										{
+											"name" : "IR 2006-P3-31",
+											"gid" : "8081",
+											"id": "46",
+											"method" : "true",
+											"layer": "10",
+											"location" : " ",
+											"children" : [
+											{
+												"name" : "IR 2006-P3",
+												"gid" : "8080",
+												"id": "54",
+												"method" : "true",
+												"layer": "11",
+												"location" : " ",
+												"children" : [
+												{
+													"name" : "IR 2006",
+													"gid" : "3610",
+													"id": "55",
+													"method" : "true",
+													"layer": "12",
+													"location" : " ",
+													"children" : [
+													{
+														"name" : "IR 1614",
+														"gid" : "2722",
+														"id": "56",
+														"layer": "13",
+														"location" : " ",
+														"children" : [
+														{
+															"name" : "IR 22",
+															"gid" : "2722",
+															"id": "53",
+															"layer": "14",
+															"location" : " "
+														},
+														{
+															"name" : "IR 1404",
+															"gid" : "2201",
+															"id": "57",
+															"layer": "14",
+															"location" : " "
+														}
+														]
+													},
+													{
+														"name" : "IR 1870",
+														"gid" : "3299",
+														"id": "58",
+														"layer": "13",
+														"location" : " ",
+														"children" : [
+														{
+															"name" : "IR 1103-15-8-4-2-2-3",
+															"gid" : "3290",
+															"id": "59",
+															"layer": "14",
+															"location" : "IRTP 4286"
+														},
+														{
+															"name" : "IR 1163-124-1-3",
+															"gid" : "3298",
+															"id": "80",
+															"layer": "14",
+															"location" : " "
+														}
+														]
+													}
+													]
+												}
+												]
+											}
+											]
+										}
+										]
+									}
+									]
+								}
+								]
+							}
+							]
+						}
+						]
+					}
+					]
+				},
+				{
+					"name" : "2061-465-1-5-5",
+					"gid" : "11072",
+					"id": "44",
+					"layer": "4",
+					"location" : "IRTP 249",
+					"children" : [
+					{
+						"name" : "IR 2061-465-1-5",
+						"gid" : "11071",
+						"id": "45",
+						"method" : "true",
+						"layer": "5",
+						"location" : " ",
+						"children" : [
+						{
+							"name" : "IR 2061-465-1",
+							"gid" : "8300",
+							"id": "60",
+							"method" : "true",
+							"layer": "10",
+							"location" : " "
+						}
+						]
+					}
+					]
+				}
+				]
+			}
+			]
+		}
+		]				
+	}
+	]
+}

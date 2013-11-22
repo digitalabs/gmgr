@@ -99,7 +99,12 @@ class SiteController extends Controller {
         Yii::app()->user->logout();
         $this->redirect(Yii::app()->homeUrl);
     }
-
+	
+	public function actionTest() 
+	{
+		$this->render('test');
+	}
+	
     public function actionEditor() {
 		$model = new ImporterForm;
 		

@@ -61,7 +61,12 @@ if (isset($_GET['searchBtn']))
 					</svg>
 						<div id="graphDiv" width="5000" style="width:2000px;"></div>
 					</div> -->
-                    <div id="graphDiv" style="z-index:50;height: auto;width: auto;"></div>
+					<div id="graph">
+					<svg width="1000" height="800" id="graphDiv"></svg>
+					</div>
+                    <!--<div id="graphDiv" style="z-index:50;">-->
+					<!--<a href="#" id="generate">Generate download preview</a>	-->
+					</div>
                     <div class="div-gradient" style="z-index:0;padding-left: 0px; width: 200px;height:650px;text-align: justify;position:fixed;right:40px;top:115px;bottom:20px;
 														-webkit-box-shadow: 3px 3px 16px rgba(50, 50, 50, 0.75);
 														-moz-box-shadow:    3px 3px 16px rgba(50, 50, 50, 0.75);
@@ -80,11 +85,19 @@ if (isset($_GET['searchBtn']))
                         </label>
                         
 					<div style="padding-left: 5px;padding-right: 5px; text-align: right;">
-							<button type="button" class="btn btn-mini btn-primary" onclick="graph2b();">Load</button>
-							<button title="This feature is a work in progress" class="btn btn-mini btn-success" id="savePNG" value="">Save as PNG</button>
+							<button disabled="true" type="button" class="btn btn-mini btn-primary" onclick="graph2b();">Update</button>
+							<button title="This feature is a work in progress" class="btn btn-mini btn-success" id="generate" value="" >Save image</button>
+							<form method="POST" enctype="multipart/form-data" action="<?php echo Yii::app()->baseUrl;?>/save.php" id="myForm">
+								<input type="hidden" name="img_val" id="img_val" value="" />
+							</form>
 							
                         <div style="padding-left:5px;padding-right:5px;"><hr></div>
                         <center><div style="padding-left:5px;padding-right:5px;">Germplasm Information</div></center> <br>
+						
+						<!--<div style="position:fixed;top:20px;left:40px;padding:5px;">
+							<button title="This feature is a work in progress" class="btn btn-mini btn-success" id="savePNG" value="">Edit</button>
+						</div>-->
+					
                         <small>
                         <div style="padding-left:5px;padding-right:5px;"> 
                         <table style="border-collapse: separate !important;border-radius: 6px 6px 6px 6px;
@@ -108,7 +121,9 @@ if (isset($_GET['searchBtn']))
                         <div style="vertical-align:top;text-align: left"><a style="color: white; text-decoration: none;"><img src='images/legend.gif' width="185px" height="100px"></a></div> 
                         </div>   
                     </div>  
-                       
+					
+                    
+					
                     <div style="vertical-align:right;text-align: right;">
 						
                         <p style="position:fixed;bottom:0px;left:40px;padding:5px;"><span class="label label-warning">Note</span> 
@@ -147,17 +162,34 @@ if (isset($_GET['searchBtn']))
         
         <script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/d3.v3.min.js"></script>
         <script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/editor4.js"></script>
-		<!--<script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/editor5b.js"></script>-->
+		<!--<script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/editor5b.js"></script>
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>-->
 		<script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/html2canvas.js"></script>
+		<script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/jquery.plugin.html2canvas.js"></script>
 		<script src="<?php echo Yii::app()->baseUrl;?>/js/vkbeautify.0.99.00.beta.js"></script>
+		<script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/rgbcolor.js"></script>
+		<script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/canvg.js"></script>
+		<script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/svgenie.js"></script>
         <script type="text/javascript">
-			function validate()
+		
+			function capture() {
+				$('#graph').html2canvas({
+					onrendered: function (svg) {
+						//Set hidden field's value to image data (base-64 string)
+						$('#img_val').val(svg.toDataURL("image/png"));
+						//Submit the form manually
+						document.getElementById("myForm").submit();
+					}
+				});
+			} 
+			
+			/*function validate()
 			{
 				if(document.getElementById('searchBtn')=='' || document.getElementById('searchBtn')==' ' || document.getElementById('searchBtn')=='Search Germplasm')
 				alert('Error');
 			}
-            /*$(document).ready(function() {
+            $(document).ready(function() {
 				$("#savePNG").click(function () {
 					html2canvas($("#graphDiv"), {
 						background: "red",
@@ -170,7 +202,7 @@ if (isset($_GET['searchBtn']))
 					});
 				});
 			});*/
-			$(document).ready(function() {
+			/*$(document).ready(function() {
 				$("#generate").click(function () {
 					alert('test');
 					writeDownloadLink();
@@ -188,8 +220,11 @@ if (isset($_GET['searchBtn']))
 				//$("#save_as_pdf").click(function() { submit_download_form("pdf"); });
 
 				$("#savePNG").click(function() { submit_download_form("png"); });
-			});
-
+			});*/
+			window.onclick = function(){
+				svgenie.save( document.getElementById('graphDiv'), { name:"this.png" } ); 
+			}
+			
 			function zoomings(optionSel)
 			{
 				var OptionSelected = optionSel.selectedIndex;
@@ -199,34 +234,6 @@ if (isset($_GET['searchBtn']))
 				div.style.zoom = val;
 			}
 			
-			function writeDownloadLink(){
-				alert('test');
-				var html = d3.select("svg")
-					.attr("title", "test2")
-					.attr("version", 1.1)
-					.attr("xmlns", "http://www.w3.org/2000/svg")
-					.node().parentNode.innerHTML;
-
-				d3.select("body").append("div")
-					.attr("id", "download")
-					.style("top", event.clientY+20+"px")
-					.style("left", event.clientX+"px")
-					.html("Right-click on this preview and choose Save as<br />Left-Click to dismiss<br />")
-					.append("img")
-					.attr("src", "data:image/svg+xml;base64,"+ btoa(html));
-
-				d3.select("#download")
-					.on("click", function(){
-						if(event.button == 0){
-							d3.select(this).transition()
-								.style("opacity", 0)
-								.remove();
-						}
-					})
-					.transition()
-					.duration(500)
-					.style("opacity", 1);
-			}
 			$(document).ready(function() {
 			  var pop = function(){
 					$('#screen').css({ opacity: 0.4, 'width':$(document).width(),'height':$(document).height()});
@@ -236,6 +243,8 @@ if (isset($_GET['searchBtn']))
 			 $('#searchBtn').click(pop);
 
 			});
+			s
+			
 			<?php
 			Yii::app()->clientScript->registerScript(
 			   'myHideEffect',
@@ -243,6 +252,8 @@ if (isset($_GET['searchBtn']))
 			   CClientScript::POS_READY
 			);
 			?>
+			
+			
         </script>
 
 </body>

@@ -1,0 +1,43 @@
+{
+  "name" : "CINA/LATISAIL",
+  "gid" : "431748",
+  "methodname" : "Single cross",
+  "meth" : "SC",
+  "methodtype" : "GEN",
+  "date" : "0",
+  "country" : "Asia",
+  "location" : "Philippines",
+  "gpid1" : "168602",
+  "gpid2" : "168603",
+  "id" : "0",
+  "layer" : "0",
+  "children" : [
+  {
+    "name" : "CINA/LATISAIL",
+    "gid" : "168602",
+    "methodname" : "Single cross",
+	"meth" : "SC",
+    "methodtype" : "GEN",
+    "date" : "0",
+    "country" : "Asia",
+    "location" : "Philippines",
+    "gpid1" : "168602",
+    "gpid2" : "168603",
+    "id" : "1",
+    "layer" : "1"
+  },
+  {    "name" : "CINA/LATISAIL",
+    "gid" : "168603",
+    "methodname" : "Single cross",
+	"meth" : "SC",
+    "methodtype" : "GEN",
+    "date" : "0",
+    "country" : "Asia",
+    "location" : "Philippines",
+    "gpid1" : "168602",
+    "gpid2" : "168603",
+    "id" : "2",
+    "layer" : "1"
+  }
+]
+}

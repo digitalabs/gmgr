@@ -1,9 +1,9 @@
 var margin = 
 	{
-		top: 100,
+		top: 200,
 		right: 50,
 		bottom: 200,
-		left: 1370
+		left: 570 //1370
 	},
 	
 	customNodes = new Array(),
@@ -15,15 +15,15 @@ var margin =
 	realHeight = window.innerHeight,
 	h = realHeight,// -m[0] -m[2],
 	w = realWidth,// -m[0] -m[0], 
-	width = 3700 - margin.right - margin.left,
-	height = 2050 - margin.top - margin.bottom;
+	width = 500,// - margin.right - margin.left,//width = 3700 - margin.right - margin.left,
+	height = 500 - margin.top - margin.bottom;//height = 2050 - margin.top - margin.bottom;
 
 	var root = (function () {
 			var json = null;
 			$.ajax({
 				'async': false,
 				'global': false,
-				'url': "/GMGR/json_files/tree.json",
+				'url': "/../gmgr/json_files/tree.json",
 				'dataType': "json",
 				'success': function (data) {
 					json = data;
@@ -45,14 +45,14 @@ var margin =
 						return [d.x + rectW / 2, (height-d.y) + rectH / 2];
 					 });
 
-	var svg = d3.select("#graphDiv").append("svg")
+	var svg = d3.select("#graphDiv").append("svg:svg")
 				.attr("width", width + margin.right + margin.left)
 				.attr("height", height + margin.top + margin.bottom)
 				.append("g")
 				.attr("class","drawarea")
 				.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 				
-	//d3.select("#generate").on("click", writeDownloadLink);
+	d3.select("#generate").on("click", writeDownloadLink);
 	
 	var ms = document.getElementById('maxStep').value;
 	var tmpNodes = d3.layout.tree().size([450, 300]).nodes(root);
@@ -66,7 +66,7 @@ var margin =
 	root.depth = parseInt(root.layer);
 	customNodes.push(root);
 	prepareNodes(root.children);
-	updateNodesXOffset()
+	updateNodesXOffset();
 	
 	//root.children.forEach(collapse);
 	update(root);
@@ -268,15 +268,22 @@ function update(source)
 				  //.attr("class", function(d) {
                   //   return d.method === "true" ? "link method" : "link"});
 
+	link.enter().insert("text", "g")
+			  .attr("x", function(d) { return (d.source.x+d.target.x)/2; })
+			  .attr("y", function(d) { return (d.source.y+d.target.y)/2; })
+			  .text(function(d) { return d.target.meth; });
+			  
+    //link.exit().transition().duration(duration) .text(function(d) { return d.target.size; }) .remove();
     // Enter any new links at the parent's previous position.
     link.enter().insert("path", "g")
-		//.attr("class", "link")
+		.attr("class", "link")
 		//.style("stroke", function(d) { return d.method === "true" ? "#33CC33" : "#FF9900"; })
         .attr("class", function(d) {
                 return d.method === "true" ? "link method" : "link"
             })
         .attr("x", rectW / 2)
         .attr("y", rectH / 2)
+		//.text(function(d) { return d.target.methodname; })
         .attr("d", function (d) {
 			var o = {
 				x: source.x0,
@@ -405,4 +412,33 @@ function show_svg_code()
 	prettyPrint();
 }
 
+//function to save D3 diagram as image (PNG)
+function writeDownloadLink()
+{
+    var html = d3.select("svg")
+        .attr("title", "test2")
+        .attr("version", 1.1)
+        .attr("xmlns", "http://www.w3.org/2000/svg")
+        .node().parentNode.innerHTML;
+
+    d3.select("body").append("div")
+        .attr("id", "download")
+        .style("top", event.clientY+20+"px")
+        .style("left", event.clientX+"px")
+        .html("<div style='position:fixed;left:40px;top:120px;'>Scroll down and <b><i>right-click</i></b> on the preview below and choose Save image as... <br/><b><i>Left-click</i></b> to dismiss<br /></div>")
+        .append("img")
+        .attr("src", "data:image/svg+xml;base64,"+ btoa(html));
+
+    d3.select("#download")
+        .on("click", function(){
+            if(event.button == 0){
+                d3.select(this).transition()
+                    .style("opacity", 0)
+                    .remove();
+            }
+        })
+        .transition()
+        .duration(500)
+        .style("opacity", 1);
+}
 

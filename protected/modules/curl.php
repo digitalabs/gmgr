@@ -35,7 +35,7 @@ class curl {
 		 }*/
     }
 
-    /*public function parse() {
+    public function parse() {
 		//http://172.29.4.99:8083/ws/standardization/term/parse
         $url = "http://172.29.4.99:8083/ws/standardization/term/parse";
 
@@ -59,7 +59,7 @@ class curl {
     public function updateMethod() {
         $url = "http://172.29.4.99:8083/ws/standardization/term/updateMethod";
         $this->exec($url);
-    }*/
+    }
 	
 	public function searchGID() 
 	{
