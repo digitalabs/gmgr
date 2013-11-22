@@ -45,7 +45,7 @@ var margin =
 						return [d.x + rectW / 2, (height-d.y) + rectH / 2];
 					 });
 
-	var svg = d3.select("#graphDiv").append("svg")
+	var svg = d3.select("#graphDiv").append("svg:svg")
 				.attr("width", width + margin.right + margin.left)
 				.attr("height", height + margin.top + margin.bottom)
 				.append("g")
@@ -66,7 +66,7 @@ var margin =
 	root.depth = parseInt(root.layer);
 	customNodes.push(root);
 	prepareNodes(root.children);
-	updateNodesXOffset()
+	updateNodesXOffset();
 	
 	//root.children.forEach(collapse);
 	update(root);
@@ -268,15 +268,22 @@ function update(source)
 				  //.attr("class", function(d) {
                   //   return d.method === "true" ? "link method" : "link"});
 
+	link.enter().insert("text", "g")
+			  .attr("x", function(d) { return (d.source.x+d.target.x)/2; })
+			  .attr("y", function(d) { return (d.source.y+d.target.y)/2; })
+			  .text(function(d) { return d.target.meth; });
+			  
+    //link.exit().transition().duration(duration) .text(function(d) { return d.target.size; }) .remove();
     // Enter any new links at the parent's previous position.
     link.enter().insert("path", "g")
-		//.attr("class", "link")
+		.attr("class", "link")
 		//.style("stroke", function(d) { return d.method === "true" ? "#33CC33" : "#FF9900"; })
         .attr("class", function(d) {
                 return d.method === "true" ? "link method" : "link"
             })
         .attr("x", rectW / 2)
         .attr("y", rectH / 2)
+		//.text(function(d) { return d.target.methodname; })
         .attr("d", function (d) {
 			var o = {
 				x: source.x0,
