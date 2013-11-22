@@ -412,7 +412,9 @@ function show_svg_code()
 	prettyPrint();
 }
 
-function writeDownloadLink(){
+//function to save D3 diagram as image (PNG)
+function writeDownloadLink()
+{
     var html = d3.select("svg")
         .attr("title", "test2")
         .attr("version", 1.1)
@@ -423,7 +425,7 @@ function writeDownloadLink(){
         .attr("id", "download")
         .style("top", event.clientY+20+"px")
         .style("left", event.clientX+"px")
-        .html("<div style='position:fixed;left:40px;top:120px;'>Right-click on the preview below and choose Save as<br/>Left-Click to dismiss<br /></div>")
+        .html("<div style='position:fixed;left:40px;top:120px;'>Scroll down and right-click on the preview below and choose Save as<br/>Left-Click to dismiss<br /></div>")
         .append("img")
         .attr("src", "data:image/svg+xml;base64,"+ btoa(html));
 
