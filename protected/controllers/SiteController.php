@@ -274,6 +274,19 @@ class SiteController extends Controller {
         if ($exists) {
             unlink(dirname(__FILE__) . "/../../csv_files/corrected2.csv");
         }
+       $exists = file_exists(dirname(__FILE__) . "/../../csv_files/searchedDER.csv.json");
+        if ($exists) {
+            unlink(dirname(__FILE__) . "/../../csv_files/searchedDER.csv");
+        }
+        $exists = file_exists(dirname(__FILE__) . "/../../csv_files/searchedDEN.csv");
+        if ($exists) {
+            unlink(dirname(__FILE__) . "/../../csv_files/searchedDEN.csv");
+        }
+        $exists = file_exists(dirname(__FILE__) . "/../../csv_files/updatedCorrected.csv");
+        if ($exists) {
+            unlink(dirname(__FILE__) . "/../../csv_files/updatedCorrected.csv");
+        }
+        
         $exists = file_exists(dirname(__FILE__) . "/../../json_files/checked.json");
         if ($exists) {
             unlink(dirname(__FILE__) . "/../../json_files/checked.json");
@@ -302,6 +315,7 @@ class SiteController extends Controller {
         if ($exists) {
             unlink(dirname(__FILE__) . "/../../json_files/term.json");
         }
+  
         if (isset($_POST['location']['id'])) {
 
             $selected = $_POST['location']['id'];
