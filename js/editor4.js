@@ -18,6 +18,7 @@ var margin =
 	width = 500,// - margin.right - margin.left,//width = 3700 - margin.right - margin.left,
 	height = 500 - margin.top - margin.bottom;//height = 2050 - margin.top - margin.bottom;
 
+	//read from file
 	var root = (function () {
 			var json = null;
 			$.ajax({
