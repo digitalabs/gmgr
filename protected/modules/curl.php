@@ -50,9 +50,9 @@ class curl {
         return $this->exec($url, $data);
     }
 
-    public function standardize() {
-        $url = "http://localhost:8080/ws/standardization/term/standardize";
-        $this->exec($url);
+    public function standardize($data) {
+        $url = "http://localhost:8080/ws/standardization/term/standardize2";
+        return $this->exec($url,$data);
     }
 
     public function createGID() {

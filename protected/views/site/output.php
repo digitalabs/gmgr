@@ -118,13 +118,16 @@
 <div class="assign">
 
     <?php
+    echo CHtml::hiddenField('list', json_encode($list));
+    echo CHtml::hiddenField('locationID', $locationID);
+
     $url = Yii::app()->createUrl('site/assignGID');
     $this->widget('bootstrap.widgets.TbButton', array(
         'type' => 'primary',
         'label' => 'AssignGID',
         //'url' =>array('site/assignGID'),
         'htmlOptions' => array(
-        'onclick' => 'js:
+            'onclick' => 'js:
 
                         var selected = $("#pedigreeGrid").selGridView("getAllSelection");
                         $("#germplasm-id").val(selected);
@@ -159,11 +162,11 @@
 
 </div>
 <div id="eventlist"></div>
-    <?php //$this->endWidget();?>
+<?php //$this->endWidget();?>
 <script type="text/javascript">
     $(document).ready(function() {
         //triggers  the activity loading indicator
-        $('#submit-btn').click( function() {
+        $('#submit-btn').click(function() {
             var selected = $.fn.yiiGridView.getSelection("pedigreeGrid");
             if (!selected.length)
             {
@@ -177,8 +180,8 @@
                 $('#ajax-loading-indicator').css({'display': 'block'});
             }
         });
-       
-      
+
+
         //checkboxes
 // $("#ajaxSubmit").click(function(){
         //$(".selection").show();
