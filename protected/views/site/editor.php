@@ -243,7 +243,7 @@ if (isset($_GET['searchBtn']))
 			 $('#searchBtn').click(pop);
 
 			});
-			s
+			
 			
 			<?php
 			Yii::app()->clientScript->registerScript(
