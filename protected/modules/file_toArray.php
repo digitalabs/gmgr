@@ -240,44 +240,35 @@ class file_toArray {
         return $data3;
     }
 
-    public function getPedigreeLine() {
+     public function getPedigreeLine($rows_checked, $rows) {
 
-        // array from checked.csv file
-        $rows_checked = $this->csv_checked();
-
-        $csv_createdGID = dirname(__FILE__).'/../../csv_files/createdGID.csv';
-        //echo $csv_createdGID;
         $final = array();
+        $final_rows = array();
 
-        for ($i = 0; $i < count($rows_checked[0]) - 1; $i++) {
-            $j = 0;
-            //echo "i: " . $rows_checked[0][$i] . "<br>";
-            $fin = fopen($csv_createdGID, 'r');
-            while (($line = fgetcsv($fin)) !== FALSE) {
-                $rows[] = $line;
+        for ($i = 0; $i < count($rows_checked); $i++) {
 
-                $c = (int) $rows_checked[0][$i] + 1;
-                $e = (int) $rows[$j][0];
+            for ($j = 0; $j < count($rows); $j++) {
+
+                $c = (int) $rows_checked[$i] + 1; //male id
+                $e = (int) $rows[$j][0]; //female id
                 $b = $rows[$j][0];
                 $a = $e . "/" . ($c);
 
-                if ($rows_checked[0][$i] == $rows[$j][0] || $c == $e || $b == $a) {
-                    $final_rows[] = $line;
+                if ($rows_checked[$i] === $rows[$j][0] || $c === $e || $b === $a) {
+                    $final_rows[] = $rows[$j];
                 }
-                $j++;
             }
-            fclose($fin);
+
             array_push($final, $final_rows);
             $final_rows = array();
         }
-        //print_r($final);
         return $final;
     }
     
-       function checkIf_standardize($checked) {
+       function checkIf_standardize($checked, $rows) {
 	    //print_r($checked);
        // echo "checked count:".count($checked);
-        $rows=$this->csv_corrected();
+        
         $selected = array();
         foreach ($rows as $row) : list($GID, $nval, $fid, $fremarks, $female, $femalename, $mid, $mremarks, $male, $malename) = $row;
             for ($i = 0; $i < count($checked); $i++) {
@@ -294,39 +285,27 @@ class file_toArray {
         
         return $selected;
     }
-     function get_unselected_rows() {
-        $checked = $this->csv_checked();
-     
-       // print_r($checked);
-
-        $fp = fopen(dirname(__FILE__)."/../../csv_files/corrected.csv", "r");
-        while (($row = fgetcsv($fp)) !== FALSE) {
-            $rows[] = $row;
+    public function csv_corrected_GID($list) {
+        $rows = array();
+        for ($i = 0; $i < count($list); $i++) {
+            if ($list[$i][0] != "N/A") {
+                $rows[] = $list[$i];
+            }
         }
-        fclose($fp);
 
-        foreach ($rows as $row) : list($GID, $nval, $fid) = $row;
+        return $rows;
+    }
+     function get_unselected_rows($checked, $rows) {
 
-            if ($this->hasChecked($checked[0], $fid) === false) {
+        $unselected = array();
+        for ($i = 0; $i < count($rows); $i++) {
+            $fid = $rows[$i][2];
+            if ($this->hasChecked($checked, $fid) === false) {
                 $unselected[] = $fid;
             }
-        endforeach;
-        //echo "unselected:";
-        //print_r($unselected);
-        return $unselected;
-    }
-        public function csv_corrected_GID() {
-        $rows = array();
-        $fp = fopen(dirname(__FILE__)."/../../csv_files/corrected.csv", "r");
-       
-        while (($row = fgetcsv($fp)) !== FALSE) {
-            if ($row[0] != "N/A") {
-                $rows[] = $row;
-            }
         }
-        fclose($fp);
-         
-        return $rows;
+
+        return $unselected;
     }
     
    public function array_push_assoc($array, $key, $value) {

@@ -2,14 +2,6 @@
 include_once(dirname(__FILE__) . "/../protected/modules/file_toArray.php");
 $file_toArray = new file_toArray();
 
-//Get existing terms
-$isCsvExists = file_exists(dirname(__FILE__) . "/../csv_files/existingTerm.csv");
-
-if ($isCsvExists) {
-    $existing = $file_toArray->csv_existingTerm();
-} else {
-    //modal will never be displayed
-}
 ?>
 
 <div class="modal-header">
@@ -34,6 +26,9 @@ if (isset($_POST['arr_terms'])) {
     $m_mid = $termArray[3];
     $m_fid = $termArray[4];
     $m_female = $termArray[5];
+    $m_male = $termArray[6];
+    $m_male = $termArray[6];
+    $m_male = $termArray[6];
     $m_male = $termArray[6];
 }
 ?>

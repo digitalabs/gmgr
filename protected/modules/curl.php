@@ -55,14 +55,14 @@ class curl {
         return $this->exec($url,$data);
     }
 
-    public function createGID() {
-        $url = "http://localhost:8080/ws/standardization/term/createGID";
-        $this->exec($url);
+    public function createGID($data) {
+        $url = "http://localhost:8080/ws/standardization/term/createGID2";
+        return $this->exec($url, $data);
     }
 
-    public function chooseGID() {
-        $url = "http://localhost:8080/ws/standardization/term/chooseGID";
-        $this->exec($url);
+    public function chooseGID($data) {
+        $url = "http://localhost:8080/ws/standardization/term/chooseGID2";
+        return $this->exec($url,$data);
     }
 
     public function updateMethod() {

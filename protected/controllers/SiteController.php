@@ -2,8 +2,6 @@
 
 class SiteController extends Controller {
 
-    private $locationID;
-
     public function actions() {
         return array(
             // captcha action renders the CAPTCHA image displayed on the contact page
@@ -123,11 +121,11 @@ class SiteController extends Controller {
         Yii::import('application.modules.json');
         Yii::import('application.modules.curl');
 
-        if (isset($_POST['location']['id'])) {
+        if (isset($_POST['location'])) {
 
-            $locationID = $_POST['location']['id'];
-            
-            //echo "<br>locationID: " . $locationID;
+            $locationID = $_POST['location'];
+
+            echo "<br>locationID: " . $locationID;
             $arr = array();
             $filtersForm = new FilterPedigreeForm;
 
@@ -187,6 +185,8 @@ class SiteController extends Controller {
         $data = $_POST['list'];
         $locationID = $_POST['locationID'];
 
+        echo "<br>2locationID: " . $locationID;
+
         $data = json_decode($data, true);
 
         $a = array(
@@ -226,7 +226,6 @@ class SiteController extends Controller {
             'dataProvider' => $dataProvider,
             'locationID' => $locationID,
             'list' => $list
-                
         ));
     }
 
@@ -371,67 +370,118 @@ class SiteController extends Controller {
                 foreach ($idArr as $index => $id) {
                     $id = strtr($id, array('["' => '', '"]' => ''));
                     //echo intval($id)."<br/>";
-                    $arrSelectedIds[$index] = (int) ($id);
+                    $arrSelectedIds[$index] = ($id);
                 }
             }
 
-            $file_toArray = new file_toArray();
-            $standardized = $file_toArray->checkIf_standardize($arrSelectedIds);
+            //call curl: function standardization
+            $curl = new curl();
+            $data = $_POST['list'];
+            $locationID = $_POST['locationID'];
 
-            //json file of checked boxes
-            $json = new json($standardized);
-            $json->checkedBox();
+            $list = json_decode($data, true);
+
+            $checked = $arrSelectedIds;
+
+            $file_toArray = new file_toArray();
+            $standardized = $file_toArray->checkIf_standardize($checked, $list);
+
+            echo "<br>";
+            print_r($checked);
+            echo "<br>";
+            // print_r($list);
+            echo "<br>";
+
+            $a = array(
+                'list' => $list,
+                'checked' => $checked,
+                'existingTerm' => array(),
+                'locationID' => $locationID
+            );
+
+            $data = json_encode($a);
 
             //call curl: function createdGID
             $curl = new curl();
-            $curl->createGID();
+            $output = $curl->createGID($data);
 
-            // echo "createdGID: <br>";
-            //print_r($file_toArray->csv_createdGID());
-        }
+            $createdGID = array();
+            $list = array();
+            $createdGID = $output['createdGID'];
+            $list = $output['list'];
+            $existing = $output['existingTerm'];
 
-        //rows output for curl
-        //If we have an array with items
-        if (count($rows)) {
-            foreach ($rows as $i => $row) : list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male) = $row;
-                $arr2[] = array('id' => $i + 1, 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks);
+            $rows = $createdGID;
 
-            endforeach;
-        }
-        if (isset($_GET['FilterPedigreeForm']))
-            $filtersForm->filters = $_GET['FilterPedigreeForm'];
+            if (count($rows)) {
+                foreach ($rows as $i => $row) : list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male) = $row;
+                    $arr2[] = array('id' => $i + 1, 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks);
 
-        //get array data and create dataProvider
-        $filteredData = $filtersForm->filter($arr2);
-        //DataProvider for the lower table, Germplasm List
-        $GdataProvider = new CArrayDataProvider($filteredData, array(
-            'keyField' => 'id',
-            'pagination' => array(
-                'pageSize' => 5,
-            ),
-        ));
-
-        //Render the page AssignGID.php   
-        if (Yii::app()->request->getIsAjaxRequest() && isset($_GET["ajax"])) {
-            $this->render('assignGID', array('filtersForm' => $filtersForm,
-                'selected' => $arrSelectedIds, 'GdataProvider' => $GdataProvider
-            ));
-        } else {
-            //open and store checked boxes
-            $myfile2 = dirname(__FILE__) . '/../../json_files/checked.json';
-
-            $fp2 = fopen($myfile2, 'r');
-            $rows2 = array();
-            while (($row2 = fgetcsv($fp2)) !== FALSE) {
-                $rows2[] = $row2;
+                endforeach;
             }
-            fclose($fp2);
+            if (isset($_GET['FilterPedigreeForm']))
+                $filtersForm->filters = $_GET['FilterPedigreeForm'];
+
+            //get array data and create dataProvider
+            $filteredData = $filtersForm->filter($arr2);
+            //DataProvider for the lower table, Germplasm List
+            $GdataProvider = new CArrayDataProvider($filteredData, array(
+                'keyField' => 'id',
+                'pagination' => array(
+                    'pageSize' => 5,
+                ),
+            ));
+
+            $this->render('assignGID', array('filtersForm' => $filtersForm,
+                'checked' => $checked, 'GdataProvider' => $GdataProvider,
+                'locationID' => $locationID,
+                'list' => $list,
+                'existing' => $existing,
+                'createdGID' => $createdGID
+            ));
+        }
+
+        if (isset($_POST['choose'])) {
+            echo "choose:" . $_POST['choose'];
+            $term = strip_tags($_POST['term']);
+            $pedigree = strip_tags($_POST['pedigree']);
+            $id = strip_tags($_POST['id']);
+            $choose = strip_tags($_POST['choose']);
+            $fid = strip_tags($_POST['fid']);
+            $mid = strip_tags($_POST['mid']);
+            $female = strip_tags($_POST['female']);
+            $male = strip_tags($_POST['male']);
+
+            //json file of chosen GID among existing germplasm names
+            $json = new json($_POST['choose']);
+            $json->checkedBox();
+
+            //update the createdGID.csv with the chosen GID among the existing germplasm names
+            $data = $file_toArray->updateGID_createdGID($term, $pedigree, $id, $choose, $fid, $mid, $female, $male);
+
+            //json file of the details of the chosen GID among existing terms; creates a term.json file
+            $json = new json($data);
+            $json->chosenGID();
+
+            //call curl: function chooseGID
+            $curl = new curl();
+            $curl->chooseGID();
+
+            //open and store checked boxes
+            $myfile = dirname(__FILE__) . '/../../../json_files/checked.json';
+
+            $fp = fopen($myfile, 'r');
+            $rows = array();
+            while (($row = fgetcsv($fp)) !== FALSE) {
+                $rows[] = $row;
+            }
+            fclose($fp);
             // echo "rows:";
 
-            $checked = $rows2;
-            $this->render('assignGID', array('filtersForm' => $filtersForm,
-                'selected' => $checked, 'GdataProvider' => $GdataProvider
-            ));
+            $checked = $rows;
+
+            // update corrected.csv
+            $file_toArray->update_csv_correctedGID($fid, $mid, $checked);
         }
     }
 

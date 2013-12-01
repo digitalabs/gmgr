@@ -95,7 +95,7 @@
 
                             $fin = fopen($myfile, 'r');
 
-                            echo '<select name="location" style="width:490px;" >';
+                            echo '<select name="location" style="width:490px;" class="ddlClass" >';
 
                             while ($line = fgetcsv($fin, 0, "#")) {
                                 if (count($line) != 3) {
@@ -117,7 +117,7 @@
                                 'htmlOptions' => array(
                                     'onclick' => 'js:
                                         var dataUser = $(".ddlClass option:selected").val();
-                                        $("#location-id").val(dataUser);
+                                        $("#location").val(dataUser);
                                         
                                     ',
                                 ),
@@ -127,8 +127,8 @@
                         </fieldset><br>
                     </div>
                     <?php
-                    echo CHtml::textField('location[id]', '', array(
-                        'id' => 'location-id',
+                    echo CHtml::textField('location', '', array(
+                        'id' => 'location',
                         'form' => 'pedigreeImport',
                         'class' => 'hidden',
                     ));
