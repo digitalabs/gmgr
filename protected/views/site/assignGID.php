@@ -42,6 +42,7 @@ if (isset($_POST['selectMethod'])) {
         //print $selected_radio;
     }
 }
+
 if (isset($_GET['yes'])) {
     $unselected = $file_toArray->get_unselected_rows();
     $standardized = $file_toArray->checkIf_standardize($unselected);
@@ -319,9 +320,11 @@ if (count($final)) {
                                                     echo "<input type='hidden' class='$term' name='m_fid' value='$fid'>";
                                                     echo "<input type='hidden' class='$term' name='m_female' value='$female'>";
                                                     echo "<input type='hidden' class='$term' name='m_male' value='$male'>";
-                                                    echo "<input type='hidden' class='$term' name='list' value='" . json_decode($list) . "'>";
-                                                    echo "<input type='hidden' class='$term' name='createdGID' value='".json_decode($createdGID)."'>";
-                                                    echo "<input type='hidden' class='$term' name='existing' value='".json_decode($existing)."'>";
+                                                    echo "<input type='hidden' class='$term' name='list' value='" . base64_encode(serialize($list)) . "'>";
+                                                    echo "<input type='hidden' class='$term' name='createdGID' value='".base64_encode(serialize($createdGID))."'>";
+                                                    echo "<input type='hidden' class='$term' name='existing' value='".base64_encode(serialize($existing))."'>";
+                                                    echo "<input type='hidden' class='$term' name='checked' value='".base64_encode(serialize($checked))."'>";
+                                                    echo "<input type='hidden' class='$term' name='locationID' value='".$locationID."'>";
 
                                                     $m_term = $term;
                                                     $m_id = $id;

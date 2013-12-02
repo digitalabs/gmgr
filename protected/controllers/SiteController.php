@@ -355,6 +355,8 @@ class SiteController extends Controller {
         Yii::import('application.modules.file_toArray');
         Yii::import('application.modules.json');
         Yii::import('application.modules.curl');
+        $file_toArray = new file_toArray();
+        $curl = new curl();
 
         $arrSelectedIds = array();
         $filtersForm = new FilterPedigreeForm;
@@ -375,7 +377,7 @@ class SiteController extends Controller {
             }
 
             //call curl: function standardization
-            $curl = new curl();
+            
             $data = $_POST['list'];
             $locationID = $_POST['locationID'];
 
@@ -383,7 +385,7 @@ class SiteController extends Controller {
 
             $checked = $arrSelectedIds;
 
-            $file_toArray = new file_toArray();
+            
             $standardized = $file_toArray->checkIf_standardize($checked, $list);
 
             echo "<br>";
@@ -396,13 +398,14 @@ class SiteController extends Controller {
                 'list' => $list,
                 'checked' => $checked,
                 'existingTerm' => array(),
-                'locationID' => $locationID
+                'locationID' => $locationID,
+                'userID' =>  Yii::app()->user->id
             );
 
             $data = json_encode($a);
 
             //call curl: function createdGID
-            $curl = new curl();
+            
             $output = $curl->createGID($data);
 
             $createdGID = array();
@@ -413,7 +416,49 @@ class SiteController extends Controller {
 
             $rows = $createdGID;
 
-            if (count($rows)) {
+        }
+
+        if (isset($_POST['choose'])) {
+            
+            echo "choose:" . $_POST['choose'];
+            
+            $term = strip_tags($_POST['term']);
+            $pedigree = strip_tags($_POST['pedigree']);
+            $id = strip_tags($_POST['id']);
+            $choose = strip_tags($_POST['choose']);
+            $fid = strip_tags($_POST['fid']);
+            $mid = strip_tags($_POST['mid']);
+            $female = strip_tags($_POST['female']);
+            $male = strip_tags($_POST['male']);
+            $locationID = strip_tags($_POST['locationID']);
+
+            $list = unserialize(base64_decode($_POST['list']));
+            $createdGID = unserialize(base64_decode($_POST['createdGID']));
+            $existing = unserialize(base64_decode($_POST['existing']));
+            $checked = unserialize(base64_decode($_POST['checked']));
+
+            //update the createdGID.csv with the chosen GID among the existing germplasm names
+            $userID=Yii::app()->user->id;
+            echo "hshh".$userID;
+            $output = $file_toArray->updateGID_createdGID($term, $pedigree, $id, $choose, $fid, $mid, $female, $male,$createdGID, $existing, $list, $userID);
+
+            
+            $output = $curl->chooseGID(json_encode($output));
+
+            $createdGID = array();
+            $list = array();
+            $createdGID = $output['createdGID'];
+            $list = $output['list'];
+            
+
+            $rows=$createdGID;
+            
+
+            // update corrected.csv
+            //$file_toArray->update_csv_correctedGID($fid, $mid, $checked);
+        }
+        
+        if (count($rows)) {
                 foreach ($rows as $i => $row) : list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male) = $row;
                     $arr2[] = array('id' => $i + 1, 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks);
 
@@ -439,50 +484,6 @@ class SiteController extends Controller {
                 'existing' => $existing,
                 'createdGID' => $createdGID
             ));
-        }
-
-        if (isset($_POST['choose'])) {
-            echo "choose:" . $_POST['choose'];
-            $term = strip_tags($_POST['term']);
-            $pedigree = strip_tags($_POST['pedigree']);
-            $id = strip_tags($_POST['id']);
-            $choose = strip_tags($_POST['choose']);
-            $fid = strip_tags($_POST['fid']);
-            $mid = strip_tags($_POST['mid']);
-            $female = strip_tags($_POST['female']);
-            $male = strip_tags($_POST['male']);
-
-            //json file of chosen GID among existing germplasm names
-            $json = new json($_POST['choose']);
-            $json->checkedBox();
-
-            //update the createdGID.csv with the chosen GID among the existing germplasm names
-            $data = $file_toArray->updateGID_createdGID($term, $pedigree, $id, $choose, $fid, $mid, $female, $male);
-
-            //json file of the details of the chosen GID among existing terms; creates a term.json file
-            $json = new json($data);
-            $json->chosenGID();
-
-            //call curl: function chooseGID
-            $curl = new curl();
-            $curl->chooseGID();
-
-            //open and store checked boxes
-            $myfile = dirname(__FILE__) . '/../../../json_files/checked.json';
-
-            $fp = fopen($myfile, 'r');
-            $rows = array();
-            while (($row = fgetcsv($fp)) !== FALSE) {
-                $rows[] = $row;
-            }
-            fclose($fp);
-            // echo "rows:";
-
-            $checked = $rows;
-
-            // update corrected.csv
-            $file_toArray->update_csv_correctedGID($fid, $mid, $checked);
-        }
     }
 
     public function actionChooseGID() {
