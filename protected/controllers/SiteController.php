@@ -17,6 +17,10 @@ class SiteController extends Controller {
         );
     }
 
+    public function actionLocalStore1() {
+        $this->render('localStore1');
+    }
+
     /**
      * This is the default 'index' action that is invoked
      * when an action is not explicitly requested by users.
@@ -98,6 +102,33 @@ class SiteController extends Controller {
     }
 
     public function actionEditor() {
+
+        $model = new ImporterForm;
+
+        if ($model->validate()) {
+            if (isset($_POST['searchBtn'])) {
+                Yii::import('application.modules.curl');
+                /* $gid = $_POST['inputGID'];
+                  $a = array('GID'=>$gid);
+                  $data = json_encode($a);
+                  $ch = curl_init();
+                  //$ch =curl_init($url);
+                  curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+                  curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+                  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                  curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                  'Content-Type: application/json',
+                  'Content-Length: ' . strlen($data))
+                  );
+                  $result = curl_exec($ch);
+                  echo $gid; */
+
+                $curl = new curl();
+                $arr = $curl->searchGID();
+                print_r($arr);
+                $this->redirect(array('/site/editor'));
+            }
+        }
         $this->render('editor');
     }
 
@@ -107,7 +138,7 @@ class SiteController extends Controller {
 
         //Collect user input form
         if (isset($_POST['ImporterForm'])) {
-            
+
         } else {
             $this->render('importer', array(
                 'model' => $model,
@@ -169,7 +200,7 @@ class SiteController extends Controller {
                 ));
             }
         }
-    }
+	}
 
     public function actionOutput() {
 

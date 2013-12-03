@@ -18,29 +18,28 @@ $file_toArray = new file_toArray();
 
 $unselected = 0;
 
-if (isset($_POST['selectMethod'])) {
+if (isset($_POST['selectMethod']) && $_POST['selectMethod'] != 0) {
+    $arrayStringMethod = $_POST['selectMethod'];
+    $arr = explode(",", $arrayStringMethod);
+    $mid = $arr[0];
+    $gid = $arr[1];
+    $id = $arr[2];
+    echo "mid:" . $mid;
 
-    $selected_radio = $_POST['selectMethod'];
-    //echo "<br><br><br><br><br><br><br><br>bondId:" . $selected_radio;
-    if ($selected_radio === "changeMethod") {
-        //  echo "<br><br><br><br><br><br><br><br>bondId:" . $_POST['bondId'];
-        //  print $selected_radio;
-        $array = array(
-            "mid" => $_POST['bondId'],
-            "gid" => $_POST['gid'],
-            "id" => $_POST['id'],
-        );
-        //create changeMethod.json
-        $json = new json($array);
-        $json->create_changeMethod();
+    //*****if the user selects the radio button with the typeahead*****
+    $array = array(
+        "mid" => $mid,
+        "gid" => $gid,
+        "id" => $id,
+    );
+    //create changeMethod.json
+    $json = new json($array);
+    $json->create_changeMethod();
 
-        //call curl: function updateMethod
+    //call curl: function updateMethod
 
-        $curl = new curl();
-        $curl->updateMethod();
-    } else {
-        //print $selected_radio;
-    }
+    $curl = new curl();
+    $curl->updateMethod();
 }
 
 if (isset($_GET['yes'])) {
@@ -82,9 +81,9 @@ $final = $file_toArray->getPedigreeLine($checked, $createdGID);
 //echo "count of final:".count($final);
 // If we have an array with items
 if (count($final)) {
-// Create the pagination object
+//*****Create the pagination object
     $pagination = new pagination($final, (isset($_GET['pagea']) ? $_GET['pagea'] : 1), 1);
-// Decide if the first and last links should show
+//******Decide if the first and last links should show
     $pagination->setShowFirstAndLast(false);
 // You can overwrite the default seperator
 // $pagination->setMainSeperator(' | ');
@@ -99,7 +98,6 @@ if (count($final)) {
 
         $count = 0;
 // echo "count: " . count($pages);
-
         foreach ($pages[0] as $r) : list($id, $nval, $term, $GID, $methodID, $method, $locID, $location) = $r;
             for ($j = 0; $j < count($checked); $j++) {
                 $a = $checked[$j] + 1;
@@ -137,9 +135,6 @@ if (count($final)) {
         $standard = count($file_toArray->checkIf_standardize($unselected, $list));
         $not_standard = count($unselected) - $standard;
 
-        //echo "<br>unselected: " . count($unselected);
-        //echo "<br><br>standard:" . $standard;
-        //echo "<br><br>not standard:" . $not_standard;
         /*
           END count for unstandardized germplasm names
          */
@@ -321,10 +316,10 @@ if (count($final)) {
                                                     echo "<input type='hidden' class='$term' name='m_female' value='$female'>";
                                                     echo "<input type='hidden' class='$term' name='m_male' value='$male'>";
                                                     echo "<input type='hidden' class='$term' name='list' value='" . base64_encode(serialize($list)) . "'>";
-                                                    echo "<input type='hidden' class='$term' name='createdGID' value='".base64_encode(serialize($createdGID))."'>";
-                                                    echo "<input type='hidden' class='$term' name='existing' value='".base64_encode(serialize($existing))."'>";
-                                                    echo "<input type='hidden' class='$term' name='checked' value='".base64_encode(serialize($checked))."'>";
-                                                    echo "<input type='hidden' class='$term' name='locationID' value='".$locationID."'>";
+                                                    echo "<input type='hidden' class='$term' name='createdGID' value='" . base64_encode(serialize($createdGID)) . "'>";
+                                                    echo "<input type='hidden' class='$term' name='existing' value='" . base64_encode(serialize($existing)) . "'>";
+                                                    echo "<input type='hidden' class='$term' name='checked' value='" . base64_encode(serialize($checked)) . "'>";
+                                                    echo "<input type='hidden' class='$term' name='locationID' value='" . $locationID . "'>";
 
                                                     $m_term = $term;
                                                     $m_id = $id;
@@ -347,17 +342,23 @@ if (count($final)) {
 
                                                 if ($newGID == "new") {
                                                     ?><td>
-                                                    <form action="" method="post">
-                                                        <input type="radio" name="selectMethod" id="r1" value="false" class="select-method" />
+                                                    <form action="" method="POST" id="updateMethodForm" name="updateMethodForm">
+                                                        <!--<input type="radio" name="selectMethod" id="r1" value="false" class="select-method" />-->
+
                                                         <?php
                                                         $line = array();
                                                         $line = explode("#", $method);
                                                         $line = implode(",", $line);
-                                                        $$method = $line;
+                                                        $method = $line;
                                                         echo "(" . $methodID . ")&nbsp; " . $method;
                                                         ?>
                                                         <br/>
-                                                        <input type="radio" name="selectMethod" id="r2" value="changeMethod" class="select-method" />
+                                                        <!--<input type="radio" name="selectMethod" id="r2" value="changeMethod" class="select-method" />-->
+                                                        <?php
+                                                        echo CHtml::hiddenField("selectMethod", "0");
+                                                        echo CHtml::hiddenField("proceedMethod", "0");
+                                                        echo CHtml::hiddenField("term", $term)
+                                                        ?>
                                                         <input
                                                             id="other<?php echo $j; ?>"
                                                             type="text"
@@ -368,14 +369,15 @@ if (count($final)) {
                                                             value=""
                                                             />
                                                         <br/>
-
-                                                        <input type="hidden" name="bondId" id="bondId<?php echo $j; ?>" value="" />
-
-
-                                                        <input type="hidden" name="gid" id="gid" value="<?php echo $GID; ?>" />
-                                                        <input type="hidden" name="id" id="id" value="<?php echo $id; ?>" />
+                                                        <input type="hidden" class="<?php echo $j; ?>" name="term" id="term<?php echo $j ?>" value="$term"/>
+                                                        <input type="hidden" class="<?php echo $j; ?>" name="bondId" id="bondId<?php echo $j; ?>" value="" />
+                                                        <input type="hidden" class="<?php echo $j; ?>" name="gid" id="gid<?php echo $j; ?>" value="<?php echo $GID; ?>" />
+                                                        <input type="hidden" class="<?php echo $j; ?>" name="id" id="id<?php echo $j; ?>" value="<?php echo $id; ?>" />
                                                         <div id="instruction" class="muted" style="font-size:10px;"></div>
-                                                        <input type="submit" id="submitMethod<?php echo $j; ?>" class="btn btn-primary btn-mini" value="Update"><br><br>
+                                                        <!--- onclick="sampleFunction(<?php //echo $j;   ?>);return false;"-->
+
+                                                        <input type="submit" id="submitMethod<?php echo $j; ?>" class="btn btn-primary btn-mini" value="Update" onclick=" return jsConfirmDialog(<?php echo $j; ?>);
+                                return false;" ><br><br>
                                                     </form>
 
 
@@ -387,7 +389,7 @@ if (count($final)) {
                                                     $line = array();
                                                     $line = explode("#", $method);
                                                     $line = implode(",", $line);
-                                                    $$method = $line;
+                                                    $method = $line;
                                                     echo "<td>(" . $methodID . ")&nbsp; " . $method . "</td>";
                                                 }
                                                 $line = array();
@@ -486,13 +488,44 @@ if (count($final)) {
     </style>  
 
     <!--***************************Modal****************************-->
-    <div id="new-Modal" class="modal hide fade in" style="display: none;">
+    <div id="new-Modal" class="modal hide fade in" style="display: none;"></div>
 
-    </div>
+    <!---*****data -confirm modal****-->
+    <div id="method-confirm" title="Confirm">Are you sure you want to update the method?</div>
 
     <script type="text/javascript" src="./assets/pnotify-1.2.0/jquery.pnotify.js"></script>
     <script type="text/javascript">
+            function jsConfirmDialog(count) {
+                event.preventDefault();
+                count1 = count;
 
+                var bondId = $("#bondId" + count).val();
+                var gid = $("#gid" + count).val();
+                var id = $("#id" + count).val();
+                var submitMethod = $("#submitMethod" + count).attr("id"); //gets the id of the submit method
+                submitMethodBtn = submitMethod;
+                var array_1 = new Array(bondId, gid, id);
+                //*****assign the array value to a hidden field inside method POST
+                $("#selectMethod").val(array_1);
+                //****opens the confirmation modal for update method
+                $("#method-confirm").dialog('open');
+
+            }
+            ;
+            function methodLoading() {
+                $('#screen').css({opacity: 0.4, 'width': $(document).width(), 'height': $(document).height()});
+                $('body').css({'overflow': 'hidden'});
+                $('#ajax-loading-indicator').css({'display': 'block'});
+                notifyMethod();
+            }
+            function notifyMethod() {
+                var term1 = $("#term").val();
+                $.pnotify({
+                    text: "You have successfully updated the method for germplasm" + " " + "'" + term1 + "'" + ".",
+                    type: "success",
+                    hide: false
+                });
+            }
             function show(row_count, newGID_count, not_standard, to_process) {
                 $.pnotify(
                         {
@@ -531,54 +564,6 @@ if (count($final)) {
             ;
 
 
-            $(document).ready(function() {
-                var pop = function() {
-                    $('#new-Modal').css({'z-index': '1000'});
-                    $('#screen').css({opacity: 0.4, 'width': $(document).width(), 'height': $(document).height()});
-                    $('body').css({'overflow': 'hidden'});
-                    $('#ajax-loading-indicator').css({'display': 'block'});
-
-                }
-                $('#submit').click(pop);
-
-
-                $("input#submit").click(function() {
-                    $.ajax({
-                        type: "POST",
-                        data: $('form.contact').serialize(),
-                        beforeSend: function() {
-                            $("#new-Modal").modal('hide');
-                            // $('#wait').show();
-                        },
-                        success: function() {
-                            $("#GermplasmList").submit();
-                            //$('#wait').hide();
-                            $('#new-Modal').css({'z-index': '1000'});
-                            document.location.reload();
-                        },
-                        error: function() {
-                            alert("failure");
-                        }
-                    });
-                    return false;
-                });
-            });
-            $(document).ready(function() {
-
-                // var msg = 'You have reached the last row selected.Do you want to proceed to next entry?';
-                $('a[data-confirm]').click(function(ev) {
-                    var href = $(this).attr('href');
-                    if (!$('#dataConfirmModal').length) {
-                        $('body').append('<div id="dataConfirmModal" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><div id="dataConfirmLabel"></div></div><div class="modal-body"></div><div class="modal-footer"><button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button><a class="btn btn-primary" id="dataConfirmOK">OK</a></div></div>');
-                    }
-                    $('#dataConfirmModal').find('.modal-body').text($().attr('data-confirm'));
-                    $('#dataConfirmOK').attr('href', href);
-
-                    $('#dataConfirmModal').modal({show: true});
-
-                    return false;
-                });
-            });
             //************For opening a modal dialog***************
             $(document).on("click", ".open-dialog", function() {
                 //*****the term to be placed on the heading in the modal
@@ -592,7 +577,7 @@ if (count($final)) {
                     m_values.push(arr[i].value);
                 }
 
-                //******assign the obtained value for h4 in the modal*****
+                //******assign the obtained value in the modal*****
                 $.ajax({
                     cache: false,
                     type: 'POST',
@@ -604,29 +589,35 @@ if (count($final)) {
                     }
                 });
             });
+
     </script>
 
+    <!--*******This script is for the typeahead in the update method****--->
     <script type="text/javascript" src="./assets/typeahead.js"></script>
 
+    <!--******script for the update method confirmation******--->
+<!--<script type="text/javascript" src="./js/methodConfirm.js"></script>-->
+
+
+
     <script type="text/javascript">
-        /*TYPEAHEAD*/
 
-        /*function disableTxt(id) {
-         document.getElementById("other").disabled = true;
-         document.getElementById(id).disabled = true;
-         }
-         function enableTxt(id) {
-         document.getElementById("other").disabled = false;
-         document.getElementById(id).disabled = false;
-         }
-         */
+        /*function sampleFunction(count) {
+         var bondId =  $("#bondId"+count).val();
+         var gid = $("#gid"+count).val();
+         var id = $("#id"+count).val();
+         var submitMethod = $("#submitMethod"+count).attr("id"); //gets the id of the submit method
+         
+         var array_1 = new Array(bondId,gid,id);
+         
+         $("#selectMethod").val(array_1);
+         
+         return false;
+         }*/
 
-        /* $(function() {
-         $("input[type=submit]").addClass("hidden");
-         });
-         */
-
+        //******gets the value inside the textbox of the typeahead********
         $(document).ready(function() {
+            //***Typeahead****
             $.each(document.getElementsByClassName("ta"), function(index, value) {
                 //console.log(value['id']);
                 $('#' + value['id']).typeahead({
@@ -667,40 +658,60 @@ if (count($final)) {
                 });
 
             });
+            //****End of Type ahead****
+
         });
+        var pop = function() {
+            $('#new-Modal').css({'z-index': '1000'});
+            $('#screen').css({'opacity': '0.4', 'width': $(document).width(), 'height': $(document).height()});
+            $('body').css({'overflow': 'hidden'});
+            $('#ajax-loading-indicator').css({'display': 'block'});
 
-        $(document).ready(function() {
-            $.each(document.getElementsByClassName("select-method"), function(index, value) {
-                console.log(value['id']);
-                var radio_checked = $('input:radio[name=selectMethod]:checked').val();
-                if (radio_checked === "false") {
-                    $("#submitMethod" + index).attr("disabled", "disabled");
-                    $("#other" + index).attr("disabled", "disabled");
+        }
+        $('#submit').click(pop);
 
-                }
-                if (radio_checked === "changeMethod") {
-                    $("#submitMethod" + index).removeAttr("disabled");
-                    $("#other" + index).removeAttr("disabled");
+        $("#method-confirm").dialog({
+            autoOpen: false,
+            autoClose: false,
+            resizable: false,
+            height: 180,
+            modal: true,
+            buttons: [{
+                    text: 'Yes',
+                    click: function() {
+                        $(this).dialog('close');
+                        var form = $("#updateMethodForm");
+                        form.submit();
+                        methodLoading();
 
-                }
+                        return true;
+                    }
+                }, {
+                    text: 'No',
+                    click: function() {
+                        $(this).dialog('close');
+                        return false;
+                    }
+                }]
+        }); //end of dialog create
+        // });
 
-
-                /*$(":radio[name='selectMethod']").click(function() {
-                 var value = $(this).val();
-                 $("#other<?php //echo $id;      ?>").attr("disabled", "disabled");
-                 $("#submitMethod<?php //echo $id;      ?>").attr("disabled", "disabled");
-                 //$("#instruction<?php //echo $id;                    ?>").html('');
-                 if (value === "changeMethod") {
-                 $("#submitMethod<?php //echo $id;      ?>").removeAttr("disabled");
-                 $("#other<?php //echo $id;      ?>").removeAttr("disabled");
-                 //$("#instruction<?php //echo $id;                    ?>").html('Press "Enter" to update');
-                 return;
-                 }
-                 
-                 });
-                 */
-            });
-        });
 
     </script>
+    <script type="text/javascript">
 
+        // var msg = 'You have reached the last row selected.Do you want to proceed to next entry?';
+        $('a[data-confirm]').click(function(ev) {
+            var href = $(this).attr('href');
+            if (!$('#dataConfirmModal').length) {
+                $('body').append('<div id="dataConfirmModal" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><div id="dataConfirmLabel"></div></div><div class="modal-body"></div><div class="modal-footer"><button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button><a class="btn btn-primary" id="dataConfirmOK">OK</a></div></div>');
+            }
+            ;
+
+
+            return false;
+        });
+
+
+
+    </script>

@@ -29,10 +29,10 @@ svg {
   fill: none;
   -stroke: #C4FFC4;
   stroke: #009700;
-  stroke-width: 2px;
+  stroke-width: 1px;
 }
 
-.link.warning{
+.link.method{
 	stroke: orange;
 } 
 

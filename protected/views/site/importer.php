@@ -3,7 +3,7 @@
     <body>
 
         <?php //if($uploaded):?>
-<!--<p>File was uploaded. Check <?php //echo //$dir   ?>.</p>
+<!--<p>File was uploaded. Check <?php //echo //$dir      ?>.</p>
         <?php //endif ?>-->
         <?php /* echo CHtml::beginForm('','post',array 
           ('enctype'=>'multipart/form-data')) */ ?>
@@ -98,76 +98,76 @@
                             echo '<select name="location" style="width:490px;" class="ddlClass" >';
 
                             while ($line = fgetcsv($fin, 0, "#")) {
-                                if (count($line) != 3) {
-                                    print_r($line);
-                                }
-                                echo '<option name="location[]" value="' . $line[0] . '">' . $line[2] . ': ' . $line[1] . '</option>';
-                            }
-                            fclose($fin);
-                            echo "</select></br>";
-                            ?>
+                               // if (count($line) != 3) {
+                                 //   print_r($line);
 
-                            <?php
-                            echo "</br>";
-                            $this->widget('bootstrap.widgets.TbButton', array(
-                                'buttonType' => 'submit',
-                                'id' => 'uploadFile',
-                                'type' => 'primary',
-                                'label' => 'Upload list',
-                                'htmlOptions' => array(
-                                    'onclick' => 'js:
+                                    echo '<option name="location[]" value="' . $line[0] . '">' . $line[2] . ': ' . $line[1] . '</option>';
+                                //}
+                            }
+                                fclose($fin);
+                                echo "</select></br>";
+                                ?>
+
+                                <?php
+                                echo "</br>";
+                                $this->widget('bootstrap.widgets.TbButton', array(
+                                    'buttonType' => 'submit',
+                                    'id' => 'uploadFile',
+                                    'type' => 'primary',
+                                    'label' => 'Upload list',
+                                    'htmlOptions' => array(
+                                        'onclick' => 'js:
                                         var dataUser = $(".ddlClass option:selected").val();
                                         $("#location").val(dataUser);
                                         
                                     ',
-                                ),
-                            ));
-                            ?>
-                            <!--</div>-->
+                                    ),
+                                ));
+                                ?>
+                                <!--</div>-->
+                            </fieldset><br>
+                        </div>
+                        <?php
+                        echo CHtml::textField('location', '', array(
+                            'id' => 'location',
+                            'form' => 'pedigreeImport',
+                            'class' => 'hidden',
+                        ));
+                        echo CHtml::submitButton('Submit', array(
+                            'id' => 'submit-btn',
+                            'class' => 'hidden',
+                            'form' => 'pedigreeImport'
+                        ));
+                        ?>
+                        <!--</div>-->
                         </fieldset><br>
                     </div>
-                    <?php
-                    echo CHtml::textField('location', '', array(
-                        'id' => 'location',
-                        'form' => 'pedigreeImport',
-                        'class' => 'hidden',
-                    ));
-                    echo CHtml::submitButton('Submit', array(
-                        'id' => 'submit-btn',
-                        'class' => 'hidden',
-                        'form' => 'pedigreeImport'
-                    ));
-                    ?>
-                    <!--</div>-->
-                    </fieldset><br>
+                    <!-- <div class="divider"></div>-->
+
+                    <!--</form>-->
                 </div>
-                <!-- <div class="divider"></div>-->
-
-                <!--</form>-->
             </div>
-        </div>
-    </div>
-    <?php if (Yii::app()->user->hasFlash('success')): ?>
-        <div class="info">
-            <?php echo Yii::app()->user->getFlash('success'); ?>
-        </div>
-    <?php endif; ?>
+            <?php if (Yii::app()->user->hasFlash('success')): ?>
+                <div class="info">
+                    <?php echo Yii::app()->user->getFlash('success'); ?>
+                </div>
+            <?php endif; ?>
 
-    <?php $this->endWidget(); ?>
-</body></html>
-<script type="text/javascript">
-    $(document).ready(function() {
-        var pop = function() {
-            $('#screen').css({opacity: 0.4, 'width': $(document).width(), 'height': $(document).height()});
-            $('body').css({'overflow': 'hidden'});
-            $('#ajax-loading-indicator').css({'display': 'block'});
-        }
-        $('#uploadFile').click(pop);
+            <?php $this->endWidget(); ?>
+        </body></html>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var pop = function() {
+                $('#screen').css({opacity: 0.4, 'width': $(document).width(), 'height': $(document).height()});
+                $('body').css({'overflow': 'hidden'});
+                $('#ajax-loading-indicator').css({'display': 'block'});
+            }
+            $('#uploadFile').click(pop);
 
-    });
-<?php
-Yii::app()->clientScript->registerScript(
-        'myHideEffect', '$(".info").animate({opacity: 1.0}, 3000).fadeOut("slow");', CClientScript::POS_READY
-);
-?>
+        });
+    <?php
+    Yii::app()->clientScript->registerScript(
+            'myHideEffect', '$(".info").animate({opacity: 1.0}, 3000).fadeOut("slow");', CClientScript::POS_READY
+    );
+    ?>
 </script>

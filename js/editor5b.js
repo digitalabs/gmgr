@@ -11,7 +11,7 @@ var data = (function () {
     $.ajax({
         'async': false,
         'global': false,
-        'url': "/../GMGR/json_files/tree.json",
+        'url': "/../GMGR/json/tree6.json",
         'dataType': "json",
         'success': function (data) {
             jason = data;
@@ -39,7 +39,7 @@ var customNodes = new Array(),
         layer_wider_label = new Array(),
         depencencyChart;
 		
-//function graph2() {
+function graph2b() {
 	var ms = document.getElementById('maxStep').value;
 	//alert(ms);
 	
@@ -96,7 +96,7 @@ var customNodes = new Array(),
     }
 
     data.children.forEach(collapse);
-//}
+}
 
 function updateNodesXOffset(){
     var x_offsets = new Array();
@@ -300,7 +300,7 @@ function drawChart2(node) {
 				.attr("transform", function(d) {
 						return "rotate(90)" 
 					})
-				.on("click", click)
+				
 				
 				var txtW = txtBox.node().getComputedTextLength();
 			

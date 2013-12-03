@@ -4,10 +4,10 @@ class UserIdentity extends CUserIdentity
     private $_id;
     public function authenticate()
     {
-        $record=User::model()->findByAttributes(array('uname'=>$this->username));
+        $record=User::model()->findByAttributes(array('uname'=>  strtoupper($this->username)));
         if($record===null)
             $this->errorCode=self::ERROR_USERNAME_INVALID;
-        else if($record->upswd!==$this->password)
+        else if($record->upswd!==  strtoupper($this->password))
             $this->errorCode=self::ERROR_PASSWORD_INVALID;
         else
         {
