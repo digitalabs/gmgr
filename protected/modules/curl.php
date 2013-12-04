@@ -67,9 +67,9 @@ class curl {
         return $this->exec($url,$data);
     }
 
-    public function updateMethod() {
+    public function updateMethod($data) {
         $url = "http://localhost:8080/ws/standardization/term/updateMethod";
-        $this->exec($url);
+        return $this->exec($url, $data);
     }
 
     public function editGermplasmName() {

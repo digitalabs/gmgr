@@ -18,30 +18,6 @@ $file_toArray = new file_toArray();
 
 $unselected = 0;
 
-if (isset($_POST['selectMethod']) && $_POST['selectMethod'] != 0) {
-    $arrayStringMethod = $_POST['selectMethod'];
-    $arr = explode(",", $arrayStringMethod);
-    $mid = $arr[0];
-    $gid = $arr[1];
-    $id = $arr[2];
-    echo "mid:" . $mid;
-
-    //*****if the user selects the radio button with the typeahead*****
-    $array = array(
-        "mid" => $mid,
-        "gid" => $gid,
-        "id" => $id,
-    );
-    //create changeMethod.json
-    $json = new json($array);
-    $json->create_changeMethod();
-
-    //call curl: function updateMethod
-
-    $curl = new curl();
-    $curl->updateMethod();
-}
-
 if (isset($_GET['yes'])) {
     $unselected = $file_toArray->get_unselected_rows();
     $standardized = $file_toArray->checkIf_standardize($unselected);
@@ -369,15 +345,22 @@ if (count($final)) {
                                                             value=""
                                                             />
                                                         <br/>
+                                                        <?php
+                                                        echo '<input type="hidden" class="'.$j.'" id="term'.$j.'" name="list" value="' . base64_encode(serialize($list)) . '" />';
+                                                        echo '<input type="hidden" class="'.$j.'" id="term'.$j.'" name="createdGID" value="' . base64_encode(serialize($createdGID)) . '" />';
+                                                        echo '<input type="hidden" class="'.$j.'" id="term'.$j.'" name="existing" value="' . base64_encode(serialize($existing)) . '" />';
+                                                        echo '<input type="hidden" class="'.$j.'"  id="term'.$j.'" name="checked" value="' . base64_encode(serialize($checked)) . '" />';
+                                                        echo '<input type="hidden" class="'.$j.'" id="term'.$j.'"name="locationID" value="' . $locationID . '" />';
+                                                        ?>
                                                         <input type="hidden" class="<?php echo $j; ?>" name="term" id="term<?php echo $j ?>" value="$term"/>
                                                         <input type="hidden" class="<?php echo $j; ?>" name="bondId" id="bondId<?php echo $j; ?>" value="" />
                                                         <input type="hidden" class="<?php echo $j; ?>" name="gid" id="gid<?php echo $j; ?>" value="<?php echo $GID; ?>" />
                                                         <input type="hidden" class="<?php echo $j; ?>" name="id" id="id<?php echo $j; ?>" value="<?php echo $id; ?>" />
                                                         <div id="instruction" class="muted" style="font-size:10px;"></div>
-                                                        <!--- onclick="sampleFunction(<?php //echo $j;   ?>);return false;"-->
+                                                        <!--- onclick="sampleFunction(<?php //echo $j;     ?>);return false;"-->
 
                                                         <input type="submit" id="submitMethod<?php echo $j; ?>" class="btn btn-primary btn-mini" value="Update" onclick=" return jsConfirmDialog(<?php echo $j; ?>);
-                                return false;" ><br><br>
+                        return false;" ><br><br>
                                                     </form>
 
 
@@ -495,100 +478,123 @@ if (count($final)) {
 
     <script type="text/javascript" src="./assets/pnotify-1.2.0/jquery.pnotify.js"></script>
     <script type="text/javascript">
-            function jsConfirmDialog(count) {
-                event.preventDefault();
-                count1 = count;
+    function jsConfirmDialog(count) {
+        event.preventDefault();
 
-                var bondId = $("#bondId" + count).val();
-                var gid = $("#gid" + count).val();
-                var id = $("#id" + count).val();
-                var submitMethod = $("#submitMethod" + count).attr("id"); //gets the id of the submit method
-                submitMethodBtn = submitMethod;
-                var array_1 = new Array(bondId, gid, id);
-                //*****assign the array value to a hidden field inside method POST
-                $("#selectMethod").val(array_1);
-                //****opens the confirmation modal for update method
-                $("#method-confirm").dialog('open');
+        var bondId = $("#bondId" + count).val();
+        var gid = $("#gid" + count).val();
+        var id = $("#id" + count).val();
+        var array_1 = new Array(bondId, gid, id);
+        //*****assign the array value to a hidden field inside method POST
+        $("#selectMethod").val(array_1);
+        //****opens the confirmation modal for update method
+        $("#method-confirm").dialog('open');
 
-            }
-            ;
-            function methodLoading() {
-                $('#screen').css({opacity: 0.4, 'width': $(document).width(), 'height': $(document).height()});
-                $('body').css({'overflow': 'hidden'});
-                $('#ajax-loading-indicator').css({'display': 'block'});
-                notifyMethod();
-            }
-            function notifyMethod() {
-                var term1 = $("#term").val();
-                $.pnotify({
-                    text: "You have successfully updated the method for germplasm" + " " + "'" + term1 + "'" + ".",
-                    type: "success",
-                    hide: false
-                });
-            }
-            function show(row_count, newGID_count, not_standard, to_process) {
-                $.pnotify(
-                        {
-                            text: to_process + "/" + row_count + " rows selected",
-                            //text: ,
-                            type: "info",
-                            hide: false,
-                            //shadow: false,
-                            //opacity: .8
-                            //nonblock: true,
-                            //nonblock_opacity: .2
-                        });
-                $.pnotify(
-                        {
-                            text: newGID_count + " created GID(s)",
-                            //text:,
+    }
+    ;
+    function methodLoading() {
+        $('#screen').css({opacity: 0.4, 'width': $(document).width(), 'height': $(document).height()});
+        $('body').css({'overflow': 'hidden'});
+        $('#ajax-loading-indicator').css({'display': 'block'});
+        notifyMethod();
+    }
+    function notifyMethod() {
+        var term1 = $("#term").val();
+        $.pnotify({
+            text: "You have successfully updated the method for germplasm" + " " + "'" + term1 + "'" + ".",
+            type: "success",
+            hide: false
+        });
+    }
+    $(document).ready(function() {
+        $("#method-confirm").dialog({
+            autoOpen: false,
+            autoClose: false,
+            resizable: false,
+            height: 180,
+            modal: true,
+            buttons: [{
+                    text: 'Yes',
+                    click: function() {
+                        $(this).dialog('close');
+                        var form = $("#updateMethodForm");
+                        form.submit();
+                        methodLoading();
 
-                            type: "success",
-                            hide: false,
-                            //shadow: false,
-                            //nonblock: true,
-                            //nonblock_opacity: .2
-                        });
-                if (not_standard > 0) {
-                    $.pnotify(
-                            {
-                                text: not_standard + " row(s) <br>" + "<b>not in standard form</b>",
-                                type: "error",
-                                hide: false,
-                                //shadow: false,
-                                //opacity: .8
-                            });
-                }
-
-            }
-            ;
-
-
-            //************For opening a modal dialog***************
-            $(document).on("click", ".open-dialog", function() {
-                //*****the term to be placed on the heading in the modal
-
-                var term = $(this).data("id");
-                var arr = document.getElementsByClassName(term);
-
-                var m_values = new Array();
-                m_values.length = 0;
-                for (var i = 0; i < arr.length; i++) {
-                    m_values.push(arr[i].value);
-                }
-
-                //******assign the obtained value in the modal*****
-                $.ajax({
-                    cache: false,
-                    type: 'POST',
-                    url: 'modules_folder/chooseGID.php',
-                    data: {termId: term, arr_terms: m_values},
-                    success: function(data) {
-                        $("#new-Modal").html(data);
-
+                        return true;
                     }
+                }, {
+                    text: 'No',
+                    click: function() {
+                        $(this).dialog('close');
+                        return false;
+                    }
+                }]
+        });
+    });
+    function show(row_count, newGID_count, not_standard, to_process) {
+        $.pnotify(
+                {
+                    text: to_process + "/" + row_count + " rows selected",
+                    //text: ,
+                    type: "info",
+                    hide: false,
+                    //shadow: false,
+                    //opacity: .8
+                    //nonblock: true,
+                    //nonblock_opacity: .2
                 });
-            });
+        $.pnotify(
+                {
+                    text: newGID_count + " created GID(s)",
+                    //text:,
+
+                    type: "success",
+                    hide: false,
+                    //shadow: false,
+                    //nonblock: true,
+                    //nonblock_opacity: .2
+                });
+        if (not_standard > 0) {
+            $.pnotify(
+                    {
+                        text: not_standard + " row(s) <br>" + "<b>not in standard form</b>",
+                        type: "error",
+                        hide: false,
+                        //shadow: false,
+                        //opacity: .8
+                    });
+        }
+
+    }
+    ;
+
+
+    //************For opening a modal dialog***************
+    $(document).on("click", ".open-dialog", function() {
+        //*****the term to be placed on the heading in the modal
+
+        var term = $(this).data("id");
+        var arr = document.getElementsByClassName(term);
+
+        var m_values = new Array();
+        m_values.length = 0;
+        for (var i = 0; i < arr.length; i++) {
+            m_values.push(arr[i].value);
+        }
+
+        //******assign the obtained value in the modal*****
+        $.ajax({
+            cache: false,
+            type: 'POST',
+            url: 'modules_folder/chooseGID.php',
+            data: {termId: term, arr_terms: m_values},
+            success: function(data) {
+                $("#new-Modal").html(data);
+
+            }
+        });
+    });
 
     </script>
 
@@ -670,30 +676,7 @@ if (count($final)) {
         }
         $('#submit').click(pop);
 
-        $("#method-confirm").dialog({
-            autoOpen: false,
-            autoClose: false,
-            resizable: false,
-            height: 180,
-            modal: true,
-            buttons: [{
-                    text: 'Yes',
-                    click: function() {
-                        $(this).dialog('close');
-                        var form = $("#updateMethodForm");
-                        form.submit();
-                        methodLoading();
-
-                        return true;
-                    }
-                }, {
-                    text: 'No',
-                    click: function() {
-                        $(this).dialog('close');
-                        return false;
-                    }
-                }]
-        }); //end of dialog create
+        //end of dialog create
         // });
 
 
