@@ -60,6 +60,7 @@
         'id' => 'pedigreeGrid',
         'dataProvider' => $dataProvider,
         'filter' => $filtersForm,
+        'ajaxUpdate' => false,
         'selectableRows' => 10,
         //'enablePagination' => true,
         'columns' => array(

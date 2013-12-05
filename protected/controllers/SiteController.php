@@ -183,23 +183,39 @@ class SiteController extends Controller {
         Yii::import('application.modules.curl');
         $arr = array();
         $filtersForm = new FilterPedigreeForm;
+        static $location;
+
 
         if (isset($_POST['location'])) {
+            $location = $_POST['location'];
+            echo "location:" . $_POST['location'];
             echo "HERE 0.<br>";
             if (isset($_POST['refresh'])) {
+                $location = $_POST['location'];
                 echo "HERE refresh.<br>";
-                $locationID = $_POST['location'];
+                $locationID = $location;
                 $list = json_decode($_POST['list']);
             } else {
+                echo "location:" . $_POST['location'];
+                $location = $_POST['location'];
                 echo "HERE flow.<br>";
-                $locationID = $_POST['location'];
+                $locationID = $location;
 
                 $json = new json('');
                 $output = $json->getFile();
+                /* echo "<br>";
+                  var_dump($output);
+                  echo "<br><br><br><br>";
+                 * 
+                 */
 
 //call curl: function parse
                 $curl = new curl();
                 $list = $curl->parse($output);
+                /* echo "<br>";
+                  var_dump($list);
+                  echo "<br>";
+                 * */
             }
             $id = $list;
 
@@ -217,24 +233,31 @@ class SiteController extends Controller {
                     'pageSize' => 10,
                 ),
             ));
+            echo "<br>";
+            //var_dump($filteredData);
+            echo "<br>render here";
 
-            if (!isset($_GET['ajax'])) {
-                echo "HERE.<br>";
-                $this->render('importFileDisplay', array(
-                    'filtersForm' => $filtersForm,
-                    'dataProvider' => $dataProvider,
-                    'locationID' => $locationID,
-                    'list' => $list
-                ));
-            } else {
-                echo "ajax.<br>";
-                $this->render('importFileDisplay', array(
-                    'filtersForm' => $filtersForm,
-                    'dataProvider' => $dataProvider,
-                    'locationID' => $locationID,
-                    'list' => $list
-                ));
-            }
+
+            $this->render('importFileDisplay', array(
+                'filtersForm' => $filtersForm,
+                'dataProvider' => $dataProvider,
+                'locationID' => $locationID,
+                'list' => $list
+            ));
+        } elseif (isset($_GET['page'])) {
+            echo "here";
+            ?>
+            <html>
+                <body onload="storeLocal1()">
+                    <form action="" method="post" id='importFileDisplay-rfrsh'>
+                        <input type="hidden" name="refresh" value="true">
+                        <input type="hidden" id ="location" name="location" value="">
+                        <input type="hidden" id="list" name="list" value="">
+                    </form>  
+                </body>
+            </html>
+
+            <?php
         } else {
             ?>
             <html>
