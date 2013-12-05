@@ -44,6 +44,13 @@ class curl {
         //print_r($output);
         return $output;
     }
+    
+    public function updateGermplasmName($data) {
+        //http://localhost:8080/ws/standardization/term/parse
+        $url = "http://localhost:8080/ws/standardization/term/updateGermplasmName";
+        echo "<br>here";
+        return $this->exec($url, $data);
+    }
 
     public function parse($data) {
         //http://localhost:8080/ws/standardization/term/parse

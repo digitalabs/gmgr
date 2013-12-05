@@ -1,4 +1,5 @@
 <!--div to grey out the screen while loading indicator is on-->
+<body onload="storeLocal()">
 <div id='screen'>
 </div>
 <span id="ajax-loading-indicator">
@@ -122,6 +123,7 @@
     echo CHtml::hiddenField('locationID', $locationID);
 
     $url = Yii::app()->createUrl('site/assignGID');
+    
     $this->widget('bootstrap.widgets.TbButton', array(
         'type' => 'primary',
         'label' => 'AssignGID',
@@ -163,14 +165,34 @@
 </div>
 <div id="eventlist"></div>
 <?php //$this->endWidget();?>
+
+</body>
 <script type="text/javascript">
+    function storeLocal() {
+        if ('localStorage' in window && window['localStorage'] != null) {
+            try {
+                console.log(JSON.stringify(<?php echo json_encode($list); ?>));
+                localStorage.setItem('list', JSON.stringify(<?php echo json_encode($list); ?>));
+            } catch (e) {
+                if (e === QUOTA_EXCEEDED_ERR) {
+                    alert('Quota exceeded!');
+                }
+            }
+        } else {
+            alert('Cannot store user preferences as your browser do not support local storage');
+        }
+    }
+    window.addEventListener('storage', storageEventHandler, false);
+    function storageEventHandler(event) {
+        storeLocal();
+    }
     $(document).ready(function() {
         //triggers  the activity loading indicator
         $('#submit-btn').click(function() {
             var selected = $.fn.yiiGridView.getSelection("pedigreeGrid");
             if (!selected.length)
             {
-                alert('Please select atleast one germplasm');
+                alert('Please select at least one row');
                 return false;
             }
             else

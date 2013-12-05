@@ -1,5 +1,5 @@
 <body onload="storeLocal()">
-    <form action="" method="post" id='refresh'>
+    <form action="" method="post" id='importFileDisplay-rfrsh'>
         <input type="hidden" name="refresh" value="true">
         <input type="hidden" name="location" id="location" value="<?php echo $locationID; ?>">
         <input type="hidden" name="list" id="list" value="">
