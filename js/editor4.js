@@ -1,10 +1,10 @@
-var margin = 
-	{
+var margin = {top: 950, right: 50, bottom: 100, left: 700},
+	/*{
 		top: 200,
 		right: 50,
 		bottom: 200,
 		left: 570 //1370
-	},
+	},*/
 	
 	customNodes = new Array(),
 	layer_wider_label = new Array(),
@@ -15,24 +15,65 @@ var margin =
 	realHeight = window.innerHeight,
 	h = realHeight,// -m[0] -m[2],
 	w = realWidth,// -m[0] -m[0], 
-	width = 500,// - margin.right - margin.left,//width = 3700 - margin.right - margin.left,
-	height = 500 - margin.top - margin.bottom;//height = 2050 - margin.top - margin.bottom;
+	width = 2000,// - margin.right - margin.left,//width = 3700 - margin.right - margin.left,
+	height = 700 - margin.top - margin.bottom;//height = 2050 - margin.top - margin.bottom;
 
 	//read from file
-	var root = (function () {
-			var json = null;
-			$.ajax({
-				'async': false,
-				'global': false,
-				'url': "/../gmgr/json_files/tree.json",
-				'dataType': "json",
-				'success': function (data) {
-					json = data;
-				}
-			});
-			return json;
-			})(); 
-
+	
+	var temp = document.getElementById('inputGID').value;
+	
+	if(temp=="50533")
+	{
+		var root = (function () {
+				var json = null;
+				$.ajax({
+					'async': false,
+					'global': false,
+					'url': "/../gmgr/json_files/tree3.json",
+					'dataType': "json",
+					'success': function (data) {
+						json = data;
+					}
+				});
+				return json;
+				})(); 
+	}
+	
+	else if(temp=="256389")
+	{
+		var root = (function () {
+				var json = null;
+				$.ajax({
+					'async': false,
+					'global': false,
+					'url': "/../gmgr/json_files/tree4.json",
+					'dataType': "json",
+					'success': function (data) {
+						json = data;
+					}
+				});
+				return json;
+				})(); 
+	}
+	
+	else
+	{
+		var root = (function () {
+				var json = null;
+				$.ajax({
+					'async': false,
+					'global': false,
+					'url': "/../gmgr/json_files/tree3.json",
+					'dataType': "json",
+					'success': function (data) {
+						json = data;
+					}
+				});
+				return json;
+				})();
+	}
+	
+	
 	var i = 0,
 		duration = 550,
 		rectW = 80,
@@ -72,7 +113,7 @@ var margin =
 	//root.children.forEach(collapse);
 	update(root);
 
-	d3.select("#graphDiv").style("height", "660px");
+	d3.select("#graphDiv").style("height", "5000px").style("width","3000px")
 	
 	//show_svg_code();
 	
@@ -347,16 +388,35 @@ function click(d)
     update(d);
 	
 	document.getElementById('gid').innerHTML = d.gid;
+	document.getElementById('hidGID').value = d.gid;
     document.getElementById('gname').innerHTML = d.name;
 	document.getElementById('gmethod').innerHTML = d.methodname;
 	document.getElementById('gmtype').innerHTML = d.methodtype;
 	document.getElementById('gdate').innerHTML = d.date;
 	document.getElementById('gcountry').innerHTML = d.country;
     document.getElementById('gloc').innerHTML = d.location;
-	document.getElementById('gcname').innerHTML = d.cname;
+	
+	if(d.cname==undefined)document.getElementById('gcname').innerHTML = "---";
+	else document.getElementById('gcname').innerHTML = d.cname;
+	
 	document.getElementById('gref').innerHTML = d.ref;
     document.getElementById('gpid1').innerHTML = d.gpid1;
     document.getElementById('gpid2').innerHTML = d.gpid2;
+	
+	document.getElementById('n1').innerHTML = d.name0;
+	document.getElementById('n2').innerHTML = d.name1;
+	if(d.name2==undefined)document.getElementById('n3').innerHTML = "---";
+	else document.getElementById('n3').innerHTML = d.name2;
+	
+	document.getElementById('l1').innerHTML = d.loc0;
+	document.getElementById('l2').innerHTML = d.loc1;
+	if(d.name2==undefined)document.getElementById('l3').innerHTML = "---";
+	else document.getElementById('l3').innerHTML = d.loc2;
+	
+	document.getElementById('d1').innerHTML = d.dates0;
+	document.getElementById('d2').innerHTML = d.dates1;
+	if(d.name2==undefined)document.getElementById('d3').innerHTML = "---";
+	else document.getElementById('d3').innerHTML = d.dates2;
 }
 
 function zoom() 

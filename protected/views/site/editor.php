@@ -30,7 +30,7 @@ if (isset($_GET['searchBtn']))
     <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap.min.css" />
 
 	<br><br> 
-        <div style="text-align:right;vertical-align:right;margin-left:10px;margin-right: 10px;">       <br>
+			<div style="text-align:right;vertical-align:right;margin-left:10px;margin-right: 10px;">       <br>
 
                     <!--<strong><small>Search Germplasm</small></strong>&nbsp;-->
                     <div style="z-index:4;position:fixed;top:75px;right:40px" class="input-append">    
@@ -40,8 +40,8 @@ if (isset($_GET['searchBtn']))
                       </div>-->
 					  <form action="index.php?r=site/editor" method="post">
 						<input title="This feature is a work in progress" style="width:140px;" class="span2" id="inputGID" name="inputGID" type="text" placeholder="Search Germplasm">
-						<button name="searchBtn" id="searchBtn" title="This feature is a work in progress" class="btn btn-primary" onclick="validate()"type="submit">GO</button>
-					  </form>
+						<button name="searchBtn" id="searchBtn" class="btn btn-primary" onclick="validate()"type="submit">GO</button>
+					  
 					  </div>  
                              
             </div>
@@ -61,13 +61,76 @@ if (isset($_GET['searchBtn']))
 					</svg>
 						<div id="graphDiv" width="5000" style="width:2000px;"></div>
 					</div> -->
-					<div id="graph">
-					<svg width="1000" height="800" id="graphDiv"></svg>
+					<div id="graph" style="height: auto;width: auto;" height="5500">
+						<svg height="5000" style="height: auto;width: auto;" id="graphDiv"></svg>
+					</div>
+					
+					<div>
+						
+						<div style="margin:5px;border:1px solid gray;border-radius: 6px 6px 6px 6px;position:fixed; bottom:60px; left:50px" id="gDetail">
+							<b>&nbsp;Alternate Names</b>
+							<table style="margin:5px;width:700px;" width="1000px ">
+								<tr>
+									<th height="10" bgcolor="lightblue">Name</th>
+									<th height="10" bgcolor="lightblue">Location</th>
+									<th height="10" bgcolor="lightblue">Status</th>
+									<th height="10" bgcolor="lightblue">Date</th>
+								</tr>
+								<tr style="border:1px solid gray">
+									<td id="n1"></td>
+									<td id="l1"></td>
+									<td ></td>
+									<td id="d1"></td>
+								</tr>
+								<tr style="border:1px solid gray">
+									<td id="n2"></td>
+									<td id="l2"></td>
+									<td></td>
+									<td id="d2"></td>
+								</tr>
+								<tr style="border:1px solid gray">
+									<td id="n3"></td>
+									<td id="l3"></td>
+									<td></td>
+									<td id="d3"></td>
+								</tr>
+							</table>
+						</div>
+						<div style="margin:5px;border:1px solid gray;border-radius: 6px 6px 6px 6px;position:fixed; bottom:60px; left:780px" id="gDetail2">
+							<b>&nbsp;Attributes</b>
+							<table style="margin:5px;width:700px;">
+								<tr>
+									<th bgcolor="lightblue">Name</th>
+									<th bgcolor="lightblue">Description</th>
+									<th bgcolor="lightblue">Value</th>
+									<th bgcolor="lightblue">Date</th>
+								</tr>
+								<tr style="border:1px solid gray">
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr style="border:1px solid gray">
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr style="border:1px solid gray">
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+								</tr>
+							</table>
+						</div>
+						
 					</div>
                     <!--<div id="graphDiv" style="z-index:50;">-->
 					<!--<a href="#" id="generate">Generate download preview</a>	-->
 					</div>
-                    <div class="div-gradient" style="z-index:0;padding-left: 0px; width: 200px;height:650px;text-align: justify;position:fixed;right:40px;top:115px;bottom:20px;
+                    <div class="div-gradient" style="z-index:0;padding-left: 0px; width: 200px;height:730px;text-align: justify;position:fixed;right:40px;top:115px;bottom:20px;
 														-webkit-box-shadow: 3px 3px 16px rgba(50, 50, 50, 0.75);
 														-moz-box-shadow:    3px 3px 16px rgba(50, 50, 50, 0.75);
 														box-shadow:         3px 3px 16px rgba(50, 50, 50, 0.75);">
@@ -75,7 +138,7 @@ if (isset($_GET['searchBtn']))
                         <!--<div style="padding-left:5px;padding-right:5px;"><hr></div>-->
                         <br>
                         <div class="form-horizontal" style="padding: 5px;">
-                            <input title="This feature is a work in progress" placeholder="All" style="width:50px;" value=" " id="maxStep" type="number" name="quantity" min="1" max="100"> 
+                            <input title="This feature is a work in progress" placeholder="All" style="width:50px;" value=" " id="maxStep" type="number" name="maxStep" min="1" max="100"> 
 							
                             <small><a data-toggle="tooltip" title="By default, a regular pedigree for a particular germplasm is created up to the certain number of known parents. You can, however, choose to show a smaller number of parental generations (steps), or to choose all." data-placement="right">Maximum Steps</a></small>
                         </div><br>
@@ -85,14 +148,19 @@ if (isset($_GET['searchBtn']))
                         </label>
                         
 					<div style="padding-left: 5px;padding-right: 5px; text-align: right;">
-							<button disabled="true" type="button" class="btn btn-mini btn-primary" onclick="graph2b();">Update</button>
+							<button name="updateBtn" id="updateBtn" type="submit" class="btn btn-mini btn-primary" onclick="graph2b();">Update</button></form>
 							<button title="This feature is a work in progress" class="btn btn-mini btn-success" id="generate" value="" >Save image</button>
 							<form method="POST" enctype="multipart/form-data" action="<?php echo Yii::app()->baseUrl;?>/save.php" id="myForm">
 								<input type="hidden" name="img_val" id="img_val" value="" />
 							</form>
 							
                         <div style="padding-left:5px;padding-right:5px;"><hr></div>
-                        <center><div style="padding-left:5px;padding-right:5px;">Germplasm Information</div></center> <br>
+                        <center>
+						<div style="padding-left:5px;padding-right:5px;">Basic Information
+						<button style="width:50px" name="showMore" id="showMore" class="btn btn-primary" onclick="validate()" type="submit">Edit</button>
+						</center> 
+						
+						<br>
 						
 						<!--<div style="position:fixed;top:20px;left:40px;padding:5px;">
 							<button title="This feature is a work in progress" class="btn btn-mini btn-success" id="savePNG" value="">Edit</button>
@@ -100,13 +168,19 @@ if (isset($_GET['searchBtn']))
 					
                         <small>
                         <div style="padding-left:5px;padding-right:5px;"> 
+						
+						<form action="index.php?r=site/editor" method="post">
                         <table style="border-collapse: separate !important;border-radius: 6px 6px 6px 6px;
 							-moz-border-radius: 6px 6px 6px 6px;
 							-webkit-border-radius: 6px 6px 6px 6px;
 							box-shadow: 0 1px 1px #CCCCCC;
 							
 							" class="table table-hover table-condensed">
-                            <tr><td width="50px" bgcolor="#0080FF" style="color: white;"><small>GID</td><td id="gid"  align="left" bgcolor="white" style=" vertical-align: left; text-align: left;"></td></tr>
+                            <tr><td width="50px" bgcolor="#0080FF" style="color: white;"><small>GID</td>
+								<td name="gid" id="gid"  align="left" bgcolor="white" style=" vertical-align: left; text-align: left;">
+								</td>
+								<input type="hidden" id="hidGID" name="hidGID">
+							</tr>
                             <tr><td bgcolor="#0080FF" style="color: white;"><small>Name</td><td id="gname" bgcolor="white" style=" vertical-align: left; text-align: left;"></td></tr>
                             <tr><td bgcolor="#0080FF" style="color: white;"><small>Method</td><td id="gmethod" bgcolor="white" style=" vertical-align: left; text-align: left;"></td></tr>
                             <tr><td bgcolor="#0080FF" style="color: white;"><small>Method Type</td><td id="gmtype" bgcolor="white" style=" vertical-align: left; text-align: left;"></td></tr>
@@ -118,7 +192,14 @@ if (isset($_GET['searchBtn']))
                             <tr><td bgcolor="#0080FF" style="color: white;"><small>GPID1</td><td id="gpid1" bgcolor="white" style=" vertical-align: left; text-align: left;"></td></tr>
                             <tr><td bgcolor="#0080FF" style="color: white;"><small>GPID2</td><td id="gpid2" bgcolor="white" style=" vertical-align: left; text-align: left;"></td></tr>
                         </table>
-                        <div style="vertical-align:top;text-align: left"><a style="color: white; text-decoration: none;"><img src='images/legend.gif' width="185px" height="100px"></a></div> 
+						
+						
+							<div style="position:fixed;bottom:80px;vertical-align:top;text-align: left">
+								
+							</div> 
+						</form>
+						
+                        <div style="position:fixed;bottom:30px;vertical-align:top;text-align: left"><a style="color: white; text-decoration: none;"><img src='images/legend.gif' width="185px" height="100px"></a></div> 
                         </div>   
                     </div>  
 					
@@ -126,7 +207,7 @@ if (isset($_GET['searchBtn']))
 					
                     <div style="vertical-align:right;text-align: right;">
 						
-                        <p style="position:fixed;bottom:0px;left:40px;padding:5px;"><span class="label label-warning">Note</span> 
+                        <p style="position:fixed;bottom:0px;left:50px;padding:5px;"><span class="label label-warning">Note</span> 
 							<small>Apply the <i>changes</i> made by clicking the <b>Update</b> button.
                                                 Click node to view germplasm information.</small>
                         </span>
@@ -184,11 +265,13 @@ if (isset($_GET['searchBtn']))
 				});
 			} 
 			
-			/*function validate()
+			function validate()
 			{
-				if(document.getElementById('searchBtn')=='' || document.getElementById('searchBtn')==' ' || document.getElementById('searchBtn')=='Search Germplasm')
-				alert('Error');
+				//if(document.getElementById('searchBtn')=='' || document.getElementById('searchBtn')==' ' || document.getElementById('searchBtn')=='Search Germplasm')
+				var tmp = document.getElementById('hidGID').value;
+				alert(tmp);
 			}
+			/*
             $(document).ready(function() {
 				$("#savePNG").click(function () {
 					html2canvas($("#graphDiv"), {
@@ -241,6 +324,7 @@ if (isset($_GET['searchBtn']))
 					$('#ajax-loading-indicator').css({'display': 'block'});
 			 }
 			 $('#searchBtn').click(pop);
+			 $('#updateBtn').click(pop);
 
 			});
 			

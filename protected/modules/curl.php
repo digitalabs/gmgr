@@ -61,14 +61,40 @@ class curl {
         $this->exec($url);
     }
 	
+	public function show_germplasm_details() 
+	{
+        $url = "http://172.29.4.99:8080/ws/standardization/term/show_germplasm_details";
+        $this->exec($url);
+		
+		$gid = $_POST['hidGID'];
+		$a = array('GID'=>$gid);
+		$data = json_encode($a);
+		$ch = curl_init();
+		$ch =curl_init($url);
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");                                                                     
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $data);                                                                  
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);                                                                      
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array(                                                                          
+			'Content-Type: application/json',                                                                                
+			'Content-Length: ' . strlen($data))                                                                       
+		); 
+		
+		$result = curl_exec($ch);
+		$jsonfile = "trydocinfo.json";
+		json_decode($result, true);
+    }
+	
 	public function searchGID() 
 	{
-        $url = "http://localhost:8081/ws/standardization/term/searchGID";
+        $url = "http://localhost:8080/ws/standardization/term/searchGID";
         $this->exec($url);
 		
 		$gid = $_POST['inputGID'];
-		$a = array('GID'=>$gid);
+		$level = $_POST['maxStep'];
+		$a = array('GID'=>$gid,'LEVEL'=>$level);
+		//$b = array('LEVEL'=>$level);
 		$data = json_encode($a);
+		//$datab = json_encode($b);
 		$ch = curl_init();
 		$ch =curl_init($url);
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");                                                                     

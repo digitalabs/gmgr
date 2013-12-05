@@ -1,0 +1,43 @@
+ {
+    "gid" : " 256389",
+    "name" : " REXORO/SBR",
+    "date" : " 0",
+    "id" : " 256389",
+    "methodname" : " Single cross",
+    "methodtype" : " GEN",
+    "location" : " United States",
+    "country" : " UNITED STATES",
+    "ref" : " REXORO/SBR",
+    "gpid1" : " 38864",
+    "gpid2": "274121",
+    "children":[
+    {
+       "gid" : " 38864",
+       "name" : " REXORO",
+       "date" : " 19280000",
+       "id" : " 38864",
+       "methodname" : " Entry in international nursery",
+       "methodtype" : " MAN",
+       "location" : " International Rice Testing Program, IRRI",
+       "country" : " PHILIPPINES",
+       "ref" : " REXORO",
+       "gpid1" : " 420278",
+       "gpid2": "2271808"
+   
+    },
+    {
+       "gid" : " 274121",
+       "name" : " BLUE ROSE SUPREME",
+       "date" : " 19250000",
+       "id" : " 274121",
+       "methodname" : " Accession into genebank",
+       "methodtype" : " MAN",
+       "location" : " National Small Grain Collection USDA,ARS",
+       "country" : " UNITED STATES",
+       "ref" : " BLUE ROSE SUPREME",
+       "gpid1" : " 569734",
+       "gpid2": "256003"
+   
+    }
+ ]
+ }
