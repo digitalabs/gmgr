@@ -188,34 +188,20 @@ class SiteController extends Controller {
 
         if (isset($_POST['location'])) {
             $location = $_POST['location'];
-            echo "location:" . $_POST['location'];
-            echo "HERE 0.<br>";
+
             if (isset($_POST['refresh'])) {
                 $location = $_POST['location'];
-                echo "HERE refresh.<br>";
+
                 $locationID = $location;
                 $list = json_decode($_POST['list']);
             } else {
-                echo "location:" . $_POST['location'];
-                $location = $_POST['location'];
-                echo "HERE flow.<br>";
-                $locationID = $location;
 
+                $location = $_POST['location'];
+                $locationID = $location;
                 $json = new json('');
                 $output = $json->getFile();
-                /* echo "<br>";
-                  var_dump($output);
-                  echo "<br><br><br><br>";
-                 * 
-                 */
-
-//call curl: function parse
                 $curl = new curl();
                 $list = $curl->parse($output);
-                /* echo "<br>";
-                  var_dump($list);
-                  echo "<br>";
-                 * */
             }
             $id = $list;
 
@@ -233,11 +219,6 @@ class SiteController extends Controller {
                     'pageSize' => 10,
                 ),
             ));
-            echo "<br>";
-            //var_dump($filteredData);
-            echo "<br>render here";
-
-
             $this->render('importFileDisplay', array(
                 'filtersForm' => $filtersForm,
                 'dataProvider' => $dataProvider,
@@ -320,23 +301,26 @@ class SiteController extends Controller {
                     )
             );
 
-            if (!isset($_GET['ajax'])) {
-                echo "HERE.<br>";
-                $this->render('output', array(
-                    'filtersForm' => $filtersForm,
-                    'dataProvider' => $dataProvider,
-                    'locationID' => $locationID,
-                    'list' => $list
-                ));
-            } else {
-                echo "ajax.<br>";
-                $this->render('output', array(
-                    'filtersForm' => $filtersForm,
-                    'dataProvider' => $dataProvider,
-                    'locationID' => $locationID,
-                    'list' => $list
-                ));
-            }
+
+            $this->render('output', array(
+                'filtersForm' => $filtersForm,
+                'dataProvider' => $dataProvider,
+                'locationID' => $locationID,
+                'list' => $list
+            ));
+        } elseif (isset($_GET['page'])) {
+            ?>
+            <html>
+                <body onload="storeLocal1()">
+                    <form action="" method="post" id='importFileDisplay-rfrsh'>
+                        <input type="hidden" name="refresh" value="true">
+                        <input type="hidden" id ="location" name="location" value="">
+                        <input type="hidden" id="list" name="list" value="">
+                    </form>  
+                </body>
+            </html>
+
+            <?php
         } else {
             ?>
             <html>
@@ -464,7 +448,20 @@ class SiteController extends Controller {
                 $this->renderPartial('createdGID', array('filtersForm' => $filtersForm, 'GdataProvider' => $GdataProvider), false, true);
             else
                 $this->renderPartial('createdGID', array('filtersForm' => $filtersForm, 'GdataProvider' => $GdataProvider));
-        }else {
+        }elseif (isset($_GET['page'])) {
+            ?>
+            <html>
+                <body onload="storeLocal1()">
+                    <form action="" method="post" id='importFileDisplay-rfrsh'>
+                        <input type="hidden" name="refresh" value="true">
+                        <input type="hidden" id ="location" name="location" value="">
+                        <input type="hidden" id="list" name="list" value="">
+                    </form>  
+                </body>
+            </html>
+
+            <?php
+        } else {
             ?>
             <html>
                 <body onload="storeLocal1()">
@@ -489,43 +486,73 @@ class SiteController extends Controller {
 
         $arrSelectedIds = array();
         $filtersForm = new FilterPedigreeForm;
-        if (isset($_POST['locationID']) || isset($_POST['location'])) {
-            if (isset($_POST['Germplasm']['gid']) && ($_POST['Germplasm']['gid'] != '')) {
+        if (isset($_POST['locationID']) || isset($_POST['location']) || isset($_GET['page'])) {
+
+            if ((isset($_POST['Germplasm']['gid']) && ($_POST['Germplasm']['gid'] != '')) || isset($_POST['process'])) {
+                $data = $_POST['list'];
+
+                $list = json_decode($data, true);
 
                 if (!empty($_POST['Germplasm']['gid'])) {
+                    echo "here 0";
                     $selected = $_POST['Germplasm']['gid'];
                     $idArr = explode(',', $selected);
                     foreach ($idArr as $index => $id) {
                         $id = strtr($id, array('["' => '', '"]' => ''));
                         $arrSelectedIds[$index] = ($id);
                     }
+                    $locationID = $_POST['locationID'];
+                    $checked = $arrSelectedIds;
+                    $standardized = $file_toArray->checkIf_standardize($checked, $list);
+                    $a = array(
+                        'list' => $list,
+                        'checked' => $checked,
+                        'existingTerm' => array(),
+                        'locationID' => $locationID,
+                        'userID' => Yii::app()->user->id
+                    );
+
+                    $data = json_encode($a);
+                    $output = $curl->createGID($data);
+
+                    $createdGID = array();
+                    $list = array();
+                    $createdGID = $output['createdGID'];
+                    $list = $output['list'];
+                    $existing = $output['existingTerm'];
+
+                    $rows = $list;
+                } else {
+                    echo "here 1";
+                    $locationID = $_POST['location'];
+                    $checked = json_decode($_POST['checked'], true);
+                    $createdGID = json_decode($_POST['createdGID'], true);
+                    $existing = json_decode($_POST['existing'], true);
+                    $unselected = $file_toArray->get_unselected_rows($checked, $list);
+                    $standardized = $file_toArray->checkIf_standardize($unselected, $list);
+
+
+                    $a = array(
+                        'list' => $list,
+                        'checked' => $checked,
+                        'existingTerm' => $existing,
+                        'createdGID' => $createdGID,
+                        'locationID' => $locationID,
+                        'userID' => Yii::app()->user->id
+                    );
+
+                    $data = json_encode($a);
+                    $output = $curl->createGID2($data);
+
+                    $createdGID = array();
+                    $list = array();
+                    $createdGID = $output['createdGID'];
+                    $list = $output['list'];
+                    $existing = $output['existingTerm'];
+
+                    
+                    $rows = $list;
                 }
-//call curl: function standardization
-
-                $data = $_POST['list'];
-                $locationID = $_POST['locationID'];
-                $list = json_decode($data, true);
-                $checked = $arrSelectedIds;
-                $standardized = $file_toArray->checkIf_standardize($checked, $list);
-
-                $a = array(
-                    'list' => $list,
-                    'checked' => $checked,
-                    'existingTerm' => array(),
-                    'locationID' => $locationID,
-                    'userID' => Yii::app()->user->id
-                );
-
-                $data = json_encode($a);
-                $output = $curl->createGID($data);
-
-                $createdGID = array();
-                $list = array();
-                $createdGID = $output['createdGID'];
-                $list = $output['list'];
-                $existing = $output['existingTerm'];
-
-                $rows = $createdGID;
             } elseif (isset($_POST['choose'])) {
 
                 $term = strip_tags($_POST['term']);
@@ -551,7 +578,7 @@ class SiteController extends Controller {
                 $list = array();
                 $createdGID = $output['createdGID'];
                 $list = $output['list'];
-                $rows = $createdGID;
+                $rows = $list;
 // update corrected.csv
 //$file_toArray->update_csv_correctedGID($fid, $mid, $checked);
             } elseif (isset($_POST['selectMethod']) && $_POST['selectMethod'] != 0) {
@@ -578,14 +605,29 @@ class SiteController extends Controller {
                 $curl = new curl();
                 $output = $curl->updateMethod(json_encode($array));
                 $createdGID = $output['createdGID'];
-                $rows = $createdGID;
+                $rows = $list;
+            } elseif (isset($_GET['page'])) {
+                ?>
+                <html>
+                    <body onload="storeLocal2()">
+                        <form action="" method="post" id='importFileDisplay-rfrsh'>
+                            <input type="hidden" name="refresh" value="true">
+                            <input type="hidden" id ="location" name="location" value="">
+                            <input type="hidden" id="list" name="list" value="">
+                            <input type="hidden" id="existing" name="existing" value="">
+                            <input type="hidden" id="createdGID" name="createdGID" value="">
+                            <input type="hidden" id="checked" name="checked" value="">
+                        </form>  
+                    </body>
+                </html>
+                <?php
             } else {
                 $locationID = $_POST['location'];
-                $rows = json_decode($_POST['createdGID']);
+                $createdGID = json_decode($_POST['createdGID']);
                 $existing = json_decode($_POST['existing']);
                 $list = json_decode($_POST['list']);
                 $checked = json_decode($_POST['checked']);
-                $createdGID = $rows;
+                $rows = $list;
             }
             if (count($rows)) {
                 foreach ($rows as $i => $row) : list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male) = $row;
@@ -613,7 +655,22 @@ class SiteController extends Controller {
                 'existing' => $existing,
                 'createdGID' => $createdGID
             ));
-        }else {
+        } elseif (isset($_GET['yes'])) {
+            ?>
+            <html>
+                <body onload="storeLocal2()">
+                    <form action="" method="post" id='importFileDisplay-rfrsh'>
+                        <input type="hidden" name="process" value="true">
+                        <input type="hidden" id ="location" name="location" value="">
+                        <input type="hidden" id="list" name="list" value="">
+                        <input type="hidden" id="existing" name="existing" value="">
+                        <input type="hidden" id="createdGID" name="createdGID" value="">
+                        <input type="hidden" id="checked" name="checked" value="">
+                    </form>  
+                </body>
+            </html>
+            <?php
+        } else {
             ?>
             <html>
                 <body onload="storeLocal2()">

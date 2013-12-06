@@ -15,6 +15,7 @@
 <?php
 $this->widget('ext.selgridview.BootSelGridView', array(
     'id' => 'germplasmList',
+    'ajaxUpdate' => false,
     'dataProvider' => $GdataProvider,
     'filter' => $filtersForm,
     'enablePagination' => true,

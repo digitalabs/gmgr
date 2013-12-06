@@ -13,68 +13,35 @@
     Yii::import('application.modules.configDB');
     Yii::import('application.modules.model');
 
-    $model = new model();
-
     $file_toArray = new file_toArray();
 
     $unselected = 0;
 
-    if (isset($_GET['yes'])) {
-        $unselected = $file_toArray->get_unselected_rows();
-        $standardized = $file_toArray->checkIf_standardize($unselected);
-        //echo "standardize unselected:";
-        //print_r($standardized);
-        //echo "count stan:".count($standardized);
-
-
-        $json = new json($standardized);
-        $json->checkedBox();
-
-        //call curl: function createdGID
-
-        $curl = new curl();
-        $curl->createGID();
-
-
-        $url = $model->curPageURL();
-        $values = parse_url($url);
-
-        $query = explode('&', $values['query']);
-
-        for ($i = 0; $i < count($query); $i++) {
-            if ('yes=1' != $query[$i]) {
-                $append[] = $query[$i];
-            }
-        }
-        $query = implode('&', $append);
-        $values['query'] = $query;
-        $url = $values['scheme'] . '://' . $values['host'] . '/' . $values['path'] . '?' . $values['query'];
-
-        header("Location: " . $values['path'] . "?" . $values['query'] . "");
-    }
-
 // final is the array containing arrays of the pedigree lines (from the checkedboxes)
     $final = $file_toArray->getPedigreeLine($checked, $createdGID);
-//echo "count of final:".count($final);
-// If we have an array with items
+    echo "<br>final";
+    var_dump($final);
+    echo "<br>";
+
+
     if (count($final)) {
 //*****Create the pagination object
         $pagination = new pagination($final, (isset($_GET['pagea']) ? $_GET['pagea'] : 1), 1);
 //******Decide if the first and last links should show
         $pagination->setShowFirstAndLast(false);
-// You can overwrite the default seperator
-// $pagination->setMainSeperator(' | ');
 // Parse through the pagination class
         $pages = $pagination->getResults();
-        //echo "pages:".count($pages);
-        //print_r($pages);
+        /*echo "pages<br>";
+    var_dump($pages);
+    echo "<br>";
+         * */
+         
 // If we have items 
         if (count($pages) != 0) {
 // Create the page numbers
 // Loop through all the items in the array
 
             $count = 0;
-// echo "count: " . count($pages);
             foreach ($pages[0] as $r) : list($id, $nval, $term, $GID, $methodID, $method, $locID, $location) = $r;
                 for ($j = 0; $j < count($checked); $j++) {
                     $a = $checked[$j] + 1;
@@ -103,8 +70,6 @@
             $processed = count($checked) - 1;
             //echo "<br>".$processed . " rows selected<br>";
             /* END count for rows that are done processing */
-
-
             /*
               count for unstandardized germplasm names
              */
@@ -124,9 +89,6 @@
 
             /* END count new GID created for cross names */
             ?>
-
-
-
         <body id="page" data-spy="scroll"  onload="show(<?php echo $row_count; ?>,<?php echo $newGID_count; ?>,<?php echo $not_standard; ?>,<?php echo $processed; ?>);">
             <!--<link href="assets/bootstrap-responsive.css" rel="stylesheet" type="text/css">-->
 
@@ -134,17 +96,12 @@
             <link href="./assets/pnotify-1.2.0/jquery.pnotify.default.icons.css" rel="stylesheet" type="text/css">
 
             <div class="container" >
-
                 <div class="page-points">
                     <br>
                 </div>
-
-
                 <div id="sections">
-
                     <div class="row-fluid">
                         <div class="span10">
-
                             <!--<div class="span8">
                                 <div class="area">
                             -->
@@ -154,21 +111,15 @@
                                         <h3 style=" border-bottom: 0px solid #999; color:#666">Created GID for cross <font style="color:#e13300; "> <?php echo $pages[0][count($pages[0]) - 1][2]; ?></font></h3>
                                     </div>
                                     <div class="panel-body">
-
-
                                         <div class="bs-callout bs-callout-warning">
                                             <div class="close" data-dismiss="alert">&times;</div>
                                             <h4>Summary info</h4>
                                             <p>
-
                                                 <?php
                                                 $female_id = (int) $pages[0][0][0];
                                                 $i = 0;
                                                 $male_id = $file_toArray->output_tree_json($pages); // get what ith element in the array is the male parent
-                                                //$male_id = (int) $female_id + 1;
-                                                //for ($i = 0; $i < count($pages[0]); $i++) {
                                                 foreach ($pages[0] as $r) : list($id, $nval, $term, $GID, $methodID, $method, $locID, $location, $gpid1, $gpid2, $newGID) = $r;
-
                                                     if ($i == 0) {
                                                         if ($GID === "CHOOSE GID") {
                                                             if ($i + 1 == $male_id) {
@@ -214,7 +165,7 @@
                                                     if ($id == $fid . "/" . $mid) {
                                                         if ($newGID === "new") {
                                                             echo "The cross <b>" . $term . "</b> has been added to the local database with a suggested method of <b>(" . $methodID . ")" . $method . "</b>. You may change the method type by 
-															typing the method id, type, code, or name and clicking the update button.
+														typing the method id, type, code, or name and clicking the update button.
 															<br>";
                                                         } else {
                                                             echo "The cross <b>" . $term . "</b> is already existing in the local or central database.<br>";
@@ -320,18 +271,12 @@
                                                 if ($newGID == "new") {
                                                     ?><td>
                                                     <form action="" method="POST" id="updateMethodForm" name="updateMethodForm">
-                                                        <!--<input type="radio" name="selectMethod" id="r1" value="false" class="select-method" />-->
-
                                                         <?php
                                                         $line = array();
                                                         $line = explode("#", $method);
                                                         $line = implode(",", $line);
                                                         $method = $line;
-                                                        echo "(" . $methodID . ")&nbsp; " . $method;
-                                                        ?>
-                                                        <br/>
-                                                        <!--<input type="radio" name="selectMethod" id="r2" value="changeMethod" class="select-method" />-->
-                                                        <?php
+                                                        echo "(" . $methodID . ")&nbsp; " . $method . "<br>";
                                                         echo CHtml::hiddenField("selectMethod", "0");
                                                         echo CHtml::hiddenField("proceedMethod", "0");
                                                         echo CHtml::hiddenField("term", $term)
@@ -357,18 +302,12 @@
                                                         <input type="hidden" class="<?php echo $j; ?>" name="bondId" id="bondId<?php echo $j; ?>" value="" />
                                                         <input type="hidden" class="<?php echo $j; ?>" name="gid" id="gid<?php echo $j; ?>" value="<?php echo $GID; ?>" />
                                                         <input type="hidden" class="<?php echo $j; ?>" name="id" id="id<?php echo $j; ?>" value="<?php echo $id; ?>" />
-                                                        <div id="instruction" class="muted" style="font-size:10px;"></div>
-                                                        <!--- onclick="sampleFunction(<?php //echo $j;         ?>);return false;"-->
-
+                                                        <div id="instruction" class="muted" style="font-size:10px;"></div>                                                        
                                                         <input type="submit" id="submitMethod<?php echo $j; ?>" class="btn btn-primary btn-mini" value="Update" onclick=" return jsConfirmDialog(<?php echo $j; ?>);
                         return false;" ><br><br>
                                                     </form>
-
-
                                                     <?php
                                                     $j++;
-                                                    //echo "::" . $j;
-                                                    //";
                                                 } else {
                                                     $line = array();
                                                     $line = explode("#", $method);
@@ -387,11 +326,10 @@
                                             ?>
                                             </tbody>
                                     </table>
-
                                     <?php
                                     // print out the page numbers beneath the results
-                                    $pageNumbers = $pagination->getLinks2($_GET, $processed, $row_count, $not_standard);
-
+                                    //$pageNumbers = $pagination->getLinks2($_GET, $processed, $row_count, $not_standard);
+                                    $pageNumbers = $pagination->getLinks2($_GET, $processed, $row_count, $checked, $createdGID, $existing, $list);
                                     echo " <div class='panel-footer'>";
                                     echo "<ul class='pager'>";
                                     echo $pageNumbers;
@@ -406,8 +344,6 @@
                     <!-- </div>
                  </div>
                     -->
-
-
                     <!-- <div class="span7">
                          <div class="area">
                     -->
@@ -417,10 +353,12 @@
                     <div id="GermplasmList">
                         <?php
 //include($_SERVER['DOCUMENT_ROOT'] . "/PedigreeImport/list.php");
-                        //include(dirname(__FILE__) . "/createdGID.php");
-                        Yii::import('application.controllers.SiteController');
-                        $controller_instance = new SiteController("Site"); //string $id, CWebModule $module=NULL
-                        $controller_instance->actionCreatedGID();
+                        include(dirname(__FILE__) . "/createdGID.php");
+                        /* Yii::import('application.controllers.SiteController');
+                          $controller_instance = new SiteController("Site"); //string $id, CWebModule $module=NULL
+                          $controller_instance->actionCreatedGID();
+                         * 
+                         */
                         ?>
                     </div>
                     <!--  </div>
@@ -428,7 +366,6 @@
                     -->
                 </div>
             </div>
-
         </div>
     </div>
 </body>
@@ -686,7 +623,7 @@
                     });
                 },
                 updater: function(object) {
-                    // $('#getSelection<?php echo $i; ?>').val(map[object].label);
+                    // $('#getSelection<?php //echo $i;  ?>').val(map[object].label);
                     $('#bondId' + index).val(map[object].mid);
                     return object;
                 }
@@ -716,11 +653,22 @@
     $('a[data-confirm]').click(function(ev) {
         var href = $(this).attr('href');
         if (!$('#dataConfirmModal').length) {
-            $('body').append('<div id="dataConfirmModal" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><div id="dataConfirmLabel"></div></div><div class="modal-body"></div><div class="modal-footer"><button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button><a class="btn btn-primary" id="dataConfirmOK">OK</a></div></div>');
+            $('body').append('<div id="dataConfirmModal" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true"><div class="modal-header">\n\
+                                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">�\n\
+                                    </button>\n\
+                                    <div id="dataConfirmLabel">\n\
+                                        You have reached the last row selected.Do you want to proceed to the next entry?\n\
+                                    </div>\n\
+                                    </div><div class="modal-body"></div><div class="modal-footer">\n\
+                                    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel\n\
+                                    </button>\n\
+                                    <a class="btn btn-primary" id="dataConfirmOK">OK</a>\n\
+                                    </div>\n\
+                                    </div>');
         }
-        ;
-
-
+        $('#dataConfirmModal').find('.modal-body').text($().attr('data-confirm'));
+        $('#dataConfirmOK').attr('href', href);
+        $('#dataConfirmModal').modal({show: true});
         return false;
     });
 

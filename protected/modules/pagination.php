@@ -196,8 +196,18 @@ class pagination {
         return;
     }
 
-    public function getLinks2($params = array(), $count, $row_count, $not_standard) {
-	//echo "****count: ".$count;
+    public function getLinks2($params = array(), $count, $row_count, $checked, $createdGID, $existingTerm, $list) {
+
+        $a = array(
+            'createdGID' => $createdGID,
+            'checked' => $checked,
+            'existingTerm' => $existingTerm,
+            'list' => $list
+        );
+        $data = base64_encode(serialize($a));
+
+        //echo "****count: ".$count;
+        //echo "****row count: ".$row_count;
 // Initiate the links array
         $plinks = array();
         $links = array();
@@ -214,61 +224,44 @@ class pagination {
 // If we have more than one pages
         if (($this->pages) > 1) {
 // Assign the 'previous page' link into the array if we are not on the first page
-            if ($this->page == 1 && $count>0) {
+            if ($this->page == 1 && $count > 0) {
                 $slinks[] = '<li> 
-               <a href="?pagea=' . ($this->page + 1) . $queryUrl . '">Next Entry &rarr;</a>
+               <a href="?data=' . $data . '&pagea=' . ($this->page + 1) . $queryUrl . '">Next Entry &rarr;</a>
 			   </li>
 ';
-				
             }
             if ($this->page != 1 && $this->page != $this->pages) {
 
-                $plinks[] = '<li> <a href="?pagea=' . ($this->page - 1) . $queryUrl . '"> &larr; Previous </a> </li>';
-                $slinks[] = '<li><a href="?pagea=' . ($this->page + 1) . $queryUrl . '"> Next Entry &rarr; </a> </li>
+                $plinks[] = '<li> <a href="?data=' . $data . '&pagea=' . ($this->page - 1) . $queryUrl . '"> &larr; Previous </a> </li>';
+                $slinks[] = '<li><a href="?data=' . $data . '&pagea=' . ($this->page + 1) . $queryUrl . '"> Next Entry &rarr; </a> </li>
                 ';
             } elseif ($this->page == $this->pages) {
+                if ($count == 0 || $count == $row_count) {
+                    $plinks[] = '<li><a href="?data=' . $data . '&pagea=' . ($this->page - 1) . $queryUrl . '"> &larr; Previous </a> </li>
+                ';
+                } else {
+                    $plinks[] = '
+                        <li><a href="?data=' . $data . '&pagea=' . ($this->page - 1) . $queryUrl . '"> &larr; Previous </a> 
+                    <a href="?data=' . $data . '&yes=1&pagea=' . ($this->page + 1) . $queryUrl . '" data-confirm="You have reached the last row selected.Do you want to proceed to next entry?">Next Entry &rarr;</a>
 
-                if ($count == 0) {
-                    $plinks[] = '<li><a href="?pagea=' . ($this->page - 1) . $queryUrl . '"> &larr; Previous </a> </li>
-                ';}
-                else if($count!=$row_count){
-					
-					if(($row_count-$count)===$not_standard){
-						//echo "dddl".($row_count-$count)."<br>".$not_standard;
-						$plinks[] = '      
-					   <li><a href="?pagea=' . ($this->page - 1) . $queryUrl . '"> &larr; Previous </a> 
-                        <a href="#">Next Entry &rarr;</a>
-					';
-					}else{
-						//echo "heres";
-					$plinks[] = '      
-					   <li><a href="?pagea=' . ($this->page - 1) . $queryUrl . '"> &larr; Previous </a> 
-                        <a href="?yes=1&pagea=' . ($this->page + 1) . $queryUrl . '" data-confirm="You have reached the last row selected.Do you want to proceed to next entry?">Next Entry &rarr;</a>
-					';
-					}
-				}
-                 
-
+';
                 }
-            
+            }
 
             // Push the array into a string using any some glue
             //print_r($plinks);
             //print_r($slinks);
             return implode(' ', $plinks) . implode(' ', $slinks);
-        }else{
-		if($count!=$row_count){
-		$slinks[] = '<li>
+        } else {
+            if ($count != $row_count) {
+                $slinks[] = '<li> 
                <a href="?yes=1&pagea=' . ($this->page + 1) . $queryUrl . '" data-confirm="You have reached the last row selected.Do you want to proceed to next entry?">Next Entry &rarr;</a>
 			   </li>';
-			   return implode(' ', $plinks) . implode(' ', $slinks);
-			   }
-		}
+                return implode(' ', $plinks) . implode(' ', $slinks);
+            }
+        }
         return;
     }
 
-}
-
-// <a data-toggle="modal" href="?yes=1&pagea=' . ($this->page + 1) . $queryUrl . '#form-confirm" >Next Entry &rarr;</a>
-?>
+}?>
 

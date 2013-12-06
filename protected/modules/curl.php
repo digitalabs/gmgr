@@ -68,6 +68,10 @@ class curl {
         $url = "http://localhost:8080/ws/standardization/term/createGID2";
         return $this->exec($url, $data);
     }
+    public function createGID2($data) {
+        $url = "http://localhost:8080/ws/standardization/term/createGID3";
+        return $this->exec($url, $data);
+    }
 
     public function chooseGID($data) {
         $url = "http://localhost:8080/ws/standardization/term/chooseGID2";

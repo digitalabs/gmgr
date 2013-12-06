@@ -32,6 +32,7 @@
     ));
     $this->widget('ext.selgridview.BootSelGridView', array(
         'id' => 'pedigreeGrid',
+        'ajaxUpdate'=>false,
         'dataProvider' => $dataProvider,
         'filter' => $filtersForm,
         'selectableRows' => 10,
