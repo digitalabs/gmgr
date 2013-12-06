@@ -19,9 +19,11 @@
 
 // final is the array containing arrays of the pedigree lines (from the checkedboxes)
     $final = $file_toArray->getPedigreeLine($checked, $createdGID);
-    echo "<br>final";
+    /*echo "<br>final";
     var_dump($final);
     echo "<br>";
+     * */
+
 
 
     if (count($final)) {
