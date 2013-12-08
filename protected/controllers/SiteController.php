@@ -183,8 +183,6 @@ class SiteController extends Controller {
         Yii::import('application.modules.curl');
         $arr = array();
         $filtersForm = new FilterPedigreeForm;
-        static $location;
-
 
         if (isset($_POST['location'])) {
             $location = $_POST['location'];
@@ -486,7 +484,7 @@ class SiteController extends Controller {
 
         $arrSelectedIds = array();
         $filtersForm = new FilterPedigreeForm;
-        if (isset($_POST['locationID']) || isset($_POST['location']) || isset($_GET['page'])) {
+        if (isset($_POST['locationID']) || isset($_POST['location']) || isset($_GET['page']) || isset($_POST['process'])) {
 
             if ((isset($_POST['Germplasm']['gid']) && ($_POST['Germplasm']['gid'] != '')) || isset($_POST['process'])) {
                 $data = $_POST['list'];
@@ -522,6 +520,14 @@ class SiteController extends Controller {
                     $existing = $output['existingTerm'];
 
                     $rows = $list;
+                }elseif(isset($_POST['process'])){
+                    echo "here 1";
+                    $locationID = $_POST['location'];
+                    $checked = json_decode($_POST['checked'], true);
+                    $createdGID = json_decode($_POST['createdGID'], true);
+                    $existing = json_decode($_POST['existing'], true);
+                    
+                    $rows = $list;
                 } else {
                     echo "here 1";
                     $locationID = $_POST['location'];
@@ -550,7 +556,7 @@ class SiteController extends Controller {
                     $list = $output['list'];
                     $existing = $output['existingTerm'];
 
-                    
+
                     $rows = $list;
                 }
             } elseif (isset($_POST['choose'])) {
@@ -655,7 +661,7 @@ class SiteController extends Controller {
                 'existing' => $existing,
                 'createdGID' => $createdGID
             ));
-        } elseif (isset($_GET['yes'])) {
+        } elseif (isset($_GET['yes']) || isset($_GET['pagea'])) {
             ?>
             <html>
                 <body onload="storeLocal2()">

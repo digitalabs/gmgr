@@ -196,15 +196,7 @@ class pagination {
         return;
     }
 
-    public function getLinks2($params = array(), $count, $row_count, $checked, $createdGID, $existingTerm, $list) {
-
-        $a = array(
-            'createdGID' => $createdGID,
-            'checked' => $checked,
-            'existingTerm' => $existingTerm,
-            'list' => $list
-        );
-        $data = base64_encode(serialize($a));
+    public function getLinks2($params = array(), $count, $row_count) {
 
         //echo "****count: ".$count;
         //echo "****row count: ".$row_count;
@@ -226,23 +218,23 @@ class pagination {
 // Assign the 'previous page' link into the array if we are not on the first page
             if ($this->page == 1 && $count > 0) {
                 $slinks[] = '<li> 
-               <a href="?data=' . $data . '&pagea=' . ($this->page + 1) . $queryUrl . '">Next Entry &rarr;</a>
+               <a href="?pagea=' . ($this->page + 1) . $queryUrl . '">Next Entry &rarr;</a>
 			   </li>
 ';
             }
             if ($this->page != 1 && $this->page != $this->pages) {
 
-                $plinks[] = '<li> <a href="?data=' . $data . '&pagea=' . ($this->page - 1) . $queryUrl . '"> &larr; Previous </a> </li>';
-                $slinks[] = '<li><a href="?data=' . $data . '&pagea=' . ($this->page + 1) . $queryUrl . '"> Next Entry &rarr; </a> </li>
+                $plinks[] = '<li> <a href="?pagea=' . ($this->page - 1) . $queryUrl . '"> &larr; Previous </a> </li>';
+                $slinks[] = '<li><a href="?pagea=' . ($this->page + 1) . $queryUrl . '"> Next Entry &rarr; </a> </li>
                 ';
             } elseif ($this->page == $this->pages) {
                 if ($count == 0 || $count == $row_count) {
-                    $plinks[] = '<li><a href="?data=' . $data . '&pagea=' . ($this->page - 1) . $queryUrl . '"> &larr; Previous </a> </li>
+                    $plinks[] = '<li><a href="?pagea=' . ($this->page - 1) . $queryUrl . '"> &larr; Previous </a> </li>
                 ';
                 } else {
                     $plinks[] = '
-                        <li><a href="?data=' . $data . '&pagea=' . ($this->page - 1) . $queryUrl . '"> &larr; Previous </a> 
-                    <a href="?data=' . $data . '&yes=1&pagea=' . ($this->page + 1) . $queryUrl . '" data-confirm="You have reached the last row selected.Do you want to proceed to next entry?">Next Entry &rarr;</a>
+                        <li><a href="?pagea=' . ($this->page - 1) . $queryUrl . '"> &larr; Previous </a> 
+                    <a href="?yes=1&pagea=' . ($this->page + 1) . $queryUrl . '" data-confirm="You have reached the last row selected.Do you want to proceed to next entry?">Next Entry &rarr;</a>
 
 ';
                 }
@@ -263,5 +255,6 @@ class pagination {
         return;
     }
 
-}?>
+}
+?>
 

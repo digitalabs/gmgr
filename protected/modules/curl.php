@@ -44,6 +44,23 @@ class curl {
         //print_r($output);
         return $output;
     }
+    public function startConnection() {
+        //http://localhost:8080/ws/standardization/term/parse
+        $url = "http://localhost:8080/ws/standardization/term/connect";
+        
+        $handle = curl_init();
+        curl_setopt($handle, CURLOPT_URL, $url);
+        curl_setopt($handle, CURLOPT_RETURNTRANSFER, 1);
+        $response = curl_exec($handle);
+    }
+    public function endConnection() {
+        //http://localhost:8080/ws/standardization/term/parse
+        $url = "http://localhost:8080/ws/standardization/term/connect";
+        $handle = curl_init();
+        curl_setopt($handle, CURLOPT_URL, $url);
+        curl_setopt($handle, CURLOPT_RETURNTRANSFER, 1);
+        $response = curl_exec($handle);
+    }
     
     public function updateGermplasmName($data) {
         //http://localhost:8080/ws/standardization/term/parse
@@ -51,7 +68,7 @@ class curl {
         echo "<br>here";
         return $this->exec($url, $data);
     }
-
+    
     public function parse($data) {
         //http://localhost:8080/ws/standardization/term/parse
         $url = "http://localhost:8080/ws/standardization/term/post";

@@ -1,5 +1,4 @@
 <!--div to grey out the screen while loading indicator is on-->
-<body onload="storeLocal()">
     <div id='screen'>
     </div>
     <span id="ajax-loading-indicator">
@@ -19,25 +18,14 @@
 
 // final is the array containing arrays of the pedigree lines (from the checkedboxes)
     $final = $file_toArray->getPedigreeLine($checked, $createdGID);
-    /*echo "<br>final";
-    var_dump($final);
-    echo "<br>";
-     * */
-
-
-
-    if (count($final)) {
+      if (count($final)) {
 //*****Create the pagination object
         $pagination = new pagination($final, (isset($_GET['pagea']) ? $_GET['pagea'] : 1), 1);
 //******Decide if the first and last links should show
         $pagination->setShowFirstAndLast(false);
 // Parse through the pagination class
         $pages = $pagination->getResults();
-        /*echo "pages<br>";
-    var_dump($pages);
-    echo "<br>";
-         * */
-         
+  
 // If we have items 
         if (count($pages) != 0) {
 // Create the page numbers
@@ -331,7 +319,7 @@
                                     <?php
                                     // print out the page numbers beneath the results
                                     //$pageNumbers = $pagination->getLinks2($_GET, $processed, $row_count, $not_standard);
-                                    $pageNumbers = $pagination->getLinks2($_GET, $processed, $row_count, $checked, $createdGID, $existing, $list);
+                                    $pageNumbers = $pagination->getLinks2($_GET, $processed, $row_count);
                                     echo " <div class='panel-footer'>";
                                     echo "<ul class='pager'>";
                                     echo $pageNumbers;
@@ -501,6 +489,7 @@
         });
     });
     function show(row_count, newGID_count, not_standard, to_process) {
+    storeLocal();
         $.pnotify(
                 {
                     text: to_process + "/" + row_count + " rows selected",
