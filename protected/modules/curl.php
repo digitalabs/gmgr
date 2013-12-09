@@ -17,48 +17,94 @@ class curl {
         
     }
 
-    public function exec($url) {
-        $handle = curl_init();
-        curl_setopt($handle, CURLOPT_URL, $url);
-        curl_setopt($handle, CURLOPT_RETURNTRANSFER, 1);
-        $response = curl_exec($handle);
-        $code = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+    public function exec($url, $data) {
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+            'Content-Length: ' . strlen($data))
+        );
+        $result = curl_exec($ch);
+        //echo "<br>here yeah: ".$result."<br>";
+        $output = json_decode($result, true);
+
+        //$code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         /* echo "<br>HTTP CODE ERROR: ".$code ."<br>";
           //echo $jsonText;
           echo "<br> cURL: WELCOME! ".$response."</outercode>";
           echo '<br>RESULT: '.print_r($response,1);
           echo "<br> END</outercode>"; */
 
-        /* if($code != 200){
-          header("Location: /GMGR/index.php?r=site/contactUs");
-          } */
+        //if($code != 200){
+        //     header("Location: /GMGR/index.php?r=site/contactUs");
+        //}
+        //print_r($output);
+        return $output;
     }
 
-    public function parse() {
-        //http://172.29.4.99:8083/ws/standardization/term/parse
-        $url = "http://172.29.4.99:8083/ws/standardization/term/parse";
+    public function startConnection() {
+        //http://localhost:8080/ws/standardization/term/parse
+        $url = "http://localhost:8080/ws/standardization/term/connect";
 
-        $this->exec($url);
+        $handle = curl_init();
+        curl_setopt($handle, CURLOPT_URL, $url);
+        curl_setopt($handle, CURLOPT_RETURNTRANSFER, 1);
+        $response = curl_exec($handle);
     }
 
-    public function standardize() {
-        $url = "http://172.29.4.99:8083/ws/standardization/term/standardize";
-        $this->exec($url);
+    public function endConnection() {
+        //http://localhost:8080/ws/standardization/term/parse
+        $url = "http://localhost:8080/ws/standardization/term/connect";
+        $handle = curl_init();
+        curl_setopt($handle, CURLOPT_URL, $url);
+        curl_setopt($handle, CURLOPT_RETURNTRANSFER, 1);
+        $response = curl_exec($handle);
     }
 
-    public function createGID() {
-        $url = "http://172.29.4.99:8083/ws/standardization/term/createGID";
-        $this->exec($url);
+    public function updateGermplasmName($data) {
+        //http://localhost:8080/ws/standardization/term/parse
+        $url = "http://localhost:8080/ws/standardization/term/updateGermplasmName";
+        echo "<br>here";
+        return $this->exec($url, $data);
     }
 
-    public function chooseGID() {
-        $url = "http://172.29.4.99:8083/ws/standardization/term/chooseGID";
-        $this->exec($url);
+    public function parse($data) {
+        //http://localhost:8080/ws/standardization/term/parse
+        $url = "http://localhost:8080/ws/standardization/term/post";
+
+        return $this->exec($url, $data);
     }
 
-    public function updateMethod() {
-        $url = "http://172.29.4.99:8083/ws/standardization/term/updateMethod";
-        $this->exec($url);
+    public function standardize($data) {
+        $url = "http://localhost:8080/ws/standardization/term/standardize2";
+        return $this->exec($url, $data);
+    }
+
+    public function createGID($data) {
+        $url = "http://localhost:8080/ws/standardization/term/createGID2";
+        return $this->exec($url, $data);
+    }
+
+    public function createGID2($data) {
+        $url = "http://localhost:8080/ws/standardization/term/createGID3";
+        return $this->exec($url, $data);
+    }
+
+    public function chooseGID($data) {
+        $url = "http://localhost:8080/ws/standardization/term/chooseGID2";
+        return $this->exec($url, $data);
+    }
+
+    public function updateMethod($data) {
+        $url = "http://localhost:8080/ws/standardization/term/updateMethod";
+        return $this->exec($url, $data);
+    }
+
+    public function editGermplasmName($data) {
+        $url = "http://localhost:8080/ws/standardization/term/checkEditedString";
+        return $this->exec($url, $data);
     }
 
     public function show_germplasm_details() {
