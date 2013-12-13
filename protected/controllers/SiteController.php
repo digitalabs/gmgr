@@ -31,7 +31,7 @@
 <?php
 
 class SiteController extends Controller {
-
+    public $browserSession = NULL;
     public function actions() {
         return array(
 // captcha action renders the CAPTCHA image displayed on the contact page
