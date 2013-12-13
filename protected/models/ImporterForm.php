@@ -1,7 +1,7 @@
 <?php
    class ImporterForm extends CFormModel
    {
-	  // public $file;
+	   public $file;
 	   public $LoadSampleFile;
 	
 	   
@@ -10,8 +10,8 @@
 	 */
 	  public function rules(){
 		  return array(
-		     //array('file','file','types'=>'csv'),
-			 //array('LoadSampleFile', 'required'),
+		     array('file','file','types'=>'csv'),
+			 array('LoadSampleFile', 'required'),
 		  );  
 	  }
 	  //Validation next
