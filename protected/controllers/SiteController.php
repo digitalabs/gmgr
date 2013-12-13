@@ -144,31 +144,52 @@ class SiteController extends Controller {
                 print_r($arr);
                 $this->redirect(array('/site/editor'));
             }
-			
-			if(isset($_POST['showMore']))
-			{
-				Yii::import('application.modules.curl');
-				$curl = new curl();
+
+            if (isset($_POST['showMore'])) {
+                Yii::import('application.modules.curl');
+                $curl = new curl();
                 $arr = $curl->show_germplasm_details();
                 //print_r($arr);
                 //$this->redirect(array('/site/editor'));
-			}
+            }
         }
-		
+
         $this->render('editor');
     }
 
     public function actionImporter() {
 
         $model = new ImporterForm;
+        Yii::app()->session['username'] = Yii::app()->user->id;
+        $this->browserSession = Yii::app()->session['username'];
+        $model2 = new LoginForm;
+        $dir = dirname(__FILE__) . '/../../uploadedFiles/';
 
-//Collect user input form
-        if (isset($_POST['ImporterForm'])) {
-            
+        if (isset($this->browserSession)) {
+
+            $model = new ImporterForm;
+            $uploaded = false;
+
+            //Collect user input form
+            if (isset($_POST['ImporterForm'])) {
+                $file = CUploadedFile::getInstance($model, 'file');
+
+                if (is_object($file) && get_class($file) === 'CUploadedFile') {
+                    $model->file = $file;
+                    if (file_exists($dir . '/' . $importedFile->file)) {
+                        unlink($dir . '/' . $importedFile->file);
+                    }
+                    if ($model->save()) {
+                        $model->file->saveAs($dir . $model->file);
+                    }
+                }
+            } else {
+                $this->render('importer', array(
+                    'model' => $model,
+                ));
+            }
         } else {
-            $this->render('importer', array(
-                'model' => $model,
-            ));
+            $this->render('login', array('model' => $model2));
         }
     }
 
@@ -180,72 +201,172 @@ class SiteController extends Controller {
         $arr = array();
         $filtersForm = new FilterPedigreeForm;
 
-        if (isset($_POST['location'])) {
-            $location = $_POST['location'];
+        Yii::app()->session['username'] = Yii::app()->user->id;
+        $this->browserSession = Yii::app()->session['username'];
+        $model2 = new LoginForm;
+        $dir = dirname(__FILE__) . '/../../uploadedFiles';
+        $newName = "germplasmFile.csv";
 
-            if (isset($_POST['refresh'])) {
+        $importedFile = new ImporterForm;
+        //*********************Delete existing files**********************
+        $exists = file_exists(dirname(__FILE__) . '/../../csv_files/createdGID.csv');
+        if ($exists) {
+            unlink(dirname(__FILE__) . '/../../csv_files/createdGID.csv');
+        }
+        $exists = file_exists(dirname(__FILE__) . '/../../csv_files/createdGID2.csv');
+        if ($exists) {
+            unlink(dirname(__FILE__) . '/../../csv_files/createdGID2.csv');
+        }
+        $exists = file_exists(dirname(__FILE__) . "/../../csv_files/sample.csv");
+        if ($exists) {
+            unlink(dirname(__FILE__) . "/../../csv_files/sample.csv");
+        }
+        $exists = file_exists(dirname(__FILE__) . "/../../csv_files/output.csv");
+        if ($exists) {
+            unlink(dirname(__FILE__) . "/../../csv_files/output.csv");
+        }
+        $exists = file_exists(dirname(__FILE__) . "/../../csv_files/newString.csv");
+        if ($exists) {
+            unlink(dirname(__FILE__) . "/../../csv_files/newString.csv");
+        }
+        $exists = file_exists(dirname(__FILE__) . "/../../csv_files/corrected.csv");
+        if ($exists) {
+            unlink(dirname(__FILE__) . "/../../csv_files/corrected.csv");
+        }
+        $exists = file_exists(dirname(__FILE__) . "/../../csv_files/corrected2.csv");
+        if ($exists) {
+            unlink(dirname(__FILE__) . "/../../csv_files/corrected2.csv");
+        }
+        $exists = file_exists(dirname(__FILE__) . "/../../csv_files/searchedDER.csv.json");
+        if ($exists) {
+            unlink(dirname(__FILE__) . "/../../csv_files/searchedDER.csv");
+        }
+        $exists = file_exists(dirname(__FILE__) . "/../../csv_files/searchedDEN.csv");
+        if ($exists) {
+            unlink(dirname(__FILE__) . "/../../csv_files/searchedDEN.csv");
+        }
+        $exists = file_exists(dirname(__FILE__) . "/../../csv_files/updatedCorrected.csv");
+        if ($exists) {
+            unlink(dirname(__FILE__) . "/../../csv_files/updatedCorrected.csv");
+        }
+
+        $exists = file_exists(dirname(__FILE__) . "/../../json_files/checked.json");
+        if ($exists) {
+            unlink(dirname(__FILE__) . "/../../json_files/checked.json");
+        }
+        $exists = file_exists(dirname(__FILE__) . "/../../json_files/docinfo.json");
+        if ($exists) {
+            unlink(dirname(__FILE__) . "/../../json_files/docinfo.json");
+        }
+        $exists = file_exists(dirname(__FILE__) . "/../../csv_files/existingTerm.csv");
+        if ($exists) {
+            unlink(dirname(__FILE__) . "/../../csv_files/existingTerm.csv");
+        }
+        $exists = file_exists(dirname(__FILE__) . "/../../csv_files/checked.csv");
+        if ($exists) {
+            unlink(dirname(__FILE__) . "/../../csv_files/checked.csv");
+        }
+        $exists = file_exists(dirname(__FILE__) . "/../../json_files/location.json");
+        if ($exists) {
+            unlink(dirname(__FILE__) . "/../../json_files/location.json");
+        }
+        $exists = file_exists(dirname(__FILE__) . "/../../json_files/tree.json");
+        if ($exists) {
+            unlink(dirname(__FILE__) . "/../../json_files/tree.json");
+        }
+        $exists = file_exists(dirname(__FILE__) . "/../../json_files/term.json");
+        if ($exists) {
+            unlink(dirname(__FILE__) . "/../../json_files/term.json");
+        }
+        //**********************End of Delete files*************************
+        if (isset($this->browserSession)) {
+            $file = CUploadedFile::getInstance($importedFile, 'file');
+
+            static $filePath;
+
+            $importedFile->file = $file;
+            $filePath = $dir . '/' . $importedFile->file;
+
+            if (file_exists($newName)) {
+                unlink($dir . '/' . $newName);
+            }
+            //***check if file is not null
+            if (isset($file)) {
+                $file = $importedFile->file;
+                $importedFile->file->saveAs($dir . '/' . $file);
+                rename($filePath, $dir . '/' . $newName);
+            }
+            $newFilename = $dir . '/' . $newName;
+
+            if (isset($_POST['location'])) {
                 $location = $_POST['location'];
 
-                $locationID = $location;
-                $list = json_decode($_POST['list']);
+                if (isset($_POST['refresh'])) {
+                    $location = $_POST['location'];
+
+                    $locationID = $location;
+                    $list = json_decode($_POST['list']);
+                } else {
+
+                    $location = $_POST['location'];
+                    $locationID = $location;
+                    $json = new json('');
+                    $output = $json->getFile($newFilename);
+                    $curl = new curl();
+                    $list = $curl->parse($output);
+                }
+                $id = $list;
+
+                foreach ($id as $row) :
+                    list($GID, $nval, $female, $fid, $fremarks, $fgid, $male, $mid, $mremarks, $mgid) = $row;
+                    $arr[] = array('id' => CJSON::encode(array($fid, $mid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks);
+                endforeach;
+
+                if (isset($_GET['FilterPedigreeForm'])) {
+                    $filtersForm->filters = $_GET['FilterPedigreeForm'];
+                }
+                $filteredData = $filtersForm->filter($arr);
+                $dataProvider = new CArrayDataProvider($filteredData, array(
+                    'pagination' => array(
+                        'pageSize' => 10,
+                    ),
+                ));
+                $this->render('importFileDisplay', array(
+                    'filtersForm' => $filtersForm,
+                    'dataProvider' => $dataProvider,
+                    'locationID' => $locationID,
+                    'list' => $list
+                ));
+            } elseif (isset($_GET['page'])) {
+                echo "here";
+                ?>
+                <html>
+                    <body onload="storeLocal1()">
+                        <form action="" method="post" id='importFileDisplay-rfrsh'>
+                            <input type="hidden" name="refresh" value="true">
+                            <input type="hidden" id ="location" name="location" value="">
+                            <input type="hidden" id="list" name="list" value="">
+                        </form>  
+                    </body>
+                </html>
+
+                <?php
             } else {
+                ?>
+                <html>
+                    <body onload="storeLocal1()">
+                        <form action="index.php?r=site/importFileDisplay" method="post" id='importFileDisplay-rfrsh'>
+                            <input type="hidden" name="refresh" value="true">
+                            <input type="hidden" id ="location" name="location" value="">
+                            <input type="hidden" id="list" name="list" value="">
+                        </form>  
+                    </body>
+                </html>
 
-                $location = $_POST['location'];
-                $locationID = $location;
-                $json = new json('');
-                $output = $json->getFile();
-                $curl = new curl();
-                $list = $curl->parse($output);
+                <?php
             }
-            $id = $list;
-
-            foreach ($id as $row) :
-                list($GID, $nval, $female, $fid, $fremarks, $fgid, $male, $mid, $mremarks, $mgid) = $row;
-                $arr[] = array('id' => CJSON::encode(array($fid, $mid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks);
-            endforeach;
-
-            if (isset($_GET['FilterPedigreeForm'])) {
-                $filtersForm->filters = $_GET['FilterPedigreeForm'];
-            }
-            $filteredData = $filtersForm->filter($arr);
-            $dataProvider = new CArrayDataProvider($filteredData, array(
-                'pagination' => array(
-                    'pageSize' => 10,
-                ),
-            ));
-            $this->render('importFileDisplay', array(
-                'filtersForm' => $filtersForm,
-                'dataProvider' => $dataProvider,
-                'locationID' => $locationID,
-                'list' => $list
-            ));
-        } elseif (isset($_GET['page'])) {
-            echo "here";
-            ?>
-            <html>
-                <body onload="storeLocal1()">
-                    <form action="" method="post" id='importFileDisplay-rfrsh'>
-                        <input type="hidden" name="refresh" value="true">
-                        <input type="hidden" id ="location" name="location" value="">
-                        <input type="hidden" id="list" name="list" value="">
-                    </form>  
-                </body>
-            </html>
-
-            <?php
         } else {
-            ?>
-            <html>
-                <body onload="storeLocal1()">
-                    <form action="index.php?r=site/importFileDisplay" method="post" id='importFileDisplay-rfrsh'>
-                        <input type="hidden" name="refresh" value="true">
-                        <input type="hidden" id ="location" name="location" value="">
-                        <input type="hidden" id="list" name="list" value="">
-                    </form>  
-                </body>
-            </html>
-
-            <?php
+            $this->render('login', array('model' => $model2));
         }
     }
 
@@ -255,31 +376,118 @@ class SiteController extends Controller {
         Yii::import('application.modules.curl');
         $curl = new curl();
 
-        if (isset($_POST['locationID']) || isset($_POST['location'])) {
-            if (isset($_POST['refresh'])) {
-                $locationID = $_POST['location'];
-                $list = json_decode($_POST['list']);
-            } else {
-                $data = $_POST['list'];
-                $locationID = $_POST['locationID'];
+        Yii::app()->session['username'] = Yii::app()->user->id;
+        $this->browserSession = Yii::app()->session['username'];
+        $model2 = new LoginForm;
 
-                echo "<br>2locationID: " . $locationID;
+        if (isset($this->browserSession)) {
 
-                $data = json_decode($data, true);
+            if (isset($_POST['locationID']) || isset($_POST['location'])) {
+                if (isset($_POST['refresh'])) {
+                    $locationID = $_POST['location'];
+                    $list = json_decode($_POST['list']);
+                } else {
+                    $data = $_POST['list'];
+                    $locationID = $_POST['locationID'];
 
-                $a = array(
-                    'list' => $data
+                    echo "<br>2locationID: " . $locationID;
+
+                    $data = json_decode($data, true);
+
+                    $a = array(
+                        'list' => $data
+                    );
+
+                    $data = json_encode($a);
+
+                    $list = $curl->standardize($data);
+                }
+
+                foreach ($list as $row) :
+                    //list($GID, $nval, $female, $fid, $fremarks, $fgid, $male, $mid, $mremarks, $mgid) = $row;
+                    list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male) = $row;
+                    $arr[] = array('id' => CJSON::encode(array($fid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks);
+                endforeach;
+
+
+                if (isset($_GET['FilterPedigreeForm']))
+                    $filtersForm->filters = $_GET['FilterPedigreeForm'];
+
+//get array data and create dataProvider
+                $filteredData = $filtersForm->filter($arr);
+                $dataProvider = new CArrayDataProvider($filteredData, array(
+                    'pagination' => array(
+                        'pageSize' => 5,
+                    ),
+                        )
                 );
 
-                $data = json_encode($a);
 
-                $list = $curl->standardize($data);
+                $this->render('output', array(
+                    'filtersForm' => $filtersForm,
+                    'dataProvider' => $dataProvider,
+                    'locationID' => $locationID,
+                    'list' => $list
+                ));
+            } elseif (isset($_GET['page'])) {
+                ?>
+                <html>
+                    <body onload="storeLocal1()">
+                        <form action="" method="post" id='importFileDisplay-rfrsh'>
+                            <input type="hidden" name="refresh" value="true">
+                            <input type="hidden" id ="location" name="location" value="">
+                            <input type="hidden" id="list" name="list" value="">
+                        </form>  
+                    </body>
+                </html>
+
+                <?php
+            } else {
+                ?>
+                <html>
+                    <body onload="storeLocal1()">
+                        <form action="index.php?r=site/output" method="post" id='importFileDisplay-rfrsh'>
+                            <input type="hidden" name="refresh" value="true">
+                            <input type="hidden" id ="location" name="location" value="">
+                            <input type="hidden" id="list" name="list" value="">
+                        </form>  
+                    </body>
+                </html>
+
+                <?php
             }
+        } else {
+            $this->render('login', array('model' => $model2));
+        }
+    }
 
-            foreach ($list as $row) :
-                //list($GID, $nval, $female, $fid, $fremarks, $fgid, $male, $mid, $mremarks, $mgid) = $row;
+    public function actionStandardTable() {
+
+        $filtersForm = new FilterPedigreeForm;
+
+        Yii::app()->session['username'] = Yii::app()->user->id;
+        $this->browserSession = Yii::app()->session['username'];
+        $model2 = new LoginForm;
+
+        if (isset($this->browserSession)) {
+
+            Yii::import('application.modules.file_toArray');
+            $file_toArray = new file_toArray();
+            $rows = $file_toArray->csv_corrected();
+
+            foreach ($rows as $i => $row) :
+//foreach ($rows as $row) :
                 list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male) = $row;
+
+                CHtml::hiddenField('hiddenMid', $mid);
+                CHtml::hiddenField('hiddenFid', $fid);
+                /* For reference, pls do not delete
+                 * developer: J.Antonio */
+// $arr[] = array('id'=>CJSON::encode(array('nval'=>$nval,'gid'=>$GID,'female'=>$female,'male'=>$male,'fgid'=>$fgid,'mgid'=>$mgid,'fremarks'=>$fremarks,'mremarks'=>$mremarks)),'nval'=>$nval,'gid'=>$GID,'female'=>$female,'male'=>$male,'fgid'=>$fgid,'mgid'=>$mgid,'fremarks'=>$fremarks,'mremarks'=>$mremarks);
                 $arr[] = array('id' => CJSON::encode(array($fid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks);
+
+//$arr[] = array('id'=>$i+1,'nval'=>$nval,'gid'=>$GID,'female'=>$female,'male'=>$male,'mgid'=>$mgid,'fremarks'=>$fremarks);
+// $arr[] = array('id'=>$i+1,'nval'=>$nval,'gid'=>$GID,'female'=>$female,'male'=>$male,'mgid'=>$mgid,'fgid'=>$fgid,'fremarks'=>$fremarks,'mremarks'=>$mremarks);
             endforeach;
 
 
@@ -295,107 +503,54 @@ class SiteController extends Controller {
                     )
             );
 
-
-            $this->render('output', array(
+//render
+            $this->render('standardTable', array(
                 'filtersForm' => $filtersForm,
                 'dataProvider' => $dataProvider,
-                'locationID' => $locationID,
-                'list' => $list
             ));
-        } elseif (isset($_GET['page'])) {
-            ?>
-            <html>
-                <body onload="storeLocal1()">
-                    <form action="" method="post" id='importFileDisplay-rfrsh'>
-                        <input type="hidden" name="refresh" value="true">
-                        <input type="hidden" id ="location" name="location" value="">
-                        <input type="hidden" id="list" name="list" value="">
-                    </form>  
-                </body>
-            </html>
-
-            <?php
-        } else {
-            ?>
-            <html>
-                <body onload="storeLocal1()">
-                    <form action="index.php?r=site/output" method="post" id='importFileDisplay-rfrsh'>
-                        <input type="hidden" name="refresh" value="true">
-                        <input type="hidden" id ="location" name="location" value="">
-                        <input type="hidden" id="list" name="list" value="">
-                    </form>  
-                </body>
-            </html>
-
-            <?php
+        }else {
+            $this->render('login', array('model' => $model2));
         }
-    }
-
-    public function actionStandardTable() {
-
-        $filtersForm = new FilterPedigreeForm;
-
-        Yii::import('application.modules.file_toArray');
-        $file_toArray = new file_toArray();
-        $rows = $file_toArray->csv_corrected();
-
-        foreach ($rows as $i => $row) :
-//foreach ($rows as $row) :
-            list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male) = $row;
-
-            CHtml::hiddenField('hiddenMid', $mid);
-            CHtml::hiddenField('hiddenFid', $fid);
-            /* For reference, pls do not delete
-             * developer: J.Antonio */
-// $arr[] = array('id'=>CJSON::encode(array('nval'=>$nval,'gid'=>$GID,'female'=>$female,'male'=>$male,'fgid'=>$fgid,'mgid'=>$mgid,'fremarks'=>$fremarks,'mremarks'=>$mremarks)),'nval'=>$nval,'gid'=>$GID,'female'=>$female,'male'=>$male,'fgid'=>$fgid,'mgid'=>$mgid,'fremarks'=>$fremarks,'mremarks'=>$mremarks);
-            $arr[] = array('id' => CJSON::encode(array($fid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks);
-
-//$arr[] = array('id'=>$i+1,'nval'=>$nval,'gid'=>$GID,'female'=>$female,'male'=>$male,'mgid'=>$mgid,'fremarks'=>$fremarks);
-// $arr[] = array('id'=>$i+1,'nval'=>$nval,'gid'=>$GID,'female'=>$female,'male'=>$male,'mgid'=>$mgid,'fgid'=>$fgid,'fremarks'=>$fremarks,'mremarks'=>$mremarks);
-        endforeach;
-
-
-        if (isset($_GET['FilterPedigreeForm']))
-            $filtersForm->filters = $_GET['FilterPedigreeForm'];
-
-//get array data and create dataProvider
-        $filteredData = $filtersForm->filter($arr);
-        $dataProvider = new CArrayDataProvider($filteredData, array(
-            'pagination' => array(
-                'pageSize' => 5,
-            ),
-                )
-        );
-
-//render
-        $this->render('standardTable', array(
-            'filtersForm' => $filtersForm,
-            'dataProvider' => $dataProvider,
-        ));
     }
 
     public function actionEditGermplasm() {
 
-        $model = new editGermplasmForm;
+        Yii::app()->session['username'] = Yii::app()->user->id;
+        $this->browserSession = Yii::app()->session['username'];
+        $model2 = new LoginForm;
 
-        if (isset($_POST['editGermplasmForm'])) {
-            $model->attributes = $_POST['editGermplasmForm'];
-            if ($model->validate()) {
-                $newGermplasmName = $_POST["editGermplasmForm"]['newGermplasmName']; //Gets the Input 
+        if (isset($this->browserSession)) {
+
+            $model = new editGermplasmForm;
+
+            if (isset($_POST['editGermplasmForm'])) {
+                $model->attributes = $_POST['editGermplasmForm'];
+                if ($model->validate()) {
+                    $newGermplasmName = $_POST["editGermplasmForm"]['newGermplasmName']; //Gets the Input 
 //echo $newGermplasmName;
-                // $this->actionSaveGermplasm($newGermplasmName);
+                    // $this->actionSaveGermplasm($newGermplasmName);
 //  Yii::app()->user->setFlash('editGermplasmForm','Submitted');
+                }
             }
+            $this->render('editGermplasm', array('model' => $model));
+        } else {
+            $this->render('login', array('model' => $model2));
         }
-        $this->render('editGermplasm', array('model' => $model));
     }
 
     public function actionSaveGermplasm() {
+        Yii::app()->session['username'] = Yii::app()->user->id;
+        $this->browserSession = Yii::app()->session['username'];
+        $model2 = new LoginForm;
 
+        if (isset($this->browserSession)) {
 //<!---*******Notifications for any page changes******-->
-        Yii::app()->user->setFlash('success', array('title' => 'Edit Successful!', 'text' => 'You successfully edited parent.'));
+            Yii::app()->user->setFlash('success', array('title' => 'Edit Successful!', 'text' => 'You successfully edited parent.'));
 //<!----*******************************************-->
-        $this->renderPartial('savegermplasm');
+            $this->renderPartial('savegermplasm');
+        } else {
+            $this->render('login', array('model' => $model2));
+        }
     }
 
     public function actionSampleAction() {
@@ -411,209 +566,270 @@ class SiteController extends Controller {
     }
 
     public function actionCreatedGID() {
-        $filtersForm = new FilterPedigreeForm;
-        if (isset($_POST["refresh"])) {
-            $list = json_decode($_POST['list']);
+        Yii::app()->session['username'] = Yii::app()->user->id;
+        $this->browserSession = Yii::app()->session['username'];
+        $model2 = new LoginForm;
 
-            $rows = $list;
-            /* If we have an array with items */
-            if (count($rows)) {
-                foreach ($rows as $i => $row) : list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male) = $row;
-                    $arr2[] = array('id' => $i + 1, 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks);
+        if (isset($this->browserSession)) {
+            $filtersForm = new FilterPedigreeForm;
+            if (isset($_POST["refresh"])) {
+                $list = json_decode($_POST['list']);
 
-                endforeach;
-            }
+                $rows = $list;
+                /* If we have an array with items */
+                if (count($rows)) {
+                    foreach ($rows as $i => $row) : list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male) = $row;
+                        $arr2[] = array('id' => $i + 1, 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks);
 
-            if (isset($_GET['FilterPedigreeForm']))
-                $filtersForm->filters = $_GET['FilterPedigreeForm'];
+                    endforeach;
+                }
+
+                if (isset($_GET['FilterPedigreeForm']))
+                    $filtersForm->filters = $_GET['FilterPedigreeForm'];
 
 //get array data and create dataProvider
-            $filteredData = $filtersForm->filter($arr2);
-            /* DataProvider for the lower table, Germplasm List */
-            $GdataProvider = new CArrayDataProvider($filteredData, array(
-                'keyField' => 'id',
-                'pagination' => array(
-                    'pageSize' => 5,
-                ),
-            ));
+                $filteredData = $filtersForm->filter($arr2);
+                /* DataProvider for the lower table, Germplasm List */
+                $GdataProvider = new CArrayDataProvider($filteredData, array(
+                    'keyField' => 'id',
+                    'pagination' => array(
+                        'pageSize' => 5,
+                    ),
+                ));
 
 //render page with ajax   
-            if (Yii::app()->request->isAjaxRequest)
-                $this->renderPartial('createdGID', array('filtersForm' => $filtersForm, 'GdataProvider' => $GdataProvider), false, true);
-            else
-                $this->renderPartial('createdGID', array('filtersForm' => $filtersForm, 'GdataProvider' => $GdataProvider));
-        }elseif (isset($_GET['page'])) {
-            ?>
-            <html>
-                <body onload="storeLocal1()">
-                    <form action="" method="post" id='importFileDisplay-rfrsh'>
-                        <input type="hidden" name="refresh" value="true">
-                        <input type="hidden" id ="location" name="location" value="">
-                        <input type="hidden" id="list" name="list" value="">
-                    </form>  
-                </body>
-            </html>
+                if (Yii::app()->request->isAjaxRequest)
+                    $this->renderPartial('createdGID', array('filtersForm' => $filtersForm, 'GdataProvider' => $GdataProvider), false, true);
+                else
+                    $this->renderPartial('createdGID', array('filtersForm' => $filtersForm, 'GdataProvider' => $GdataProvider));
+            }elseif (isset($_GET['page'])) {
+                ?>
+                <html>
+                    <body onload="storeLocal1()">
+                        <form action="" method="post" id='importFileDisplay-rfrsh'>
+                            <input type="hidden" name="refresh" value="true">
+                            <input type="hidden" id ="location" name="location" value="">
+                            <input type="hidden" id="list" name="list" value="">
+                        </form>  
+                    </body>
+                </html>
 
-            <?php
+                <?php
+            } else {
+                ?>
+                <html>
+                    <body onload="storeLocal1()">
+                        <form action="index.php?r=site/output" method="post" id='importFileDisplay-rfrsh'>
+                            <input type="hidden" name="refresh" value="true">
+                            <input type="hidden" id ="location" name="location" value="">
+                            <input type="hidden" id="list" name="list" value="">
+                        </form>  
+                    </body>
+                </html>
+                <?php
+            }
         } else {
-            ?>
-            <html>
-                <body onload="storeLocal1()">
-                    <form action="index.php?r=site/output" method="post" id='importFileDisplay-rfrsh'>
-                        <input type="hidden" name="refresh" value="true">
-                        <input type="hidden" id ="location" name="location" value="">
-                        <input type="hidden" id="list" name="list" value="">
-                    </form>  
-                </body>
-            </html>
-            <?php
+            $this->render('login', array('model' => $model2));
         }
     }
 
     public function actionAssignGID() {
+        Yii::app()->session['username'] = Yii::app()->user->id;
+        $this->browserSession = Yii::app()->session['username'];
+        $model2 = new LoginForm;
 
-        Yii::import('application.modules.file_toArray');
-        Yii::import('application.modules.json');
-        Yii::import('application.modules.curl');
-        $file_toArray = new file_toArray();
-        $curl = new curl();
+        if (isset($this->browserSession)) {
+            Yii::import('application.modules.file_toArray');
+            Yii::import('application.modules.json');
+            Yii::import('application.modules.curl');
+            $file_toArray = new file_toArray();
+            $curl = new curl();
 
-        $arrSelectedIds = array();
-        $filtersForm = new FilterPedigreeForm;
-        if (isset($_POST['locationID']) || isset($_POST['location']) || isset($_GET['page']) || isset($_POST['process'])) {
+            $arrSelectedIds = array();
+            $filtersForm = new FilterPedigreeForm;
+            if (isset($_POST['locationID']) || isset($_POST['location']) || isset($_GET['page']) || isset($_POST['process'])) {
 
-            if ((isset($_POST['Germplasm']['gid']) && ($_POST['Germplasm']['gid'] != '')) || isset($_POST['process'])) {
-                $data = $_POST['list'];
+                if ((isset($_POST['Germplasm']['gid']) && ($_POST['Germplasm']['gid'] != '')) || isset($_POST['process'])) {
+                    $data = $_POST['list'];
 
-                $list = json_decode($data, true);
+                    $list = json_decode($data, true);
 
-                if (!empty($_POST['Germplasm']['gid'])) {
-                    echo "here 0";
-                    $selected = $_POST['Germplasm']['gid'];
-                    $idArr = explode(',', $selected);
-                    foreach ($idArr as $index => $id) {
-                        $id = strtr($id, array('["' => '', '"]' => ''));
-                        $arrSelectedIds[$index] = ($id);
+                    if (!empty($_POST['Germplasm']['gid'])) {
+                        echo "here 0";
+                        $selected = $_POST['Germplasm']['gid'];
+                        $idArr = explode(',', $selected);
+                        foreach ($idArr as $index => $id) {
+                            $id = strtr($id, array('["' => '', '"]' => ''));
+                            $arrSelectedIds[$index] = ($id);
+                        }
+                        $locationID = $_POST['locationID'];
+                        $checked = $arrSelectedIds;
+                        $standardized = $file_toArray->checkIf_standardize($checked, $list);
+                        $a = array(
+                            'list' => $list,
+                            'checked' => $checked,
+                            'existingTerm' => array(),
+                            'locationID' => $locationID,
+                            'userID' => Yii::app()->user->id
+                        );
+
+                        $data = json_encode($a);
+                        $output = $curl->createGID($data);
+
+                        $createdGID = array();
+                        $list = array();
+                        $createdGID = $output['createdGID'];
+                        $list = $output['list'];
+                        $existing = $output['existingTerm'];
+
+                        $rows = $list;
+                    } elseif (isset($_POST['process'])) {
+                        echo "here 1";
+                        $locationID = $_POST['location'];
+                        $checked = json_decode($_POST['checked'], true);
+                        $createdGID = json_decode($_POST['createdGID'], true);
+                        $existing = json_decode($_POST['existing'], true);
+
+                        $rows = $list;
+                    } else {
+                        echo "here 1";
+                        $locationID = $_POST['location'];
+                        $checked = json_decode($_POST['checked'], true);
+                        $createdGID = json_decode($_POST['createdGID'], true);
+                        $existing = json_decode($_POST['existing'], true);
+                        $unselected = $file_toArray->get_unselected_rows($checked, $list);
+                        $standardized = $file_toArray->checkIf_standardize($unselected, $list);
+
+
+                        $a = array(
+                            'list' => $list,
+                            'checked' => $checked,
+                            'existingTerm' => $existing,
+                            'createdGID' => $createdGID,
+                            'locationID' => $locationID,
+                            'userID' => Yii::app()->user->id
+                        );
+
+                        $data = json_encode($a);
+                        $output = $curl->createGID2($data);
+
+                        $createdGID = array();
+                        $list = array();
+                        $createdGID = $output['createdGID'];
+                        $list = $output['list'];
+                        $existing = $output['existingTerm'];
+
+
+                        $rows = $list;
                     }
-                    $locationID = $_POST['locationID'];
-                    $checked = $arrSelectedIds;
-                    $standardized = $file_toArray->checkIf_standardize($checked, $list);
-                    $a = array(
-                        'list' => $list,
-                        'checked' => $checked,
-                        'existingTerm' => array(),
-                        'locationID' => $locationID,
-                        'userID' => Yii::app()->user->id
-                    );
+                } elseif (isset($_POST['choose'])) {
 
-                    $data = json_encode($a);
-                    $output = $curl->createGID($data);
+                    $term = strip_tags($_POST['term']);
+                    $pedigree = strip_tags($_POST['pedigree']);
+                    $id = strip_tags($_POST['id']);
+                    $choose = strip_tags($_POST['choose']);
+                    $fid = strip_tags($_POST['fid']);
+                    $mid = strip_tags($_POST['mid']);
+                    $female = strip_tags($_POST['female']);
+                    $male = strip_tags($_POST['male']);
+                    $locationID = strip_tags($_POST['locationID']);
 
-                    $createdGID = array();
-                    $list = array();
-                    $createdGID = $output['createdGID'];
-                    $list = $output['list'];
-                    $existing = $output['existingTerm'];
+                    $list = unserialize(base64_decode($_POST['list']));
+                    $createdGID = unserialize(base64_decode($_POST['createdGID']));
+                    $existing = unserialize(base64_decode($_POST['existing']));
+                    $checked = unserialize(base64_decode($_POST['checked']));
 
-                    $rows = $list;
-                }elseif(isset($_POST['process'])){
-                    echo "here 1";
-                    $locationID = $_POST['location'];
-                    $checked = json_decode($_POST['checked'], true);
-                    $createdGID = json_decode($_POST['createdGID'], true);
-                    $existing = json_decode($_POST['existing'], true);
-                    
-                    $rows = $list;
-                } else {
-                    echo "here 1";
-                    $locationID = $_POST['location'];
-                    $checked = json_decode($_POST['checked'], true);
-                    $createdGID = json_decode($_POST['createdGID'], true);
-                    $existing = json_decode($_POST['existing'], true);
-                    $unselected = $file_toArray->get_unselected_rows($checked, $list);
-                    $standardized = $file_toArray->checkIf_standardize($unselected, $list);
-
-
-                    $a = array(
-                        'list' => $list,
-                        'checked' => $checked,
-                        'existingTerm' => $existing,
-                        'createdGID' => $createdGID,
-                        'locationID' => $locationID,
-                        'userID' => Yii::app()->user->id
-                    );
-
-                    $data = json_encode($a);
-                    $output = $curl->createGID2($data);
+                    $userID = Yii::app()->user->id;
+                    $output = $file_toArray->updateGID_createdGID($term, $pedigree, $id, $choose, $fid, $mid, $female, $male, $createdGID, $existing, $list, $userID);
+                    $output = $curl->chooseGID(json_encode($output));
 
                     $createdGID = array();
                     $list = array();
                     $createdGID = $output['createdGID'];
                     $list = $output['list'];
-                    $existing = $output['existingTerm'];
-
-
                     $rows = $list;
-                }
-            } elseif (isset($_POST['choose'])) {
-
-                $term = strip_tags($_POST['term']);
-                $pedigree = strip_tags($_POST['pedigree']);
-                $id = strip_tags($_POST['id']);
-                $choose = strip_tags($_POST['choose']);
-                $fid = strip_tags($_POST['fid']);
-                $mid = strip_tags($_POST['mid']);
-                $female = strip_tags($_POST['female']);
-                $male = strip_tags($_POST['male']);
-                $locationID = strip_tags($_POST['locationID']);
-
-                $list = unserialize(base64_decode($_POST['list']));
-                $createdGID = unserialize(base64_decode($_POST['createdGID']));
-                $existing = unserialize(base64_decode($_POST['existing']));
-                $checked = unserialize(base64_decode($_POST['checked']));
-
-                $userID = Yii::app()->user->id;
-                $output = $file_toArray->updateGID_createdGID($term, $pedigree, $id, $choose, $fid, $mid, $female, $male, $createdGID, $existing, $list, $userID);
-                $output = $curl->chooseGID(json_encode($output));
-
-                $createdGID = array();
-                $list = array();
-                $createdGID = $output['createdGID'];
-                $list = $output['list'];
-                $rows = $list;
 // update corrected.csv
 //$file_toArray->update_csv_correctedGID($fid, $mid, $checked);
-            } elseif (isset($_POST['selectMethod']) && $_POST['selectMethod'] != 0) {
-                $arrayStringMethod = $_POST['selectMethod'];
-                $locationID = $_POST['locationID'];
+                } elseif (isset($_POST['selectMethod']) && $_POST['selectMethod'] != 0) {
+                    $arrayStringMethod = $_POST['selectMethod'];
+                    $locationID = $_POST['locationID'];
 
-                $list = unserialize(base64_decode($_POST['list']));
-                $createdGID = unserialize(base64_decode($_POST['createdGID']));
-                $existing = unserialize(base64_decode($_POST['existing']));
-                $checked = unserialize(base64_decode($_POST['checked']));
+                    $list = unserialize(base64_decode($_POST['list']));
+                    $createdGID = unserialize(base64_decode($_POST['createdGID']));
+                    $existing = unserialize(base64_decode($_POST['existing']));
+                    $checked = unserialize(base64_decode($_POST['checked']));
 
-                $arr = explode(",", $arrayStringMethod);
-                $mid = $arr[0];
-                $gid = $arr[1];
-                $id = $arr[2];
+                    $arr = explode(",", $arrayStringMethod);
+                    $mid = $arr[0];
+                    $gid = $arr[1];
+                    $id = $arr[2];
 
 //*****if the user selects the radio button with the typeahead*****
-                $array = array(
-                    "mid" => $mid,
-                    "gid" => $gid,
-                    "id" => $id,
-                    "createdGID" => $createdGID
-                );
-                $curl = new curl();
-                $output = $curl->updateMethod(json_encode($array));
-                $createdGID = $output['createdGID'];
-                $rows = $list;
-            } elseif (isset($_GET['page'])) {
+                    $array = array(
+                        "mid" => $mid,
+                        "gid" => $gid,
+                        "id" => $id,
+                        "createdGID" => $createdGID
+                    );
+                    $curl = new curl();
+                    $output = $curl->updateMethod(json_encode($array));
+                    $createdGID = $output['createdGID'];
+                    $rows = $list;
+                } elseif (isset($_GET['page'])) {
+                    ?>
+                    <html>
+                        <body onload="storeLocal2()">
+                            <form action="" method="post" id='importFileDisplay-rfrsh'>
+                                <input type="hidden" name="refresh" value="true">
+                                <input type="hidden" id ="location" name="location" value="">
+                                <input type="hidden" id="list" name="list" value="">
+                                <input type="hidden" id="existing" name="existing" value="">
+                                <input type="hidden" id="createdGID" name="createdGID" value="">
+                                <input type="hidden" id="checked" name="checked" value="">
+                            </form>  
+                        </body>
+                    </html>
+                    <?php
+                } else {
+                    $locationID = $_POST['location'];
+                    $createdGID = json_decode($_POST['createdGID']);
+                    $existing = json_decode($_POST['existing']);
+                    $list = json_decode($_POST['list']);
+                    $checked = json_decode($_POST['checked']);
+                    $rows = $list;
+                }
+                if (count($rows)) {
+                    foreach ($rows as $i => $row) : list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male) = $row;
+                        $arr2[] = array('id' => $i + 1, 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks);
+
+                    endforeach;
+                }
+                if (isset($_GET['FilterPedigreeForm']))
+                    $filtersForm->filters = $_GET['FilterPedigreeForm'];
+
+//get array data and create dataProvider
+                $filteredData = $filtersForm->filter($arr2);
+//DataProvider for the lower table, Germplasm List
+                $GdataProvider = new CArrayDataProvider($filteredData, array(
+                    'keyField' => 'id',
+                    'pagination' => array(
+                        'pageSize' => 5,
+                    ),
+                ));
+
+                $this->render('assignGID', array('filtersForm' => $filtersForm,
+                    'checked' => $checked, 'GdataProvider' => $GdataProvider,
+                    'locationID' => $locationID,
+                    'list' => $list,
+                    'existing' => $existing,
+                    'createdGID' => $createdGID
+                ));
+            } elseif (isset($_GET['yes']) || isset($_GET['pagea'])) {
                 ?>
                 <html>
                     <body onload="storeLocal2()">
                         <form action="" method="post" id='importFileDisplay-rfrsh'>
-                            <input type="hidden" name="refresh" value="true">
+                            <input type="hidden" name="process" value="true">
                             <input type="hidden" id ="location" name="location" value="">
                             <input type="hidden" id="list" name="list" value="">
                             <input type="hidden" id="existing" name="existing" value="">
@@ -624,74 +840,36 @@ class SiteController extends Controller {
                 </html>
                 <?php
             } else {
-                $locationID = $_POST['location'];
-                $createdGID = json_decode($_POST['createdGID']);
-                $existing = json_decode($_POST['existing']);
-                $list = json_decode($_POST['list']);
-                $checked = json_decode($_POST['checked']);
-                $rows = $list;
+                ?>
+                <html>
+                    <body onload="storeLocal2()">
+                        <form action="index.php?r=site/assignGID" method="post" id='importFileDisplay-rfrsh'>
+                            <input type="hidden" name="refresh" value="true">
+                            <input type="hidden" id ="location" name="location" value="">
+                            <input type="hidden" id="list" name="list" value="">
+                            <input type="hidden" id="existing" name="existing" value="">
+                            <input type="hidden" id="createdGID" name="createdGID" value="">
+                            <input type="hidden" id="checked" name="checked" value="">
+                        </form>  
+                    </body>
+                </html>
+                <?php
             }
-            if (count($rows)) {
-                foreach ($rows as $i => $row) : list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male) = $row;
-                    $arr2[] = array('id' => $i + 1, 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks);
-
-                endforeach;
-            }
-            if (isset($_GET['FilterPedigreeForm']))
-                $filtersForm->filters = $_GET['FilterPedigreeForm'];
-
-//get array data and create dataProvider
-            $filteredData = $filtersForm->filter($arr2);
-//DataProvider for the lower table, Germplasm List
-            $GdataProvider = new CArrayDataProvider($filteredData, array(
-                'keyField' => 'id',
-                'pagination' => array(
-                    'pageSize' => 5,
-                ),
-            ));
-
-            $this->render('assignGID', array('filtersForm' => $filtersForm,
-                'checked' => $checked, 'GdataProvider' => $GdataProvider,
-                'locationID' => $locationID,
-                'list' => $list,
-                'existing' => $existing,
-                'createdGID' => $createdGID
-            ));
-        } elseif (isset($_GET['yes']) || isset($_GET['pagea'])) {
-            ?>
-            <html>
-                <body onload="storeLocal2()">
-                    <form action="" method="post" id='importFileDisplay-rfrsh'>
-                        <input type="hidden" name="process" value="true">
-                        <input type="hidden" id ="location" name="location" value="">
-                        <input type="hidden" id="list" name="list" value="">
-                        <input type="hidden" id="existing" name="existing" value="">
-                        <input type="hidden" id="createdGID" name="createdGID" value="">
-                        <input type="hidden" id="checked" name="checked" value="">
-                    </form>  
-                </body>
-            </html>
-            <?php
         } else {
-            ?>
-            <html>
-                <body onload="storeLocal2()">
-                    <form action="index.php?r=site/assignGID" method="post" id='importFileDisplay-rfrsh'>
-                        <input type="hidden" name="refresh" value="true">
-                        <input type="hidden" id ="location" name="location" value="">
-                        <input type="hidden" id="list" name="list" value="">
-                        <input type="hidden" id="existing" name="existing" value="">
-                        <input type="hidden" id="createdGID" name="createdGID" value="">
-                        <input type="hidden" id="checked" name="checked" value="">
-                    </form>  
-                </body>
-            </html>
-            <?php
+            $this->render('login', array('model' => $model2));
         }
     }
 
     public function actionChooseGID() {
-        $this->render('chooseGID');
+        Yii::app()->session['username'] = Yii::app()->user->id;
+        $this->browserSession = Yii::app()->session['username'];
+        $model2 = new LoginForm;
+
+        if (isset($this->browserSession)) {
+            $this->render('chooseGID');
+        } else {
+            $this->render('login', array('model' => $model2));
+        }
     }
 
     public function actionContactUs() {
