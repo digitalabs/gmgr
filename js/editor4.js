@@ -22,56 +22,20 @@ var margin = {top: 950, right: 50, bottom: 100, left: 700},
 	
 	var temp = document.getElementById('inputGID').value;
 	
-	if(temp=="50533")
-	{
-		var root = (function () {
-				var json = null;
-				$.ajax({
-					'async': false,
-					'global': false,
-					'url': "/../gmgr/json_files/tree3.json",
-					'dataType': "json",
-					'success': function (data) {
-						json = data;
-					}
-				});
-				return json;
-				})(); 
-	}
+	var root = (function () {
+		var json = null;
+		$.ajax({
+			'async': false,
+			'global': false,
+			'url': "/../gmgr/json_files/tree3.json",
+			'dataType': "json",
+			'success': function (data) {
+				json = data;
+			}
+		});
+		return json;
+		})();
 	
-	else if(temp=="256389")
-	{
-		var root = (function () {
-				var json = null;
-				$.ajax({
-					'async': false,
-					'global': false,
-					'url': "/../gmgr/json_files/tree4.json",
-					'dataType': "json",
-					'success': function (data) {
-						json = data;
-					}
-				});
-				return json;
-				})(); 
-	}
-	
-	else
-	{
-		var root = (function () {
-				var json = null;
-				$.ajax({
-					'async': false,
-					'global': false,
-					'url': "/../gmgr/json_files/tree3.json",
-					'dataType': "json",
-					'success': function (data) {
-						json = data;
-					}
-				});
-				return json;
-				})();
-	}
 	
 	
 	var i = 0,
