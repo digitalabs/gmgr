@@ -40,7 +40,7 @@ if (isset($_GET['searchBtn']))
                       </div>-->
 					  <form action="index.php?r=site/editor" method="post">
 						<input title="This feature is a work in progress" style="width:140px;" class="span2" id="inputGID" name="inputGID" type="text" placeholder="Search Germplasm">
-						<button name="searchBtn" id="searchBtn" class="btn btn-primary" onclick="validate()"type="submit">GO</button>
+						<button name="searchBtn" id="searchBtn" class="btn btn-primary" type="submit">GO</button>
 					  
 					  </div>  
                              
@@ -65,7 +65,44 @@ if (isset($_GET['searchBtn']))
 						<svg height="5000" style="height: auto;width: auto;" id="graphDiv"></svg>
 					</div>
 					
-					<div>
+					<div id="opener" style="position:fixed; bottom:70px; left:50px">
+						<a href="#1" name="1" onclick="show();">Show Germplasm details</a>
+					</div>
+					<div id="benefits" style="position:fixed; bottom:80px; left:50px; display:none;">
+						<b>&nbsp;Alternate Names</b>
+							<table style="background-color:white;margin:5px;width:800px;" width="1000px" class="table table-hover table-condensed">
+								<tr>
+									<th height="10" bgcolor="lightgreen">Name Type</th>
+									<th height="10" bgcolor="lightblue">Name</th>
+									<th height="10" bgcolor="lightblue">Location</th>
+									<th height="10" bgcolor="lightblue">Status</th>
+									<th height="10" bgcolor="lightblue">Date</th>
+								</tr>
+								<tr style="border:1px solid gray">
+									<td id="nt1"></td>
+									<td id="n1"></td>
+									<td id="l1"></td>
+									<td id="ns1"></td>
+									<td id="d1"></td>
+								</tr>
+								<tr style="border:1px solid gray">
+									<td id="nt2"></td>
+									<td id="n2"></td>
+									<td id="l2"></td>
+									<td id="ns2"></td>
+									<td id="d2"></td>
+								</tr>
+								<tr style="border:1px solid gray">
+									<td id="nt3"></td>
+									<td id="n3"></td>
+									<td id="l3"></td>
+									<td id="ns3"></td>
+									<td id="d3"></td>
+								</tr>
+							</table>
+						<div id="upbutton"><a onclick="conceal();">&nbsp;Hide</a></div>
+					</div>
+					<!--<div>
 						
 						<div style="margin:5px;border:1px solid gray;border-radius: 6px 6px 6px 6px;position:fixed; bottom:60px; left:50px" id="gDetail">
 							<b>&nbsp;Alternate Names</b>
@@ -126,7 +163,9 @@ if (isset($_GET['searchBtn']))
 							</table>
 						</div>
 						
-					</div>
+					</div>-->
+					
+					
                     <!--<div id="graphDiv" style="z-index:50;">-->
 					<!--<a href="#" id="generate">Generate download preview</a>	-->
 					</div>
@@ -253,6 +292,20 @@ if (isset($_GET['searchBtn']))
 		<script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/canvg.js"></script>
 		<script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/svgenie.js"></script>
         <script type="text/javascript">
+		
+			function conceal() {      
+					if(document.getElementById('benefits').style.display=='block') {
+					  document.getElementById('benefits').style.display='none';
+					  document.getElementById('opener').style.display='block';
+					}
+				}  
+
+			function show() {
+				if(document.getElementById('benefits').style.display=='none') {
+				  document.getElementById('benefits').style.display='block';
+				  document.getElementById('opener').style.display='none';
+				}
+			}
 		
 			function capture() {
 				$('#graph').html2canvas({
