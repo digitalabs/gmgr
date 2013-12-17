@@ -40,7 +40,7 @@ if (isset($_GET['searchBtn']))
                       </div>-->
 					  <form action="index.php?r=site/editor" method="post">
 						<input title="This feature is a work in progress" style="width:155px;height:30px;" class="span2" id="inputGID" name="inputGID" type="text" placeholder="Search Germplasm">
-						<button name="searchBtn" id="searchBtn" class="btn btn-primary" type="submit">GO</button>
+						<button name="searchBtn" id="searchBtn" class="btn btn-primary" onclick="validate()" type="submit">GO</button>
 					  
 					  </div>  
                              
@@ -61,8 +61,8 @@ if (isset($_GET['searchBtn']))
 					</svg>
 						<div id="graphDiv" width="5000" style="width:2000px;"></div>
 					</div> -->
-					<div id="graph" style="height: auto;width: auto;" height="5500">
-						<svg height="5000" style="height: auto;width: auto;" id="graphDiv"></svg>
+					<div id="graph" style="height: auto;width: auto;" height="6500">
+						<svg width="3500" height="5000" style="height: auto;width: auto;" id="graphDiv"></svg>
 					</div>
 					
 					<div id="opener" style="position:fixed; bottom:70px; left:50px">
@@ -321,8 +321,10 @@ if (isset($_GET['searchBtn']))
 			function validate()
 			{
 				//if(document.getElementById('searchBtn')=='' || document.getElementById('searchBtn')==' ' || document.getElementById('searchBtn')=='Search Germplasm')
-				var tmp = document.getElementById('hidGID').value;
-				alert(tmp);
+				var tmp = document.getElementById('maxStep').value;
+				var tmp2 = document.getElementById('inputGID').value;
+				//alert(tmp2);
+				//alert(tmp);
 			}
 			/*
             $(document).ready(function() {
