@@ -1,0 +1,767 @@
+{
+	"name" : "IR 64",
+	"gid" : "50533",
+	"id": "29",
+	"layer": "0",
+	"current": "true",
+	"location" : "IRTP 12158",
+	"methodname" : " Single plant selection",
+    "methodtype" : " DER",
+    "location" : " International Rice Testing Program, IRRI",
+    "country" : " PHILIPPINES",
+    "ref" : " PARENTAGE OF IRRI CROSSES IR 1-IR 50000",
+    "dates0" : " 0",
+    "name0" : " IR 18348-36-3-3",
+    "loc0" : " IRRI-International Rice Research Institute, Los Baños",
+    "dates1" : " 0",
+    "name1" : " IR 64",
+    "loc1" : " IRRI-International Rice Research Institute, Los Baños",
+    "dates2" : " 19860730",
+    "name2" : " IRTP 12158",
+    "loc2" : " International Rice Testing Program, IRRI",
+    "dates3" : " 0",
+    "name3" : " OM 89",
+    "loc3" : " Unknown",
+    "dates4" : " 0",
+    "name4" : " KSB 199",
+    "loc4" : " Unknown",
+    "dates5" : " 0",
+    "name5" : " OMCS 95-3",
+    "loc5" : " Unknown",
+    "dates6" : " 0",
+    "name6" : " COTTONDORA SANNALU",
+    "loc6" : " Unknown",
+    "dates7" : " 0",
+    "name7" : " OM 1270",
+    "loc7" : " Unknown",
+    "dates8" : " 0",
+    "name8" : " OM 997-6",
+    "loc8" : " Unknown",
+    "dates9" : " 0",
+    "name9" : " COTTONDORA SANNALU",
+    "loc9" : " Unknown",
+    "dates10" : " 0",
+    "name10" : " DONG 256",
+    "loc10" : " Unknown",
+    "dates11" : " 0",
+    "name11" : " OM 987-1",
+    "loc11" : " Unknown",
+    "dates12" : " 0",
+    "name12" : " PSB RC 7 (BANAHAW)",
+    "loc12" : " Unknown",
+    "dates13" : " 0",
+    "name13" : " AS 996",
+    "loc13" : " Unknown",
+    "dates14" : " 0",
+    "name14" : " MR 185",
+    "loc14" : " Unknown",
+    "dates15" : " 0",
+    "name15" : " OM 1271",
+    "loc15" : " Unknown",
+    "dates16" : " 0",
+    "name16" : " P 4",
+    "loc16" : " Unknown",
+    "dates17" : " 0",
+    "name17" : " KSB 140-5",
+    "loc17" : " Unknown",
+    "gpid1" : " 24489",
+    "gpid2": "50532",
+	"children" : [
+	{
+		"name" : "IR 18348-36-3",
+		"gid" : "50532",
+		"id": "30",
+		"warning" : "true",
+		"layer": "1",
+		"location" : " ",
+		"children" : [
+		{
+			"name" : "IR 18348-36",
+			"gid" : "50531",
+			"id": "31",
+			"warning" : "true",
+			"layer": "2",
+			"location" : " ",
+			"children" : [
+			{
+				"name" : "IR 18348",
+				"gid" : "24489",
+				"id": "32",
+				"warning" : "true",
+				"layer": "3",
+				"location" : " ",
+				"children" : [
+				{
+					"name" : "IR 5657-33-2-1",
+					"gid" : "24486",
+					"id": "33",
+					"layer": "4",
+					"methodname" : " Single plant selection",
+				   "methodtype" : " DER",
+				   "location" : " IRRI-International Rice Research Institute, Los Baños",
+				   "country" : " PHILIPPINES",
+				   "ref" : " PARENTAGE OF IRRI CROSSES IR 1-IR 50000",
+				   "dates0" : " 0",
+				   "name0" : " IR 5657-33-2-1",
+				   "loc0" : " IRRI-International Rice Research Institute, Los Baños",
+				   "dates1" : " 20121002",
+				   "name1" : " IRIS 10-24486",
+				   "loc1" : " Philippines",
+				   "gpid1" : " 8709",
+				   "gpid2": "24453",
+					"children" : [
+					{
+						"name" : "IR 5657-33-2",
+						"gid" : "24453",
+						"id": "34",
+						"warning" : "true",
+						"layer": "5",
+						"location" : "IRTP 12164",
+						"children" : [
+						{
+							"name" : "IR 5657-33",
+							"gid" : "24452",
+							"id": "35",
+							"warning" : "true",
+							"layer": "6",
+							"location" : " ",
+							"children" : [
+							{
+								"name" : "IR 5657",
+								"gid" : "8709",
+								"id": "36",
+								"warning" : "true",
+								"layer": "7",
+								"location" : " ",
+								"children" : [
+								{
+									"name" : "IR 5338",
+									"gid" : "8307",
+									"id": "37",
+									"layer": "8",
+									"methodname" : " Single cross",
+									  "methodtype" : " GEN",
+									  "location" : " IRRI-International Rice Research Institute, Los Baños",
+									  "country" : " PHILIPPINES",
+									  "ref" : " PARENTAGE OF IRRI CROSSES IR 1-IR 50000",
+									  "dates0" : " 19741201",
+									  "name0" : " IR 5338",
+									  "loc0" : " IRRI-International Rice Research Institute, Los Baños",
+									  "dates1" : " 20121002",
+									  "name1" : " IRIS 10-8307",
+									  "loc1" : " Philippines",
+									  "gpid1" : " 8301",
+									  "gpid2": "7326",
+									"children" : [
+									{
+										"name" : "IR 2055-475-2",
+										"gid" : "7326",
+										"id": "38",
+										"layer": "9",
+										"methodname" : " Single plant selection",
+										 "methodtype" : " DER",
+										 "location" : " International Rice Testing Program, IRRI",
+										 "country" : " PHILIPPINES",
+										 "ref" : " PARENTAGE OF IRRI CROSSES IR 1-IR 50000",
+										 "dates0" : " 0",
+										 "name0" : " IR 2055-475-2",
+										 "loc0" : " IRRI-International Rice Research Institute, Los Baños",
+										 "dates1" : " 0",
+										 "name1" : " IRTP 4894",
+										 "loc1" : " International Rice Testing Program, IRRI",
+										 "gpid1" : " 3698",
+										 "gpid2": "7325",
+										"children" : [
+										{
+											"name" : "IR 2055-475",
+											"gid" : "7325",
+											"id": "48",
+											"warning" : "true",
+											"layer": "10",
+											"location" : " ",
+											"children" : [
+											{
+												"name" : "IR 2055",
+												"gid" : "3698",
+												"id": "49",
+												"warning" : "true",
+												"layer": "11",
+												"location" : " ",
+												"children" : [
+												{
+													"name" : "BPI 121-407",
+													"gid" : "3680",
+													"id": "50",
+													"layer": "12",
+													"location" : "IRGC 15762",
+													"children" : [
+													{
+														"name" : "BPI 121-407",
+														"gid" : "3680",
+														"id": "81",
+														"warning" : "true",
+														"layer": "13",
+														"location" : "IRGC 15762",
+														"children" : [
+														{
+															"name" : "BPI 121",
+															"gid" : "35418",
+															"id": "82",
+															"warning" : "true",
+															"layer": "14",
+															"location" : " ",
+															"children" : [
+															{
+																"name" : "BPI 121",
+																"gid" : "420649",
+																"id": "83",
+																"warning" : "true",
+																"layer": "15",
+																"location" : "ITP 4772"
+															}
+															]
+														}
+														]
+													}
+													]
+												},
+												{
+													"name" : "IR 1833",
+													"gid" : "3199",
+													"id": "51",
+													"layer": "12",
+													"location" : " ",
+													"children" : [
+													{
+														"name" : "IR 1416-131-5",
+														"gid" : "3161",
+														"id": "52",
+														"layer": "13",
+														"location" : "IRTP 8123",
+														"children" : [
+														{
+															"name" : "IR 1416-131",
+															"gid" : "3160",
+															"id": "84",
+															"warning" : "true",
+															"layer": "14",
+															"location" : " ",
+															"children" : [
+															{
+																"name" : "IR 1416",
+																"gid" : "2231",
+																"id": "85",
+																"warning" : "true",
+																"layer": "15",
+																"location" : " "
+															}
+															]
+														}
+														]
+													},
+													{
+														"name" : "IR 22",
+														"gid" : "2722",
+														"id": "53",
+														"layer": "14",
+														"location" : "IRTP 197"
+													}
+													]
+												}
+												]
+											}
+											]
+										}
+										]
+									},
+									{
+										"name" : "IR 2061-465-1-4",
+										"gid" : "8301",
+										"id": "39",
+										"layer": "9",
+										"methodname" : " Single plant selection",
+										 "methodtype" : " DER",
+										 "location" : " IRRI-International Rice Research Institute, Los Baños",
+										 "country" : " PHILIPPINES",
+										 "ref" : " PARENTAGE OF IRRI CROSSES IR 1-IR 50000",
+										 "dates0" : " 0",
+										 "name0" : " IR 2061-465-1-4",
+										 "loc0" : " IRRI-International Rice Research Institute, Los Baños",
+										 "dates1" : " 20121002",
+										 "name1" : " IRIS 10-8301",
+										 "loc1" : " Philippines",
+										 "gpid1" : " 3708",
+										 "gpid2": "8300",
+										"children" : [
+										{
+											"name" : "IR 2061-465-1",
+											"gid" : "8300",
+											"id": "60",
+											"warning" : "true",
+											"layer": "10",
+											"location" : " ",
+											"children" : [
+											{
+												"name" : "IR 2061-465",
+												"gid" : "8299",
+												"id": "61",
+												"warning" : "true",
+												"layer": "11",
+												"location" : " ",
+												"children" : [
+												{
+													"name" : "IR 2061",
+													"gid" : "3708",
+													"id": "62",
+													"warning" : "true",
+													"layer": "12",
+													"location" : " ",
+													"children" : [
+													{
+														"name" : "IR 833-6-2-1-1",
+														"gid" : "3707",
+														"id": "63",
+														"layer": "13",
+														"methodname" : " Single plant selection",
+														  "methodtype" : " DER",
+														  "location" : " International Rice Testing Program, IRRI",
+														  "country" : " PHILIPPINES",
+														  "ref" : " PARENTAGE OF IRRI CROSSES IR 1-IR 50000",
+														  "dates0" : " 0",
+														  "name0" : " IR 833-6-2-1-1",
+														  "loc0" : " IRRI-International Rice Research Institute, Los Baños",
+														  "dates1" : " 0",
+														  "name1" : " IRTP 4227",
+														  "loc1" : " International Rice Testing Program, IRRI",
+														  "gpid1" : " 1244",
+														  "gpid2": "3706",
+														"children" : [
+														{
+															"name" : "IR 833-6-2-1",
+															"gid" : "3706",
+															"id": "64",
+															"warning" : "true",
+															"layer": "14",
+															"location" : "IRGC 32590"
+														}
+														]
+													},
+													{
+														"name" : "IR 2040",
+														"gid" : "3661",
+														"id": "66",
+														"layer": "13",
+														"methodname" : " Single cross",
+														  "methodtype" : " GEN",
+														  "location" : " IRRI-International Rice Research Institute, Los Baños",
+														  "country" : " PHILIPPINES",
+														  "ref" : " PARENTAGE OF IRRI CROSSES IR 1-IR 50000",
+														  "dates0" : " 0",
+														  "name0" : " IR 2040",
+														  "loc0" : " IRRI-International Rice Research Institute, Los Baños",
+														  "dates1" : " 20121002",
+														  "name1" : " IRIS 10-3661",
+														  "loc1" : " Philippines",
+														  "gpid1" : " 3660",
+														  "gpid2": "3006",
+														"children" : [
+														{
+															"name" : "IR 1561-149-1",
+															"gid" : "3660",
+															"id": "67",
+															"layer": "14",
+															"methodname" : " Single plant selection",
+															 "methodtype" : " DER",
+															 "location" : " IRRI-International Rice Research Institute, Los Baños",
+															 "country" : " PHILIPPINES",
+															 "ref" : " PARENTAGE OF IRRI CROSSES IR 1-IR 50000",
+															 "dates0" : " 0",
+															 "name0" : " IR 1561-149-1",
+															 "loc0" : " IRRI-International Rice Research Institute, Los Baños",
+															 "dates1" : " 20121002",
+															 "name1" : " IRIS 10-3660",
+															 "loc1" : " Philippines",
+															 "gpid1" : " 2584",
+															 "gpid2": "3563",
+															"children" : [
+															{
+																"name" : "IR 1561-149",
+																"gid" : "3563",
+																"id": "68",
+																"warning" : "true",
+																"layer": "15",
+																"location" : " ",
+																"children" : [
+																{
+																	"name" : "IR 1561",
+																	"gid" : "2584",
+																	"id": "69",
+																	"warning" : "true",
+																	"layer": "16",
+																	"location" : " "
+																}
+																]
+															}
+															]
+														},
+														{
+															"name" : "IR 1737",
+															"gid" : "3006",
+															"id": "70",
+															"layer": "15",
+															"methodname" : " Backcross",
+															 "methodtype" : " GEN",
+															 "location" : " IRRI-International Rice Research Institute, Los Baños",
+															 "country" : " PHILIPPINES",
+															 "ref" : " PARENTAGE OF IRRI CROSSES IR 1-IR 50000",
+															 "dates0" : " 0",
+															 "name0" : " IR 1737",
+															 "loc0" : " IRRI-International Rice Research Institute, Los Baños",
+															 "dates1" : " 0",
+															 "name1" : " IR 24*4/O NIVARA",
+															 "loc1" : " IRRI-International Rice Research Institute, Los Baños",
+															 "dates2" : " 20121002",
+															 "name2" : " IRIS 10-3006",
+															 "loc2" : " Philippines",
+															 "gpid1" : " 2444",
+															 "gpid2": "2983",
+															"children" : [
+															{
+																"name" : "IR 1721",
+																"gid" : "2983",
+																"id": "71",
+																"layer": "16",
+																"location" : " ",
+																"children" : [
+																{
+																	"name" : "IR 1704",
+																	"gid" : "2933",
+																	"id": "72",
+																	"layer": "17",
+																	"location" : " ",
+																	"children" : [
+																	{
+																		"name" : "IR 1641",
+																		"gid" : "2789",
+																		"id": "73",
+																		"layer": "18",
+																		"location" : " ",
+																		"children" : [
+																		{
+																			"name" : "IR 24",
+																			"gid" : "2444",
+																			"id": "74",
+																			"layer": "19",
+																			"location" : "IRTP 198"
+																		}
+																		]
+																	},
+																	{
+																		"name" : "IR 24",
+																		"gid" : "2444",
+																		"id": "74",
+																		"layer": "19",
+																		"location" : "IRTP 198"
+																	}
+																	]
+																}
+																]
+															},
+															{
+																"name" : "IR 24",
+																"gid" : "2444",
+																"id": "74",
+																"layer": "19",
+																"location" : "IRTP 198"
+															}
+															]
+														}
+														]
+													}
+													]
+												}
+												]
+											}
+											]
+										}
+										]	
+									}
+									]
+								},
+								{
+									"name" : "IR 5236",
+									"gid" : "8180",
+									"id": "41",
+									"layer": "8",
+									"methodname" : " Single cross",
+									  "methodtype" : " GEN",
+									  "location" : " IRRI-International Rice Research Institute, Los Baños",
+									  "country" : " PHILIPPINES",
+									  "ref" : " PARENTAGE OF IRRI CROSSES IR 1-IR 50000",
+									  "dates0" : " 19741201",
+									  "name0" : " IR 5236",
+									  "loc0" : " IRRI-International Rice Research Institute, Los Baños",
+									  "dates1" : " 20121002",
+									  "name1" : " IRIS 10-8180",
+									  "loc1" : " Philippines",
+									  "gpid1" : " 8082",
+									  "gpid2": "8111",
+									"children" : [
+									{
+										"name" : "IR 2146-68-1",
+										"gid" : "8111",
+										"id": "42",
+										"layer": "9",
+										"location" : " ",
+										"methodname" : " Single plant selection",
+										 "methodtype" : " DER",
+										 "location" : " IRRI-International Rice Research Institute, Los Baños",
+										 "country" : " PHILIPPINES",
+										 "ref" : " PARENTAGE OF IRRI CROSSES IR 1-IR 50000",
+										 "dates0" : " 0",
+										 "name0" : " IR 2146-68-1",
+										 "loc0" : " IRRI-International Rice Research Institute, Los Baños",
+										 "dates1" : " 20121002",
+										 "name1" : " IRIS 10-8111",
+										 "loc1" : " Philippines",
+										 "gpid1" : " 3862",
+										 "gpid2": "8110",
+										"children" : [
+										{
+											"name" : "IR 2146-68",
+											"gid" : "8110",
+											"id": "47",
+											"warning" : "true",
+											"layer": "10",
+											"location" : " ",
+											"children" : [
+											{
+												"name" : "IR 2146",
+												"gid" : "3862",
+												"id": "65",
+												"warning" : "true",
+												"layer": "11",
+												"location" : " ",
+												"children" : [
+												{
+													"name" : "IR 1916",
+													"gid" : "3414",
+													"id": "75",
+													"layer": "12",
+													"location" : " ",
+													"children" : [
+													{
+														"name" : "IR 1915 B",
+														"gid" : "3413",
+														"id": "76",
+														"layer": "13",
+														"location" : " ",
+														"children" : [
+														{
+															"name" : "IR 773 A 1-36-2-1 / O Nivara",
+															"gid" : "3412",
+															"id": "77",
+															"layer": "14",
+															"location" : " ",
+															"children" : [
+															{
+																"name" : "O Nivara",
+																"gid" : "3257",
+																"id": "78",
+																"layer": "15",
+																"location" : " "
+															},
+															{
+																"name" : "IR 773 A 1-36-2-1",
+																"gid" : "3411",
+																"id": "79",
+																"layer": "15",
+																"location" : "IRGC 11374"
+															}
+															]
+														},
+														{
+															"name" : "IR 773 A 1-36-2-1",
+															"gid" : "3411",
+															"id": "79",
+															"layer": "15",
+															"location" : "IRGC 11374"
+														}
+														]
+													},
+													{
+														"name" : "IR 773 A 1-36-2-1",
+														"gid" : "3411",
+														"id": "79",
+														"layer": "15",
+														"location" : "IRGC 11374"
+													}
+													]
+												},
+												{
+													"name" : "IR 773 A 1-36-2-1",
+													"gid" : "3411",
+													"id": "79",
+													"layer": "15",
+													"location" : "IRGC 11374"
+												}
+												]
+											}
+											]
+										}
+										]
+									},
+									{
+										"name" : "IR 2006-P3-31-3",
+										"gid" : "8082",
+										"id": "43",
+										"layer": "9",
+										"methodname" : " Single plant selection",
+										 "methodtype" : " DER",
+										 "location" : " IRRI-International Rice Research Institute, Los Baños",
+										 "country" : " PHILIPPINES",
+										 "ref" : " PARENTAGE OF IRRI CROSSES IR 1-IR 50000",
+										 "dates0" : " 0",
+										 "name0" : " IR 2006-P3-31-3",
+										 "loc0" : " IRRI-International Rice Research Institute, Los Baños",
+										 "dates1" : " 20121002",
+										 "name1" : " IRIS 10-8082",
+										 "loc1" : " Philippines",
+										 "gpid1" : " 3610",
+										 "gpid2": "8081",
+										"children" : [
+										{
+											"name" : "IR 2006-P3-31",
+											"gid" : "8081",
+											"id": "46",
+											"warning" : "true",
+											"layer": "10",
+											"location" : " ",
+											"children" : [
+											{
+												"name" : "IR 2006-P3",
+												"gid" : "8080",
+												"id": "54",
+												"warning" : "true",
+												"layer": "11",
+												"location" : " ",
+												"children" : [
+												{
+													"name" : "IR 2006",
+													"gid" : "3610",
+													"id": "55",
+													"warning" : "true",
+													"layer": "12",
+													"location" : " ",
+													"children" : [
+													{
+														"name" : "IR 1614",
+														"gid" : "2722",
+														"id": "56",
+														"layer": "13",
+														"location" : " ",
+														"children" : [
+														{
+															"name" : "IR 22",
+															"gid" : "2722",
+															"id": "53",
+															"layer": "14",
+															"location" : " "
+														},
+														{
+															"name" : "IR 1404",
+															"gid" : "2201",
+															"id": "57",
+															"layer": "14",
+															"location" : " "
+														}
+														]
+													},
+													{
+														"name" : "IR 1870",
+														"gid" : "3299",
+														"id": "58",
+														"layer": "13",
+														"location" : " ",
+														"children" : [
+														{
+															"name" : "IR 1103-15-8-4-2-2-3",
+															"gid" : "3290",
+															"id": "59",
+															"layer": "14",
+															"location" : "IRTP 4286"
+														},
+														{
+															"name" : "IR 1163-124-1-3",
+															"gid" : "3298",
+															"id": "80",
+															"layer": "14",
+															"location" : " "
+														}
+														]
+													}
+													]
+												}
+												]
+											}
+											]
+										}
+										]
+									}
+									]
+								}
+								]
+							}
+							]
+						}
+						]
+					}
+					]
+				},
+				{
+					"name" : "2061-465-1-5-5",
+					"gid" : "11072",
+					"id": "44",
+					"layer": "4",
+					"methodname" : " Single plant selection",
+					   "methodtype" : " DER",
+					   "location" : " International Rice Testing Program, IRRI",
+					   "country" : " PHILIPPINES",
+					   "ref" : " PARENTAGE OF IRRI CROSSES IR 1-IR 50000",
+					   "dates0" : " 0",
+					   "name0" : " IR 2061-465-1-5-5",
+					   "loc0" : " IRRI-International Rice Research Institute, Los Baños",
+					   "dates1" : " 0",
+					   "name1" : " IRTP 249",
+					   "loc1" : " International Rice Testing Program, IRRI",
+					   "gpid1" : " 3708",
+					   "gpid2": "11071",
+					"children" : [
+					{
+						"name" : "IR 2061-465-1-5",
+						"gid" : "11071",
+						"id": "45",
+						"warning" : "true",
+						"layer": "5",
+						"location" : " ",
+						"children" : [
+						{
+							"name" : "IR 2061-465-1",
+							"gid" : "8300",
+							"id": "60",
+							"warning" : "true",
+							"layer": "10",
+							"location" : " "
+						}
+						]
+					}
+					]
+				}
+				]
+			}
+			]
+		}
+		]				
+	}
+	]
+}
