@@ -2,21 +2,12 @@
 
     <body>
         <?php
-        /* @var $this SiteController */
-        /* @var $model LoginForm */
-        /* @var $form CActiveForm  */
-
         $this->pageTitle = Yii::app()->name . ' - Importer';
         $this->breadcrumbs = array(
             'Importer',
         );
         ?>
 
-        <?php
-        /* @var $this SiteController */
-
-//include_once($_SERVER['DOCUMENT_ROOT'] . "/PedigreeImport/model/configDB.php");
-        ?>
 
         <span id="ajax-loading-indicator">
         </span>
@@ -25,9 +16,9 @@
            $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
             'type' => 'horizontal',
             'id' => 'pedigreeImport',
-            'enableClientValidation' => true,
-            'enableClientValidation' => true,
-              'htmlOptions' => array('class'=>'well','enctype' => 'multipart/form-data'),
+            'method' =>'post',
+            'enableAjaxValidation' => false,
+            'htmlOptions' => array('class'=>'well','enctype' => 'multipart/form-data'),
             'action' => array('site/importFileDisplay')
         ));
         ?>
@@ -69,8 +60,9 @@
                             <legend>Upload File</legend>
                             <br>
                            <?php
-                                echo CHtml::error($model, 'file');
-                                echo CHtml::activeFileField($model, 'file');
+                                echo $form->labelEx($model, 'file');
+                                echo $form->fileField($model, 'file');
+                                echo $form->error($model, 'file');
                             ?>
                             <a href="Sample File/Sample1.htm">View Sample File</a> <br>
                             <label>Location</label>
