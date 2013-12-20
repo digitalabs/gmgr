@@ -60,9 +60,9 @@
                             <legend>Upload File</legend>
                             <br>
                            <?php
-                                echo $form->labelEx($model, 'file');
-                                echo $form->fileField($model, 'file');
-                                echo $form->error($model, 'file');
+                                //echo $form->labelEx($model, 'file');
+                                echo CHtml::activefileField($model, 'file');
+                                echo CHtml::error($model, 'file');
                             ?>
                             <a href="Sample File/Sample1.htm">View Sample File</a> <br>
                             <label>Location</label>
