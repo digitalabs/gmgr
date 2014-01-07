@@ -80,12 +80,7 @@
                 'type' => 'raw',
                 'value' => 'CHtml::encode($data["date"])'
             ),
-            array(
-                'header' => 'GID',
-                'name' => 'gid',
-                'type' => 'raw',
-                'value' => 'CHtml::encode($data["gid"])'
-            ),
+            
             array(
                 'header' => 'Female Parent',
                 'name' => 'female',
