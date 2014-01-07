@@ -83,7 +83,9 @@ return array(
 		    'username' => 'datasourceuser',
 			'password' => 'ici$rule$',
 			'charset' => 'utf8',
-		),*/
+		),
+                
+                 */
 		
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors

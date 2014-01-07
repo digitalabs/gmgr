@@ -17,22 +17,83 @@ class file_toArray {
     }
 
     public function uploadedFile() {
+
+
         //$f = fopen($_FILES["file"]["name"], "r");
         $filePath = dirname(__FILE__) . '/../../csv_files/germplasmList.csv';
         $f = fopen($filePath, "r");
-        //echo $_FILES["file"]["name"];
-        //$fr = fread($f, filesize($_FILES["file"]["name"]));
+
+        //get headers
+        $row1 = fgetcsv($f, 1000, ',');
+        echo '<br><br><br><br><br>header:<br>';
+        print_r($row1);
+        for ($i = 0; $i < count($row1); $i++) {
+            $header = array();
+            $header = explode(";", $row1[$i]);
+        }
+        echo "<br>" . count($header) . "<br>";
+        $column_female = -1;
+        $column_male = -1;
+        $column_cross = -1;
+        $column_date = -1;
+        for ($i = 0; $i < count($header) - 1; $i++) {
+
+
+            if (preg_match("/female/i", $header[$i], $output_array) == 1) {
+                print_r($output_array[0]);
+                echo '<br>';
+                $column_female = $i;
+            } elseif (preg_match("/male/i", $header[$i], $output_array) == 1) {
+                print_r($output_array[0]);
+                echo '<br>';
+                $column_male = $i;
+            }
+            if (preg_match("/cross/i", $header[$i], $output_array) == 1) {
+                print_r($output_array[0]);
+                echo 'CROSS:<br>';
+                $column_cross = $i;
+                echo $column_cross . "<br>";
+            }
+            if (preg_match("/date/i", $header[$i], $output_array) == 1) {
+                print_r($output_array[0]);
+                echo '<br>';
+                $column_date = $i;
+            }
+        }
+
         $fr = fread($f, filesize($filePath));
         fclose($f);
         $lines = array();
         $lines = explode("\n", $fr); // IMPORTANT the delimiter here just the "new line" \n 
         $dataString = array();
+        echo $column_date . "<br>";
         for ($i = 0; $i < count($lines); $i++) {
             $cells = array();
             $cells = explode(";", $lines[$i]); // use the cell/row delimiter ;
+            //print_r($cells);
+            //echo "<br>";
+           // echo $column_cross . "<br>";
             for ($k = 0; $k < count($cells) - 1; $k++) {
-                array_push($dataString, $cells[$k]);
+
+                if ($k == $column_cross) {
+                    $cross = $cells[$k];
+                } elseif ($k == $column_female) {
+                    $female = $cells[$k];
+                } elseif ($k == $column_male) {
+                    $male = $cells[$k];
+                } elseif ($k == $column_date) {
+                        $date = $cells[$k];
+                }
             }// for k end	
+             array_push($dataString, $cross);
+              array_push($dataString, $female);
+              array_push($dataString, $male);
+              if($column_date==-1){
+                  array_push($dataString, "not specified");
+              }else{
+                  array_push($dataString, $date);
+              }
+             
         }
         return $dataString;
     }
@@ -172,7 +233,7 @@ class file_toArray {
     public function updateGID_createdGID($term, $pedigree, $id, $choose, $fid, $mid, $female, $male, $createdGID, $existingTerm, $list, $userID) {
 
         $data = array();
-         for ($i = 0, $k = count($existingTerm); $i < $k; $i++) {
+        for ($i = 0, $k = count($existingTerm); $i < $k; $i++) {
             if ($existingTerm[$i][2] === $choose) {
                 $data[] = $existingTerm[$i]; //existingTerm data
             }
@@ -182,8 +243,8 @@ class file_toArray {
         $germplasm = array();
 
         for ($i = 0, $k = count($createdGID); $i < $k; $i++) {
-           // echo "".$createdGID[$i][0]."  id: ".$id."<br>";
-           // echo "".$createdGID[$i][2]."  id: ".$term."<br>";
+            // echo "".$createdGID[$i][0]."  id: ".$id."<br>";
+            // echo "".$createdGID[$i][2]."  id: ".$term."<br>";
             if ($createdGID[$i][0] == $id && $createdGID[$i][2] == $term) {
                 $createdGID[$i][3] = $data[0][6];
                 $createdGID[$i][4] = $data[0][7];
@@ -204,13 +265,13 @@ class file_toArray {
                 $germplasm[7] = $createdGID[$i][7];
                 $germplasm[8] = $createdGID[$i][8];
                 $germplasm[9] = $createdGID[$i][9];
-               // echo "HERE"."<br>";
+                // echo "HERE"."<br>";
             }
             $data2[] = $createdGID; // data2: edited CreatedGID data
         }
 
         //array from createdGID.csv
-        
+
         print_r($germplasm);
         echo "<br><br>";
 

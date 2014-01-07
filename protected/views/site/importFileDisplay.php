@@ -75,6 +75,12 @@
                 )
             ),
             array(
+                'header' => 'Date of Creation',
+                'name' => 'date',
+                'type' => 'raw',
+                'value' => 'CHtml::encode($data["date"])'
+            ),
+            array(
                 'header' => 'GID',
                 'name' => 'gid',
                 'type' => 'raw',
@@ -86,10 +92,16 @@
                 'type' => 'raw',
                 'value' => function ($data) {
 
-                    if (strcmp(CHtml::encode($data["fremarks"]), "in standardized format") == 0)
-                        return CHtml::encode($data["female"]);
+                    if (strcmp(CHtml::encode($data["fremarks"]), "in standardized format") == 0) {
+                        $your_array = array();
+                        $your_array = explode("#", CHtml::encode($data["fgid"]));
+                        $your_array = implode("<br>", $your_array);
+                        $fgid = $your_array;
+
+                        return "<b>".CHtml::encode($data["female"]) . "</b>" . "" . $fgid . "";
+                    }
                     else
-                        return "<font style='color:#FF6600; font-weight:bold;'>" . CHtml::tag("span", array("title" => CHtml::encode($data["fremarks"]), "class" => "tooltipster"), CHtml::encode($data["female"])) . "</font>";
+                        return "<font style='color:#FF6600;'>" . CHtml::tag("span", array("title" => CHtml::encode($data["fremarks"]), "class" => "tooltipster"), CHtml::encode($data["female"])) . "</font>";
                 },
             ),
             array(
@@ -97,30 +109,19 @@
                 'name' => 'male',
                 'type' => 'raw',
                 'value' => function ($data) {
-                    if (strcmp(CHtml::encode($data["mremarks"]), "in standardized format") == 0)
-                        return CHtml::encode($data["male"]);
+                    if (strcmp(CHtml::encode($data["mremarks"]), "in standardized format") == 0) {
+
+                        $your_array = array();
+                        $your_array = explode("#", CHtml::encode($data["mgid"]));
+                        $your_array = implode("<br>", $your_array);
+                        $mgid = $your_array;
+                        return "<b>".CHtml::encode($data["male"]) . "</b><br>" . "" . $mgid . "";
+                    }
                     else
-                        return "<font style='color:#FF6600; font-weight:bold;'>" . CHtml::tag("span", array("title" => CHtml::encode($data["mremarks"]), "class" => "tooltipster"), CHtml::encode($data["male"])) . "</font>";
+                        return "<font style='color:#FF6600; '>" . CHtml::tag("span", array("title" => CHtml::encode($data["mremarks"]), "class" => "tooltipster"), CHtml::encode($data["male"])) . "</font>";
                 },
             ),
-            array(
-                'header' => 'New GID',
-                'type' => 'raw',
-                //'value'=>'CHtml::encode($data["mgid"])'
-                'value' => function($data) {
-                    $your_array = array();
-                    $your_array = explode("#", CHtml::encode($data["fgid"]));
-                    $your_array = implode("\n", $your_array);
-                    $fgid = $your_array;
-
-                    $your_array = array();
-                    $your_array = explode("#", CHtml::encode($data["mgid"]));
-                    $your_array = implode("\n", $your_array);
-                    $mgid = $your_array;
-
-                    return "<pre>" . $fgid . "</pre><pre>" . $mgid . "</pre>";
-                }
-            ),
+            
         ),
     ));
 
@@ -129,19 +130,19 @@
 </body>
 
 <script type="text/javascript">
-   function storeLocal(){
+    function storeLocal() {
         if ('localStorage' in window && window['localStorage'] != null) {
             try {
                 localStorage.removeItem("locationID");
                 localStorage.removeItem("list");
-            
-                var list= <?php echo json_encode($list); ?>;
-                
+
+                var list = <?php echo json_encode($list); ?>;
+
                 console.log(JSON.stringify(<?php echo json_encode($list); ?>));
-                document.getElementById('list').value=list;
-                localStorage.setItem('list', JSON.stringify(<?php echo json_encode($list); ?>));  
-                
-                var locationID=document.getElementById('location').value;
+                document.getElementById('list').value = list;
+                localStorage.setItem('list', JSON.stringify(<?php echo json_encode($list); ?>));
+
+                var locationID = document.getElementById('location').value;
                 //var list=document.getElementById('list').value;
                 //console.log("ss"+locationID);
                 //console.log("sssw"+list);
@@ -154,7 +155,7 @@
         } else {
             alert('Cannot store user preferences as your browser do not support local storage');
         }
-   }
+    }
     window.addEventListener('storage', storageEventHandler, false);
     function storageEventHandler(event) {
         storeLocal();
