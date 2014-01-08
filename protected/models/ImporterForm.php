@@ -1,8 +1,8 @@
 <?php
    class ImporterForm extends CFormModel
    {
-	  // public $file;
-	   public $LoadSampleFile;
+	   public $file;
+	  // public $LoadSampleFile;
 	
 	   
 	 /**
@@ -10,12 +10,13 @@
 	 */
 	  public function rules(){
 		  return array(
-		     //array('file','file','types'=>'csv'),
-			 //array('LoadSampleFile', 'required'),
+                     array('file','file' ,'types'=>'csv','wrongType'=>'*CSV files only'),
 		  );  
 	  }
-	  //Validation next
-	  
+	
+          public function attributesLabels(){
+              return array('file' => 'Select csv file');
+          }
    }
    
 ?>

@@ -1,41 +1,25 @@
 <html>
 
     <body>
-
-        <?php //if($uploaded):?>
-<!--<p>File was uploaded. Check <?php //echo //$dir      ?>.</p>
-        <?php //endif ?>-->
-        <?php /* echo CHtml::beginForm('','post',array 
-          ('enctype'=>'multipart/form-data')) */ ?>
-        <?php //echo CHtml::error($model, 'file')?>
-        <?php //echo CHtml::activeFileField($model, 'file')?>
-        <?php //echo CHtml::submitButton('Upload')?>
-        <?php // echo CHtml::endForm()?>
         <?php
-        /* @var $this SiteController */
-        /* @var $model LoginForm */
-        /* @var $form CActiveForm  */
-
         $this->pageTitle = Yii::app()->name . ' - Importer';
         $this->breadcrumbs = array(
             'Importer',
         );
         ?>
 
-        <?php
-        /* @var $this SiteController */
-
-//include_once($_SERVER['DOCUMENT_ROOT'] . "/PedigreeImport/model/configDB.php");
-        ?>
 
         <span id="ajax-loading-indicator">
         </span>
         <?php
         /** @var BootActiveForm $form */
-        $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+           $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
             'type' => 'horizontal',
             'id' => 'pedigreeImport',
-            'action' => array('/site/importFileDisplay'),
+            'method' =>'post',
+            'enableAjaxValidation' => false,
+            'htmlOptions' => array('class'=>'well','enctype' => 'multipart/form-data'),
+            'action' => array('site/importFileDisplay')
         ));
         ?>
 
@@ -75,19 +59,12 @@
                         <fieldset>
                             <legend>Upload File</legend>
                             <br>
-                            <?php
-                            /* $file1 =dirname(__FILE__).'/../../modules/germplasmList.csv';
-                              echo CHtml::error($model, 'file');
-                              echo CHtml::activeFileField($model, 'file'); */
+                           <?php
+                                //echo $form->labelEx($model, 'file');
+                                echo CHtml::activefileField($model, 'file');
+                                echo CHtml::error($model, 'file');
                             ?>
-                            <div class="form-horizontal">
-                                <?php
-                                $model->LoadSampleFile = 'germplasmList.csv';
-                                //echo $form->labelEx($model,'LoadSampleFile'); 
-                                echo $form->textFieldRow($model, 'LoadSampleFile', array('class' => 'input-medium', 'readOnly' => true));
-                                ?>
-                            </div>
-
+                            <a href="Sample File/Sample1.htm">View Sample File</a> <br>
                             <label>Location</label>
                             <?php
                             $myfile = dirname(__FILE__) . '/../../../csv_files/location.csv';

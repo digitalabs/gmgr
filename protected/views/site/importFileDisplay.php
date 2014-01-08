@@ -59,10 +59,18 @@
     $this->widget('ext.selgridview.BootSelGridView', array(
         'id' => 'pedigreeGrid',
         'dataProvider' => $dataProvider,
+        'beforeAjaxUpdate' => 'js:
+                function (id, options) {
+                    options.data = {
+                        list: $("#list").val(),
+                        location: $("#location").val()
+                    };
+                    options.type = "post";
+                }
+            ',
         'filter' => $filtersForm,
-        'ajaxUpdate' => false,
         'selectableRows' => 10,
-        //'enablePagination' => true,
+        'enablePagination' => true,
         'columns' => array(
             array(
                 'header' => 'Cross Name',
@@ -127,6 +135,7 @@
 
 //echo "</div>";
     ?> 
+   
 </body>
 
 <script type="text/javascript">

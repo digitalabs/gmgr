@@ -1,139 +1,103 @@
-var margin = {top: 950, right: 50, bottom: 100, left: 700},
-	/*{
-		top: 200,
-		right: 50,
-		bottom: 200,
-		left: 570 //1370
-	},*/
-	
-	customNodes = new Array(),
-	layer_wider_label = new Array(),
-	label_w = 70,
-    branch_w = 70,
-	m = [100, 500, 100, 500],
-	realWidth = window.innerWidth,
-	realHeight = window.innerHeight,
-	h = realHeight,// -m[0] -m[2],
-	w = realWidth,// -m[0] -m[0], 
-	width = 2000,// - margin.right - margin.left,//width = 3700 - margin.right - margin.left,
-	height = 700 - margin.top - margin.bottom;//height = 2050 - margin.top - margin.bottom;
+var orientation = {
+  "": {
+    size: [width, height],
+    x: function(node) { return node.x; },
+    y: function(node) { return height - node.y; }
+  }, 
+};
 
-	//read from file
-	
-	var temp = document.getElementById('inputGID').value;
-	
-	if(temp=="50533")
-	{
-		var root = (function () {
-				var json = null;
-				$.ajax({
-					'async': false,
-					'global': false,
-					'url': "/../gmgr/json_files/tree3.json",
-					'dataType': "json",
-					'success': function (data) {
-						json = data;
-					}
-				});
-				return json;
-				})(); 
-	}
-	
-	else if(temp=="256389")
-	{
-		var root = (function () {
-				var json = null;
-				$.ajax({
-					'async': false,
-					'global': false,
-					'url': "/../gmgr/json_files/tree4.json",
-					'dataType': "json",
-					'success': function (data) {
-						json = data;
-					}
-				});
-				return json;
-				})(); 
-	}
-	
-	else
-	{
-		var root = (function () {
-				var json = null;
-				$.ajax({
-					'async': false,
-					'global': false,
-					'url': "/../gmgr/json_files/tree3.json",
-					'dataType': "json",
-					'success': function (data) {
-						json = data;
-					}
-				});
-				return json;
-				})();
-	}
-	
-	
-	var i = 0,
-		duration = 550,
-		rectW = 80,
-		rectH = 17,
-		ms;
+//alert("Hello");
 
-	var tree = d3.layout.tree().nodeSize([120, 50]);
+var data = (function () {
+    var jason = null;
+    $.ajax({
+        'async': false,
+        'global': false,
+        'url': "/../gmgr/json_files/tree6.json",
+        'dataType': "json",
+        'success': function (data) {
+            jason = data;
+        }
+    });
+    return jason;
+})(); 
 
-	var diagonal = d3.svg.diagonal()
-					 .projection(function (d) {
-						return [d.x + rectW / 2, (height-d.y) + rectH / 2];
-					 });
+var realWidth = window.innerWidth;
+var realHeight = window.innerHeight;
+var margin = {top: 950, right: 50, bottom: 200, left: 1500},
+	m = [100, 500, 100, 500],     
+    width = 2000 - margin.left - margin.right,
+    height = 5050 - margin.top - margin.bottom,
+    h = realHeight -m[0] -m[2],
+	rectW = 200,
+    rectH = 100,
+    i = 0,
+    w = realWidth -m[0] -m[0];  
 
-	var svg = d3.select("#graphDiv").append("svg:svg")
-				.attr("width", width + margin.right + margin.left)
-				.attr("height", height + margin.top + margin.bottom)
-				.append("g")
-				.attr("class","drawarea")
-				.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-				
-	d3.select("#generate").on("click", writeDownloadLink);
-	
+var customNodes = new Array(),
+        tmpNodes,
+        label_w = 8,
+        branch_w = 30,
+        layer_wider_label = new Array(),
+        depencencyChart;
+		
+//function graph2() {
 	var ms = document.getElementById('maxStep').value;
-	var tmpNodes = d3.layout.tree().size([450, 300]).nodes(root);
+	//alert(ms);
 	
-//function graph2()
-//{
+	$('#graphDiv').css({
+		 '-moz-transform':'rotate(270deg)',
+		 '-webkit-transform':'rotate(270deg)',
+		 '-o-transform':'rotate(270deg)',
+		 '-ms-transform':'rotate(270deg)',
+		 'transform':'rotate(270deg)'
+	});
 	
-	root.x0 = function(d) { return d.x; };//0;
-	root.y0 = function(d) { return height - d.y; };//height / 2;
-	//alert('success');
-	root.depth = parseInt(root.layer);
-	customNodes.push(root);
-	prepareNodes(root.children);
-	updateNodesXOffset();
+    tmpNodes = d3.layout.tree().size([1300, 500]).nodes(data)
+				 //.on("click", click)	;//;
 	
-	//root.children.forEach(collapse);
-	update(root);
+					
+	//Create a svg canvas
+    depencencyChart = d3.select("#graphDiv").append("svg:svg")
+			//.data(d3.entries(orientation))
+            .attr("width", 6000)
+            .attr("height", 5500)
+            .append("svg:g")
+			.attr("class","drawarea")
+            .attr("transform", "translate(0, 900)") // shift everything to the right
+			
+			
 
-	d3.select("#graphDiv").style("height", "5000px").style("width","3000px")
+    var fakeTxtBox = depencencyChart.append("svg:text")
+            .attr("id", "fakeTXT")
+            .attr("text-anchor", "left")
+            .text(data.name + "(" + data.gid + ")")
+			//.on("click", click);
+    layer_wider_label[0] = fakeTxtBox.node().getComputedTextLength();
+    depencencyChart.select("#fakeTXT").remove();
+    data.y = getNodeY(data.id);
+    data.x = 0;
+			
+    data.depth = parseInt(data.layer);
+    customNodes.push(data);//.on("click", click);	
+    prepareNodes(data.children);//.on("click", click(data));
+    //align nodes.
+    updateNodesXOffset()
+
+    if(ms==""||ms==" "||ms=="All")
+		drawChart2();
+	else
+		drawChart(ms);
 	
-	//show_svg_code();
-	
-	
-	
-	function collapse(d) 
-	{
-		if (d.children) 
-		{
-			d._children = d.children;
-			d._children.forEach(collapse);
-			d.children = null;
-		}
-	}
-	
-	
-	/*d3.select("svg")
-	  .call(d3.behavior.zoom()
-      .scaleExtent([0.5,5])
-      .on("zoom", zoom));*/
+	function collapse(data) {
+        if (data.children) {
+            data._children = data.children;
+            data._children.forEach(collapse);
+            data.children = null;
+        }
+    }
+
+    data.children.forEach(collapse);
 //}
 
 function updateNodesXOffset(){
@@ -146,41 +110,6 @@ function updateNodesXOffset(){
             x_offsets[node.layer] = node.x;
         }
     });
-}
-
-function prepareNodes(nodes) {
-    nodes.forEach(function(node) {
-		//alert('try');
-        prepareNode(node);
-        if (node.children) {
-            prepareNodes(node.children);
-        }
-    });
-}
-
-function prepareNode(node) {
-    node.y = getNodeY(node.id);
-		//.on("click", click);
-    //fake element to calculate labels area width.
-    var fakeTxtBox = svg.append("svg:text")
-            .attr("id", "fakeTXT")
-            .attr("text-anchor", "right")
-            .text(node.name + " : " + node.gid)
-			//.on("click", click(node));
-    var this_label_w = fakeTxtBox.node().getComputedTextLength();
-    svg.select("#fakeTXT").remove();
-    if (layer_wider_label[node.layer] == null) {
-        layer_wider_label[node.layer] = this_label_w;
-    } else {
-        if (this_label_w > layer_wider_label[node.layer]) {
-            layer_wider_label[node.layer] = this_label_w;
-        }
-    }
-//                node.x = nodex;
-    //x will be set
-    node.depth = parseInt(node.layer);
-    customNodes.push(node);
-	//node.on("click", click(node));
 }
 
 function getNodeY(id) {
@@ -196,184 +125,242 @@ function getNodeY(id) {
     return ret;
 }
 
-function update(source) 
-{
-    // Compute the new tree layout.
-    var nodes = tree.nodes(root).reverse(),
-        links = tree.links(nodes,function (d) {
-			return d.id || (d.id = ++i)
-			});
-
-    // Normalize for fixed-depth.
-    nodes.forEach(function (d) {
-        d.y = d.depth * 100;
-    });
+function prepareNodes(nodes) {
+    nodes.forEach(function(node) {
+		//alert('try');
+        prepareNode(node);
+        if (node.children) {
+            prepareNodes(node.children);
+        }
+		//alert(node.name);
+    })
 	
-    // Update the nodes…
-    var node = svg.selectAll("g.node")
-        .data(nodes, function (d) {
-			return d.id || (d.id = ++i);
-    });
-	//if(node.depth <= ms){
-    // Enter any new nodes at the parent's previous position.
-    var nodeEnter = node.enter()
-						.append("g")
-						.attr("class", "node")
-						.attr("transform", function (d) {
-							return "translate(" + source.x0 + "," + source.y0 + ")";
-						})
-						.on("click", click);
-	
-	//var txtBox = nodeEnter.append("text")
-    
-	//var txtW = txtBox.node().getComputedTextLength();
-	/*nodeEnter.append("rect","text")
-			 .attr("width", rectW)
-			 .attr("height", rectH)
-			 .attr("stroke", "black")
-			 .attr("stroke-width", 0.5)
-			 .attr("rx", 4)
-             .attr("ry", 4)
-			 .style("fill", function (d) {
-				return d._children ? "#0099FF" : "#fff";
-			 });*/
+}
 
+function prepareNode(node) {
+    node.y = getNodeY(node.id);
+	
+    //fake element to calculate labels area width.
+    var fakeTxtBox = depencencyChart.append("svg:text")
+            .attr("id", "fakeTXT")
+            .attr("text-anchor", "right")
+            .text(node.name + " : " + node.gid)
+		
+    var this_label_w = fakeTxtBox.node().getComputedTextLength();
+    depencencyChart.select("#fakeTXT").remove();
+    if (layer_wider_label[node.layer] == null) {
+        layer_wider_label[node.layer] = this_label_w;
+    } else {
+        if (this_label_w > layer_wider_label[node.layer]) {
+            layer_wider_label[node.layer] = this_label_w;
+        }
+    }
+	
+    node.depth = parseInt(node.layer);
+    customNodes.push(node);
+}
+
+function customSpline(d) {
+    var p = new Array();
+    p[0] = (d.source.x-35) + "," + d.source.y;
+    p[3] = (d.target.x-10) + "," + d.target.y;
+    var m = (d.source.x + d.target.x)  / 2
+    p[1] = m + "," + d.source.y;
+    p[2] = m + "," + d.target.y;
+    //This is to change the points where the spline is anchored
+    //from [source.right,target.left] to [source.top,target.bottom]
+               // var m = (d.source.y + d.target.y)/2
+               // p[1] = d.source.x + "," + m;
+               // p[2] = d.target.x + "," + m;
+    //return "M" + p[0] + "C" + p[1] + " " + p[2] + " " + p[3];
+	return "M" + p[3] + "C" + p[2] + " " + p[1] + " " + p[0];
+	
+}
+
+function drawChart(ms) {
+	var cnt=0;
+	
+    customNodes.forEach(function(node) { //alert(node.layer);
+		if(node.depth <= ms){
+		cnt++;
+        var nodeSVG = depencencyChart.append("svg:g")
+                .attr("transform", "translate(" + node.x + "," + node.y + ")")
+				.enter()
+				.append("g")
+				//.on("click",click)
+				
+		
+		//alert(node.depth);		
+        if (node.depth > 0) {
+            nodeSVG.append("svg:circle")
+                    .attr("stroke", node.children ? "#3191c1" : "#269926")
+                    .attr("fill", "#fff")
+                    .attr("r", 3)
+					
+        }
+        var txtBox = nodeSVG.append("svg:text")
+				//.on("click", click)
+				//.attr("class", "name")
+                .attr("dx", 8)
+                .attr("dy", 4)
+                //.attr("fill", node.current ? "#ffffff" : node.children ? "#226586" : "#269926")
+				//.attr("fill", node.current ? "#ffffff" : node.children ? "#ffffff" : "#ffffff")
+                .text(node.name)
+				//.style("stroke", "black")
+				//.on("click", click)
+				var txtW = txtBox.node().getComputedTextLength();
+				nodeSVG.insert("rect", "text")
+                    .attr("fill", node.children ? "#3191c1" : "#3191c1")
+					.attr("stroke", "black")
+                    .attr("width", txtW + 8)
+                    .attr("height", "20")
+                    .attr("y", "-12")
+                    .attr("x", "5")
+                    .attr("rx", 4)
+                    .attr("ry", 4)
+				
+				//.on("click", click(node))
+		
+		//if(cnt <= ms){
+        if (node.children) {
+            node.x = node.x + txtW + 20;
+            //prepare links;
+            var links = new Array();
+            node.children.forEach(function(child) {
+                var st = new Object();
+                st.source = node;
+//                        st.parent = node;
+                st.target = child;
+                st.warning = child.warning;
+                links.push(st);
+            })
+			//.on("click", click);
 			
-    nodeEnter.append("text")
-			 .attr("x", rectW / 2)
-			 .attr("y", (rectH-40) / 2)
-			 .attr("stroke", node.current ? "#ffffff" : node.children ? "#ffffff" : "#000000")
-			 .attr("stroke-width", 0.5)
-			 //.attr("stroke", "white")
-			 .attr("dy", ".15em")
-			 .attr("text-anchor", "middle")
-			 .text(function (d) {
-				return d.name;
-			 });
-	
-	nodeEnter.append("text")
-			 .attr("x", rectW / 2)
-			 .attr("y", (rectH-10) / 2)
-			 .attr("stroke", node.current ? "#ffffff" : node.children ? "#ffffff" : "#000000")
-			 .attr("stroke-width", 0.5)
-			 //.attr("stroke", "white")
-			 .attr("dy", ".15em")
-			 .attr("text-anchor", "middle")
-			 .text(function (d) {
-				return "("+d.gid+")";
-			 });
-	
-			 
-    // Transition nodes to their new position.
-    var nodeUpdate = node.transition()
-						 .duration(duration)
-						 .attr("transform", function (d) {
-							return "translate(" + d.x + "," + (height-d.y) + ")";
-						 });
-
-    nodeUpdate.select("rect","text")
-			  .attr("width", rectW)
-			  .attr("height", rectH)
-			  .attr("stroke", "black")
-			  .attr("stroke-width", 0.5)
-			  .attr("rx", 4)
-              .attr("ry", 4)
-			  .style("fill", function (d) {
-				return d._children ? "#0099FF" : "#fff";
-			  });
-
-    nodeUpdate.select("text")
-			  .style("fill-opacity", 1);
-
-    // Transition exiting nodes to the parent's new position.
-    var nodeExit = node.exit()
-					   .transition()
-					   .duration(duration)
-					   .attr("transform", function (d) {
-							return "translate(" + source.x + "," + (height-source.y) + ")";
-					   })
-					   .remove();
-
-    nodeExit.select("rect")
-			.attr("width", rectW)
-			.attr("height", rectH)
-			.attr("stroke", "black")
-			.attr("stroke-width", 1);
-
-    nodeExit.select("text");
-	
-    // Update the links…
-    var link = svg.selectAll("path.link")
-				  .data(links, function (d) {
-					return d.target.id;
-				  });
-				  //.attr("class", function(d) {
-                  //   return d.method === "true" ? "link method" : "link"});
-
-	link.enter().insert("text", "g")
-			  .attr("x", function(d) { return (d.source.x+d.target.x)/2; })
-			  .attr("y", function(d) { return (d.source.y+d.target.y)/2; })
-			  .text(function(d) { return d.target.meth; });
-			  
-    //link.exit().transition().duration(duration) .text(function(d) { return d.target.size; }) .remove();
-    // Enter any new links at the parent's previous position.
-    link.enter().insert("path", "g")
-		.attr("class", "link")
-		//.style("stroke", function(d) { return d.method === "true" ? "#33CC33" : "#FF9900"; })
-        .attr("class", function(d) {
-                return d.method === "true" ? "link method" : "link"
+            //draw links (under nodes)
+            depencencyChart.selectAll("pathlink")
+                    .data(links)
+                    .enter().insert("svg:path", "g")
+                    .attr("class", function(d) {
+                return d.warning === "true" ? "link warning" : "link"
             })
-        .attr("x", rectW / 2)
-        .attr("y", rectH / 2)
-		//.text(function(d) { return d.target.methodname; })
-        .attr("d", function (d) {
-			var o = {
-				x: source.x0,
-				y: (height-source.y0)
-			};
-			return diagonal({
-				source: o,
-				target: o
-			});
-		});
-
-    // Transition links to their new position.
-    link.transition()
-        .duration(duration)
-		.attr("class", function(d) {
-                return d.method === "true" ? "link method" : "link"
-            })
-        .attr("d", diagonal);
-
-    // Transition exiting nodes to the parent's new position.
-    link.exit().transition()
-        .duration(duration)
-        .attr("d", function (d) {
-			var o = {
-				x: source.x.id,
-				y: (height-source.y0)
-			};
-			return diagonal({
-				source: o,
-				target: o
-			});
-		})
-		.attr("class", function(d) {
-                return d.method === "true" ? "link method" : "link"
-            })
-        .remove();
-
-    // Stash the old positions for transition.
-    nodes.forEach(function (d) {
-        d.x0 = d.y;
-        d.y0 = d.x;
+                    .attr("d", customSpline)
+				
+					
+            //draw a node at the end of the link
+            nodeSVG.append("svg:circle")
+                    .attr("stroke", "#3191c1")
+                    .attr("fill", "#fff")
+                    .attr("r", 5.5)
+					//.on("click", click(node))
+                    .attr("transform", "translate(" + (txtW + 20) + ",0)");
+		//}
+        }
+		//node.on("click", click(node));
+		
+		}
+		
     });
-	//}
+}
+
+function drawChart2(node) {
+	
+	var cnt=0;
+	
+    customNodes.forEach(function(node) {
+		//if(node.depth <= ms){
+		cnt++;
+		
+        var nodeSVG = depencencyChart.append("svg:g")
+                .attr("transform", "translate(" + node.x + "," + (node.y) + ")")
+				
+				
+		if (node.depth > 0) {
+            nodeSVG.append("svg:circle")
+                    .attr("stroke", node.children ? "#3191c1" : "#269926")
+                    .attr("fill", "#fff")
+                    .attr("r", 3)
+					.attr("cy", 0)
+					.attr("cx", -6)
+					
+        }
+		
+		//
+        var txtBox = nodeSVG.append("svg:text")
+				.attr("class", "name")
+                .attr("dx", -19)
+                .attr("dy", -5)
+                .text(node.name)
+				.attr("transform", function(d) {
+					return "rotate(90)" 
+				})
+				.on("click", function(d,i) { click(node); })
+				
+				var txtW = txtBox.node().getComputedTextLength();
+			
+		//if(cnt <= ms){
+        if (node.children) {
+            node.x = node.x + txtW + 20;
+			
+            //prepare links;
+            var links = new Array();
+            node.children.forEach(function(child) {
+                var st = new Object();
+                st.source = node;
+                st.target = child;
+                st.warning = child.warning;
+                links.push(st);
+				
+            })
+			
+			
+            //draw links (under nodes)
+            depencencyChart.selectAll("pathlink")
+                    .data(links)
+                    .enter().insert("svg:path", "g")
+                    .attr("class", function(d) {
+						return d.warning === "true" ? "link warning" : "link"
+					})
+                    .attr("d", customSpline)
+					//.on("click",click(node))
+		
+			//draw a node at the end of the link
+            nodeSVG.append("svg:circle")
+                    .attr("stroke", "#3191c1")
+                    .attr("fill", "#fff")
+                    .attr("r", 5.5)
+                    .attr("transform", "translate(" + (txtW+10) + ",0)")
+					.attr("cx", -30);
+			//}
+					
+        }
+		
+		//}
+		
+    });
+}
+
+function zoom() {
+    var scale = d3.event.scale,
+        translation = d3.event.translate,
+        tbound = -h * scale,
+        bbound = h * scale,
+        lbound = -w * scale,//lbound = (-w - m[1]) * scale,
+        rbound = w * scale;//rbound = (w - m[3]) * scale;
+    // limit translation to thresholds
+	
+    translation = [
+        Math.max(Math.min(translation[0], rbound), lbound),
+        Math.max(Math.min(translation[1], bbound), tbound)
+    ];
+    d3.select(".drawarea")
+        .attr("transform", "translate(" + translation + ")" +
+              " scale(" + scale + ")");
 }
 
 // Toggle children on click.
 function click(d) 
 {
+	//alert(d.gid);
     if (d.children) 
 	{
         d._children = d.children;
@@ -385,10 +372,10 @@ function click(d)
         d._children = null;
     }
 	
-    update(d);
+    //update(d);
 	
 	document.getElementById('gid').innerHTML = d.gid;
-	document.getElementById('hidGID').value = d.gid;
+	//document.getElementById('hidGID').value = d.gid;
     document.getElementById('gname').innerHTML = d.name;
 	document.getElementById('gmethod').innerHTML = d.methodname;
 	document.getElementById('gmtype').innerHTML = d.methodtype;
@@ -419,61 +406,6 @@ function click(d)
 	else document.getElementById('d3').innerHTML = d.dates2;
 }
 
-function zoom() 
-{
-    var scale = d3.event.scale,
-        translation = d3.event.translate,
-        tbound = -h * scale,
-        bbound = h * scale,
-        lbound = (-w + m[1]) * scale,
-        rbound = (w - m[3]) * scale;
-		
-    // limit translation to thresholds
-    translation = [
-        Math.max(Math.min(translation[0], rbound), lbound),
-        Math.max(Math.min(translation[1], bbound), tbound)
-    ];
-	
-    d3.select(".drawarea")
-      .attr("transform", "translate(" + translation + ")" + " scale(" + scale + ")");
-}
-
-function submit_download_form(output_format)
-{
-	// Get the d3js SVG element
-	var tmp = document.getElementById("graphDiv");
-	var svg = tmp.getElementsByTagName("svg")[0];
-	// Extract the data as SVG text string
-	var svg_xml = (new XMLSerializer).serializeToString(svg);
-
-	// Submit the <FORM> to the server.
-	// The result will be an attachment file to download.
-	var form = document.getElementById("svgform");
-	form['output_format'].value = output_format;
-	form['data'].value = svg_xml ;
-	form.submit();
-}
-
-function show_svg_code()
-{
-	// Get the d3js SVG element
-	var tmp  = document.getElementById("graphDiv");
-	var svg = tmp.getElementsByTagName("svg")[0];
-
-	// Extract the data as SVG text string
-	var svg_xml = (new XMLSerializer).serializeToString(svg);
-
-	//Optional: prettify the XML with proper indentations
-	svg_xml = vkbeautify.xml(svg_xml);
-
-	// Set the content of the <pre> element with the XML
-	$("#svg_code").text(svg_xml);
-
-	//Optional: Use Google-Code-Prettifier to add colors.
-	prettyPrint();
-}
-
-//function to save D3 diagram as image (PNG)
 function writeDownloadLink()
 {
     var html = d3.select("svg")
@@ -502,4 +434,3 @@ function writeDownloadLink()
         .duration(500)
         .style("opacity", 1);
 }
-

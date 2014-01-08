@@ -68,10 +68,10 @@ return array(
 		
          'db'=>array(
 		    'class'=>'CDbConnection',
-			'connectionString' => 'mysql:host=localhost;dbname=central',
+			'connectionString' => 'mysql:host=localhost;dbname=iris_mysiam_20121002',
 			'emulatePrepare' => true,
-			'username' => 'root',
-			'password' => '',
+			'username' => 'datasourceuser',
+			'password' => 'ici$rule$',
 			'charset' => 'utf8',
 
 		),/*

@@ -16,11 +16,10 @@ class file_toArray {
         
     }
 
-    public function uploadedFile() {
-
+    public function uploadedFile($filePath) {
 
         //$f = fopen($_FILES["file"]["name"], "r");
-        $filePath = dirname(__FILE__) . '/../../csv_files/germplasmList.csv';
+        //$filePath = dirname(__FILE__) . '/../../csv_files/germplasmList.csv';
         $f = fopen($filePath, "r");
 
         //get headers

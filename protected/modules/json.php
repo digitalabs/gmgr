@@ -31,10 +31,10 @@ class json {
         $this->toFile($jsonfile, $data);
     }
 
-    function getFile() {
+    function getFile($file) {
 
         $file_toArray = new file_toArray();
-        $array = $file_toArray->uploadedFile();
+        $array = $file_toArray->uploadedFile($file);
 
         $a = array('list' => $array,
             'locationID' => $this->data
