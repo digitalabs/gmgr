@@ -1,4 +1,5 @@
 <?php
+session_start();
 /* @var $this SiteController */
 /* @var $model LoginForm */
 /* @var $form CActiveForm  */
@@ -18,12 +19,16 @@ if (isset($_GET['searchBtn']))
 	echo "Success";
 }
 
+//$ssAct=$_REQUEST["ssAct"];
+//$ssName=$_REQUEST["inputGID"];
+	 
+//$GIDval = $_POST['inputGID'];
 
 ?>
 
-<html>
+<html ng-app="my-app">
 <head>
-<body>
+<body ng-controller="AppController">
 <meta charset="utf-8">
 	<!-- blueprint CSS framework -->
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/editor.css" />
@@ -39,9 +44,9 @@ if (isset($_GET['searchBtn']))
                           <button type="button" class="btn">GID</button>    
                       </div>-->
 					  <form action="index.php?r=site/editor" method="post">
-						<input title="This feature is a work in progress" style="width:155px;height:30px;" class="span2" id="inputGID" name="inputGID" type="text" placeholder="Search by GID">
-						<button name="searchBtn" id="searchBtn" class="btn btn-primary" onclick="validate()" type="submit">GO</button>
-					  
+						<input title="This feature is a work in progress" style="width:255px;height:30px;" class="span2" id="inputGID" name="inputGID" type="text" placeholder="Search by GID">
+						<button name="searchBtn" id="searchBtn" onclick="clik()" class="btn btn-primary" type="submit">GO</button>
+				
 					  </div>  
                              
             </div>
@@ -61,7 +66,7 @@ if (isset($_GET['searchBtn']))
 					</svg>
 						<div id="graphDiv" width="5000" style="width:2000px;"></div>
 					</div> -->
-					<div id="graph" style="height: auto;width: auto;" height="6500">
+					<div id="graph" style="height: auto;width: auto;" height="1000">
 						<svg width="3500" height="5000" style="height: auto;width: auto;" id="graphDiv"></svg>
 					</div>
 					
@@ -169,7 +174,7 @@ if (isset($_GET['searchBtn']))
                     <!--<div id="graphDiv" style="z-index:50;">-->
 					<!--<a href="#" id="generate">Generate download preview</a>	-->
 					</div>
-                    <div class="div-gradient" style="z-index:0;padding-left: 0px; width: 200px;height:730px;text-align: justify;position:fixed;right:40px;top:115px;bottom:20px;
+                    <div class="div-gradient" style="z-index:0;padding-left: 0px; width: 300px;height:730px;text-align: justify;position:fixed;right:40px;top:115px;bottom:20px;
 														-webkit-box-shadow: 3px 3px 16px rgba(50, 50, 50, 0.75);
 														-moz-box-shadow:    3px 3px 16px rgba(50, 50, 50, 0.75);
 														box-shadow:         3px 3px 16px rgba(50, 50, 50, 0.75);">
@@ -196,7 +201,7 @@ if (isset($_GET['searchBtn']))
                         <div style="padding-left:5px;padding-right:5px;"><hr></div>
                         <center>
 						<div style="padding-left:5px;padding-right:5px;">Basic Information
-						<button style="width:50px" name="showMore" id="showMore" class="btn btn-primary" onclick="validate()" type="submit">Edit</button>
+						<!--<button style="width:50px" name="showMore" id="showMore" class="btn btn-primary" onclick="validate()" type="submit">Edit</button>-->
 						</center> 
 						
 						<br>
@@ -212,15 +217,26 @@ if (isset($_GET['searchBtn']))
                         <table style="border-collapse: separate !important;border-radius: 6px 6px 6px 6px;
 							-moz-border-radius: 6px 6px 6px 6px;
 							-webkit-border-radius: 6px 6px 6px 6px;
-							box-shadow: 0 1px 1px #CCCCCC;
-							
-							" class="table table-hover table-condensed">
+							box-shadow: 0 1px 1px #CCCCCC;" class="table table-hover table-condensed">
+							<tr>
+								<th></th>
+								<th>Value</th>
+								<th>Action</th>
+							</tr>
                             <tr><td width="50px" bgcolor="#0080FF" style="color: white;"><small>GID</td>
 								<td name="gid" id="gid"  align="left" bgcolor="white" style=" vertical-align: left; text-align: left;">
 								</td>
 								<input type="hidden" id="hidGID" name="hidGID">
 							</tr>
-                            <tr><td bgcolor="#0080FF" style="color: white;"><small>Name</td><td id="gname" bgcolor="white" style=" vertical-align: left; text-align: left;"></td></tr>
+                            <tr ng-repeat="record in records"><td bgcolor="#0080FF" style="color: white;"><small>Name</td>
+								<td ng-repeat="cell in record.cells" id="gname" bgcolor="white" style=" vertical-align: left; text-align: left;">
+									<input ng-show="mode == 'edit'" ng-model="cell.value" />
+								</td>
+								<td width="40px">
+								  <button class="btn btn-mini btn-primary" ng-show="mode != 'edit'" ng-click="update(this)">Edit</button>
+								  <button class="btn btn-mini btn-success" ng-show="mode == 'edit'" ng-click="mode = null">Save</button>
+								</td>
+							</tr>
                             <tr><td bgcolor="#0080FF" style="color: white;"><small>Method</td><td id="gmethod" bgcolor="white" style=" vertical-align: left; text-align: left;"></td></tr>
                             <tr><td bgcolor="#0080FF" style="color: white;"><small>Method Type</td><td id="gmtype" bgcolor="white" style=" vertical-align: left; text-align: left;"></td></tr>
                             <tr><td bgcolor="#0080FF" style="color: white;"><small>Date</td><td id="gdate" bgcolor="white" style=" vertical-align: left; text-align: left;"></td></tr>
@@ -272,7 +288,14 @@ if (isset($_GET['searchBtn']))
             <!--</div>-->
             <br><br><br><br><br><br>
         <!-- end editor content -->
+		<?php
 		
+			if (isset($_POST['searchBtn'])) 
+			 { 
+				$_SESSION['GID'] = $_POST['inputGID'];
+			 } 
+		
+		?>
 				<!-- Hidden <FORM> to submit the SVG data to the server, which will convert it to SVG/PDF/PNG downloadable file.
 			 The form is populated and submitted by the JavaScript below. -->
 		<form id="svgform" method="post" action="download.pl">
@@ -280,6 +303,9 @@ if (isset($_GET['searchBtn']))
 		 <input type="hidden" id="data" name="data" value="">
 		</form>
         
+		<script src='http://code.jquery.com/jquery-1.9.1.min.js'></script>
+		<script src='<?php echo Yii::app()->baseUrl;?>/js/jquery.storage.js'></script>
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js"></script>
         <script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/d3.v3.min.js"></script>
         <script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/editor4.js"></script>
 		<!--<script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/editor5b.js"></script>
@@ -293,6 +319,60 @@ if (isset($_GET['searchBtn']))
 		<script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/svgenie.js"></script>
         <script type="text/javascript">
 		
+		/*$('#searchBtn').click(function() {
+			var val = $('#inputGID').val();
+			alert(val);
+			
+			//document.getElementById('inputGID').value = val;
+			$('#inputGID').val() = val;
+			
+			
+		});
+		localStorage.setItem( 'GID', val );*/
+		document.getElementById('inputGID').value = $.localStorage('GID');
+		document.getElementById('maxStep').value = $.localStorage('level');
+		
+		function clik()
+		{
+		  //alert(jQuery("input#inputGID").val())
+		  $.localStorage('GID', jQuery("input#inputGID").val());
+		  $.localStorage('level', jQuery("input#maxStep").val());
+		  //document.getElementById('inputGID').value = jQuery("input#inputGID").val();
+		}
+		
+		var app = angular.module('my-app', [], function () {
+
+			})
+
+			app.controller('AppController', function ($scope) {
+			  var i, j, row;
+			  
+			  $scope.columns = [];
+			  for(j = 0; j < 5; j++){
+				$scope.columns.push({ column_name: 'Column' + j })
+			  }
+			  
+			  //$scope.records = [];
+			  $scope.records = name;
+			  
+			  /*for(i = 0; i < 10; i++){
+				row = [];
+				for(j = 0; j < 5; j++){
+				  row.push({value : 'R' + i + 'C' + j })
+				}
+				$scope.records.push({
+				  cells: row
+				});
+			  }*/
+			  
+			  $scope.update = function(repeat$scope){
+				repeat$scope.mode = 'edit';
+				//do what ever you want to do
+			  }
+			  
+			})
+			
+			//window.scroll(100,200);
 			function conceal() {      
 					if(document.getElementById('benefits').style.display=='block') {
 					  document.getElementById('benefits').style.display='none';
@@ -391,6 +471,25 @@ if (isset($_GET['searchBtn']))
 			   CClientScript::POS_READY
 			);
 			?>
+			
+			function reload(GID)
+			{
+				/*var val1=document.form1.fname.value ;
+				var val2=document.form1.mname.value ;
+				var val3=document.form1.lname.value ;
+				
+				//// For radio button value to collect ///
+				for(var i=0; i < document.form1.type.length; i++)
+				{
+					if(document.form1.type[i].checked)
+					var val4=document.form1.type[i].value 
+				}
+
+				self.location='retain.php?fname=' + val1 + '&mname=' + val2 + '&lname=' + val3 + '&type=' + val4;*/
+				document.getElementById('inputGID').value = GID;
+
+			}
+			
 			
 			
         </script>
