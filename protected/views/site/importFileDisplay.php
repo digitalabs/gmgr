@@ -59,9 +59,18 @@
     $this->widget('ext.selgridview.BootSelGridView', array(
         'id' => 'pedigreeGrid',
         'dataProvider' => $dataProvider,
+        'beforeAjaxUpdate' => 'js:
+                function (id, options) {
+                    options.data = {
+                        list: $("#list").val(),
+                        location: $("#location").val()
+                    };
+                    options.type = "post";
+                }
+            ',
         'filter' => $filtersForm,
         'selectableRows' => 10,
-        //'enablePagination' => true,
+        'enablePagination' => true,
         'columns' => array(
             array(
                 'header' => 'Cross Name',
@@ -125,22 +134,23 @@
 
 //echo "</div>";
     ?> 
+   
 </body>
 
 <script type="text/javascript">
-   function storeLocal(){
+    function storeLocal() {
         if ('localStorage' in window && window['localStorage'] != null) {
             try {
                 localStorage.removeItem("locationID");
                 localStorage.removeItem("list");
-            
-                var list= <?php echo json_encode($list); ?>;
-                
+
+                var list = <?php echo json_encode($list); ?>;
+
                 console.log(JSON.stringify(<?php echo json_encode($list); ?>));
-                document.getElementById('list').value=list;
-                localStorage.setItem('list', JSON.stringify(<?php echo json_encode($list); ?>));  
-                
-                var locationID=document.getElementById('location').value;
+                document.getElementById('list').value = list;
+                localStorage.setItem('list', JSON.stringify(<?php echo json_encode($list); ?>));
+
+                var locationID = document.getElementById('location').value;
                 //var list=document.getElementById('list').value;
                 //console.log("ss"+locationID);
                 //console.log("sssw"+list);
@@ -153,7 +163,7 @@
         } else {
             alert('Cannot store user preferences as your browser do not support local storage');
         }
-   }
+    }
     window.addEventListener('storage', storageEventHandler, false);
     function storageEventHandler(event) {
         storeLocal();
