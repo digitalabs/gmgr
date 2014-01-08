@@ -314,7 +314,7 @@ class SiteController extends Controller {
                         $location = $_POST['location'];
 
                         if (isset($_POST['refresh'])) {
-                            // echo "refresh";
+                             echo "refresh";
                             $location = $_POST['location'];
                             $locationID = $location;
                             $list = json_decode($_POST['list']);
@@ -365,7 +365,7 @@ class SiteController extends Controller {
                         </form>  
                     </body>
                 </html>
-
+                    
                 <?php
                 $dir = dirname(__FILE__) . '/../../uploadedFiles';
                 $newName = "germplasmFile.csv";
@@ -376,13 +376,13 @@ class SiteController extends Controller {
 
                 if (isset($_POST['location'])) {
                     $location = $_POST['location'];
-
+                   
                     if (isset($_POST['refresh'])) {
                         //echo "refresh";
                         $location = $_POST['location'];
                         $locationID = $location;
                         $list = json_decode($_POST['list']);
-                    } else {
+                    } /*else {
                         //echo "no refresh";
                         $location = $_POST['location'];
                         $locationID = $location;
@@ -390,7 +390,7 @@ class SiteController extends Controller {
                         $output = $json->getFile($newFilename);
                         $curl = new curl();
                         $list = $curl->parse($output);
-                    }
+                    }*/
                     $id = $list;
 
                     foreach ($id as $row) :

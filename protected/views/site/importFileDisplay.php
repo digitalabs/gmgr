@@ -62,8 +62,9 @@
         'beforeAjaxUpdate' => 'js:
                 function (id, options) {
                     options.data = {
-                        list: $("#list").val(),
-                        location: $("#location").val()
+                        list: $("#list1").val(),
+                        location: $("#location1").val(),
+                        refresh: 1
                     };
                     options.type = "post";
                 }
@@ -134,7 +135,8 @@
 
 //echo "</div>";
     ?> 
-   
+    <input type="hidden" id ="location1" name="location" value="">
+    <input type="hidden" id="list1" name="list" value="">
 </body>
 
 <script type="text/javascript">
@@ -155,6 +157,7 @@
                 //console.log("ss"+locationID);
                 //console.log("sssw"+list);
                 localStorage.setItem('locationID', locationID);
+                   storeLocal1();
             } catch (e) {
                 if (e === QUOTA_EXCEEDED_ERR) {
                     alert('Quota exceeded!');
@@ -164,12 +167,28 @@
             alert('Cannot store user preferences as your browser do not support local storage');
         }
     }
+    
     window.addEventListener('storage', storageEventHandler, false);
     function storageEventHandler(event) {
         storeLocal();
     }
-
+        function storeLocal1() {
+        if ('localStorage' in window && window['localStorage'] != null) {
+            try {
+                document.getElementById('list1').value = localStorage.list;
+                document.getElementById('location1').value = localStorage.locationID;
+                
+            } catch (e) {
+                if (e === QUOTA_EXCEEDED_ERR) {
+                    alert('Quota exceeded!');
+                }
+            }
+        } else {
+            alert('Cannot store user preferences as your browser do not support local storage');
+        }
+    }
     $(document).ready(function() {
+     
         var pop = function() {
             $('#screen').css({opacity: 0.4, 'width': $(document).width(), 'height': $(document).height()});
             $('body').css({'overflow': 'hidden'});
