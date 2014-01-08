@@ -209,7 +209,7 @@ class SiteController extends Controller {
         $newName = "germplasmFile.csv";
 
         $importedFile = new ImporterForm;
-       
+
         if (isset($this->browserSession)) {
 
             if (isset($_POST['ImporterForm'])) {
@@ -319,10 +319,10 @@ class SiteController extends Controller {
                     }
                     $id = $list;
 
-            foreach ($id as $row) :
-                list($GID, $nval, $female, $fid, $fremarks, $fgid, $male, $mid, $mremarks, $mgid,$date) = $row;
-                $arr[] = array('id' => CJSON::encode(array($fid, $mid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks,'date' => $date);
-            endforeach;
+                    foreach ($id as $row) :
+                        list($GID, $nval, $female, $fid, $fremarks, $fgid, $male, $mid, $mremarks, $mgid, $date) = $row;
+                        $arr[] = array('id' => CJSON::encode(array($fid, $mid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date' => $date);
+                    endforeach;
 
 
                     if (isset($_GET['FilterPedigreeForm'])) {
@@ -394,20 +394,17 @@ class SiteController extends Controller {
                     );
 
                     $data = json_encode($a);
-                    
+
                     $list = $curl->standardize($data);
                 }
-
                 foreach ($list as $row) :
-                    list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male) = $row;
-
-                    $arr[] = array('id' => CJSON::encode(array($fid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks);
-
+                    //list($GID, $nval, $female, $fid, $fremarks, $fgid, $male, $mid, $mremarks, $mgid) = $row;
+                    list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male, $date) = $row;
+                    $arr[] = array('id' => CJSON::encode(array($fid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date' => $date);
                     if ((strcmp(($fremarks), "in standardized format")) != 0 || (strcmp(($mremarks), "in standardized format")) != 0) {
-                        $nonStandardize[] = array('id' => CJSON::encode(array($fid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks);
+                        $nonStandardize[] = array('id' => CJSON::encode(array($fid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date' => $date);
                     }
                 endforeach;
-
 
                 if (isset($_GET['FilterPedigreeForm'])) {
                     $filtersForm->filters = $_GET['FilterPedigreeForm'];
@@ -633,7 +630,7 @@ class SiteController extends Controller {
         }
     }
 
-        public function actionAssignGID() {
+    public function actionAssignGID() {
         Yii::app()->session['username'] = Yii::app()->user->id;
         $this->browserSession = Yii::app()->session['username'];
         $model2 = new LoginForm;
@@ -655,7 +652,7 @@ class SiteController extends Controller {
                     $list = json_decode($data, true);
 
                     if (!empty($_POST['Germplasm']['gid'])) {
-                       // echo "here 0";
+                        // echo "here 0";
                         $selected = $_POST['Germplasm']['gid'];
                         $idArr = explode(',', $selected);
                         foreach ($idArr as $index => $id) {
@@ -672,16 +669,16 @@ class SiteController extends Controller {
                             'locationID' => $locationID,
                             'userID' => Yii::app()->user->id
                         );
-                       // echo "<br/>a:<br/>";
-                       // print_r($a);
-                       // echo "<br/>";
+                        // echo "<br/>a:<br/>";
+                        // print_r($a);
+                        // echo "<br/>";
                         $data = json_encode($a);
-                       // echo "<br/>data:<br/>";
-                       // print_r($data);
-                      //  echo "<br/>";
+                        // echo "<br/>data:<br/>";
+                        // print_r($data);
+                        //  echo "<br/>";
                         $output = $curl->createGID($data);
-                      //  echo "<br/>output:<br/>";
-                       // print_r($output);
+                        //  echo "<br/>output:<br/>";
+                        // print_r($output);
                         //echo "<br/>";
 
                         $createdGID = array();
@@ -689,9 +686,9 @@ class SiteController extends Controller {
                         $createdGID = $output['createdGID'];
                         $list = $output['list'];
                         $existing = $output['existingTerm'];
-                        
+
                         $rows = $list;
-                       // echo "<br/>rows:<br/>";
+                        // echo "<br/>rows:<br/>";
                         //print_r($rows);
                         //echo "<br/>";
                     } elseif (isset($_POST['process'])) {
@@ -786,7 +783,7 @@ class SiteController extends Controller {
                     $output = $curl->updateMethod(json_encode($array));
                     $createdGID = $output['createdGID'];
                     $rows = $list;
-                } elseif (isset($_GET['page']) || isset ($_POST['refresh'])) {
+                } elseif (isset($_GET['page']) || isset($_POST['refresh'])) {
                     ?>
                     <html>
                         <body onload="storeLocal2()">
