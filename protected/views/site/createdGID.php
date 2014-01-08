@@ -11,86 +11,75 @@
 ?>  
 <!---***********************************************FOR CreatedGID--Germplasm List, 2nd table, portion**********************************************-->
 <div id="germList">
-<h4 style=" border-bottom: 0px solid #999;text-align: left;">Germplasm List</h4> 
-<?php
-$this->widget('ext.selgridview.BootSelGridView', array(
-    'id' => 'germplasmList',
-    'ajaxUpdate' => false,
-    'dataProvider' => $GdataProvider,
-    'filter' => $filtersForm,
-    'enablePagination' => true,
-    'columns' => array(
-        array(
-            'header' => 'Cross Name',
-            'value' => 'CHtml::encode($data["nval"])',
-            'name' => '',
-            'filter' => CHtml::textField('FilterPedigreeForm[nval]', isset($_GET['FilterPedigreeForm']['nval]']) ? $_GET['FilterPedigreeForm']['nval'] : ''),
-        ),
-        array(
-            'header' => 'GID',
-            'name' => 'gid',
-            'value' => 'CHtml::encode($data["gid"])',
-        ),
-        array(
-            'header' => 'Female Parent',
-            'name' => 'female',
-            'type' => 'raw',
-            'value' => function($data) {
-                $line = array();
-                $line = explode("#", CHtml::encode($data["fremarks"]));
-                $line = implode("\n", $line);
-                $fremarks = $line;
-                if (strcmp($fremarks, 'in standardized format') == 0) {
+    <h4 style=" border-bottom: 0px solid #999;text-align: left;">Germplasm List</h4> 
+    <?php
+    $this->widget('ext.selgridview.BootSelGridView', array(
+        'id' => 'germplasmList',
+        'ajaxUpdate' => false,
+        'dataProvider' => $GdataProvider,
+        'filter' => $filtersForm,
+        'enablePagination' => true,
+        'columns' => array(
+            array(
+                'header' => 'Cross Name',
+                'value' => 'CHtml::encode($data["nval"])',
+                'name' => '',
+                'filter' => CHtml::textField('FilterPedigreeForm[nval]', isset($_GET['FilterPedigreeForm']['nval]']) ? $_GET['FilterPedigreeForm']['nval'] : ''),
+            ),
+            array(
+                'header' => 'GID',
+                'name' => 'gid',
+                'value' => 'CHtml::encode($data["gid"])',
+            ),
+            array(
+                'header' => 'Female Parent',
+                'name' => 'female',
+                'type' => 'raw',
+                'value' => function($data) {
+                    $line = array();
+                    $line = explode("#", CHtml::encode($data["fremarks"]));
+                    $line = implode("\n", $line);
+                    $fremarks = $line;
+                    if (strcmp($fremarks, 'in standardized format') == 0) {
+                        $your_array = array();
+                        $your_array = explode("#", CHtml::encode($data["fgid"]));
+                        $your_array = implode("<br>", $your_array);
+                        $fgid = $your_array;
 
-                    // return '<a style="color:black;" data-toggle="tooltip" data-placement="right" title="' .$fremarks. '">'.CHtml::encode($data["female"]).'</a>';
-                    return CHtml::tag("span", array("title" => CHtml::encode($data["fremarks"]), "class" => "tooltipster"), CHtml::encode($data["female"]));
-                } else {
-                    return "<div class='j'><font style='color:#FF6600; font-weight:bold;'>" . CHtml::link(CHtml::encode($data["female"]), Yii::app()->createUrl("site/editGermplasm", array("germplasm" => $data["female"], "error" => $data["fremarks"])), array('title' => CHtml::encode($data["fremarks"]), 'class' => 'tooltipster')) . "</font></div>";
-                    // return '<a data-toggle="tooltip" title="' .CHtml::encode($data["mremarks"]) . '" data-placement="right" style="color:rgb(255, 0, 0); font-weight:bold;" href="/GMGR/index.php?r=site/editGermplasm.php?germplasm=' .CHtml::encode($data["female"]) . '&error=' .CHtml::encode($data["fremarks"]). '">' . CHtml::encode($data["female"]) . '<a>';
-                }
-            },
-        ),
-        array(
-            'header' => 'Male Parent',
-            'name' => 'male',
-            'type' => 'raw',
-            'value' => function($data) {
-                $line = array();
-                $line = explode("#", CHtml::encode($data["mremarks"]));
-                $line = implode("\n", $line);
-                $mremarks = $line;
-                if (strcmp($mremarks, 'in standardized format') == 0) {
-                    // return '<a style="color:black;" data-toggle="tooltip" data-placement="right" title="' . $mremarks . '">' . CHtml::encode($data["male"]) . '</a>';
-                    return CHtml::tag("span", array("title" => CHtml::encode($data["mremarks"]), "class" => "tooltipster"), CHtml::encode($data["male"]));
-                } else {
-                    return "<div class='j'><font style='color:#FF6600; font-weight:bold;'>" . CHtml::link(CHtml::encode($data["male"]), Yii::app()->createUrl("site/editGermplasm", array("germplasm" => $data["male"], "error" => $data["mremarks"])), array('title' => CHtml::encode($data["mremarks"]), 'class' => 'tooltipster')) . "</font></div>";
-                    //echo '<a data-toggle="tooltip" data-placement="right" title="' . $mremarks . '" style="color:rgb(255, 0, 0); font-weight:bold;" href="/GMGR/index.php?r=site/editGermplasm.php?germplasm=' . CHtml::encode($data["male"]) . '&error=' . $mremarks . '">' . CHtml::encode($data["male"]) . '<a>';
-                }
-            },
-        ),
-        array(
-            'header' => 'New GID',
-            'type' => 'raw',
-            'value' => function($data) {
-                $line = array();
-                $line = explode("#", CHtml::encode($data["fgid"]));
-                $line = implode("\n", $line);
-                $fgid = $line;
+                        return "<b>" . CHtml::tag("span", array("title" => CHtml::encode($data["fremarks"]), "class" => "tooltipster"), CHtml::encode($data["female"])) . "</b>" . "" . $fgid . "";
+                    } else {
+                        return "<div class='j'><font style='color:#FF6600; font-weight:bold;'>" . CHtml::link(CHtml::encode($data["female"]), Yii::app()->createUrl("site/editGermplasm", array("germplasm" => $data["female"], "error" => $data["fremarks"])), array('title' => CHtml::encode($data["fremarks"]), 'class' => 'tooltipster')) . "</font></div>";
+                        // return '<a data-toggle="tooltip" title="' .CHtml::encode($data["mremarks"]) . '" data-placement="right" style="color:rgb(255, 0, 0); font-weight:bold;" href="/GMGR/index.php?r=site/editGermplasm.php?germplasm=' .CHtml::encode($data["female"]) . '&error=' .CHtml::encode($data["fremarks"]). '">' . CHtml::encode($data["female"]) . '<a>';
+                    }
+                },
+            ),
+            array(
+                'header' => 'Male Parent',
+                'name' => 'male',
+                'type' => 'raw',
+                'value' => function($data) {
+                    $line = array();
+                    $line = explode("#", CHtml::encode($data["mremarks"]));
+                    $line = implode("\n", $line);
+                    $mremarks = $line;
+                    if (strcmp($mremarks, 'in standardized format') == 0) {
 
-
-                $line = array();
-                $line = explode("#", CHtml::encode($data["mgid"]));
-                $line = implode("\n", $line);
-                $mgid = $line;
-
-                return '<pre>' . $fgid . '</pre><pre>' . $mgid . '</pre>';
-            },
+                        $your_array = array();
+                        $your_array = explode("#", CHtml::encode($data["mgid"]));
+                        $your_array = implode("<br>", $your_array);
+                        $mgid = $your_array;
+                        return "<b>" . CHtml::tag("span", array("title" => CHtml::encode($data["mremarks"]), "class" => "tooltipster"), CHtml::encode($data["male"])) . "</b>" . "" . $mgid . "";
+                    } else {
+                        return "<div class='j'><font style='color:#FF6600; font-weight:bold;'>" . CHtml::link(CHtml::encode($data["male"]), Yii::app()->createUrl("site/editGermplasm", array("germplasm" => $data["male"], "error" => $data["mremarks"])), array('title' => CHtml::encode($data["mremarks"]), 'class' => 'tooltipster')) . "</font></div>";
+                        //echo '<a data-toggle="tooltip" data-placement="right" title="' . $mremarks . '" style="color:rgb(255, 0, 0); font-weight:bold;" href="/GMGR/index.php?r=site/editGermplasm.php?germplasm=' . CHtml::encode($data["male"]) . '&error=' . $mremarks . '">' . CHtml::encode($data["male"]) . '<a>';
+                    }
+                },
+            ),
         ),
-    ),
-));
-?>
+    ));
+    ?>
 </div>
-<?php //$this->endWidget();?>
+<?php //$this->endWidget(); ?>
 
 
 <?php

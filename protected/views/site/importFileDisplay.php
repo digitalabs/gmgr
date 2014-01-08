@@ -110,7 +110,7 @@
                         $your_array = explode("#", CHtml::encode($data["mgid"]));
                         $your_array = implode("<br>", $your_array);
                         $mgid = $your_array;
-                        return "<b>".CHtml::encode($data["male"]) . "</b><br>" . "" . $mgid . "";
+                        return "<b>".CHtml::encode($data["male"]) . "</b>" . "" . $mgid . "";
                     }
                     else
                         return "<font style='color:#FF6600; '>" . CHtml::tag("span", array("title" => CHtml::encode($data["mremarks"]), "class" => "tooltipster"), CHtml::encode($data["male"])) . "</font>";
