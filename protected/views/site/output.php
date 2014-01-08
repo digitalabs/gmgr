@@ -78,19 +78,25 @@
                 )
             ),
             array(
-                'header' => 'GID',
-                'value' => 'CHtml::encode($data["gid"])',
-                'name' => 'gid',
-                'filter' => CHtml::textField('FilterPedigreeForm2[gid]', isset($_GET['FilterPedigreeForm2']['gid]']) ? $_GET['FilterPedigreeForm2']['gid'] : ''),
+
+                'header' => 'Date of Creation',
+                'name' => 'date',
+                'type' => 'raw',
+                'value' => 'CHtml::encode($data["date"])',
+            'filter' => CHtml::textField('FilterPedigreeForm2[gid]', isset($_GET['FilterPedigreeForm2']['date]']) ? $_GET['FilterPedigreeForm2']['date'] : ''),
             ),
             array(
                 'header' => 'Female Parent',
                 'name' => 'female',
                 'type' => 'raw',
                 'value' => function ($data) {
-                    if (strcmp(CHtml::encode($data["fremarks"]), "in standardized format") === 0) {
 
-                        return CHtml::encode($data["female"]);        // CHtml::hiddenField('hiddenFid',CHtml::encode($data["female"]));   
+                    if (strcmp(CHtml::encode($data["fremarks"]), "in standardized format") == 0) {
+                        $your_array = array();
+                        $your_array = explode("#", CHtml::encode($data["fgid"]));
+                        $your_array = implode("<br>", $your_array);
+                        $fgid = $your_array;
+                        return "<b>".CHtml::encode($data["female"]) . "</b>" . "" . $fgid . "";
                     } else {
                         //return "<font style='color:#FF6600; font-weight:bold;'>".CHtml::encode($data["female"])."</font>";
 
@@ -105,34 +111,21 @@
                 'name' => 'male',
                 'type' => 'raw',
                 'value' => function ($data) {
-                    if (strcmp(CHtml::encode($data["mremarks"]), "in standardized format") === 0) {
-                        //echo CHtml::hiddenField('hiddenMid',CHtml::encode($data["male"]));
-                        return CHtml::encode($data["male"]);
+
+                    if (strcmp(CHtml::encode($data["mremarks"]), "in standardized format") == 0) {
+
+                        $your_array = array();
+                        $your_array = explode("#", CHtml::encode($data["mgid"]));
+                        $your_array = implode("<br>", $your_array);
+                        $mgid = $your_array;
+                        return "<b>".CHtml::encode($data["male"]) . "</b>" . "" . $mgid . "";
                     } else {
                         //echo CHtml::hiddenField('hiddenMid',CHtml::encode($data["male"]));
                         return "<div class='j'><font style='color:#FF6600; font-weight:bold;'>" . CHtml::link(CHtml::encode($data["male"]), Yii::app()->createUrl("site/editGermplasm", array("germplasm" => $data["male"], "error" => $data["mremarks"])), array('title' => CHtml::encode($data["mremarks"]), 'class' => 'tooltipster')) . "</font></div>";
                     }
                     echo CHtml::hiddenField('hiddenMid', CHtml::encode($data["male"]));
                 },
-            ),
-            array(
-                'header' => 'New GID',
-                'type' => 'raw',
-                //'value'=>'CHtml::encode($data["mgid"])'
-                'value' => function($data) {
-                    $your_array = array();
-                    $your_array = explode("#", CHtml::encode($data["fgid"]));
-                    $your_array = implode("\n", $your_array);
-                    $fgid = $your_array;
-
-                    $your_array = array();
-                    $your_array = explode("#", CHtml::encode($data["mgid"]));
-                    $your_array = implode("\n", $your_array);
-                    $mgid = $your_array;
-
-                    return "<pre>" . $fgid . "</pre><pre>" . $mgid . "</pre>";
-                }
-            ),
+            )
         ),
     ));
     ?>

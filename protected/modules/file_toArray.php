@@ -17,148 +17,76 @@ class file_toArray {
     }
 
     public function uploadedFile($filePath) {
+
         //$f = fopen($_FILES["file"]["name"], "r");
         //$filePath = dirname(__FILE__) . '/../../csv_files/germplasmList.csv';
         $f = fopen($filePath, "r");
-        //echo $_FILES["file"]["name"];
-        //$fr = fread($f, filesize($_FILES["file"]["name"]));
+
+        //get headers
+        $row1 = fgetcsv($f, 1000, ',');
+        for ($i = 0; $i < count($row1); $i++) {
+            $header = array();
+            $header = explode(";", $row1[$i]);
+        }
+
+        $column_female = -1;
+        $column_male = -1;
+        $column_cross = -1;
+        $column_date = -1;
+        for ($i = 0; $i < count($header) - 1; $i++) {
+
+
+            if (preg_match("/female/i", $header[$i], $output_array) == 1) {
+
+                $column_female = $i;
+            } elseif (preg_match("/male/i", $header[$i], $output_array) == 1) {
+                $column_male = $i;
+            }
+            if (preg_match("/cross/i", $header[$i], $output_array) == 1) {
+                $column_cross = $i;
+            }
+            if (preg_match("/date/i", $header[$i], $output_array) == 1) {
+                $column_date = $i;
+            }
+        }
+
         $fr = fread($f, filesize($filePath));
         fclose($f);
         $lines = array();
         $lines = explode("\n", $fr); // IMPORTANT the delimiter here just the "new line" \n 
         $dataString = array();
+        echo $column_date . "<br>";
         for ($i = 0; $i < count($lines); $i++) {
             $cells = array();
             $cells = explode(";", $lines[$i]); // use the cell/row delimiter ;
+            //print_r($cells);
+            //echo "<br>";
+            // echo $column_cross . "<br>";
             for ($k = 0; $k < count($cells) - 1; $k++) {
-                array_push($dataString, $cells[$k]);
+
+                if ($k == $column_cross) {
+                    $cross = $cells[$k];
+                } elseif ($k == $column_female) {
+                    $female = $cells[$k];
+                } elseif ($k == $column_male) {
+                    $male = $cells[$k];
+                } elseif ($k == $column_date) {
+                    $date = $cells[$k];
+                }
             }// for k end	
+            array_push($dataString, $cross);
+            array_push($dataString, $female);
+            array_push($dataString, $male);
+            if ($column_date == -1) {
+                array_push($dataString, "not specified");
+            } else {
+                array_push($dataString, $date);
+            }
         }
         return $dataString;
     }
 
-    public function csv_output() {
-        $fp = fopen(dirname(__FILE__) . "/../../csv_files/output.csv", "r");
-
-        while (($row = fgetcsv($fp)) !== FALSE) {
-            $rows[] = $row;
-        }
-        fclose($fp);
-        return $rows;
-    }
-
-    public function csv_corrected() {
-        $fp = fopen(dirname(__FILE__) . "/../../csv_files/corrected.csv", "r");
-
-        while (($row = fgetcsv($fp)) !== FALSE) {
-            $rows[] = $row;
-        }
-        fclose($fp);
-        return $rows;
-    }
-
-    public function csv_createdGID() {
-        $fp = fopen(dirname(__FILE__) . "/../../csv_files/createdGID.csv", "r");
-        while (($row = fgetcsv($fp)) !== FALSE) {
-            $rows[] = $row;
-        }
-        fclose($fp);
-        return $rows;
-    }
-
-    public function csv_checked() {
-        $fp = fopen(dirname(__FILE__) . "/../../csv_files/checked.csv", "r");
-        while (($row = fgetcsv($fp)) !== FALSE) {
-            $rows[] = $row;
-        }
-        fclose($fp);
-        return $rows;
-    }
-
-    public function csv_checked2() {
-        $fp = fopen(dirname(__FILE__) . "/../../csv_files/checked.csv", "r");
-        //$checked=array();
-        while (($row = fgetcsv($fp)) !== FALSE) {
-            $checked = $row;
-        }
-        fclose($fp);
-        return $checked;
-    }
-
-    public function csv_existingTerm() {
-        $myfile = dirname(__FILE__) . '/../../csv_files/existingTerm.csv';
-
-        $fin = fopen($myfile, 'r');
-        $existing = array();
-        while (($line = fgetcsv($fin)) !== FALSE) {
-            $existing[] = $line;
-        }
-        fclose($fin);
-        return $existing;
-    }
-
-    public function json_checked() {
-        $json = file_get_contents(dirname(__FILE__) . "/../../json_files/checked.json");
-        $jsonIterator = new RecursiveIteratorIterator(
-                new RecursiveArrayIterator(json_decode($json, TRUE)), RecursiveIteratorIterator::SELF_FIRST);
-        $checked = array();
-        foreach ($jsonIterator as $key => $val) {
-            if (is_array($val)) {
-//echo "$key:\n\n jj";
-            } else {
-//echo "$key : $val\n";
-                array_push($checked, $val);
-            }
-        }
-        //    fclose($json);
-//echo count($checked);
-        return $checked;
-    }
-
-    public function update_csv_correctedGID($fid, $mid, $checked) {
-        //echo "checked count:".count($checked);
-        $myfile = dirname(__FILE__) . '/../../csv_files/createdGID.csv';
-        $fin = fopen($myfile, 'r');
-        $data = array();
-        //print_r($fid); print_r($mid);
-        while ($line = fgetcsv($fin, 0)) {
-            for ($i = 0; $i < count($checked); $i++) {
-                if ($line[0] === $fid . "/" . $mid) {
-                    //   echo "HERE*******";
-                    $data[] = $line; //existingTerm data
-                }
-            }
-        }
-        echo "createdGID:";
-        print_r($data);
-        fclose($fin);
-
-        $correctedCsv = dirname(__FILE__) . '/../../csv_files/corrected.csv';
-        $fin = fopen($correctedCsv, 'r');
-        $data2 = array();   // data2: edited CreatedGID data
-        $data3 = array();   //data 3 is the details of the chosen GID
-
-
-
-        while ($line = fgetcsv($fin, 0)) {
-            //echo join(', ', $line).'<br>';
-            for ($i = 0, $k = count($line); $i < $k; $i++) {
-                if ($line[2] == $fid) {
-
-                    $line[0] = $data[0][3];
-                    $data3 = $line; //data 3 is the details of the chosen GID				
-                }
-            }
-            $data2[] = $line; // data2: edited CreatedGID data
-        }
-        fclose($fin);
-
-        $fout = fopen($correctedCsv, 'w');
-        foreach ($data2 as $line) {
-            fputcsv($fout, $line);
-        }
-        fclose($fout);
-    }
+    
 
     public function hasChecked($checked, $fid) {
         for ($i = 0; $i < count($checked); $i++) {
@@ -172,7 +100,7 @@ class file_toArray {
     public function updateGID_createdGID($term, $pedigree, $id, $choose, $fid, $mid, $female, $male, $createdGID, $existingTerm, $list, $userID) {
 
         $data = array();
-         for ($i = 0, $k = count($existingTerm); $i < $k; $i++) {
+        for ($i = 0, $k = count($existingTerm); $i < $k; $i++) {
             if ($existingTerm[$i][2] === $choose) {
                 $data[] = $existingTerm[$i]; //existingTerm data
             }
@@ -182,8 +110,8 @@ class file_toArray {
         $germplasm = array();
 
         for ($i = 0, $k = count($createdGID); $i < $k; $i++) {
-           // echo "".$createdGID[$i][0]."  id: ".$id."<br>";
-           // echo "".$createdGID[$i][2]."  id: ".$term."<br>";
+            // echo "".$createdGID[$i][0]."  id: ".$id."<br>";
+            // echo "".$createdGID[$i][2]."  id: ".$term."<br>";
             if ($createdGID[$i][0] == $id && $createdGID[$i][2] == $term) {
                 $createdGID[$i][3] = $data[0][6];
                 $createdGID[$i][4] = $data[0][7];
@@ -204,13 +132,13 @@ class file_toArray {
                 $germplasm[7] = $createdGID[$i][7];
                 $germplasm[8] = $createdGID[$i][8];
                 $germplasm[9] = $createdGID[$i][9];
-               // echo "HERE"."<br>";
+                // echo "HERE"."<br>";
             }
             $data2[] = $createdGID; // data2: edited CreatedGID data
         }
 
         //array from createdGID.csv
-        
+
         print_r($germplasm);
         echo "<br><br>";
 
@@ -384,16 +312,6 @@ class file_toArray {
         $json->create_tree();
         return $fid_i;
     }
-
-    public function csv_methods() {
-        $fp = fopen(dirname(__FILE__) . "/../../csv_files/methods.csv", "r");
-        while (($row = fgetcsv($fp)) !== FALSE) {
-            $rows[] = $row;
-        }
-        fclose($fp);
-        return $rows;
-    }
-
 }
 
 ?>
