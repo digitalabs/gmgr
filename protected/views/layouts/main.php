@@ -79,7 +79,7 @@
     'collapse'=>true, // requires bootstrap-responsive.css
     'items'=>array(
         array(
-            'class'=>'bootstrap.widgets.TbMenu',
+            'class'=>'bootstrap.widgets.TbMenu', 
             'items'=>array(
                 array('label'=>'Home', 'url'=>array('/site/index')),
 				//array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
