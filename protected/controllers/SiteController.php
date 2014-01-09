@@ -256,8 +256,8 @@ class SiteController extends Controller {
                         $id = $list;
 
                         foreach ($id as $row) :
-                            list($GID, $nval, $female, $fid, $fremarks, $fgid, $male, $mid, $mremarks, $mgid, $date) = $row;
-                            $arr[] = array('id' => CJSON::encode(array($fid, $mid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date'=>$date);
+                            list($GID, $nval, $female, $fid, $fremarks, $fgid, $male, $mid, $mremarks, $mgid) = $row;
+                            $arr[] = array('id' => CJSON::encode(array($fid, $mid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks);
                         endforeach;
 
                         if (isset($_GET['FilterPedigreeForm'])) {
