@@ -78,7 +78,7 @@ class curl {
     }
 
     public function standardize($data) {
-        $url = "http://172.29.4.99:8083/ws/standardization/term/standardize2";
+        $url = "http://localhost:8083/ws/standardization/term/standardize2";
         return $this->exec($url, $data);
     }
 

@@ -79,14 +79,14 @@
     'collapse'=>true, // requires bootstrap-responsive.css
     'items'=>array(
         array(
-            'class'=>'bootstrap.widgets.TbMenu', 
+            'class'=>'bootstrap.widgets.TbMenu',
             'items'=>array(
                 array('label'=>'Home', 'url'=>array('/site/index')),
 				//array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
 				//array('label'=>'Contact', 'url'=>array('/site/contact')),
 				//array('htmlOptions'=>array('class'=>'pull-right'),'label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
 				array('label'=>'Pedigree Importer', 'url'=>array('/site/importer'),'visible'=>!Yii::app()->user->isGuest),
-				array('label'=>'Pedigree Editor', 'url'=>array('/site/editor'), 'visible'=>!Yii::app()->user->isGuest)
+				//array('label'=>'Pedigree Editor', 'url'=>array('/site/editor'), 'visible'=>!Yii::app()->user->isGuest)
                
             ),
         ),
