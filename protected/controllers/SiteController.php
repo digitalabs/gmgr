@@ -240,7 +240,7 @@ class SiteController extends Controller {
                         $location = $_POST['location'];
 
                         if (isset($_POST['refresh'])) {
-                             echo "refresh";
+
                             $location = $_POST['location'];
                             $locationID = $location;
                             $list = json_decode($_POST['list']);
@@ -256,8 +256,9 @@ class SiteController extends Controller {
                         $id = $list;
 
                         foreach ($id as $row) :
+
                             list($GID, $nval, $female, $fid, $fremarks, $fgid, $male, $mid, $mremarks, $mgid, $date) = $row;
-                            $arr[] = array('id' => CJSON::encode(array($fid, $mid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date'=>$date);
+                            $arr[] = array('id' => CJSON::encode(array($fid, $mid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date' => $date);
                         endforeach;
 
                         if (isset($_GET['FilterPedigreeForm'])) {
@@ -280,50 +281,49 @@ class SiteController extends Controller {
                 } else {
                     $this->render('importer', array('model' => $importedFile));
                 }
-            } else {
-                ?>
-               <html>
-                    <body onload="storeLocal1()">
-                        <form action="" method="post" id='importFileDisplay-rfrsh'>
-                            <input type="hidden" name="refresh" value="true">
-                            <input type="hidden" id ="location" name="location" value="">
-                            <input type="hidden" id="list" name="list" value="">
-                        </form>  
-                    </body>
-                </html>
-                    
-                <?php
-                $dir = dirname(__FILE__) . '/../../uploadedFiles';
-                $newName = "germplasmFile.csv";
-                $newFilename = $dir . '/' . $newName;
-                $importedFile->file = $newFilename;
-                $file = $importedFile->file;
-                //echo "new file:".$file;
+            } elseif (isset($_POST['next']) || isset($_POST['refresh'])) {
 
                 if (isset($_POST['location'])) {
                     $location = $_POST['location'];
-                   
-                    if (isset($_POST['refresh'])) {
-                        //echo "refresh";
+
+                    if (isset($_POST['next']) || isset($_POST['refresh'])) {
+
                         $location = $_POST['location'];
                         $locationID = $location;
                         $list = json_decode($_POST['list']);
-                    } /*else {
-                        //echo "no refresh";
-                        $location = $_POST['location'];
-                        $locationID = $location;
-                        $json = new json('');
-                        $output = $json->getFile($newFilename);
-                        $curl = new curl();
-                        $list = $curl->parse($output);
-                    }*/
+                    }
                     $id = $list;
-
                     foreach ($id as $row) :
-                        list($GID, $nval, $female, $fid, $fremarks, $fgid, $male, $mid, $mremarks, $mgid, $date) = $row;
-                        $arr[] = array('id' => CJSON::encode(array($fid, $mid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date' => $date);
+                        //list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male, $date) = $row;
+                        list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male, $date) = $row;
+                        $arr[] = array('id' => CJSON::encode(array($fid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date' => $date);
                     endforeach;
 
+                    /* if(isset($_POST['next']) && empty($_POST['refresh'])){
+                      foreach ($id as $row) :
+                      list($GID, $nval, $female, $fid, $fremarks, $fgid, $male, $mid, $mremarks, $mgid,$date) = $row;
+                      $arr[] = array('id' => CJSON::encode(array($fid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date' => $date);
+                      endforeach;
+                      }elseif(isset($_POST['refresh']) && empty($_POST['next'])){
+                      foreach ($id as $row) :
+                      //list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male, $date) = $row;
+                      list($GID, $nval, $female, $fid, $fremarks, $fgid, $male, $mid, $mremarks, $mgid,$date) = $row;
+                      $arr[] = array('id' => CJSON::encode(array($fid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date' => $date);
+                      endforeach;
+                      } */
+                    /* if (isset($_POST['refresh'])) {
+                      foreach ($id as $row) :
+                      //list($GID, $nval, $female, $fid, $fremarks, $fgid, $male, $mid, $mremarks, $mgid,$date) = $row;
+                      list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male, $date) = $row;
+                      $arr[] = array('id' => CJSON::encode(array($fid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date' => $date);
+                      endforeach;
+                      }else {
+                      foreach ($id as $row) :
+                      //list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male, $date) = $row;
+                      list($GID, $nval, $female, $fid, $fremarks, $fgid, $male, $mid, $mremarks, $mgid,$date) = $row;
+                      $arr[] = array('id' => CJSON::encode(array($fid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date' => $date);
+                      endforeach;
+                      } */
 
                     if (isset($_GET['FilterPedigreeForm'])) {
                         $filtersForm->filters = $_GET['FilterPedigreeForm'];
@@ -342,20 +342,19 @@ class SiteController extends Controller {
                         'list' => $list
                     ));
                 }
-            } /* else {
-              ?>
-              <html>
-              <body onload="storeLocal1()">
-              <form action="index.php?r=site/importFileDisplay" method="post" id='importFileDisplay-rfrsh'>
-              <input type="hidden" name="refresh" value="true">
-              <input type="hidden" id ="location" name="location" value="">
-              <input type="hidden" id="list" name="list" value="">
-              </form>
-              </body>
-              </html>
-
-              <?php
-              } */
+            } else {
+                ?>
+                <html>
+                    <body onload="storeLocal1()">
+                        <form action="index.php?r=site/importFileDisplay" method="post" id='importFileDisplay-rfrsh'>
+                            <input type="hidden" name="refresh" value="true">
+                            <input type="hidden" id ="location" name="location" value="">
+                            <input type="hidden" id="list" name="list" value="">
+                        </form>
+                    </body>
+                </html>
+                <?php
+            }
         } else {
             $this->render('login', array('model' => $model2));
         }
@@ -375,9 +374,9 @@ class SiteController extends Controller {
         //static $locationID, $list;
         if (isset($this->browserSession)) {
             if (isset($_POST['locationID']) || isset($_POST['location'])) {
-
-                if (isset($_GET['refresh']) || isset($_POST['refresh'])) {
-                    //echo "Refresh!!!";
+                //echo "<br>enter here"; 
+                if (isset($_POST['next']) || isset($_POST['refresh'])) {
+                    echo "<br>Refresh!!!";
                     $locationID = $_POST['location'];
                     $list = json_decode($_POST['list']);
                     //echo "<br>list:<br>";
@@ -406,65 +405,63 @@ class SiteController extends Controller {
                     }
                 endforeach;
 
+
                 if (isset($_GET['FilterPedigreeForm'])) {
                     $filtersForm->filters = $_GET['FilterPedigreeForm'];
                 }
-                if (isset($_GET['FilterPedigreeForm2'])) {
-                    $filtersForm2->filters = $_GET['FilterPedigreeForm2'];
+                if (isset($nonStandardize)) {
+                    if (isset($_GET['FilterPedigreeForm2'])) {
+                        $filtersForm2->filters = $_GET['FilterPedigreeForm2'];
+                    }
+                    $notStandard = $filtersForm2->filter($nonStandardize);
+                    $dataProvider2 = new CArrayDataProvider($notStandard, array(
+                        'pagination' => array(
+                            'pageSize' => 2,
+                    )));
                 }
                 //get array data and create dataProvider
                 $filteredData = $filtersForm->filter($arr);
-                $notStandard = $filtersForm2->filter($nonStandardize);
 
-                $dataProvider2 = new CArrayDataProvider($notStandard, array(
-                    'pagination' => array(
-                        'pageSize' => 2,
-                )));
                 $dataProvider = new CArrayDataProvider($filteredData, array(
                     'pagination' => array(
                         'pageSize' => 5,
                 )));
 
                 //renders the data-browser
+                if (isset($nonStandardize)) {
+                    $this->render('output', array(
+                        'filtersForm' => $filtersForm,
+                        'filtersForm2' => $filtersForm2,
+                        'dataProvider' => $dataProvider,
+                        'dataProvider2' => $dataProvider2,
+                        'locationID' => $locationID,
+                        'list' => $list
+                    ));
+                } else {
+                    $this->render('output', array(
+                        'filtersForm' => $filtersForm,
+                        'dataProvider' => $dataProvider,
+                        'locationID' => $locationID,
+                        'list' => $list
+                    ));
+                }
+            }
 
-                $this->render('output', array(
-                    'filtersForm' => $filtersForm,
-                    'filtersForm2' => $filtersForm2,
-                    'dataProvider' => $dataProvider,
-                    'dataProvider2' => $dataProvider2,
-                    'locationID' => $locationID,
-                    'list' => $list
-                ));
-            }/* elseif (isset($_GET['page'])) {
-              echo "get page";
-              ?>
-              <html>
-              <body onload="storeLocal1()">
-              <form action="" method="post" id='importFileDisplay-rfrsh'>
-              <input type="hidden" name="refresh" value="true">
-              <input type="hidden" id ="location" name="location" value="">
-              <input type="hidden" id="list" name="list" value="">
-              </form>
-              </body>
-              </html>
+            //***This condition is loaded when refresh or browser-back is pressed
+            else {
+                ?>
+                <html>
+                    <body onload="storeLocal1()">
+                        <form action="index.php?r=site/output" method="post" id='importFileDisplay-rfrsh'>
+                            <input type="hidden" name="refresh" value="true">
+                            <input type="hidden" id ="location" name="location" value="">
+                            <input type="hidden" id="list" name="list" value="">
+                        </form>
+                    </body>
+                </html>
 
-              <?php
-
-              } else {
-              echo "last else";
-              ?>
-              <html>
-              <body onload="storeLocal1()">
-              <form action="index.php?r=site/importFileDisplay" method="post" id='importFileDisplay-rfrsh'>
-              <input type="hidden" name="refresh" value="true">
-              <input type="hidden" id ="location" name="location" value="">
-              <input type="hidden" id="list" name="list" value="">
-              </form>
-              </body>
-              </html>
-
-              <?php
-              } */
+                <?php
+            }
         } else {
             $this->render('login', array('model' => $model2));
         }
