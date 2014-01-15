@@ -304,6 +304,7 @@ if (isset($_GET['searchBtn']))
 			  $.localStorage('GID', jQuery("input#inputGID").val());
 			  $.localStorage('level', jQuery("input#maxStep").val());
 			  //document.getElementById('inputGID').value = jQuery("input#inputGID").val();
+			  //
 			}
 		
 			function conceal() {      
