@@ -130,15 +130,15 @@ class curl {
     }
 
     public function searchGID() {
-        $url = "http://172.29.4.99:8083/ws/standardization/term/searchGID";
-        $this->exec($url);
-
+	
         $gid = $_POST['inputGID'];
         $level = $_POST['maxStep'];
         $a = array('GID' => $gid, 'LEVEL' => $level);
-        //$b = array('LEVEL'=>$level);
         $data = json_encode($a);
-        //$datab = json_encode($b);
+		
+		$url = "http://localhost:8080/ws/standardization/term/searchGID";
+        $this->exec($url,$data);
+        
         $ch = curl_init();
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
@@ -148,18 +148,13 @@ class curl {
             'Content-Type: application/json',
             'Content-Length: ' . strlen($data))
         );
-
+		
+		//$results
         $result = curl_exec($ch);
         $jsonfile = "trydocinfo.json";
-        json_decode($result, true);
-        //foreach($arr['GID'] as $GID){
-        //	file_put_contents($jsonfile, print_r($arr));
-        //echo "items: ". $GID;
-        //echo('<pre>');
-        //print_r($arr);
-        //echo('</pre>');
-        //};
-        //echo "success"; 
+        $try = json_decode($result, true); 
+		echo $result;
+		return $try;
     }
 
 }
