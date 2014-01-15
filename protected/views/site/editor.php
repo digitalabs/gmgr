@@ -280,6 +280,8 @@ if (isset($_GET['searchBtn']))
 		 <input type="hidden" id="data" name="data" value="">
 		</form>
         
+		<script src='http://code.jquery.com/jquery-1.9.1.min.js'></script>
+		<script src='<?php echo Yii::app()->baseUrl;?>/js/jquery.storage.js'></script>
         <script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/d3.v3.min.js"></script>
         <script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/editor4.js"></script>
 		<!--<script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/editor5b.js"></script>
