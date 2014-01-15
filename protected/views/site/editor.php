@@ -40,7 +40,7 @@ if (isset($_GET['searchBtn']))
                       </div>-->
 					  <form action="index.php?r=site/editor" method="post">
 						<input title="This feature is a work in progress" style="width:155px;height:30px;" class="span2" id="inputGID" name="inputGID" type="text" placeholder="Search by GID">
-						<button name="searchBtn" id="searchBtn" class="btn btn-primary" onclick="validate()" type="submit">GO</button>
+						<button name="searchBtn" id="searchBtn" class="btn btn-primary" onclick="click()" type="submit">GO</button>
 					  
 					  </div>  
                              
@@ -292,6 +292,17 @@ if (isset($_GET['searchBtn']))
 		<script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/canvg.js"></script>
 		<script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/svgenie.js"></script>
         <script type="text/javascript">
+		
+			document.getElementById('inputGID').value = $.localStorage('GID');
+			document.getElementById('maxStep').value = $.localStorage('level');
+			
+			function clik()
+			{
+			  //alert(jQuery("input#inputGID").val())
+			  $.localStorage('GID', jQuery("input#inputGID").val());
+			  $.localStorage('level', jQuery("input#maxStep").val());
+			  //document.getElementById('inputGID').value = jQuery("input#inputGID").val();
+			}
 		
 			function conceal() {      
 					if(document.getElementById('benefits').style.display=='block') {
