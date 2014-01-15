@@ -137,7 +137,7 @@ class SiteController extends Controller {
 
         $model = new ImporterForm;
 
-        if ($model->validate()) {
+        //if ($model->validate()) {
             if (isset($_POST['searchBtn']) || isset($_POST['updateBtn'])) {
                 Yii::import('application.modules.curl');
 
@@ -154,7 +154,7 @@ class SiteController extends Controller {
                 //print_r($arr);
                 //$this->redirect(array('/site/editor'));
             }
-        }
+        //}
 
         $this->render('editor');
     }
