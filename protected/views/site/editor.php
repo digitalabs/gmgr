@@ -40,7 +40,7 @@ if (isset($_GET['searchBtn']))
                       </div>-->
 					  <form action="index.php?r=site/editor" method="post">
 						<input title="This feature is a work in progress" style="width:155px;height:30px;" class="span2" id="inputGID" name="inputGID" type="text" placeholder="Search by GID">
-						<button name="searchBtn" id="searchBtn" class="btn btn-primary" onclick="click()" type="submit">GO</button>
+						<button name="searchBtn" id="searchBtn" class="btn btn-primary" onclick="clik()" type="submit">GO</button>
 					  
 					  </div>  
                              
