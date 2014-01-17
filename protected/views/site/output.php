@@ -8,7 +8,9 @@
     <!---End for loading indicators-->
 
     <!--****For edit germplasm modal dialog-->
+
     <div id="editGermplasmNameModal" class="modal hide fade in" style="display: none;"></div>
+
     <!--****End of edit germplasm modal dialog-->
 
     <?php
@@ -21,7 +23,7 @@
     ));
 
     if (isset($dataProvider2)) {
-        ?>
+    ?>
         <div id="non_standardized_table">
             <h4 style = " border-bottom: 0px solid #999;text-align: left;">Table 1. List of germplasm <b>not</b> in <b>standardized</b> format.</h4>
             <?php
@@ -39,6 +41,7 @@
 						options.type = "post";
 					}
 				',
+
                 'filter' => $filtersForm2,
                 'selectableRows' => 2,
                 'enablePagination' => true,
@@ -108,17 +111,12 @@
         ?>
     </div>
     <div id="standardized_table">
-
         <br/>
         <h4 style=" border-bottom: 0px solid #999;text-align: left;">Table 2. List of sorted germplasm in <b>standardized</b> and <b>non</b>-<b>standardized</b> format.</h4> 
         <i><p ><strong>Note:</strong>&nbsp; 
                 Germplasm names not in standardized format are in red color.Hover the mouse over the germplasm names to see the error and click to correct it.
             </p></i>
 
-        <?php
-//Dropdown Pagination
-        $pageSize = Yii::app()->user->getState('pageSize', Yii::app()->params['defaultPageSize']);
-        ?>
         <br>
         <?php
         $this->widget('ext.selgridview.BootSelGridView', array(
@@ -154,23 +152,19 @@
                     )
                 ),
                 array(
-                    'header' => 'GID',
-                    'value' => 'CHtml::encode($data["gid"])',
-                    'name' => 'gid',
-                    //'filter'=>CHtml::textField('FilterPedigreeForm[gid]'),
-                    'filter' => CHtml::textField('FilterPedigreeForm[gid]', isset($_GET['FilterPedigreeForm']['gid]']) ? $_GET['FilterPedigreeForm']['gid'] : ''),
-                ),
-                array(
                     'header' => 'Female Parent',
                     'name' => 'female',
                     'type' => 'raw',
                     /* 'value'=>'CHtml::link( CHtml::encode($data["female"]),
                       Yii::app()->createUrl( "site/editGermplasm", array("germplasm"=>$data["female"]) ))', */
                     'value' => function ($data) {
-                        if (strcmp(CHtml::encode($data["fremarks"]), "in standardized format") === 0) {
-
-                            return CHtml::encode($data["female"]);        // CHtml::hiddenField('hiddenFid',CHtml::encode($data["female"]));   
-                        } else {
+                        if (strcmp(CHtml::encode($data["fremarks"]), "in standardized format") == 0) {
+                            $your_array = array();
+                            $your_array = explode("#", CHtml::encode($data["fgid"]));
+                            $your_array = implode("<br>", $your_array);
+                            $fgid = $your_array;
+                            return "<b>" . CHtml::encode($data["female"]) . "</b>" . "" . $fgid . "";
+                        }  else {
                             //return "<font style='color:#FF6600; font-weight:bold;'>".CHtml::encode($data["female"])."</font>";
 
                             return "<div class='j'><font style='color:#FF6600; font-weight:bold;'>" . CHtml::link(CHtml::encode($data["female"]), Yii::app()->createUrl("site/editGermplasm", array("germplasm" => $data["female"], "error" => $data["fremarks"])), array('title' => CHtml::encode($data["fremarks"]), 'class' => 'tooltipster')) . "</font></div>";
@@ -184,9 +178,13 @@
                     'name' => 'male',
                     'type' => 'raw',
                     'value' => function ($data) {
-                        if (strcmp(CHtml::encode($data["mremarks"]), "in standardized format") === 0) {
-                            //echo CHtml::hiddenField('hiddenMid',CHtml::encode($data["male"]));
-                            return CHtml::encode($data["male"]);
+                        if (strcmp(CHtml::encode($data["mremarks"]), "in standardized format") == 0) {
+
+                            $your_array = array();
+                            $your_array = explode("#", CHtml::encode($data["mgid"]));
+                            $your_array = implode("<br>", $your_array);
+                            $mgid = $your_array;
+                            return "<b>" . CHtml::encode($data["male"]) . "</b>" . "" . $mgid . "";
                         } else {
                             //echo CHtml::hiddenField('hiddenMid',CHtml::encode($data["male"]));
                             return "<div class='j'><font style='color:#FF6600; font-weight:bold;'>" . CHtml::link(CHtml::encode($data["male"]), Yii::app()->createUrl("site/editGermplasm", array("germplasm" => $data["male"], "error" => $data["mremarks"])), array('title' => CHtml::encode($data["mremarks"]), 'class' => 'tooltipster')) . "</font></div>";
@@ -194,29 +192,9 @@
                         echo CHtml::hiddenField('hiddenMid', CHtml::encode($data["male"]));
                     },
                 ),
-                array(
-                    'header' => 'New GID',
-                    'type' => 'raw',
-                    //'value'=>'CHtml::encode($data["mgid"])'
-                    'value' => function($data) {
-                        $your_array = array();
-                        $your_array = explode("#", CHtml::encode($data["fgid"]));
-                        $your_array = implode("\n", $your_array);
-                        $fgid = $your_array;
-
-                        $your_array = array();
-                        $your_array = explode("#", CHtml::encode($data["mgid"]));
-                        $your_array = implode("\n", $your_array);
-                        $mgid = $your_array;
-
-                        return "<pre>" . $fgid . "</pre><pre>" . $mgid . "</pre>";
-                    }
-                ),
             ),
         ));
         ?>
-
-
 
         <div class="assign">
 
@@ -233,7 +211,6 @@
                 //'url' =>array('site/assignGID'),
                 'htmlOptions' => array(
                     'onclick' => 'js:
-
                         var selected = $("#pedigreeGrid").selGridView("getAllSelection");
                         $("#germplasm-id").val(selected);
                         $("#submit-btn").click();
@@ -268,8 +245,8 @@
              <input type="hidden" id ="list1" name="list1" value="">
              <input type="hidden" id ="location1" name="location" value="">
             -->
-
         </div>
+
     </div>
 <?php $this->endWidget(); ?>
 </body>
@@ -310,26 +287,6 @@
             $('#ajax-loading-indicator').css({'display': 'block'});
             //}
         });
-
-
-
-        //checkboxes
-// $("#ajaxSubmit").click(function(){
-        //$(".selection").show();
-        //alert( $.fn.yiiGridView.getSelection("pedigreeGrid"));
-        //var arr = $("#pedigreeGrid").selGridView("getAllSelection");
-        //alert(arr);
-
-        //});
-        /* function selectAll(){
-         var inputs = document.getElementsByTagName("input");
-         var checkboxes = [];
-         for (var i = 0; i < inputs.length; i++) {
-         if (inputs[i].type == "checkbox") {
-         inputs[i].checked = true;
-         }
-         }
-         }*/
     });
 
     //opens the modal from another page
@@ -358,7 +315,5 @@
 
 
     });
-    $(function() {
-        $("#non_standardized_table").accordion();
-    });
+   
 </script>

@@ -16,10 +16,8 @@ class file_toArray {
         
     }
 
-    public function uploadedFile($filePath) {
+   public function uploadedFile($filePath) {
 
-        //$f = fopen($_FILES["file"]["name"], "r");
-        //$filePath = dirname(__FILE__) . '/../../csv_files/germplasmList.csv';
         $f = fopen($filePath, "r");
 
         //get headers
@@ -55,7 +53,7 @@ class file_toArray {
         $lines = array();
         $lines = explode("\n", $fr); // IMPORTANT the delimiter here just the "new line" \n 
         $dataString = array();
-        echo $column_date . "<br>";
+        //echo $column_date . "<br>";
         for ($i = 0; $i < count($lines); $i++) {
             $cells = array();
             $cells = explode(";", $lines[$i]); // use the cell/row delimiter ;
@@ -77,7 +75,7 @@ class file_toArray {
             array_push($dataString, $cross);
             array_push($dataString, $female);
             array_push($dataString, $male);
-            if ($column_date == -1) {
+            if ($column_date == -1 || empty($date)) {
                 array_push($dataString, "not specified");
             } else {
                 array_push($dataString, $date);

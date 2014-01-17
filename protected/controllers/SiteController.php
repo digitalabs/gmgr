@@ -137,25 +137,47 @@ class SiteController extends Controller {
 
         $model = new ImporterForm;
 
-        if ($model->validate()) {
+        //if ($model->validate()) {
             if (isset($_POST['searchBtn']) || isset($_POST['updateBtn'])) {
                 Yii::import('application.modules.curl');
 
                 $curl = new curl();
                 $arr = $curl->searchGID();
                 //print_r($arr);
+				
+				$tree = $arr['tree'];
+				//$rows = $tree;
+				
+				$out = json_decode($tree);
+				//echo "<br/>rows:<br/>";
+                //print_r($rows);
+                //echo "<br/>";
+				
+				$File = 'E:/xampp/htdocs/GMGR/json_files/treePHP.json';
+				//file_put_contents($File, $out);
+				$Handle = fopen($File, 'w');
+				$Data = $tree; 
+				fwrite($Handle, $Data); 
+				print "Data Written"; 
+				fclose($Handle); 
+ 
                 $this->redirect(array('/site/editor'));
             }
-
-            if (isset($_POST['showMore'])) {
+			
+			if (isset($_POST['save'])) {
                 Yii::import('application.modules.curl');
-                $curl = new curl();
-                $arr = $curl->show_germplasm_details();
+				
+				$curl = new curl();
+                $arr = $curl->editGermplasm();
+			}
+            //if (isset($_POST['showMore'])) {
+            //    Yii::import('application.modules.curl');
+            //    $curl = new curl();
+               // $arr = $curl->show_germplasm_details();
                 //print_r($arr);
                 //$this->redirect(array('/site/editor'));
-            }
-        }
-
+            //}
+        //}
         $this->render('editor');
     }
 
@@ -194,7 +216,7 @@ class SiteController extends Controller {
         }
     }
 
-     public function actionImportFileDisplay() {
+    public function actionImportFileDisplay() {
 
         Yii::import('application.modules.file_toArray');
         Yii::import('application.modules.json');
@@ -257,8 +279,8 @@ class SiteController extends Controller {
 					
 
                         foreach ($id as $row) :
-                            //list($GID, $nval, $female, $fid, $fremarks, $fgid, $male, $mid, $mremarks, $mgid, $date) = $row;
-							list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male, $date) = $row;
+
+                            list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male, $date) = $row;
                             $arr[] = array('id' => CJSON::encode(array($fid, $mid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date' => $date);
                         endforeach;
 
@@ -283,6 +305,7 @@ class SiteController extends Controller {
                     $this->render('importer', array('model' => $importedFile));
                 }
             } elseif (isset($_POST['next']) || isset($_POST['refresh'])) {
+
                 if (isset($_POST['location'])) {
                     $location = $_POST['location'];
 
@@ -293,37 +316,37 @@ class SiteController extends Controller {
                         $list = json_decode($_POST['list']);
                     }
                     $id = $list;
-                     foreach ($id as $row) :
+                    foreach ($id as $row) :
+                        //list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male, $date) = $row;
+                        list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male, $date) = $row;
+                        $arr[] = array('id' => CJSON::encode(array($fid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date' => $date);
+                    endforeach;
+
+                    /* if(isset($_POST['next']) && empty($_POST['refresh'])){
+                      foreach ($id as $row) :
+                      list($GID, $nval, $female, $fid, $fremarks, $fgid, $male, $mid, $mremarks, $mgid,$date) = $row;
+                      $arr[] = array('id' => CJSON::encode(array($fid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date' => $date);
+                      endforeach;
+                      }elseif(isset($_POST['refresh']) && empty($_POST['next'])){
+                      foreach ($id as $row) :
                       //list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male, $date) = $row;
-						list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male, $date) = $row;
-						$arr[] = array('id' => CJSON::encode(array($fid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date' => $date);
-                     endforeach;
-                     
-					 /*if(isset($_POST['next']) && empty($_POST['refresh'])){
-						  foreach ($id as $row) :
-							list($GID, $nval, $female, $fid, $fremarks, $fgid, $male, $mid, $mremarks, $mgid,$date) = $row;
-                            $arr[] = array('id' => CJSON::encode(array($fid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date' => $date);
-                        endforeach;
-					 }elseif(isset($_POST['refresh']) && empty($_POST['next'])){
-					    foreach ($id as $row) :
-                            //list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male, $date) = $row;
-							list($GID, $nval, $female, $fid, $fremarks, $fgid, $male, $mid, $mremarks, $mgid,$date) = $row;
-                            $arr[] = array('id' => CJSON::encode(array($fid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date' => $date);
-                        endforeach;
-					 }*/
-                    /*if (isset($_POST['refresh'])) {
-                        foreach ($id as $row) :
-                            //list($GID, $nval, $female, $fid, $fremarks, $fgid, $male, $mid, $mremarks, $mgid,$date) = $row;
-                            list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male, $date) = $row;
-                            $arr[] = array('id' => CJSON::encode(array($fid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date' => $date);
-                        endforeach;
-                    }else {
-                        foreach ($id as $row) :
-                            //list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male, $date) = $row;
-							list($GID, $nval, $female, $fid, $fremarks, $fgid, $male, $mid, $mremarks, $mgid,$date) = $row;
-                            $arr[] = array('id' => CJSON::encode(array($fid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date' => $date);
-                        endforeach;
-                    }*/
+                      list($GID, $nval, $female, $fid, $fremarks, $fgid, $male, $mid, $mremarks, $mgid,$date) = $row;
+                      $arr[] = array('id' => CJSON::encode(array($fid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date' => $date);
+                      endforeach;
+                      } */
+                    /* if (isset($_POST['refresh'])) {
+                      foreach ($id as $row) :
+                      //list($GID, $nval, $female, $fid, $fremarks, $fgid, $male, $mid, $mremarks, $mgid,$date) = $row;
+                      list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male, $date) = $row;
+                      $arr[] = array('id' => CJSON::encode(array($fid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date' => $date);
+                      endforeach;
+                      }else {
+                      foreach ($id as $row) :
+                      //list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male, $date) = $row;
+                      list($GID, $nval, $female, $fid, $fremarks, $fgid, $male, $mid, $mremarks, $mgid,$date) = $row;
+                      $arr[] = array('id' => CJSON::encode(array($fid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date' => $date);
+                      endforeach;
+                      } */
 
                     if (isset($_GET['FilterPedigreeForm'])) {
                         $filtersForm->filters = $_GET['FilterPedigreeForm'];
@@ -466,6 +489,7 @@ class SiteController extends Controller {
             $this->render('login', array('model' => $model2));
         }
     }
+
     public function actionStandardTable() {
 
         $filtersForm = new FilterPedigreeForm;
