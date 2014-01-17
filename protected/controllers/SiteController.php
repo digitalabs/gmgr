@@ -153,7 +153,7 @@ class SiteController extends Controller {
                 //print_r($rows);
                 //echo "<br/>";
 				
-				$File = 'E:/xampp/htdocs/GMGR/json_files/treePHP.json';
+				$File = '/var/www/gmgr/json_files/treePHP.json';
 				//file_put_contents($File, $out);
 				$Handle = fopen($File, 'w');
 				$Data = $tree; 
