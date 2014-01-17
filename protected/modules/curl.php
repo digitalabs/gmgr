@@ -44,25 +44,6 @@ class curl {
         return $output;
     }
 
-    public function startConnection() {
-        //http://172.29.4.99:8083/ws/standardization/term/parse
-        $url = "http://172.29.4.99:8083/ws/standardization/term/connect";
-
-        $handle = curl_init();
-        curl_setopt($handle, CURLOPT_URL, $url);
-        curl_setopt($handle, CURLOPT_RETURNTRANSFER, 1);
-        $response = curl_exec($handle);
-    }
-
-    public function endConnection() {
-        //http://172.29.4.99:8083/ws/standardization/term/parse
-        $url = "http://172.29.4.99:8083/ws/standardization/term/connect";
-        $handle = curl_init();
-        curl_setopt($handle, CURLOPT_URL, $url);
-        curl_setopt($handle, CURLOPT_RETURNTRANSFER, 1);
-        $response = curl_exec($handle);
-    }
-
     public function updateGermplasmName($data) {
         //http://172.29.4.99:8083/ws/standardization/term/parse
         $url = "http://172.29.4.99:8083/ws/standardization/term/updateGermplasmName";
