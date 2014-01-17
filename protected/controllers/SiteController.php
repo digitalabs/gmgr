@@ -153,7 +153,7 @@ class SiteController extends Controller {
                 //print_r($rows);
                 //echo "<br/>";
 				
-				$File = '/var/lib/hudson/jobs/GMGR/workspace/json_files/treePHP.json';
+				$File = dirname(__FILE__) . '/../../json_files/treePHP.json';
 				//file_put_contents($File, $out);
 				$Handle = fopen($File, 'w');
 				$Data = $tree; 
