@@ -11,8 +11,6 @@
 
     <div id="editGermplasmNameModal" class="modal hide fade in" style="display: none;"></div>
 
-    <!--****End of edit germplasm modal dialog-->
-
     <?php
     $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
         'type' => 'horizontal',
@@ -23,7 +21,7 @@
     ));
 
     if (isset($dataProvider2)) {
-    ?>
+        ?>
         <div id="non_standardized_table">
             <h4 style = " border-bottom: 0px solid #999;text-align: left;">Table 1. List of germplasm <b>not</b> in <b>standardized</b> format.</h4>
             <?php
@@ -41,7 +39,6 @@
 						options.type = "post";
 					}
 				',
-
                 'filter' => $filtersForm2,
                 'selectableRows' => 2,
                 'enablePagination' => true,
@@ -111,6 +108,7 @@
         ?>
     </div>
     <div id="standardized_table">
+
         <br/>
         <h4 style=" border-bottom: 0px solid #999;text-align: left;">Table 2. List of sorted germplasm in <b>standardized</b> and <b>non</b>-<b>standardized</b> format.</h4> 
         <i><p ><strong>Note:</strong>&nbsp; 
@@ -164,10 +162,13 @@
                             $your_array = implode("<br>", $your_array);
                             $fgid = $your_array;
                             return "<b>" . CHtml::encode($data["female"]) . "</b>" . "" . $fgid . "";
-                        }  else {
+                        } else {
                             //return "<font style='color:#FF6600; font-weight:bold;'>".CHtml::encode($data["female"])."</font>";
 
-                            return "<div class='j'><font style='color:#FF6600; font-weight:bold;'>" . CHtml::link(CHtml::encode($data["female"]), Yii::app()->createUrl("site/editGermplasm", array("germplasm" => $data["female"], "error" => $data["fremarks"])), array('title' => CHtml::encode($data["fremarks"]), 'class' => 'tooltipster')) . "</font></div>";
+
+                            echo "<input type='hidden' class='" . $data["female"] . "' name='female' value='" . $data["female"] . "'>";
+                            echo "<input type='hidden' class='" . $data["female"] . "' name='fremarks' value='" . $data["fremarks"] . "'>";
+                            return "<div class='j'><font style='color:#FF6600; font-weight:bold;'>" . CHtml::link(CHtml::encode($data["female"]), '#', array('id' => 'open-modal', 'title' => CHtml::encode($data["fremarks"]), 'class' => 'tooltipster', 'data-toggle' => 'modal', 'data-target' => '#editGermplasmNameModal', 'data-id' => $data["female"])) . "</font></div>";
 
                             //echo CHtml::hiddenField('hiddenFid',CHtml::encode($data["female"]));
                         }
@@ -186,8 +187,9 @@
                             $mgid = $your_array;
                             return "<b>" . CHtml::encode($data["male"]) . "</b>" . "" . $mgid . "";
                         } else {
-                            //echo CHtml::hiddenField('hiddenMid',CHtml::encode($data["male"]));
-                            return "<div class='j'><font style='color:#FF6600; font-weight:bold;'>" . CHtml::link(CHtml::encode($data["male"]), Yii::app()->createUrl("site/editGermplasm", array("germplasm" => $data["male"], "error" => $data["mremarks"])), array('title' => CHtml::encode($data["mremarks"]), 'class' => 'tooltipster')) . "</font></div>";
+                            echo "<input type='hidden' class='" . $data["male"] . "' name='male' value='" . $data["male"] . "'>";
+                            echo "<input type='hidden' class='" . $data["male"] . "' name='mremarks' value='" . $data["mremarks"] . "'>";
+                            return "<div class='j'><font style='color:#FF6600; font-weight:bold;'>" . CHtml::link(CHtml::encode($data["male"]), '#', array('id' => 'open-modal', 'title' => CHtml::encode($data["mremarks"]), 'class' => 'tooltipster', 'data-toggle' => 'modal', 'data-target' => '#editGermplasmNameModal', 'data-id' => $data["male"])) . "</font></div>";
                         }
                         echo CHtml::hiddenField('hiddenMid', CHtml::encode($data["male"]));
                     },
@@ -198,13 +200,13 @@
 
         <div class="assign">
 
+
             <?php
             echo CHtml::hiddenField('list', json_encode($list));
             echo CHtml::hiddenField('location', $locationID);
             echo CHtml::hiddenField('locationID', $locationID);
 
             $url = Yii::app()->createUrl('site/assignGID');
-
             $this->widget('bootstrap.widgets.TbButton', array(
                 'type' => 'primary',
                 'label' => 'AssignGID',
@@ -246,9 +248,8 @@
              <input type="hidden" id ="location1" name="location" value="">
             -->
         </div>
-
     </div>
-<?php $this->endWidget(); ?>
+    <?php $this->endWidget(); ?>
 </body>
 <script type="text/javascript">
     function storeLocal() {
@@ -315,5 +316,5 @@
 
 
     });
-   
+
 </script>

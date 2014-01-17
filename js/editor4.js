@@ -375,20 +375,29 @@ function click(d)
     //update(d);
 	
 	document.getElementById('gid').innerHTML = d.gid;
-	//document.getElementById('hidGID').value = d.gid;
+	document.getElementById('hidGID').value = d.gid;
     document.getElementById('gname').innerHTML = d.name;
+	document.getElementById('hidname').value = d.name;
 	document.getElementById('gmethod').innerHTML = d.methodname;
+	document.getElementById('hidmethod').value = d.methodname;
 	document.getElementById('gmtype').innerHTML = d.methodtype;
+	document.getElementById('hidmtype').value = d.methodtype;
 	document.getElementById('gdate').innerHTML = d.date;
+	document.getElementById('hiddate').value = d.date;
 	document.getElementById('gcountry').innerHTML = d.country;
+	document.getElementById('hidcountry').value = d.country;
     document.getElementById('gloc').innerHTML = d.location;
+	document.getElementById('hidloc').value = d.location;
 	
 	if(d.cname==undefined)document.getElementById('gcname').innerHTML = "---";
 	else document.getElementById('gcname').innerHTML = d.cname;
-	
+	document.getElementById('hidcname').value = d.cname;
 	document.getElementById('gref').innerHTML = d.ref;
+	document.getElementById('hidref').value = d.ref;
     document.getElementById('gpid1').innerHTML = d.gpid1;
+	document.getElementById('hidgpid1').value = d.gpid1;
     document.getElementById('gpid2').innerHTML = d.gpid2;
+	document.getElementById('hidgpid2').value = d.gpid2;
 	
 	document.getElementById('n1').innerHTML = d.name0;
 	document.getElementById('n2').innerHTML = d.name1;
