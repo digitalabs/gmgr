@@ -49,7 +49,7 @@ if (isset($_GET['searchBtn']))
 			</span>
 			
             <!--bg while loading indicator is on-->
-			<div style="z-index:100;" id='screen'>
+			<div style="z-index:1100;" id='screen'>
 			   
 			</div>
             
@@ -187,8 +187,8 @@ if (isset($_GET['searchBtn']))
                         </label>
                         
 					<div style="padding-left: 5px;padding-right: 5px; text-align: right;">
-							<button name="updateBtn" id="updateBtn" type="submit" class="btn btn-mini btn-primary" onclick="graph2b();">Update</button></form>
-							<button title="This feature is a work in progress" class="btn btn-mini btn-success" id="generate" value="" >Save image</button>
+							<!--<button name="updateBtn" id="updateBtn" type="submit" class="btn btn-mini btn-primary" onclick="graph2b();">Update</button></form>
+							<button title="This feature is a work in progress" class="btn btn-mini btn-success" id="generate" value="" >Save image</button>-->
 							<form method="POST" enctype="multipart/form-data" action="<?php echo Yii::app()->baseUrl;?>/save.php" id="myForm">
 								<input type="hidden" name="img_val" id="img_val" value="" />
 							</form>
@@ -196,7 +196,7 @@ if (isset($_GET['searchBtn']))
                         <div style="padding-left:5px;padding-right:5px;"><hr></div>
                         <center>
 						<div style="padding-left:5px;padding-right:5px;">Basic Information
-						<button style="width:50px" name="showMore" id="showMore" class="btn btn-primary" onclick="validate()" type="submit">Edit</button>
+						<button data-toggle="modal" data-target="#myModal" onclick="info()" style="width:50px" name="showMore" id="showMore" class="btn btn-primary" onclick="validate()" type="submit">Edit</button>
 						</center> 
 						
 						<br>
@@ -217,19 +217,37 @@ if (isset($_GET['searchBtn']))
 							" class="table table-hover table-condensed">
                             <tr><td width="50px" bgcolor="#0080FF" style="color: white;"><small>GID</td>
 								<td name="gid" id="gid"  align="left" bgcolor="white" style=" vertical-align: left; text-align: left;">
-								</td>
-								<input type="hidden" id="hidGID" name="hidGID">
-							</tr>
-                            <tr><td bgcolor="#0080FF" style="color: white;"><small>Name</td><td id="gname" bgcolor="white" style=" vertical-align: left; text-align: left;"></td></tr>
-                            <tr><td bgcolor="#0080FF" style="color: white;"><small>Method</td><td id="gmethod" bgcolor="white" style=" vertical-align: left; text-align: left;"></td></tr>
-                            <tr><td bgcolor="#0080FF" style="color: white;"><small>Method Type</td><td id="gmtype" bgcolor="white" style=" vertical-align: left; text-align: left;"></td></tr>
-                            <tr><td bgcolor="#0080FF" style="color: white;"><small>Date</td><td id="gdate" bgcolor="white" style=" vertical-align: left; text-align: left;"></td></tr>
-                            <tr><td bgcolor="#0080FF" style="color: white;"><small>Country</td><td id="gcountry" bgcolor="white" style=" vertical-align: left; text-align: left;"></td></tr>
-                            <tr><td bgcolor="#0080FF" style="color: white;"><small>Location</td><td id="gloc" bgcolor="white" style=" vertical-align: left; text-align: left;"></td></tr>
-                            <tr><td bgcolor="#0080FF" style="color: white;"><small>Crop Name</td><td id="gcname" bgcolor="white" style=" vertical-align: left; text-align: left;"></td></tr>
-                            <tr><td bgcolor="#0080FF" style="color: white;"><small>Reference</td><td id="gref" bgcolor="white" style=" vertical-align: left; text-align: left;"></td></tr>
-                            <tr><td bgcolor="#0080FF" style="color: white;"><small>GPID1</td><td id="gpid1" bgcolor="white" style=" vertical-align: left; text-align: left;"></td></tr>
-                            <tr><td bgcolor="#0080FF" style="color: white;"><small>GPID2</td><td id="gpid2" bgcolor="white" style=" vertical-align: left; text-align: left;"></td></tr>
+								</td><input type="hidden" id="hidGID" name="hidGID"></tr>
+                            <tr><td bgcolor="#0080FF" style="color: white;"><small>Name</td>
+								<td id="gname" bgcolor="white" style=" vertical-align: left; text-align: left;">
+								</td><input type="hidden" id="hidname" name="hidname"></tr>
+                            <tr><td bgcolor="#0080FF" style="color: white;"><small>Method</td>
+								<td id="gmethod" bgcolor="white" style=" vertical-align: left; text-align: left;">
+								</td><input type="hidden" id="hidmethod" name="hidGID"></tr>
+                            <tr><td bgcolor="#0080FF" style="color: white;"><small>Method Type</td>
+								<td id="gmtype" bgcolor="white" style=" vertical-align: left; text-align: left;">
+								</td><input type="hidden" id="hidmtype" name="hidGID"></tr>
+                            <tr><td bgcolor="#0080FF" style="color: white;"><small>Date</td>
+								<td id="gdate" bgcolor="white" style=" vertical-align: left; text-align: left;">
+								</td><input type="hidden" id="hiddate" name="hidGID"></tr>
+                            <tr><td bgcolor="#0080FF" style="color: white;"><small>Country</td>
+								<td id="gcountry" bgcolor="white" style=" vertical-align: left; text-align: left;">
+								</td><input type="hidden" id="hidcountry" name="hidGID"></tr>
+                            <tr><td bgcolor="#0080FF" style="color: white;"><small>Location</td>
+								<td id="gloc" bgcolor="white" style=" vertical-align: left; text-align: left;">
+								</td><input type="hidden" id="hidloc" name="hidloc"></tr>
+                            <tr><td bgcolor="#0080FF" style="color: white;"><small>Crop Name</td>
+								<td id="gcname" bgcolor="white" style=" vertical-align: left; text-align: left;">
+								</td><input type="hidden" id="hidcname" name="hidcname"></tr>
+                            <tr><td bgcolor="#0080FF" style="color: white;"><small>Reference</td>
+								<td id="gref" bgcolor="white" style=" vertical-align: left; text-align: left;">
+								</td><input type="hidden" id="hidref" name="hidref"></tr>
+                            <tr><td bgcolor="#0080FF" style="color: white;"><small>GPID1</td>
+								<td id="gpid1" bgcolor="white" style=" vertical-align: left; text-align: left;">
+								</td><input type="hidden" id="hidgpid1" name="hidgpid1"></tr>
+                            <tr><td bgcolor="#0080FF" style="color: white;"><small>GPID2</td>
+								<td id="gpid2" bgcolor="white" style=" vertical-align: left; text-align: left;">
+								</td><input type="hidden" id="hidgpid2" name="hidgpid2"></tr>
                         </table>
 						
 						
@@ -279,6 +297,62 @@ if (isset($_GET['searchBtn']))
 		 <input type="hidden" id="output_format" name="output_format" value="">
 		 <input type="hidden" id="data" name="data" value="">
 		</form>
+		
+		<!-- Modal -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+			<div class="modal-content">
+			  <div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">Edit Germplasm Information</h4>
+			  </div>
+			  <div class="modal-body">
+				<table class="table table-hover">
+				<form action="index.php?r=site/editor" method="post">
+					<tr><td width="50px" bgcolor="#0080FF" style="color: white;"><b>GID</b></td>
+						<td name="gid" id="gid"  align="left" bgcolor="white" style=" vertical-align: left; text-align: left;">
+							<input style="width:400px;" type="text" id="egid"></td></tr>
+					<tr><td bgcolor="#0080FF" style="color: white;">Name</td>
+						<td id="gname" bgcolor="white" style=" vertical-align: left; text-align: left;">
+							<input style="width:400px;" type="text" id="ename"></td></tr>
+					<tr><td bgcolor="#0080FF" style="color: white;">Method</td>
+						<td id="gmethod" bgcolor="white" style=" vertical-align: left; text-align: left;">
+							<input style="width:400px;" type="text" id="emethod"></td></tr>
+					<tr><td bgcolor="#0080FF" style="color: white;">Method Type</td>
+						<td id="gmtype" bgcolor="white" style=" vertical-align: left; text-align: left;">
+							<input style="width:400px;" type="text" id="emtype"></td></tr>
+					<tr><td bgcolor="#0080FF" style="color: white;">Date</td>
+						<td id="gdate" bgcolor="white" style=" vertical-align: left; text-align: left;">
+							<input style="width:400px;" type="text" id="edate"></td></tr>
+					<tr><td bgcolor="#0080FF" style="color: white;">Country</td>
+						<td id="gcountry" bgcolor="white" style=" vertical-align: left; text-align: left;">
+							<input style="width:400px;" type="text" id="ecountry"></td></tr>
+					<tr><td bgcolor="#0080FF" style="color: white;">Location</td>
+						<td id="gloc" bgcolor="white" style=" vertical-align: left; text-align: left;">
+							<input style="width:400px;" type="text" id="eloc"></td></tr>
+					<tr><td bgcolor="#0080FF" style="color: white;">Crop Name</td>
+						<td id="gcname" bgcolor="white" style=" vertical-align: left; text-align: left;">
+							<input style="width:400px;" type="text" id="ecname"></td></tr>
+					<tr><td bgcolor="#0080FF" style="color: white;">Reference</td>
+						<td id="gref" bgcolor="white" style=" vertical-align: left; text-align: left;">
+							<input style="width:400px;" type="text" id="eref"></td></tr>
+					<tr><td bgcolor="#0080FF" style="color: white;">GPID1</td>
+						<td id="gpid1" bgcolor="white" style=" vertical-align: left; text-align: left;">
+							<input style="width:400px;" type="text" id="egpid1"></td></tr>
+					<tr><td bgcolor="#0080FF" style="color: white;">GPID2</td>
+						<td id="gpid2" bgcolor="white" style=" vertical-align: left; text-align: left;">
+							<input style="width:400px;" type="text" id="egpid2"></td></tr>
+				</table>
+			  </div>
+			  <div class="modal-footer">
+			  
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<button type="submit" class="btn btn-primary" id="save" name="save">Save changes</button>
+				</form>
+			  </div>
+			</div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
         
 		<script src='http://code.jquery.com/jquery-1.9.1.min.js'></script>
 		<script src='<?php echo Yii::app()->baseUrl;?>/js/jquery.storage.js'></script>
@@ -297,6 +371,34 @@ if (isset($_GET['searchBtn']))
 		
 			document.getElementById('inputGID').value = $.localStorage('GID');
 			document.getElementById('maxStep').value = $.localStorage('level');
+			
+			function info()
+			{
+				//document.getElementById('egid').value = document.getElementById('gid').value;
+				$.localStorage('EGID', jQuery("input#hidGID").val());
+				$.localStorage('NAME', jQuery("input#hidname").val());
+				$.localStorage('METHOD', jQuery("input#hidmethod").val());
+				$.localStorage('MTYPE', jQuery("input#hidmtype").val());
+				$.localStorage('DATE', jQuery("input#hiddate").val());
+				$.localStorage('CTY', jQuery("input#hidcountry").val());
+				$.localStorage('LOC', jQuery("input#hidloc").val());
+				$.localStorage('CNAME', jQuery("input#hidcname").val());
+				$.localStorage('REF', jQuery("input#hidref").val());
+				$.localStorage('GPID1', jQuery("input#hidgpid1").val());
+				$.localStorage('GPID2', jQuery("input#hidgpid2").val());
+				
+				document.getElementById('egid').value = $.localStorage('EGID');
+				document.getElementById('ename').value = $.localStorage('NAME');
+				document.getElementById('emethod').value = $.localStorage('METHOD');
+				document.getElementById('emtype').value = $.localStorage('MTYPE');
+				document.getElementById('edate').value = $.localStorage('DATE');
+				document.getElementById('ecountry').value = $.localStorage('CTY');
+				document.getElementById('eloc').value = $.localStorage('LOC');
+				document.getElementById('ecname').value = $.localStorage('CNAME');
+				document.getElementById('eref').value = $.localStorage('REF');
+				document.getElementById('egpid1').value = $.localStorage('GPID1');
+				document.getElementById('egpid2').value = $.localStorage('GPID2');
+			}
 			
 			function clik()
 			{
@@ -394,6 +496,7 @@ if (isset($_GET['searchBtn']))
 			 }
 			 $('#searchBtn').click(pop);
 			 $('#updateBtn').click(pop);
+			 $('#save').click(pop);
 
 			});
 			

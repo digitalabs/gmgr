@@ -139,7 +139,7 @@ class curl {
 		$url = "http://localhost:8080/ws/standardization/term/searchGID";
         $this->exec($url,$data);
         
-        $ch = curl_init();
+        //$ch = curl_init();
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
@@ -153,7 +153,39 @@ class curl {
         $result = curl_exec($ch);
         $jsonfile = "trydocinfo.json";
         $try = json_decode($result, true); 
-		echo $result;
+		
+		
+		//echo $result;
+		return $try;
+    }
+	
+	public function editGermplasm() {
+	
+        //$gid = $_POST['inputGID'];
+        //$level = $_POST['maxStep'];
+        $a = array('GID' => 50533, 'LEVEL' => 2);
+        $data = json_encode($a);
+		
+		$url = "http://localhost:8080/ws/standardization/term/editGermplasm";
+        $this->exec($url,$data);
+        
+        //$ch = curl_init();
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+            'Content-Length: ' . strlen($data))
+        );
+		
+		//$results
+        $result = curl_exec($ch);
+        $jsonfile = "trydocinfo.json";
+        $try = json_decode($result, true); 
+		
+		
+		//echo $result;
 		return $try;
     }
 
