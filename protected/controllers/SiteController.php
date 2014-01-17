@@ -254,6 +254,7 @@ class SiteController extends Controller {
                             $list = $curl->parse($output);
                         }
                         $id = $list;
+					
 
                         foreach ($id as $row) :
                             //list($GID, $nval, $female, $fid, $fremarks, $fgid, $male, $mid, $mremarks, $mgid, $date) = $row;
@@ -526,21 +527,22 @@ class SiteController extends Controller {
         if (isset($this->browserSession)) {
 
             $model = new editGermplasmForm;
-
+//print_r($model);
             if (isset($_POST['editGermplasmForm'])) {
                 $model->attributes = $_POST['editGermplasmForm'];
                 if ($model->validate()) {
                     $newGermplasmName = $_POST["editGermplasmForm"]['newGermplasmName']; //Gets the Input 
-//echo $newGermplasmName;
-                    // $this->actionSaveGermplasm($newGermplasmName);
-//  Yii::app()->user->setFlash('editGermplasmForm','Submitted');
                 }
             }
-            $this->render('editGermplasm', array('model' => $model));
+		   $this->renderPartial('editGermplasm', array('model' => $model));
+           
         } else {
             $this->render('login', array('model' => $model2));
         }
     }
+	public function actionUpdateAjax(){
+	    
+	}
 
     public function actionSaveGermplasm() {
         Yii::app()->session['username'] = Yii::app()->user->id;
@@ -551,7 +553,7 @@ class SiteController extends Controller {
 //<!---*******Notifications for any page changes******-->
             Yii::app()->user->setFlash('success', array('title' => 'Edit Successful!', 'text' => 'You successfully edited parent.'));
 //<!----*******************************************-->
-            $this->renderPartial('savegermplasm');
+               $this->renderPartial('savegermplasm');
         } else {
             $this->render('login', array('model' => $model2));
         }
@@ -802,8 +804,8 @@ class SiteController extends Controller {
                     $rows = $list;
                 }
                 if (count($rows)) {
-                    foreach ($rows as $i => $row) : list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male) = $row;
-                        $arr2[] = array('id' => $i + 1, 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks);
+                    foreach ($rows as $i => $row) : list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male,$date) = $row;
+                        $arr2[] = array('id' => $i + 1, 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks,'date'=>$date);
 
                     endforeach;
                 }
