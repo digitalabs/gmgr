@@ -187,8 +187,8 @@ if (isset($_GET['searchBtn']))
                         </label>
                         
 					<div style="padding-left: 5px;padding-right: 5px; text-align: right;">
-							<button name="updateBtn" id="updateBtn" type="submit" class="btn btn-mini btn-primary" onclick="graph2b();">Update</button></form>
-							<button title="This feature is a work in progress" class="btn btn-mini btn-success" id="generate" value="" >Save image</button>
+							<!--<button name="updateBtn" id="updateBtn" type="submit" class="btn btn-mini btn-primary" onclick="graph2b();">Update</button></form>
+							<button title="This feature is a work in progress" class="btn btn-mini btn-success" id="generate" value="" >Save image</button>-->
 							<form method="POST" enctype="multipart/form-data" action="<?php echo Yii::app()->baseUrl;?>/save.php" id="myForm">
 								<input type="hidden" name="img_val" id="img_val" value="" />
 							</form>
