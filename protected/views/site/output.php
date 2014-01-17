@@ -53,13 +53,6 @@
                         )
                     ),
                     array(
-                        'header' => 'Date of Creation',
-                        'name' => 'date',
-                        'type' => 'raw',
-                        'value' => 'CHtml::encode($data["date"])',
-                        'filter' => CHtml::textField('FilterPedigreeForm2[gid]', isset($_GET['FilterPedigreeForm2']['date]']) ? $_GET['FilterPedigreeForm2']['date'] : ''),
-                    ),
-                    array(
                         'header' => 'Female Parent',
                         'name' => 'female',
                         'type' => 'raw',
@@ -78,6 +71,7 @@
                                 return "<div class='j'><font style='color:#FF6600; font-weight:bold;'>" . CHtml::link(CHtml::encode($data["female"]), '#', array('id' => 'open-modal', 'title' => CHtml::encode($data["fremarks"]), 'class' => 'tooltipster', 'data-toggle' => 'modal', 'data-target' => '#editGermplasmNameModal', 'data-id' => $data["female"])) . "</font></div>";
                             }
                         },
+                                
                     ),
                     array(
                         'header' => 'Male Parent',
@@ -101,7 +95,15 @@
                             }
                             echo CHtml::hiddenField('hiddenMid', CHtml::encode($data["male"]));
                         },
-                    )
+                    ),
+                                
+                    array(
+                        'header' => 'Date of Creation',
+                        'name' => 'date',
+                        'type' => 'raw',
+                        'value' => 'CHtml::encode($data["date"])',
+                        'filter' => CHtml::textField('FilterPedigreeForm2[gid]', isset($_GET['FilterPedigreeForm2']['date]']) ? $_GET['FilterPedigreeForm2']['date'] : ''),
+                    ),
                 ),
             ));
         }
@@ -194,6 +196,14 @@
                         echo CHtml::hiddenField('hiddenMid', CHtml::encode($data["male"]));
                     },
                 ),
+                            
+                    array(
+                        'header' => 'Date of Creation',
+                        'name' => 'date',
+                        'type' => 'raw',
+                        'value' => 'CHtml::encode($data["date"])',
+                        'filter' => CHtml::textField('FilterPedigreeForm2[gid]', isset($_GET['FilterPedigreeForm2']['date]']) ? $_GET['FilterPedigreeForm2']['date'] : ''),
+                    ),
             ),
         ));
         ?>

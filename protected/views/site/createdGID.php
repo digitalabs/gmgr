@@ -21,16 +21,17 @@
         'enablePagination' => true,
         'columns' => array(
             array(
+                'header' => 'GID',
+                'name' => 'gid',
+                'value' => 'CHtml::encode($data["gid"])',
+            ),
+            array(
                 'header' => 'Cross Name',
                 'value' => 'CHtml::encode($data["nval"])',
                 'name' => '',
                 'filter' => CHtml::textField('FilterPedigreeForm[nval]', isset($_GET['FilterPedigreeForm']['nval]']) ? $_GET['FilterPedigreeForm']['nval'] : ''),
             ),
-            array(
-                'header' => 'GID',
-                'name' => 'gid',
-                'value' => 'CHtml::encode($data["gid"])',
-            ),
+                       
             array(
                 'header' => 'Female Parent',
                 'name' => 'female',
@@ -75,6 +76,12 @@
                     }
                 },
             ),
+                        array(
+               'header' => 'Date of Creation',
+               'name' => 'date',
+               'type' => 'raw',
+               'value' => 'CHtml::encode($data["date"])'
+           ),
         ),
     ));
     ?>
