@@ -144,18 +144,40 @@ class SiteController extends Controller {
                 $curl = new curl();
                 $arr = $curl->searchGID();
                 //print_r($arr);
+				
+				$tree = $arr['tree'];
+				//$rows = $tree;
+				
+				$out = json_decode($tree);
+				//echo "<br/>rows:<br/>";
+                //print_r($rows);
+                //echo "<br/>";
+				
+				$File = 'E:/xampp/htdocs/GMGR/json_files/treePHP.json';
+				//file_put_contents($File, $out);
+				$Handle = fopen($File, 'w');
+				$Data = $tree; 
+				fwrite($Handle, $Data); 
+				print "Data Written"; 
+				fclose($Handle); 
+ 
                 $this->redirect(array('/site/editor'));
             }
-
-            if (isset($_POST['showMore'])) {
+			
+			if (isset($_POST['save'])) {
                 Yii::import('application.modules.curl');
-                $curl = new curl();
-                $arr = $curl->show_germplasm_details();
+				
+				$curl = new curl();
+                $arr = $curl->editGermplasm();
+			}
+            //if (isset($_POST['showMore'])) {
+            //    Yii::import('application.modules.curl');
+            //    $curl = new curl();
+               // $arr = $curl->show_germplasm_details();
                 //print_r($arr);
                 //$this->redirect(array('/site/editor'));
-            }
+            //}
         //}
-
         $this->render('editor');
     }
 
