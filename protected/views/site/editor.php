@@ -354,7 +354,7 @@ if (isset($_GET['searchBtn']))
 		  </div><!-- /.modal-dialog -->
 		</div><!-- /.modal -->
         
-		<script src='http://code.jquery.com/jquery-1.9.1.min.js'></script>
+		
 		<script src='<?php echo Yii::app()->baseUrl;?>/js/jquery.storage.js'></script>
         <script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/d3.v3.min.js"></script>
         <script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/editor4.js"></script>
