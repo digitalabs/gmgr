@@ -1,84 +1,85 @@
 <!--div to grey out the screen while loading indicator is on-->
-    <div id='screen'>
-    </div>
-    <span id="ajax-loading-indicator">
-    </span>
-    <!---End for loading indicators-->
-    <?php
-    Yii::import('application.modules.file_toArray');
-    Yii::import('application.modules.json');
-    Yii::import('application.modules.curl');
-    Yii::import('application.modules.pagination');
-    Yii::import('application.modules.configDB');
-    Yii::import('application.modules.model');
+<div id='screen'>
+</div>
+<span id="ajax-loading-indicator">
+</span>
+<!---End for loading indicators-->
+<?php
+Yii::import('application.modules.file_toArray');
+Yii::import('application.modules.json');
+Yii::import('application.modules.curl');
+Yii::import('application.modules.pagination');
+Yii::import('application.modules.configDB');
+Yii::import('application.modules.model');
 
-    $file_toArray = new file_toArray();
+$file_toArray = new file_toArray();
 
-    $unselected = 0;
-
+$unselected = 0;
+//print_r($checked);
+//print_r($createdGID);
 // final is the array containing arrays of the pedigree lines (from the checkedboxes)
-    $final = $file_toArray->getPedigreeLine($checked, $createdGID);
-      if (count($final)) {
+$final = $file_toArray->getPedigreeLine($checked, $createdGID);
+if (count($final)) {
 //*****Create the pagination object
-        $pagination = new pagination($final, (isset($_GET['pagea']) ? $_GET['pagea'] : 1), 1);
+    $pagination = new pagination($final, (isset($_GET['pagea']) ? $_GET['pagea'] : 1), 1);
 //******Decide if the first and last links should show
-        $pagination->setShowFirstAndLast(false);
+    $pagination->setShowFirstAndLast(false);
 // Parse through the pagination class
-        $pages = $pagination->getResults();
-  
+    $pages = $pagination->getResults();
+
 // If we have items 
-        if (count($pages) != 0) {
+    if (count($pages) != 0) {
 // Create the page numbers
 // Loop through all the items in the array
 
-            $count = 0;
-            foreach ($pages[0] as $r) : list($id, $nval, $term, $GID, $methodID, $method, $locID, $location) = $r;
-                for ($j = 0; $j < count($checked); $j++) {
-                    $a = $checked[$j] + 1;
+        $count = 0;
+        foreach ($pages[0] as $r) : list($id, $nval, $term, $GID, $methodID, $method, $locID, $location) = $r;
+            for ($j = 0; $j < count($checked); $j++) {
+                $a = $checked[$j] + 1;
 
-                    if ($checked[$j] === $id) {
-                        $female = $nval;
-                        $fid = $id;
-                    }
-                    if ($a === (int) $id) {
-                        $male = $nval;
-                        $mid = $id;
-                    }
+                if ($checked[$j] === $id) {
+                    $female = $nval;
+                    $fid = $id;
                 }
-            endforeach;
+                if ($a === (int) $id) {
+                    $male = $nval;
+                    $mid = $id;
+                }
+            }
+        endforeach;
 
-            /*
-              count all rows
-             */
-            $row_count = count($list);
-            // echo "<br><br><br><br><br><br><br><br><br><br>all:".$row_count;
-            /* END count all rows */
+        /*
+          count all rows
+         */
+        $row_count = count($list);
+        // echo "<br><br><br><br><br><br><br><br><br><br>all:".$row_count;
+        /* END count all rows */
 
-            /*
-              count for rows that are done processing
-             */
-            $processed = count($checked) - 1;
-            //echo "<br>".$processed . " rows selected<br>";
-            /* END count for rows that are done processing */
-            /*
-              count for unstandardized germplasm names
-             */
-            $unselected = $file_toArray->get_unselected_rows($checked, $list);
-            $standard = count($file_toArray->checkIf_standardize($unselected, $list));
-            $not_standard = count($unselected) - $standard;
+        /*
+          count for rows that are done processing
+         */
+        $processed = count($checked) - 1;
+        //echo "<br>".$processed . " rows selected<br>";
+        /* END count for rows that are done processing */
+        /*
+          count for unstandardized germplasm names
+         */
+        $unselected = $file_toArray->get_unselected_rows($checked, $list);
+        $standard = count($file_toArray->checkIf_standardize($unselected, $list));
+        $not_standard = count($unselected) - $standard;
 
-            /*
-              END count for unstandardized germplasm names
-             */
+        /*
+          END count for unstandardized germplasm names
+         */
 
-            /* count new GID created for cross names
-             */
-            $GID_rows = $file_toArray->csv_corrected_GID($list);
-            $newGID_count = count($GID_rows);
-            //echo "<br>".count($GID_rows) . " created GID(s)<br>";
+        /* count new GID created for cross names
+         */
+        $GID_rows = $file_toArray->csv_corrected_GID($list);
+        $newGID_count = count($GID_rows);
+        //echo "<br>".count($GID_rows) . " created GID(s)<br>";
 
-            /* END count new GID created for cross names */
-            ?>
+        /* END count new GID created for cross names */
+        ?>
         <body id="page" data-spy="scroll"  onload="show(<?php echo $row_count; ?>,<?php echo $newGID_count; ?>,<?php echo $not_standard; ?>,<?php echo $processed; ?>);">
             <!--<link href="assets/bootstrap-responsive.css" rel="stylesheet" type="text/css">-->
 
@@ -294,7 +295,7 @@
                                                         <input type="hidden" class="<?php echo $j; ?>" name="id" id="id<?php echo $j; ?>" value="<?php echo $id; ?>" />
                                                         <div id="instruction" class="muted" style="font-size:10px;"></div>                                                        
                                                         <input type="submit" id="submitMethod<?php echo $j; ?>" class="btn btn-primary btn-mini" value="Update" onclick=" return jsConfirmDialog(<?php echo $j; ?>);
-                        return false;" ><br><br>
+                                return false;" ><br><br>
                                                     </form>
                                                     <?php
                                                     $j++;
@@ -331,24 +332,116 @@
 
                         </div>	
                     </div>
-                    <!-- </div>
-                 </div>
-                    -->
-                    <!-- <div class="span7">
-                         <div class="area">
-                    -->
+
                     <br>
                     <br><br>
 
                     <div id="GermplasmList">
+                        <?php if (!isset($_POST['next'])) { ?>
+                            <h4 style=" border-bottom: 0px solid #999;text-align: left;">Germplasm List</h4> 
+                        <?php } ?>
                         <?php
-//include($_SERVER['DOCUMENT_ROOT'] . "/PedigreeImport/list.php");
-                        include(dirname(__FILE__) . "/createdGID.php");
-                        /* Yii::import('application.controllers.SiteController');
-                          $controller_instance = new SiteController("Site"); //string $id, CWebModule $module=NULL
-                          $controller_instance->actionCreatedGID();
-                         * 
-                         */
+                        $this->widget('ext.selgridview.BootSelGridView', array(
+                            'id' => 'germplasmList',
+                            'dataProvider' => $GdataProvider,
+                            'filter' => $filtersForm,
+                            'enablePagination' => true,
+                            'beforeAjaxUpdate' => 'js:
+					function (id, options) {
+						options.data = {
+							list: $("#list").val(),
+                                                        rows: $("#list").val(),
+							locationID: $("#location").val(),
+							location: $("#location").val(),
+                                                        checked: $("#checked").val(),
+                                                        existing: $("#existing").val(),
+                                                        createdGID: $("#createdGID").val(),
+							next:1
+						};
+						options.type = "post";
+					}
+				',
+                            'columns' => array(
+                                array(
+                                    'header' => 'Cross Name',
+                                    'value' => 'CHtml::encode($data["nval"])',
+                                    'name' => '',
+                                    'filter' => CHtml::textField('FilterPedigreeForm[nval]', isset($_GET['FilterPedigreeForm']['nval]']) ? $_GET['FilterPedigreeForm']['nval'] : ''),
+                                ),
+                                array(
+                                    'header' => 'Date of Creation',
+                                    'name' => 'date',
+                                    'type' => 'raw',
+                                    'value' => 'CHtml::encode($data["date"])',
+                                    'filter' => CHtml::textField('FilterPedigreeForm[gid]', isset($_GET['FilterPedigreeForm']['date]']) ? $_GET['FilterPedigreeForm']['date'] : ''),
+                                ),
+                                array(
+                                    'header' => 'GID',
+                                    'name' => 'gid',
+                                    'value' => 'CHtml::encode($data["gid"])',
+                                ),
+                                array(
+                                    'header' => 'Female Parent',
+                                    'name' => 'female',
+                                    'type' => 'raw',
+                                    'value' => function($data) {
+                                        $line = array();
+                                        $line = explode("#", CHtml::encode($data["fremarks"]));
+                                        $line = implode("\n", $line);
+                                        $fremarks = $line;
+                                        if (strcmp($fremarks, 'in standardized format') == 0) {
+                                            $your_array = array();
+                                            $your_array = explode("#", CHtml::encode($data["fgid"]));
+                                            $your_array = implode("<br>", $your_array);
+                                            $fgid = $your_array;
+
+                                            return "<b>" . CHtml::tag("span", array("title" => CHtml::encode($data["fremarks"]), "class" => "tooltipster"), CHtml::encode($data["female"])) . "</b>" . "" . $fgid . "";
+                                        } else {
+                                            return "<div class='j'><font style='color:#FF6600; font-weight:bold;'>" . CHtml::link(CHtml::encode($data["female"]), Yii::app()->createUrl("site/editGermplasm", array("germplasm" => $data["female"], "error" => $data["fremarks"])), array('title' => CHtml::encode($data["fremarks"]), 'class' => 'tooltipster')) . "</font></div>";
+                                            // return '<a data-toggle="tooltip" title="' .CHtml::encode($data["mremarks"]) . '" data-placement="right" style="color:rgb(255, 0, 0); font-weight:bold;" href="/GMGR/index.php?r=site/editGermplasm.php?germplasm=' .CHtml::encode($data["female"]) . '&error=' .CHtml::encode($data["fremarks"]). '">' . CHtml::encode($data["female"]) . '<a>';
+                                        }
+                                    },
+                                ),
+                                array(
+                                    'header' => 'Male Parent',
+                                    'name' => 'male',
+                                    'type' => 'raw',
+                                    'value' => function($data) {
+                                        $line = array();
+                                        $line = explode("#", CHtml::encode($data["mremarks"]));
+                                        $line = implode("\n", $line);
+                                        $mremarks = $line;
+                                        if (strcmp($mremarks, 'in standardized format') == 0) {
+
+                                            $your_array = array();
+                                            $your_array = explode("#", CHtml::encode($data["mgid"]));
+                                            $your_array = implode("<br>", $your_array);
+                                            $mgid = $your_array;
+                                            return "<b>" . CHtml::tag("span", array("title" => CHtml::encode($data["mremarks"]), "class" => "tooltipster"), CHtml::encode($data["male"])) . "</b>" . "" . $mgid . "";
+                                        } else {
+                                            return "<div class='j'><font style='color:#FF6600; font-weight:bold;'>" . CHtml::link(CHtml::encode($data["male"]), Yii::app()->createUrl("site/editGermplasm", array("germplasm" => $data["male"], "error" => $data["mremarks"])), array('title' => CHtml::encode($data["mremarks"]), 'class' => 'tooltipster')) . "</font></div>";
+                                            //echo '<a data-toggle="tooltip" data-placement="right" title="' . $mremarks . '" style="color:rgb(255, 0, 0); font-weight:bold;" href="/GMGR/index.php?r=site/editGermplasm.php?germplasm=' . CHtml::encode($data["male"]) . '&error=' . $mremarks . '">' . CHtml::encode($data["male"]) . '<a>';
+                                        }
+                                    },
+                                ),
+                                array(
+                                    'header' => 'Date of Creation',
+                                    'name' => 'date',
+                                    'type' => 'raw',
+                                    'value' => 'CHtml::encode($data["date"])'
+                                ),
+                            ),
+                        ));
+                        ?>
+
+                        <?php
+                        echo CHtml::hiddenField('list', json_encode($list));
+                        echo CHtml::hiddenField('rows', json_encode($list));
+                        echo CHtml::hiddenField('location', $locationID);
+                        echo CHtml::hiddenField('locationID', $locationID);
+                        echo CHtml::hiddenField('checked', '');
+                        echo CHtml::hiddenField('existing', '');
+                        echo CHtml::hiddenField('createdGID', '');
                         ?>
                     </div>
                     <!--  </div>
@@ -405,33 +498,38 @@
 <div id="new-Modal" class="modal hide fade in" style="display: none;"></div>
 
 <!---*****data -confirm modal****-->
-<div id="method-confirm" title="Confirm">Are you sure you want to update the method?</div>
+<div id="method-confirm" title="Confirm" style="display: none;">Are you sure you want to update the method?</div>
 
 <script type="text/javascript" src="./assets/pnotify-1.2.0/jquery.pnotify.js"></script>
 <script type="text/javascript">
-    function storeLocal() {
-        if ('localStorage' in window && window['localStorage'] != null) {
-            try {
-                console.log(JSON.stringify(<?php echo json_encode($list); ?>));
-                console.log(JSON.stringify(<?php echo json_encode($createdGID); ?>));
-                console.log(JSON.stringify(<?php echo json_encode($existing); ?>));
-                localStorage.setItem('list', JSON.stringify(<?php echo json_encode($list); ?>));
-                localStorage.setItem('createdGID', JSON.stringify(<?php echo json_encode($createdGID); ?>));
-                localStorage.setItem('existing', JSON.stringify(<?php echo json_encode($existing); ?>));
-                localStorage.setItem('checked', JSON.stringify(<?php echo json_encode($checked); ?>));
-            } catch (e) {
-                if (e === QUOTA_EXCEEDED_ERR) {
-                    alert('Quota exceeded!');
+            function storeLocal() {
+                if ('localStorage' in window && window['localStorage'] != null) {
+                    try {
+                        console.log(JSON.stringify(<?php echo json_encode($list); ?>));
+                        console.log(JSON.stringify(<?php echo json_encode($createdGID); ?>));
+                        console.log(JSON.stringify(<?php echo json_encode($existing); ?>));
+                        localStorage.setItem('list', JSON.stringify(<?php echo json_encode($list); ?>));
+                        localStorage.setItem('createdGID', JSON.stringify(<?php echo json_encode($createdGID); ?>));
+                        localStorage.setItem('existing', JSON.stringify(<?php echo json_encode($existing); ?>));
+                        localStorage.setItem('checked', JSON.stringify(<?php echo json_encode($checked); ?>));
+
+
+                        document.getElementById('checked').value = localStorage.checked;
+                        document.getElementById('existing').value = localStorage.existing;
+                        document.getElementById('createdGID').value = localStorage.createdGID;
+                    } catch (e) {
+                        if (e === QUOTA_EXCEEDED_ERR) {
+                            alert('Quota exceeded!');
+                        }
+                    }
+                } else {
+                    alert('Cannot store user preferences as your browser do not support local storage');
                 }
             }
-        } else {
-            alert('Cannot store user preferences as your browser do not support local storage');
-        }
-    }
-    window.addEventListener('storage', storageEventHandler, false);
-    function storageEventHandler(event) {
-        storeLocal();
-    }
+            window.addEventListener('storage', storageEventHandler, false);
+            function storageEventHandler(event) {
+                storeLocal();
+            }
 </script>
 <script type="text/javascript">
     function jsConfirmDialog(count) {
@@ -489,7 +587,7 @@
         });
     });
     function show(row_count, newGID_count, not_standard, to_process) {
-    storeLocal();
+        storeLocal();
         $.pnotify(
                 {
                     text: to_process + "/" + row_count + " rows selected",
@@ -614,7 +712,7 @@
                     });
                 },
                 updater: function(object) {
-                    // $('#getSelection<?php //echo $i;  ?>').val(map[object].label);
+                    // $('#getSelection<?php //echo $i;      ?>').val(map[object].label);
                     $('#bondId' + index).val(map[object].mid);
                     return object;
                 }
@@ -645,7 +743,7 @@
         var href = $(this).attr('href');
         if (!$('#dataConfirmModal').length) {
             $('body').append('<div id="dataConfirmModal" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true"><div class="modal-header">\n\
-                                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">�\n\
+                                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">ï¿½\n\
                                     </button>\n\
                                     <div id="dataConfirmLabel">\n\
                                         You have reached the last row selected.Do you want to proceed to the next entry?\n\

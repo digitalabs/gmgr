@@ -138,6 +138,7 @@ class SiteController extends Controller {
         $model = new ImporterForm;
 
         //if ($model->validate()) {
+
             if (isset($_POST['searchBtn']) || isset($_POST['updateBtn'])) {
                 Yii::import('application.modules.curl');
 
@@ -177,6 +178,7 @@ class SiteController extends Controller {
                 //print_r($arr);
                 //$this->redirect(array('/site/editor'));
             //}
+
         //}
         $this->render('editor');
     }
@@ -276,7 +278,7 @@ class SiteController extends Controller {
                             $list = $curl->parse($output);
                         }
                         $id = $list;
-					
+
 
                         foreach ($id as $row) :
 
@@ -399,7 +401,7 @@ class SiteController extends Controller {
             if (isset($_POST['locationID']) || isset($_POST['location'])) {
                 //echo "<br>enter here"; 
                 if (isset($_POST['next']) || isset($_POST['refresh'])) {
-                    echo "<br>Refresh!!!";
+                    //echo "<br>Refresh!!!";
                     $locationID = $_POST['location'];
                     $list = json_decode($_POST['list']);
                     //echo "<br>list:<br>";
@@ -558,15 +560,15 @@ class SiteController extends Controller {
                     $newGermplasmName = $_POST["editGermplasmForm"]['newGermplasmName']; //Gets the Input 
                 }
             }
-		   $this->renderPartial('editGermplasm', array('model' => $model));
-           
+            $this->renderPartial('editGermplasm', array('model' => $model));
         } else {
             $this->render('login', array('model' => $model2));
         }
     }
-	public function actionUpdateAjax(){
-	    
-	}
+
+    public function actionUpdateAjax() {
+        
+    }
 
     public function actionSaveGermplasm() {
         Yii::app()->session['username'] = Yii::app()->user->id;
@@ -577,7 +579,7 @@ class SiteController extends Controller {
 //<!---*******Notifications for any page changes******-->
             Yii::app()->user->setFlash('success', array('title' => 'Edit Successful!', 'text' => 'You successfully edited parent.'));
 //<!----*******************************************-->
-               $this->renderPartial('savegermplasm');
+            $this->renderPartial('savegermplasm');
         } else {
             $this->render('login', array('model' => $model2));
         }
@@ -713,7 +715,7 @@ class SiteController extends Controller {
                         //print_r($rows);
                         //echo "<br/>";
                     } elseif (isset($_POST['process'])) {
-                        //echo "here 1";
+                        echo "entered post process";
                         $locationID = $_POST['location'];
                         $checked = json_decode($_POST['checked'], true);
                         $createdGID = json_decode($_POST['createdGID'], true);
@@ -806,7 +808,7 @@ class SiteController extends Controller {
                     $rows = $list;
                 } elseif (isset($_GET['page']) || isset($_POST['refresh'])) {
                     ?>
-                    <html>
+                   <!-- <html>
                         <body onload="storeLocal2()">
                             <form action="" method="post" id='importFileDisplay-rfrsh'>
                                 <input type="hidden" name="refresh" value="true">
@@ -817,8 +819,17 @@ class SiteController extends Controller {
                                 <input type="hidden" id="checked" name="checked" value="">
                             </form>  
                         </body>
-                    </html>
+                    </html>-->
+                   
                     <?php
+                    
+                        $locationID = $_POST['location'];
+                        $createdGID = json_decode($_POST['createdGID']);
+                        $existing = json_decode($_POST['existing']);
+                        $list = json_decode($_POST['list']);
+                        $checked = json_decode($_POST['checked']);
+                        $rows = $list;
+                    
                 } else {
                     $locationID = $_POST['location'];
                     $createdGID = json_decode($_POST['createdGID']);
@@ -827,9 +838,19 @@ class SiteController extends Controller {
                     $checked = json_decode($_POST['checked']);
                     $rows = $list;
                 }
+                if (isset($_POST['next'])) {
+                    $list = json_decode($_POST['list']);
+                    $rows = $list;
+                    $locationID = $_POST['location'];
+                    $createdGID = json_decode($_POST['createdGID']);
+                    $existing = json_decode($_POST['existing']);
+                    $list = json_decode($_POST['list']);
+                    $checked = json_decode($_POST['checked']);
+                }
+
                 if (count($rows)) {
-                    foreach ($rows as $i => $row) : list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male,$date) = $row;
-                        $arr2[] = array('id' => $i + 1, 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks,'date'=>$date);
+                    foreach ($rows as $i => $row) : list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male, $date) = $row;
+                        $arr2[] = array('id' => $i + 1, 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date' => $date);
 
                     endforeach;
                 }
@@ -854,6 +875,7 @@ class SiteController extends Controller {
                     'createdGID' => $createdGID
                 ));
             } elseif (isset($_GET['yes']) || isset($_GET['pagea'])) {
+                echo "yes page";
                 ?>
                 <html>
                     <body onload="storeLocal2()">
