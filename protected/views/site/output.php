@@ -11,15 +11,7 @@
 
     <div id="editGermplasmNameModal" class="modal hide fade in" style="display: none;"></div>
 
-    <?php
-    $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-        'type' => 'horizontal',
-        'id' => 'assign-gid-form',
-        'enableAjaxValidation' => true,
-        'action' => array('/site/assignGID'),
-        'htmlOptions' => array('class' => 'well well-small'),
-    ));
-
+   <?php
     if (isset($dataProvider2)) {
         ?>
         <div id="non_standardized_table">
@@ -109,6 +101,16 @@
         }
         ?>
     </div>
+    <?php
+        $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+            'type' => 'horizontal',
+            'id' => 'assign-gid-form',
+            'enableAjaxValidation' => true,
+            'action' => array('/site/assignGID'),
+            'htmlOptions' => array('class' => 'well well-small'),
+    ));
+
+    ?>
     <div id="standardized_table">
 
         <br/>
