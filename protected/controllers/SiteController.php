@@ -153,12 +153,12 @@ class SiteController extends Controller {
 				//echo "<br/>rows:<br/>";
                 //print_r($rows);
                 //echo "<br/>";
-				
-				$File = dirname(__FILE__) . '/../../json_files/treePHP.json';
-				//file_put_contents($File, $out);
-				$Handle = fopen($File, 'w');
 				$Data = $tree; 
-				fwrite($Handle, $Data); 
+				$File = dirname(__FILE__) . '/../../json_files/treePHP.json';
+				file_put_contents($File, $out);
+				//$Handle = fopen($File, 'w');
+				
+				//fwrite($Handle, $Data); 
 				print "Data Written"; 
 				fclose($Handle); 
  
