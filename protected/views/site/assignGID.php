@@ -15,8 +15,8 @@ Yii::import('application.modules.model');
 $file_toArray = new file_toArray();
 
 $unselected = 0;
-print_r($checked);
-print_r($createdGID);
+//print_r($checked);
+//print_r($createdGID);
 // final is the array containing arrays of the pedigree lines (from the checkedboxes)
 $final = $file_toArray->getPedigreeLine($checked, $createdGID);
 if (count($final)) {
