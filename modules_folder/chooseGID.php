@@ -45,9 +45,8 @@ $file_toArray = new file_toArray();
             <?php if ($existing[0][13] != "not specified") {
                 ?>
                 <input type="hidden"  value="<?php echo $existing[0][13]; ?>"  id="sToId" name="sToId">
-
-                <input type="button" class="btn btn-primary" value="Show Germplasm older than the cross" id="filter">&nbsp;&nbsp;
-                <input type="button" class="btn btn-primary" value="Show All" id="showAll"><br><br>
+                <input type="button" class="btn btn-primary" value="Show Germplasm older than the cross" id="filter" onclick="change()" >&nbsp;&nbsp;
+                <br><br>
                 <?php
             }
             ?>
@@ -132,6 +131,8 @@ $file_toArray = new file_toArray();
 ?>
 <script type="text/javascript">
     //function for the loading indicator
+    //************For opening a modal dialog***************
+    
     $(document).ready(function() {
         var pop = function() {
             $('#choose-frm').hide();
@@ -161,60 +162,48 @@ $file_toArray = new file_toArray();
         });
 
 
-        $("#mybutton").click(function() {
-            $.fn.dataTableExt.afnFiltering.push(
-                    function(oSettings, aData, iDataIndex) {
-                        // "date-range" is the id for my input
-                        var dateRange = $('#sToId').attr("value");
-
-                        // parse the range from a single field into min and max, remove " - "
-                        iMin = "";
-                        iMax = $('#sToId').attr("value");
-
-                        // 4 here is the column where my dates are.
-                        var iValue = aData[1];
-
-
-                        /*
-                         // run through cases
-                         if ( dateMin == "" && date <= dateMax){
-                         return true;
-                         }
-                         else if ( dateMin =="" && date <= dateMax ){
-                         return true;
-                         }
-                         else if ( dateMin <= date && "" == dateMax ){
-                         return true;
-                         }
-                         else if ( dateMin <= date && date <= dateMax ){
-                         return true;
-                         }
-                         // all failed
-                         return false;
-                         */
-                        if (iMax == "") {
-                            return true;
-                        }
-                        var date1 = new Date(iValue);
-                        var date2 = new Date(iMax);
-                        var result = date1 - date2;
-                        console.log(date1 + "-" + date2 + "= " + result);
-
-                        //var f=dates.compare(iValue,iMax);
-                        if (result === 0) {
-                            return true;
-                        } else if (result < 0) {
-                            return true;
-                        }
-                        return false;
-
-
-                    }
-            );
-            //Update table
-            $('#model').dataTable().fnDraw();
-            //Deleting the filtering funtion if we need the original table later.
-
-        });
     });
+    function change() {
+        var elem = document.getElementById("filter");
+        if (elem.value == "Show Germplasm older than the cross") {
+            elem.value = "Show All";
+            iMax = $('#sToId').attr("value");
+        } else {
+            elem.value = "Show Germplasm older than the cross";
+            iMax = "";
+        }
+        $.fn.dataTableExt.afnFiltering.push(
+                function(oSettings, aData, iDataIndex) {
+                    // "date-range" is the id for my input
+                    var dateRange = $('#sToId').attr("value");
+
+                    // parse the range from a single field into min and max, remove " - "
+                    iMin = "";
+                   
+                    // 4 here is the column where my dates are.
+                    var iValue = aData[1];
+
+                    if (iMax == "") {
+                        return true;
+                    }
+                    var date1 = new Date(iValue);
+                    var date2 = new Date(iMax);
+                    var result = date1 - date2;
+                    //console.log(date1 + "-" + date2 + "= " + result);
+
+                    //var f=dates.compare(iValue,iMax);
+                    if (result === 0) {
+                        return true;
+                    } else if (result < 0) {
+                        return true;
+                    }
+                    return false;
+
+
+                }
+        );
+        //Update table
+        $('#model').dataTable().fnDraw();
+        //Deleting the filtering funtion if we need the original table later.
+    }
 </script>    
