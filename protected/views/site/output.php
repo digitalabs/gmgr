@@ -10,7 +10,7 @@
     <!--****For edit germplasm modal dialog-->
 
     <div id="editGermplasmNameModal" class="modal hide fade in" style="display: none;"></div>
-
+    <br><br>
    <?php
     if (isset($dataProvider2)) {
         ?>
