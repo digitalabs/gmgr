@@ -11,15 +11,7 @@
 
     <div id="editGermplasmNameModal" class="modal hide fade in" style="display: none;"></div>
 
-    <?php
-    $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-        'type' => 'horizontal',
-        'id' => 'assign-gid-form',
-        'enableAjaxValidation' => true,
-        'action' => array('/site/assignGID'),
-        'htmlOptions' => array('class' => 'well well-small'),
-    ));
-
+   <?php
     if (isset($dataProvider2)) {
         ?>
         <div id="non_standardized_table">
@@ -53,13 +45,6 @@
                         )
                     ),
                     array(
-                        'header' => 'Date of Creation',
-                        'name' => 'date',
-                        'type' => 'raw',
-                        'value' => 'CHtml::encode($data["date"])',
-                        'filter' => CHtml::textField('FilterPedigreeForm2[gid]', isset($_GET['FilterPedigreeForm2']['date]']) ? $_GET['FilterPedigreeForm2']['date'] : ''),
-                    ),
-                    array(
                         'header' => 'Female Parent',
                         'name' => 'female',
                         'type' => 'raw',
@@ -78,6 +63,7 @@
                                 return "<div class='j'><font style='color:#FF6600; font-weight:bold;'>" . CHtml::link(CHtml::encode($data["female"]), '#', array('id' => 'open-modal', 'title' => CHtml::encode($data["fremarks"]), 'class' => 'tooltipster', 'data-toggle' => 'modal', 'data-target' => '#editGermplasmNameModal', 'data-id' => $data["female"])) . "</font></div>";
                             }
                         },
+                                
                     ),
                     array(
                         'header' => 'Male Parent',
@@ -101,12 +87,30 @@
                             }
                             echo CHtml::hiddenField('hiddenMid', CHtml::encode($data["male"]));
                         },
-                    )
+                    ),
+                                
+                    array(
+                        'header' => 'Date of Creation',
+                        'name' => 'date',
+                        'type' => 'raw',
+                        'value' => 'CHtml::encode($data["date"])',
+                        'filter' => CHtml::textField('FilterPedigreeForm2[gid]', isset($_GET['FilterPedigreeForm2']['date]']) ? $_GET['FilterPedigreeForm2']['date'] : ''),
+                    ),
                 ),
             ));
         }
         ?>
     </div>
+    <?php
+        $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+            'type' => 'horizontal',
+            'id' => 'assign-gid-form',
+            'enableAjaxValidation' => true,
+            'action' => array('/site/assignGID'),
+            'htmlOptions' => array('class' => 'well well-small'),
+    ));
+
+    ?>
     <div id="standardized_table">
 
         <br/>
@@ -194,6 +198,14 @@
                         echo CHtml::hiddenField('hiddenMid', CHtml::encode($data["male"]));
                     },
                 ),
+                            
+                    array(
+                        'header' => 'Date of Creation',
+                        'name' => 'date',
+                        'type' => 'raw',
+                        'value' => 'CHtml::encode($data["date"])',
+                        'filter' => CHtml::textField('FilterPedigreeForm2[gid]', isset($_GET['FilterPedigreeForm2']['date]']) ? $_GET['FilterPedigreeForm2']['date'] : ''),
+                    ),
             ),
         ));
         ?>
