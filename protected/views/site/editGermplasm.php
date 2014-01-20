@@ -73,7 +73,7 @@ $modalForm = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
         //$( '#assign-gid-form' ).parsley(); 
 
         $('#save-changes-btn').click(function() {
-            alert($("#germplasm_name_new").parsley("validate"));
+           // alert($("#germplasm_name_new").parsley("validate"));
             if ("localStorage" in window && window["localStorage"] != null) {
                 try {
                     //console.log(localStorage.list);
