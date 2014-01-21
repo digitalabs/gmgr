@@ -54,11 +54,11 @@ $modalForm = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
         'type' => 'primary',
         'htmlOptions' => array('data-dismiss' => 'modal'),
     ));
-    /* echo CHtml::submitButton('Submit', array(
-      'id' => 'submit-btn',
+     echo CHtml::submitButton('Submit', array(
+      'id' => 'save-btn',
       'class' => 'hidden',
       'form' => 'assign-gid-form'
-      )); */
+      )); 
     ?>
     <?php $this->endWidget();
     ?>   
@@ -125,7 +125,7 @@ $modalForm = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 
                                         document.getElementById("list").value = localStorage.list;
                                         document.getElementById("location").value = localStorage.locationID;
-                                        $("#submit-btn").click();
+                                        $("#save-btn").click();
 
                                     } catch (e) {
                                         if (e === QUOTA_EXCEEDED_ERR) {
