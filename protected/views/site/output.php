@@ -288,17 +288,17 @@
         //triggers  the activity loading indicator
         $('#submit-btn').click(function() {
             var selected = $.fn.yiiGridView.getSelection("pedigreeGrid");
-            /*if (!selected.length)
+            if (!selected.length)
              {
              alert('Please select at least one row');
              return false;
              }
              else
-             {*/
+             {
             $('#screen').css({opacity: 0.4, 'width': $(document).width(), 'height': $(document).height()});
             $('body').css({'overflow': 'hidden'});
             $('#ajax-loading-indicator').css({'display': 'block'});
-            //}
+            }
         });
     });
 
