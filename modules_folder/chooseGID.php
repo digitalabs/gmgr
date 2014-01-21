@@ -98,8 +98,8 @@ $file_toArray = new file_toArray();
                             echo '<input type="hidden" name="checked" value="' . base64_encode(serialize($checked)) . '" />';
                             echo '<input type="hidden" name="locationID" value="' . $locationID . '" />';
                             echo "</td>";
-                            echo "<td>" . $existing[$j][6] . "
-                            <a  data-toggle='modal' href='#modal-pedTree' class='open-modal' data-id='" . $existing[$j][6] . "'>Show Pedigree Tree</a></td>";
+                            echo "<td>" . $existing[$j][6] . "</td>";
+                            
                             /* echo "<td>" . $existing[$j][6] . '<form action="index.php?r=site/editor" method="post" target="_blank">
 
                               <input type="hidden" name="inputGID" value="' . $existing[$j][6] . '">
