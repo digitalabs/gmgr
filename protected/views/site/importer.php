@@ -64,7 +64,9 @@
                                 echo CHtml::activefileField($model, 'file');
                                 echo CHtml::error($model, 'file');
                             ?>
-                            <a href="Sample File/Sample1.htm">View Sample File</a> <br>
+                            <?php
+                              echo CHtml::link('Download sample file', Yii::app()->baseUrl. '/csv_files/germplasmList.csv');
+                            ?>
                             <label>Location</label>
                             <?php
                             $myfile = dirname(__FILE__) . '/../../../csv_files/location.csv';
