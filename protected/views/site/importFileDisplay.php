@@ -97,8 +97,14 @@
 
                         return "<b>" . CHtml::encode($data["female"]) . "</b>" . "" . $fgid . "";
                     }
-                    else
-                        return "<font style='color:#FF6600;'>" . CHtml::tag("span", array("title" => CHtml::encode($data["fremarks"]), "class" => "tooltipster"), CHtml::encode($data["female"])) . "</font>";
+                    else{
+                        $your_array = array();
+                        $your_array = explode("#", CHtml::encode($data["fremarks"]));
+                        $your_array = implode("<br />", $your_array);
+                        $fremarks = $your_array;
+                        
+                        return "<font style='color:#FF6600;'>" . CHtml::tag("span", array("title" => $fremarks, "class" => "tooltipster"), CHtml::encode($data["female"])) . "</font>";
+                    }
                 },
             ),
             array(
@@ -114,8 +120,14 @@
                         $mgid = $your_array;
                         return "<b>" . CHtml::encode($data["male"]) . "</b>" . "" . $mgid . "";
                     }
-                    else
-                        return "<font style='color:#FF6600; '>" . CHtml::tag("span", array("title" => CHtml::encode($data["mremarks"]), "class" => "tooltipster"), CHtml::encode($data["male"])) . "</font>";
+                    else{
+                        $your_array = array();
+                        $your_array = explode("#", CHtml::encode($data["mremarks"]));
+                        $your_array = implode("<br />", $your_array);
+                        $mremarks = $your_array;
+                        
+                        return "<font style='color:#FF6600; '>" . CHtml::tag("span", array("title" => $mremarks, "class" => "tooltipster"), CHtml::encode($data["male"])) . "</font>";
+                    }
                 },
             ),
             array(
