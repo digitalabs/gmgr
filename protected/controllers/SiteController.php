@@ -441,7 +441,7 @@ class SiteController extends Controller {
                     $notStandard = $filtersForm2->filter($nonStandardize);
                     $dataProvider2 = new CArrayDataProvider($notStandard, array(
                         'pagination' => array(
-                            'pageSize' => 2,
+                            'pageSize' => 5,
                     )));
                 }
                 //get array data and create dataProvider
