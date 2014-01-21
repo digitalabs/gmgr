@@ -160,7 +160,7 @@ class SiteController extends Controller {
 				
 				//fwrite($Handle, $Data); 
 				print "Data Written"; 
-				fclose($Handle); 
+				//fclose($Handle); 
  
                 $this->redirect(array('/site/editor'));
             }
