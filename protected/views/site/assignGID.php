@@ -259,53 +259,12 @@ if (count($final)) {
                                                 }
                                                 //Methods
 
-                                                if ($newGID == "new") {
-                                                    ?><td>
-                                                    <form action="" method="POST" id="updateMethodForm" name="updateMethodForm">
-                                                        <?php
-                                                        $line = array();
-                                                        $line = explode("#", $method);
-                                                        $line = implode(",", $line);
-                                                        $method = $line;
-                                                        echo "(" . $methodID . ")&nbsp; " . $method . "<br>";
-                                                        echo CHtml::hiddenField("selectMethod", "0");
-                                                        echo CHtml::hiddenField("proceedMethod", "0");
-                                                        echo CHtml::hiddenField("term", $term)
-                                                        ?>
-                                                        <input
-                                                            id="other<?php echo $j; ?>"
-                                                            type="text"
-                                                            class="ta"
-                                                            placeholder="Type the method id/type/code/name"
-                                                            autocomplete="off"
-                                                            data-provide="typeahead"
-                                                            value=""
-                                                            />
-                                                        <br/>
-                                                        <?php
-                                                        echo '<input type="hidden" class="' . $j . '" id="term' . $j . '" name="list" value="' . base64_encode(serialize($list)) . '" />';
-                                                        echo '<input type="hidden" class="' . $j . '" id="term' . $j . '" name="createdGID" value="' . base64_encode(serialize($createdGID)) . '" />';
-                                                        echo '<input type="hidden" class="' . $j . '" id="term' . $j . '" name="existing" value="' . base64_encode(serialize($existing)) . '" />';
-                                                        echo '<input type="hidden" class="' . $j . '"  id="term' . $j . '" name="checked" value="' . base64_encode(serialize($checked)) . '" />';
-                                                        echo '<input type="hidden" class="' . $j . '" id="term' . $j . '"name="locationID" value="' . $locationID . '" />';
-                                                        ?>
-                                                        <input type="hidden" class="<?php echo $j; ?>" name="term" id="term<?php echo $j ?>" value="$term"/>
-                                                        <input type="hidden" class="<?php echo $j; ?>" name="bondId" id="bondId<?php echo $j; ?>" value="" />
-                                                        <input type="hidden" class="<?php echo $j; ?>" name="gid" id="gid<?php echo $j; ?>" value="<?php echo $GID; ?>" />
-                                                        <input type="hidden" class="<?php echo $j; ?>" name="id" id="id<?php echo $j; ?>" value="<?php echo $id; ?>" />
-                                                        <div id="instruction" class="muted" style="font-size:10px;"></div>                                                        
-                                                        <input type="submit" id="submitMethod<?php echo $j; ?>" class="btn btn-primary btn-mini" value="Update" onclick=" return jsConfirmDialog(<?php echo $j; ?>);
-                                return false;" ><br><br>
-                                                    </form>
-                                                    <?php
-                                                    $j++;
-                                                } else {
                                                     $line = array();
                                                     $line = explode("#", $method);
                                                     $line = implode(",", $line);
                                                     $method = $line;
                                                     echo "<td>(" . $methodID . ")&nbsp; " . $method . "</td>";
-                                                }
+                                               // location
                                                 $line = array();
                                                 $line = explode("#", $location);
                                                 $line = implode(",", $line);
@@ -525,60 +484,7 @@ if (count($final)) {
             }
 </script>
 <script type="text/javascript">
-    function jsConfirmDialog(count) {
-        event.preventDefault();
-
-        var bondId = $("#bondId" + count).val();
-        var gid = $("#gid" + count).val();
-        var id = $("#id" + count).val();
-        var array_1 = new Array(bondId, gid, id);
-        //*****assign the array value to a hidden field inside method POST
-        $("#selectMethod").val(array_1);
-        //****opens the confirmation modal for update method
-        $("#method-confirm").dialog('open');
-
-    }
-    ;
-    function methodLoading() {
-        $('#screen').css({opacity: 0.4, 'width': $(document).width(), 'height': $(document).height()});
-        $('body').css({'overflow': 'hidden'});
-        $('#ajax-loading-indicator').css({'display': 'block'});
-        notifyMethod();
-    }
-    function notifyMethod() {
-        var term1 = $("#term").val();
-        $.pnotify({
-            text: "You have successfully updated the method for germplasm" + " " + "'" + term1 + "'" + ".",
-            type: "success",
-            hide: false
-        });
-    }
-    $(document).ready(function() {
-        $("#method-confirm").dialog({
-            autoOpen: false,
-            autoClose: false,
-            resizable: false,
-            height: 180,
-            modal: true,
-            buttons: [{
-                    text: 'Yes',
-                    click: function() {
-                        $(this).dialog('close');
-                        var form = $("#updateMethodForm");
-                        form.submit();
-                        methodLoading();
-
-                        return true;
-                    }
-                }, {
-                    text: 'No',
-                    click: function() {
-                        $(this).dialog('close');
-                        return false;
-                    }
-                }]
-        });
-    });
+    
     function show(row_count, newGID_count, not_standard, to_process) {
         storeLocal();
         $.pnotify(
@@ -669,52 +575,7 @@ if (count($final)) {
      return false;
      }*/
 
-    //******gets the value inside the textbox of the typeahead********
-    $(document).ready(function() {
-        //***Typeahead****
-        $.each(document.getElementsByClassName("ta"), function(index, value) {
-            //console.log(value['id']);
-            $('#' + value['id']).typeahead({
-                source: function(query, process) {
-
-                    $.ajax({
-                        url: 'methods.json'
-                                , cache: false
-                                , success: function(data) {
-
-                            objects = [];
-                            map = {};
-                            $.each(data, function(i, object) {
-
-                                //for each iteration of this loop the "object" argument contains
-                                //1 bond object from the array in our json, such as:
-                                // { "id":7, "name":"Pierce Brosnan" }
-
-                                //add the label to the display array
-
-                                //also store a hashmap so that when bootstrap gives us the selected
-                                //name we can map that back to an id value
-
-                                map[object.mid + "," + object.mcode + "," + object.mtype + "," + object.mname] = object;
-                                objects.push(object.mid + "," + object.mcode + "," + object.mtype + "," + object.mname);
-                            });
-
-                            //send the array of results to bootstrap for display
-                            process(objects);
-                        }
-                    });
-                },
-                updater: function(object) {
-                    // $('#getSelection<?php //echo $i;      ?>').val(map[object].label);
-                    $('#bondId' + index).val(map[object].mid);
-                    return object;
-                }
-            });
-
-        });
-        //****End of Type ahead****
-
-    });
+   
     var pop = function() {
         $('#new-Modal').css({'z-index': '1000'});
         $('#screen').css({'opacity': '0.4', 'width': $(document).width(), 'height': $(document).height()});
