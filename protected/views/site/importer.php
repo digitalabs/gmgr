@@ -65,7 +65,6 @@
                                 echo CHtml::error($model, 'file');
                             ?>
                             <?php
-                              echo CHtml::link('Download sample file', Yii::app()->baseUrl. '/csv_files/germplasmList2.csv');
                               echo CHtml::link('Download sample file with dates', Yii::app()->baseUrl. '/csv_files/germplasmList.csv');
                             ?>
                             <label>Location</label>
