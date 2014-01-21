@@ -875,7 +875,7 @@ class SiteController extends Controller {
                     'createdGID' => $createdGID
                 ));
             } elseif (isset($_GET['yes']) || isset($_GET['pagea'])) {
-                echo "yes page";
+               // echo "yes page";
                 ?>
                 <html>
                     <body onload="storeLocal2()">
