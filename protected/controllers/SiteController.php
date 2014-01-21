@@ -926,6 +926,10 @@ class SiteController extends Controller {
     public function actionContactUs() {
         $this->render('contactUs');
     }
+    
+     public function actionDiagram() {
+        $this->render('diagram');
+    }
 
 }
 

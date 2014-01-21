@@ -369,13 +369,6 @@ if (count($final)) {
                                     'filter' => CHtml::textField('FilterPedigreeForm[nval]', isset($_GET['FilterPedigreeForm']['nval]']) ? $_GET['FilterPedigreeForm']['nval'] : ''),
                                 ),
                                 array(
-                                    'header' => 'Date of Creation',
-                                    'name' => 'date',
-                                    'type' => 'raw',
-                                    'value' => 'CHtml::encode($data["date"])',
-                                    'filter' => CHtml::textField('FilterPedigreeForm[gid]', isset($_GET['FilterPedigreeForm']['date]']) ? $_GET['FilterPedigreeForm']['date'] : ''),
-                                ),
-                                array(
                                     'header' => 'GID',
                                     'name' => 'gid',
                                     'value' => 'CHtml::encode($data["gid"])',

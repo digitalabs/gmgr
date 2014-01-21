@@ -98,13 +98,16 @@ $file_toArray = new file_toArray();
                             echo '<input type="hidden" name="checked" value="' . base64_encode(serialize($checked)) . '" />';
                             echo '<input type="hidden" name="locationID" value="' . $locationID . '" />';
                             echo "</td>";
-                            echo "<td>" . $existing[$j][6] . '<form action="index.php?r=site/editor" method="post" target="_blank">
-                            <input type="hidden" name="inputGID" value="' . $existing[$j][6] . '">
-                            <input type="hidden" name="maxStep" value="">
-                            <input type="submit" value="See Pedigree Tree">
-                            </form>
-                                
-</td>';
+                            echo "<td>" . $existing[$j][6] . "
+                            <a  data-toggle='modal' href='#modal-pedTree' class='open-modal' data-id='" . $existing[$j][6] . "'>Show Pedigree Tree</a></td>";
+                            /* echo "<td>" . $existing[$j][6] . '<form action="index.php?r=site/editor" method="post" target="_blank">
+
+                              <input type="hidden" name="inputGID" value="' . $existing[$j][6] . '">
+                              <input type="hidden" name="maxStep" value="">
+                              <input type="submit" value="See Pedigree Tree">
+                              </form>
+
+                              </td>'; */
 
                             echo "<td>(" . $existing[$j][2] . ")&nbsp; " . $existing[$j][3] . "</td>";
                             echo "<td>(" . $existing[$j][4] . ")&nbsp; " . $existing[$j][5] . "</td>";
@@ -117,6 +120,7 @@ $file_toArray = new file_toArray();
                     ?>
                 </tbody>
             </table>
+            <div id="modal-pedTree" class="modal hide fade in" style="display: none; z-index:2000"></div>
 
         </div>
         <div class="modal-footer">
@@ -130,80 +134,108 @@ $file_toArray = new file_toArray();
 }
 ?>
 <script type="text/javascript">
-    //function for the loading indicator
-    //************For opening a modal dialog***************
-    
-    $(document).ready(function() {
-        var pop = function() {
-            $('#choose-frm').hide();
-            $('#screen').css({opacity: 0.4, 'width': $(document).width(), 'height': $(document).height()});
-            $('body').css({'overflow': 'hidden'});
-            $('#ajax-loading-indicator').css({'display': 'block'});
-        }
-        $('#submit').click(pop);
-        /* Initialise datatables */
+            //function for the loading indicator
+            //************For opening a modal dialog***************
 
-
-        $('#model').dataTable({
-            "bPaginate": false,
-            "bSort": false,
-            "bSearchable": false
-        }).columnFilter({sPlaceHolder: "head:after",
-            aoColumns: [{type: "none"},
-                {type: "text"},
-                {type: "text"},
-                {type: "text"},
-                {type: "text"},
-                {type: "text"},
-                {type: "text"},
-                {type: "text"}
-            ]
-
-        });
-
-
-    });
-    function change() {
-        var elem = document.getElementById("filter");
-        if (elem.value == "Show Germplasm older than the cross") {
-            elem.value = "Show All";
-            iMax = $('#sToId').attr("value");
-        } else {
-            elem.value = "Show Germplasm older than the cross";
-            iMax = "";
-        }
-        $.fn.dataTableExt.afnFiltering.push(
-                function(oSettings, aData, iDataIndex) {
-                    // "date-range" is the id for my input
-                    var dateRange = $('#sToId').attr("value");
-
-                    // parse the range from a single field into min and max, remove " - "
-                    iMin = "";
-                   
-                    // 4 here is the column where my dates are.
-                    var iValue = aData[1];
-
-                    if (iMax == "") {
-                        return true;
-                    }
-                    var date1 = new Date(iValue);
-                    var date2 = new Date(iMax);
-                    var result = date1 - date2;
-                    //console.log(date1 + "-" + date2 + "= " + result);
-
-                    //var f=dates.compare(iValue,iMax);
-                    if (result === 0) {
-                        return true;
-                    } else if (result < 0) {
-                        return true;
-                    }
-                    return false;
-
-
+            $(document).ready(function() {
+                var pop = function() {
+                    $('#choose-frm').hide();
+                    $('#screen').css({opacity: 0.4, 'width': $(document).width(), 'height': $(document).height()});
+                    $('body').css({'overflow': 'hidden'});
+                    $('#ajax-loading-indicator').css({'display': 'block'});
                 }
-        );
-        //Update table
-        $('#model').dataTable().fnDraw();
-        //Deleting the filtering funtion if we need the original table later.
-    }
+                $('#submit').click(pop);
+                /* Initialise datatables */
+
+                $(".open-modal").click(function() {
+                    alert("hey");
+                    var term = $(this).data("id");
+                    var arr = document.getElementsByClassName(term);
+
+                    var m_values = new Array();
+                    m_values.length = 0;
+                    for (var i = 0; i < arr.length; i++) {
+                        m_values.push(arr[i].value);
+                    }
+
+                    //******assign the obtained value in the modal*****
+                    $.ajax({
+                        cache: false,
+                        type: 'POST',
+                        url:  '/GMGR/index.php?r=site/diagram',
+                        data: {termId: term, arr_terms: m_values},
+                        success: function(data) {
+                            $("#modal-pedTree").html(data);
+
+                        }
+                    });
+                });
+
+                $('#model').dataTable({
+                    "bPaginate": false,
+                    "bSort": false,
+                    "bSearchable": false
+                }).columnFilter({sPlaceHolder: "head:after",
+                    aoColumns: [{type: "none"},
+                        {type: "text"},
+                        {type: "text"},
+                        {type: "text"},
+                        {type: "text"},
+                        {type: "text"},
+                        {type: "text"},
+                        {type: "text"}
+                    ]
+
+                });
+
+
+            });
+            function change() {
+                var elem = document.getElementById("filter");
+                if (elem.value == "Show Germplasm older than the cross") {
+                    elem.value = "Show All";
+                    iMax = $('#sToId').attr("value");
+                } else {
+                    elem.value = "Show Germplasm older than the cross";
+                    iMax = "";
+                }
+                $.fn.dataTableExt.afnFiltering.push(
+                        function(oSettings, aData, iDataIndex) {
+                            // "date-range" is the id for my input
+                            var dateRange = $('#sToId').attr("value");
+
+                            // parse the range from a single field into min and max, remove " - "
+                            iMin = "";
+
+                            // 4 here is the column where my dates are.
+                            var iValue = aData[1];
+
+                            if (iMax == "") {
+                                return true;
+                            }
+                            var date1 = new Date(iValue);
+                            var date2 = new Date(iMax);
+                            var result = date1 - date2;
+                            //console.log(date1 + "-" + date2 + "= " + result);
+
+                            //var f=dates.compare(iValue,iMax);
+                            if (result === 0) {
+                                return true;
+                            } else if (result < 0) {
+                                return true;
+                            }
+                            return false;
+
+
+                        }
+                );
+                //Update table
+                $('#model').dataTable().fnDraw();
+                //Deleting the filtering funtion if we need the original table later.
+            }
+            //************For opening a modal dialog***************
+            /*$(document).on("click", ".open-modal", function() {
+             //*****the term to be placed on the heading in the modal
+             alert("hey");
+             });*/
 </script>    
