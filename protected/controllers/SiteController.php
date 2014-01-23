@@ -118,6 +118,8 @@ class SiteController extends Controller {
             if ($model->validate() && $model->login()) {
 // $this->redirect(Yii::app()->user->returnUrl);
                 $this->redirect(array('/site/importer'));
+            }else{
+                $this->redirect(Yii::app()->baseUrl);
             }
         }
 
