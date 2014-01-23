@@ -252,7 +252,7 @@ class SiteController extends Controller {
 
 
                     if (file_exists($newName)) {
-                        unlink($dir . '/' . $newName);
+                      //  unlink($dir . '/' . $newName);
                     }
                     //***check if file is not null
                     if (isset($file)) {
@@ -356,11 +356,7 @@ class SiteController extends Controller {
                     </body>
                 </html>
                 <?php
-                $dir = dirname(__FILE__) . '/../../uploadedFiles';
-			$newName = "germplasmFile.csv";
-			$newFilename = $dir . '/' . $newName;
-			$importedFile->file = $newFilename;
-			$file = $importedFile->file;
+              
             }
         } else {
             $this->render('login', array('model' => $model2));
