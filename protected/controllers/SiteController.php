@@ -441,7 +441,7 @@ class SiteController extends Controller {
                     $notStandard = $filtersForm2->filter($nonStandardize);
                     $dataProvider2 = new CArrayDataProvider($notStandard, array(
                         'pagination' => array(
-                            'pageSize' => 2,
+                            'pageSize' => 5,
                     )));
                 }
                 //get array data and create dataProvider
@@ -685,9 +685,10 @@ class SiteController extends Controller {
                         $locationID = $_POST['locationID'];
                         $checked = $arrSelectedIds;
                         $standardized = $file_toArray->checkIf_standardize($checked, $list);
+                        $checked = $standardized;
                         $a = array(
                             'list' => $list,
-                            'checked' => $checked,
+                            'checked' => $standardized,
                             'existingTerm' => array(),
                             'locationID' => $locationID,
                             'userID' => Yii::app()->user->id
@@ -715,15 +716,15 @@ class SiteController extends Controller {
                         //print_r($rows);
                         //echo "<br/>";
                     } elseif (isset($_POST['process'])) {
-                        echo "entered post process";
+                        //echo "entered post process";
                         $locationID = $_POST['location'];
                         $checked = json_decode($_POST['checked'], true);
                         $createdGID = json_decode($_POST['createdGID'], true);
                         $existing = json_decode($_POST['existing'], true);
-
+                        
                         $rows = $list;
                     } else {
-                        //echo "here 1";
+                     
                         $locationID = $_POST['location'];
                         $checked = json_decode($_POST['checked'], true);
                         $createdGID = json_decode($_POST['createdGID'], true);
@@ -731,10 +732,10 @@ class SiteController extends Controller {
                         $unselected = $file_toArray->get_unselected_rows($checked, $list);
                         $standardized = $file_toArray->checkIf_standardize($unselected, $list);
 
-
+                        
                         $a = array(
                             'list' => $list,
-                            'checked' => $checked,
+                            'checked' => $standardized,
                             'existingTerm' => $existing,
                             'createdGID' => $createdGID,
                             'locationID' => $locationID,
@@ -866,7 +867,6 @@ class SiteController extends Controller {
                         'pageSize' => 5,
                     ),
                 ));
-
                 $this->render('assignGID', array('filtersForm' => $filtersForm,
                     'checked' => $checked, 'GdataProvider' => $GdataProvider,
                     'locationID' => $locationID,
@@ -875,7 +875,7 @@ class SiteController extends Controller {
                     'createdGID' => $createdGID
                 ));
             } elseif (isset($_GET['yes']) || isset($_GET['pagea'])) {
-                echo "yes page";
+                //echo "yes page";
                 ?>
                 <html>
                     <body onload="storeLocal2()">
