@@ -685,6 +685,7 @@ class SiteController extends Controller {
                         $locationID = $_POST['locationID'];
                         $checked = $arrSelectedIds;
                         $standardized = $file_toArray->checkIf_standardize($checked, $list);
+                        $checked = $standardized;
                         $a = array(
                             'list' => $list,
                             'checked' => $checked,
@@ -730,7 +731,7 @@ class SiteController extends Controller {
                         $existing = json_decode($_POST['existing'], true);
                         $unselected = $file_toArray->get_unselected_rows($checked, $list);
                         $standardized = $file_toArray->checkIf_standardize($unselected, $list);
-
+                        $checked = $standardized;
 
                         $a = array(
                             'list' => $list,
