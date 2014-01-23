@@ -26,8 +26,8 @@ $modalForm = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
         echo CHtml::hiddenField('germplasmName', $model->germplasmName);
         ?>
         <?php echo $modalForm->textFieldRow($model, 'newGermplasmName', array('id' => 'germplasm_name_new', 'data-placement' => 'right', 'data-required' => 'true')); ?>
-        <span id="notification" style='display:none;'> </span><br/>
-        <span id="notification2" style='display:none;'> </span>
+        <span id="notification"> </span><br/>
+        <span id="notification2"> </span>
         <?php echo $modalForm->error($model, 'newGermplasmName') ?>
 
     </p>
@@ -93,6 +93,7 @@ $modalForm = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                 if (newGermplasmName1 === "") {
 
                     $("#notification").html("This is a required field.").addClass("flash-error").fadeIn();
+                    $("#notification2").hide();
 
                     return false;
                 }
@@ -137,6 +138,7 @@ $modalForm = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                                 }
                             } else {
                                 $("#germplasm_name_new").focus();
+                                $("#notification2").show();
                                 $("#notification").text("ERROR.Germplasm name is not in standardized format. Please edit the germplasm name. Hint is next to germplasm name text box").css("color", "red");
                                 $("#notification2").text(error1 + gid1).css("color", "red");
                                 return false;

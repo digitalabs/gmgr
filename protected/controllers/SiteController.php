@@ -441,7 +441,7 @@ class SiteController extends Controller {
                     $notStandard = $filtersForm2->filter($nonStandardize);
                     $dataProvider2 = new CArrayDataProvider($notStandard, array(
                         'pagination' => array(
-                            'pageSize' => 2,
+                            'pageSize' => 5,
                     )));
                 }
                 //get array data and create dataProvider
@@ -685,6 +685,7 @@ class SiteController extends Controller {
                         $locationID = $_POST['locationID'];
                         $checked = $arrSelectedIds;
                         $standardized = $file_toArray->checkIf_standardize($checked, $list);
+                        $checked = $standardized;
                         $a = array(
                             'list' => $list,
                             'checked' => $checked,
@@ -730,7 +731,7 @@ class SiteController extends Controller {
                         $existing = json_decode($_POST['existing'], true);
                         $unselected = $file_toArray->get_unselected_rows($checked, $list);
                         $standardized = $file_toArray->checkIf_standardize($unselected, $list);
-
+                        $checked = $standardized;
 
                         $a = array(
                             'list' => $list,
@@ -875,7 +876,7 @@ class SiteController extends Controller {
                     'createdGID' => $createdGID
                 ));
             } elseif (isset($_GET['yes']) || isset($_GET['pagea'])) {
-                echo "yes page";
+               // echo "yes page";
                 ?>
                 <html>
                     <body onload="storeLocal2()">
