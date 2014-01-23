@@ -326,31 +326,6 @@ class SiteController extends Controller {
                         $arr[] = array('id' => CJSON::encode(array($fid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date' => $date);
                     endforeach;
 
-                    /* if(isset($_POST['next']) && empty($_POST['refresh'])){
-                      foreach ($id as $row) :
-                      list($GID, $nval, $female, $fid, $fremarks, $fgid, $male, $mid, $mremarks, $mgid,$date) = $row;
-                      $arr[] = array('id' => CJSON::encode(array($fid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date' => $date);
-                      endforeach;
-                      }elseif(isset($_POST['refresh']) && empty($_POST['next'])){
-                      foreach ($id as $row) :
-                      //list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male, $date) = $row;
-                      list($GID, $nval, $female, $fid, $fremarks, $fgid, $male, $mid, $mremarks, $mgid,$date) = $row;
-                      $arr[] = array('id' => CJSON::encode(array($fid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date' => $date);
-                      endforeach;
-                      } */
-                    /* if (isset($_POST['refresh'])) {
-                      foreach ($id as $row) :
-                      //list($GID, $nval, $female, $fid, $fremarks, $fgid, $male, $mid, $mremarks, $mgid,$date) = $row;
-                      list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male, $date) = $row;
-                      $arr[] = array('id' => CJSON::encode(array($fid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date' => $date);
-                      endforeach;
-                      }else {
-                      foreach ($id as $row) :
-                      //list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male, $date) = $row;
-                      list($GID, $nval, $female, $fid, $fremarks, $fgid, $male, $mid, $mremarks, $mgid,$date) = $row;
-                      $arr[] = array('id' => CJSON::encode(array($fid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date' => $date);
-                      endforeach;
-                      } */
 
                     if (isset($_GET['FilterPedigreeForm'])) {
                         $filtersForm->filters = $_GET['FilterPedigreeForm'];
@@ -381,6 +356,11 @@ class SiteController extends Controller {
                     </body>
                 </html>
                 <?php
+                $dir = dirname(__FILE__) . '/../../uploadedFiles';
+			$newName = "germplasmFile.csv";
+			$newFilename = $dir . '/' . $newName;
+			$importedFile->file = $newFilename;
+			$file = $importedFile->file;
             }
         } else {
             $this->render('login', array('model' => $model2));
