@@ -283,10 +283,8 @@
         storeLocal();
     }
 
-    $(document).ready(function() {
-
         //triggers  the activity loading indicator
-        $('#submit-btn').click(function() {
+         $(document).on("click", "#submit-btn", function() {
             var selected = $.fn.yiiGridView.getSelection("pedigreeGrid");
             if (!selected.length)
              {
@@ -300,7 +298,7 @@
             $('#ajax-loading-indicator').css({'display': 'block'});
             }
         });
-    });
+
 
     //opens the modal from another page
     $(document).on("click", "#open-modal", function() {
