@@ -58,6 +58,7 @@
 // echo "<div id='table1'>";
     $this->widget('ext.selgridview.BootSelGridView', array(
         'id' => 'pedigreeGrid',
+        'ajaxUpdate'=>true,
         'dataProvider' => $dataProvider,
         'beforeAjaxUpdate' => 'js:
                function (id, options) {

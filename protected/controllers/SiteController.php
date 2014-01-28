@@ -118,6 +118,8 @@ class SiteController extends Controller {
             if ($model->validate() && $model->login()) {
 // $this->redirect(Yii::app()->user->returnUrl);
                 $this->redirect(array('/site/importer'));
+            }else{
+                $this->redirect(Yii::app()->baseUrl);
             }
         }
 
@@ -250,7 +252,7 @@ class SiteController extends Controller {
 
 
                     if (file_exists($newName)) {
-                        unlink($dir . '/' . $newName);
+                      //  unlink($dir . '/' . $newName);
                     }
                     //***check if file is not null
                     if (isset($file)) {
@@ -324,31 +326,6 @@ class SiteController extends Controller {
                         $arr[] = array('id' => CJSON::encode(array($fid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date' => $date);
                     endforeach;
 
-                    /* if(isset($_POST['next']) && empty($_POST['refresh'])){
-                      foreach ($id as $row) :
-                      list($GID, $nval, $female, $fid, $fremarks, $fgid, $male, $mid, $mremarks, $mgid,$date) = $row;
-                      $arr[] = array('id' => CJSON::encode(array($fid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date' => $date);
-                      endforeach;
-                      }elseif(isset($_POST['refresh']) && empty($_POST['next'])){
-                      foreach ($id as $row) :
-                      //list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male, $date) = $row;
-                      list($GID, $nval, $female, $fid, $fremarks, $fgid, $male, $mid, $mremarks, $mgid,$date) = $row;
-                      $arr[] = array('id' => CJSON::encode(array($fid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date' => $date);
-                      endforeach;
-                      } */
-                    /* if (isset($_POST['refresh'])) {
-                      foreach ($id as $row) :
-                      //list($GID, $nval, $female, $fid, $fremarks, $fgid, $male, $mid, $mremarks, $mgid,$date) = $row;
-                      list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male, $date) = $row;
-                      $arr[] = array('id' => CJSON::encode(array($fid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date' => $date);
-                      endforeach;
-                      }else {
-                      foreach ($id as $row) :
-                      //list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male, $date) = $row;
-                      list($GID, $nval, $female, $fid, $fremarks, $fgid, $male, $mid, $mremarks, $mgid,$date) = $row;
-                      $arr[] = array('id' => CJSON::encode(array($fid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date' => $date);
-                      endforeach;
-                      } */
 
                     if (isset($_GET['FilterPedigreeForm'])) {
                         $filtersForm->filters = $_GET['FilterPedigreeForm'];
@@ -379,6 +356,7 @@ class SiteController extends Controller {
                     </body>
                 </html>
                 <?php
+              
             }
         } else {
             $this->render('login', array('model' => $model2));
