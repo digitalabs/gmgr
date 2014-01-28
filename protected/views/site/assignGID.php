@@ -120,8 +120,7 @@ if (count($final)) {
                                                             }
                                                         } else {
                                                             if ($newGID === "new") {
-                                                                echo "The female parent <b>" . $term . "</b> has been added to the local database with a suggested method of <b>(" . $methodID . ")" . $method . "</b>. You may change the method type by 
-															typing the method id, type, code, or name and clicking the update button.
+                                                                echo "The female parent <b>" . $term . "</b> has been added to the local database with a suggested method of <b>(" . $methodID . ")" . $method . "</b>. 
 															<br>";
                                                             } else {
                                                                 if ($i + 1 == $male_id) {
@@ -140,8 +139,7 @@ if (count($final)) {
                                                             }
                                                         } else {
                                                             if ($newGID === "new") {
-                                                                echo "The male parent <b>" . $term . "</b> has been added to the local database with a suggested method of <b>(" . $methodID . ")" . $method . "</b>. You may change the method type by 
-															typing the method id, type, code, or name and clicking the update button.
+                                                                echo "The male parent <b>" . $term . "</b> has been added to the local database with a suggested method of <b>(" . $methodID . ")" . $method . "</b>.
 															<br>";
                                                             } else {
                                                                 if (($i + 1) == count($pages[0]) - 1) {
