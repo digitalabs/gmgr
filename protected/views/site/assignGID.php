@@ -175,6 +175,8 @@ if (count($final)) {
                                         <th></th>
                                         <th>Germplasm Name</th>
                                         <th>GID</th>
+                                        <th>GPID1</th>
+                                        <th>GPID2</th>
                                         <th>Method </th>
                                         <th>Location</th>
 
@@ -257,14 +259,18 @@ if (count($final)) {
                                                 } else {
                                                     echo "<td>" . $GID . "</td>";
                                                 }
+                                                //gpid1
+                                                echo "<td>" . $gpid1 . "</td>";
+                                                //gpid2
+                                                echo "<td>" . $gpid2 . "</td>";
                                                 //Methods
 
-                                                    $line = array();
-                                                    $line = explode("#", $method);
-                                                    $line = implode(",", $line);
-                                                    $method = $line;
-                                                    echo "<td>(" . $methodID . ")&nbsp; " . $method . "</td>";
-                                               // location
+                                                $line = array();
+                                                $line = explode("#", $method);
+                                                $line = implode(",", $line);
+                                                $method = $line;
+                                                echo "<td>(" . $methodID . ")&nbsp; " . $method . "</td>";
+                                                // location
                                                 $line = array();
                                                 $line = explode("#", $location);
                                                 $line = implode(",", $line);
@@ -274,7 +280,7 @@ if (count($final)) {
 
                                             endforeach;
                                             ?>
-                                            </tbody>
+                                        </tbody>
                                     </table>
                                     <?php
                                     // print out the page numbers beneath the results
@@ -349,7 +355,7 @@ if (count($final)) {
 
                                             return "<b>" . CHtml::tag("span", array("title" => CHtml::encode($data["fremarks"]), "class" => "tooltipster"), CHtml::encode($data["female"])) . "</b>" . "" . $fgid . "";
                                         } else {
-                                        return "<font style='color:#FF6600; '>" . CHtml::tag("span", array("title" => $fremarks, "class" => "tooltipster"), CHtml::encode($data["female"])) . "</font>";
+                                            return "<font style='color:#FF6600; '>" . CHtml::tag("span", array("title" => $fremarks, "class" => "tooltipster"), CHtml::encode($data["female"])) . "</font>";
                                             //return "<div class='j'><font style='color:#FF6600; font-weight:bold;'>" . CHtml::link(CHtml::encode($data["female"]), Yii::app()->createUrl("site/editGermplasm", array("germplasm" => $data["female"], "error" => $data["fremarks"])), array('title' => CHtml::encode($data["fremarks"]), 'class' => 'tooltipster')) . "</font></div>";
                                             // return '<a data-toggle="tooltip" title="' .CHtml::encode($data["mremarks"]) . '" data-placement="right" style="color:rgb(255, 0, 0); font-weight:bold;" href="/GMGR/index.php?r=site/editGermplasm.php?germplasm=' .CHtml::encode($data["female"]) . '&error=' .CHtml::encode($data["fremarks"]). '">' . CHtml::encode($data["female"]) . '<a>';
                                         }
@@ -372,7 +378,7 @@ if (count($final)) {
                                             $mgid = $your_array;
                                             return "<b>" . CHtml::tag("span", array("title" => CHtml::encode($data["mremarks"]), "class" => "tooltipster"), CHtml::encode($data["male"])) . "</b>" . "" . $mgid . "";
                                         } else {
-                                        return "<font style='color:#FF6600; '>" . CHtml::tag("span", array("title" => $mremarks, "class" => "tooltipster"), CHtml::encode($data["male"])) . "</font>";
+                                            return "<font style='color:#FF6600; '>" . CHtml::tag("span", array("title" => $mremarks, "class" => "tooltipster"), CHtml::encode($data["male"])) . "</font>";
                                             //turn "<div class='j'><font style='color:#FF6600; font-weight:bold;'>" . CHtml::link(CHtml::encode($data["male"]), Yii::app()->createUrl("site/editGermplasm", array("germplasm" => $data["male"], "error" => $data["mremarks"])), array('title' => CHtml::encode($data["mremarks"]), 'class' => 'tooltipster')) . "</font></div>";
                                             //echo '<a data-toggle="tooltip" data-placement="right" title="' . $mremarks . '" style="color:rgb(255, 0, 0); font-weight:bold;" href="/GMGR/index.php?r=site/editGermplasm.php?germplasm=' . CHtml::encode($data["male"]) . '&error=' . $mremarks . '">' . CHtml::encode($data["male"]) . '<a>';
                                         }
@@ -471,9 +477,10 @@ if (count($final)) {
                         document.getElementById('checked').value = localStorage.checked;
                         document.getElementById('existing').value = localStorage.existing;
                         document.getElementById('createdGID').value = localStorage.createdGID;
-                    } catch (e) {
-                        if (e === QUOTA_EXCEEDED_ERR) {
-                            alert('Quota exceeded!');
+                    } catch (exception) {
+                        if ((exception != QUOTA_EXCEEDED_ERR) &&
+                                (exception != NS_ERROR_DOM_QUOTA_REACHED)) {
+                            throw exception;
                         }
                     }
                 } else {
@@ -486,7 +493,7 @@ if (count($final)) {
             }
 </script>
 <script type="text/javascript">
-    
+
     function show(row_count, newGID_count, not_standard, to_process) {
         storeLocal();
         $.pnotify(
@@ -577,7 +584,7 @@ if (count($final)) {
      return false;
      }*/
 
-   
+
     var pop = function() {
         $('#new-Modal').css({'z-index': '1000'});
         $('#screen').css({'opacity': '0.4', 'width': $(document).width(), 'height': $(document).height()});
