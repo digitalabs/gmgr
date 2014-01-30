@@ -52,14 +52,14 @@ if (count($final)) {
           count all rows
          */
         $row_count = count($list);
-        // echo "<br><br><br><br><br><br><br><br><br><br>all:".$row_count;
+// echo "<br><br><br><br><br><br><br><br><br><br>all:".$row_count;
         /* END count all rows */
 
         /*
           count for rows that are done processing
          */
         $processed = count($checked) - 1;
-        //echo "<br>".$processed . " rows selected<br>";
+//echo "<br>".$processed . " rows selected<br>";
         /* END count for rows that are done processing */
         /*
           count for unstandardized germplasm names
@@ -76,7 +76,7 @@ if (count($final)) {
          */
         $GID_rows = $file_toArray->csv_corrected_GID($list);
         $newGID_count = count($GID_rows);
-        //echo "<br>".count($GID_rows) . " created GID(s)<br>";
+//echo "<br>".count($GID_rows) . " created GID(s)<br>";
 
         /* END count new GID created for cross names */
         ?>
@@ -257,25 +257,42 @@ if (count($final)) {
                                                 } else {
                                                     echo "<td>" . $GID . "</td>";
                                                 }
+
                                                 //gpid1
-                                                echo "<td>" . $gpid1 . "</td>";
+                                                if ($gpid1 === "N/A") {
+                                                    echo "<td class='muted'><font><i>" . $gpid1 . "</i></font></td>";
+                                                } else {
+                                                    echo "<td>" . $gpid1 . "</td>";
+                                                }
+
                                                 //gpid2
-                                                echo "<td>" . $gpid2 . "</td>";
+                                                if ($gpid2 === "N/A") {
+                                                    echo "<td class='muted'><font><i>" . $gpid2 . "</i></font></td>";
+                                                } else {
+                                                    echo "<td>" . $gpid2 . "</td>";
+                                                }
                                                 //Methods
 
-                                                $line = array();
-                                                $line = explode("#", $method);
-                                                $line = implode(",", $line);
-                                                $method = $line;
-                                                echo "<td>(" . $methodID . ")&nbsp; " . $method . "</td>";
+                                                if ($method === "N/A") {
+                                                    echo "<td class='muted'><font><i>" . $method . "</i></font></td>";
+                                                } else {
+                                                    $line = array();
+                                                    $line = explode("#", $method);
+                                                    $line = implode(",", $line);
+                                                    $method = $line;
+                                                    echo "<td>(" . $methodID . ")&nbsp; " . $method . "</td>";
+                                                }
                                                 // location
-                                                $line = array();
-                                                $line = explode("#", $location);
-                                                $line = implode(",", $line);
-                                                $location = $line;
-                                                echo "<td>(" . $locID . ")&nbsp; " . $location . "</td>";
-                                                echo '</tr>';
-
+                                                if ($method === "N/A") {
+                                                    echo "<td class='muted'><font><i>" . $method . "</i></font></td>";
+                                                } else {
+                                                    $line = array();
+                                                    $line = explode("#", $location);
+                                                    $line = implode(",", $line);
+                                                    $location = $line;
+                                                    echo "<td>(" . $locID . ")&nbsp; " . $location . "</td>";
+                                                    echo '</tr>';
+                                                }
                                             endforeach;
                                             ?>
                                         </tbody>
