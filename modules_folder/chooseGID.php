@@ -118,6 +118,7 @@ $file_toArray = new file_toArray();
                             echo '<input type="hidden" name="existing" value="' . base64_encode(serialize($existing)) . '" />';
                             echo '<input type="hidden" name="checked" value="' . base64_encode(serialize($checked)) . '" />';
                             echo '<input type="hidden" name="locationID" value="' . $locationID . '" />';
+                            echo '<input type="hidden" name="theParents" value="' . $m_nval . '" />';
                             echo "</td>";
                             echo "<td>" . $gid_l . "</td>";
 

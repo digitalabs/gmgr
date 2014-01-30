@@ -97,7 +97,7 @@ class file_toArray {
         return false;
     }
 
-    public function updateGID_createdGID($term, $pedigree, $id, $choose, $fid, $mid, $female, $male, $createdGID, $existingTerm, $list, $userID) {
+    public function updateGID_createdGID($term, $pedigree, $id, $choose, $fid, $mid, $female, $male, $createdGID, $existingTerm, $list, $userID, $theParent) {
 
         $data = array();
         for ($i = 0, $k = count($existingTerm); $i < $k; $i++) {
@@ -172,6 +172,7 @@ class file_toArray {
         $data3["list"] = $list;
         $data3["existingTerm"] = $existingTerm;
         $data3["userID"] = $userID;
+        $data3["theParent"] = $theParent;
 
         return $data3;
     }

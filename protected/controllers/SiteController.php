@@ -743,6 +743,7 @@ class SiteController extends Controller {
                     $female = strip_tags($_POST['female']);
                     $male = strip_tags($_POST['male']);
                     $locationID = strip_tags($_POST['locationID']);
+                    $theParent = strip_tags($_POST['theParent']);
 
                     $list = unserialize(base64_decode($_POST['list']));
                     $createdGID = unserialize(base64_decode($_POST['createdGID']));
@@ -750,7 +751,7 @@ class SiteController extends Controller {
                     $checked = unserialize(base64_decode($_POST['checked']));
 
                     $userID = Yii::app()->user->id;
-                    $output = $file_toArray->updateGID_createdGID($term, $pedigree, $id, $choose, $fid, $mid, $female, $male, $createdGID, $existing, $list, $userID);
+                    $output = $file_toArray->updateGID_createdGID($term, $pedigree, $id, $choose, $fid, $mid, $female, $male, $createdGID, $existing, $list, $userID, $theParent);
                     $output = $curl->chooseGID(json_encode($output));
 
                     $createdGID = array();
