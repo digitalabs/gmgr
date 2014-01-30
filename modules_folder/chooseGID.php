@@ -94,12 +94,12 @@ $file_toArray = new file_toArray();
                             $gid_l = $existing[$j][6];
 
                             $line = array();
-                            $line = explode("#", $method);
+                            $line = explode("#", $method_l);
                             $line = implode(",", $line);
                             $method_l = $line;
 
                             $line = array();
-                            $line = explode("#", $location);
+                            $line = explode("#", $location_l);
                             $line = implode(",", $line);
                             $location_l = $line;
 
