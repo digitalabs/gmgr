@@ -58,7 +58,7 @@ if (count($final)) {
         /*
           count for rows that are done processing
          */
-        $processed = count($checked) - 1;
+        $processed = count($checked);
 //echo "<br>".$processed . " rows selected<br>";
         /* END count for rows that are done processing */
         /*
@@ -280,7 +280,7 @@ if (count($final)) {
                                                     $line = explode("#", $method);
                                                     $line = implode(",", $line);
                                                     $method = $line;
-                                                    echo "<td>(" . $methodID . ")&nbsp; " . $method . "</td>";
+                                                    echo "<td>" . $methodID . "&nbsp; <i>" . $method . "</i></td>";
                                                 }
                                                 // location
                                                 if ($method === "N/A") {
@@ -290,7 +290,7 @@ if (count($final)) {
                                                     $line = explode("#", $location);
                                                     $line = implode(",", $line);
                                                     $location = $line;
-                                                    echo "<td>(" . $locID . ")&nbsp; " . $location . "</td>";
+                                                    echo "<td>" . $locID . "&nbsp; <i>" . $location . "</i></td>";
                                                     echo '</tr>';
                                                 }
                                             endforeach;
@@ -300,6 +300,8 @@ if (count($final)) {
                                     <?php
                                     // print out the page numbers beneath the results
                                     //$pageNumbers = $pagination->getLinks2($_GET, $processed, $row_count, $not_standard);
+                                    echo "<br>row_count: ".$row_count;
+                                    echo "<br>processed: ".$processed;
                                     $pageNumbers = $pagination->getLinks2($_GET, $processed, $row_count);
                                     echo " <div class='panel-footer'>";
                                     echo "<ul class='pager'>";
