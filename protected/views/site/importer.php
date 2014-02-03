@@ -1,3 +1,4 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <html>
 
     <body>
@@ -67,22 +68,28 @@
                             <?php
                               echo CHtml::link('Download sample file', Yii::app()->baseUrl. '/csv_files/germplasmList.csv');
                             ?>
-                            <label>Location</label>
+                            <br><br/>
+                            <div id="select-location">
+                            <span>Location: </span>
+                            
                             <?php
                             $myfile = dirname(__FILE__) . '/../../../csv_files/location.csv';
 
 
                             $fin = fopen($myfile, 'r');
-
-                            echo '<select name="location" style="width:490px;" class="ddlClass" >';
+                       
+                            echo '<select name="location"  class="ddlClass" >';
 
                             while ($line = fgetcsv($fin, 0, "#")) {
                                // if (count($line) != 3) {
                                  //   print_r($line);
 
-                                    echo '<option name="location[]" value="' . $line[0] . '">' . $line[2] . ': ' . $line[1] . '</option>';
+                                    echo '<option name="location[]" id=location value="' . $line[0] . '">' . $line[2] . ': ' . $line[1] . '</option>';
                                 //}
                             }
+                            ?>
+                            </div>
+                            <?php
                                 fclose($fin);
                                 echo "</select></br>";
                                 ?>

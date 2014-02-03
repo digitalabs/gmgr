@@ -14,11 +14,11 @@ if (isset($_GET['searchBtn'])) {
     echo "Success";
 }
 ?>
-<div class="modal-body" style="overflow-x: hidden;overflow-y: hidden;">
     <meta charset="utf-8">
     <!-- blueprint CSS framework -->
-    <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/editor.css" />
-
+<!-- blueprint CSS framework -->
+        <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/editor.css" />
+        <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap.min.css" />
     <br><br> 
     <div style="text-align:right;vertical-align:right;margin-left:10px;margin-right: 10px;">       <br>
     </div>
@@ -180,12 +180,7 @@ if (isset($_GET['searchBtn'])) {
         <input type="hidden" id="output_format" name="output_format" value="">
         <input type="hidden" id="data" name="data" value="">
     </form>
-</div>
-    
-<div class="modal-footer">
-            <a id="close" href="#" class="btn" data-dismiss="modal">Close</a>
 
-        </div>
 <script src='<?php echo Yii::app()->baseUrl; ?>/js/jquery.storage.js'></script>
 <script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/d3.v3.min.js"></script>
 <script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/editor4.js"></script>
