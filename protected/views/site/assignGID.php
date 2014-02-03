@@ -52,14 +52,14 @@ if (count($final)) {
           count all rows
          */
         $row_count = count($list);
-        // echo "<br><br><br><br><br><br><br><br><br><br>all:".$row_count;
+// echo "<br><br><br><br><br><br><br><br><br><br>all:".$row_count;
         /* END count all rows */
 
         /*
           count for rows that are done processing
          */
-        $processed = count($checked) - 1;
-        //echo "<br>".$processed . " rows selected<br>";
+        $processed = count($checked);
+//echo "<br>".$processed . " rows selected<br>";
         /* END count for rows that are done processing */
         /*
           count for unstandardized germplasm names
@@ -76,7 +76,7 @@ if (count($final)) {
          */
         $GID_rows = $file_toArray->csv_corrected_GID($list);
         $newGID_count = count($GID_rows);
-        //echo "<br>".count($GID_rows) . " created GID(s)<br>";
+//echo "<br>".count($GID_rows) . " created GID(s)<br>";
 
         /* END count new GID created for cross names */
         ?>
@@ -120,8 +120,7 @@ if (count($final)) {
                                                             }
                                                         } else {
                                                             if ($newGID === "new") {
-                                                                echo "The female parent <b>" . $term . "</b> has been added to the local database with a suggested method of <b>(" . $methodID . ")" . $method . "</b>. You may change the method type by 
-															typing the method id, type, code, or name and clicking the update button.
+                                                                echo "The female parent <b>" . $term . "</b> has been added to the local database with a suggested method of <b>(" . $methodID . ")" . $method . "</b>. 
 															<br>";
                                                             } else {
                                                                 if ($i + 1 == $male_id) {
@@ -140,8 +139,7 @@ if (count($final)) {
                                                             }
                                                         } else {
                                                             if ($newGID === "new") {
-                                                                echo "The male parent <b>" . $term . "</b> has been added to the local database with a suggested method of <b>(" . $methodID . ")" . $method . "</b>. You may change the method type by 
-															typing the method id, type, code, or name and clicking the update button.
+                                                                echo "The male parent <b>" . $term . "</b> has been added to the local database with a suggested method of <b>(" . $methodID . ")" . $method . "</b>.
 															<br>";
                                                             } else {
                                                                 if (($i + 1) == count($pages[0]) - 1) {
@@ -175,6 +173,8 @@ if (count($final)) {
                                         <th></th>
                                         <th>Germplasm Name</th>
                                         <th>GID</th>
+                                        <th>GPID1</th>
+                                        <th>GPID2</th>
                                         <th>Method </th>
                                         <th>Location</th>
 
@@ -257,28 +257,51 @@ if (count($final)) {
                                                 } else {
                                                     echo "<td>" . $GID . "</td>";
                                                 }
+
+                                                //gpid1
+                                                if ($gpid1 === "N/A") {
+                                                    echo "<td class='muted'><font><i>" . $gpid1 . "</i></font></td>";
+                                                } else {
+                                                    echo "<td>" . $gpid1 . "</td>";
+                                                }
+
+                                                //gpid2
+                                                if ($gpid2 === "N/A") {
+                                                    echo "<td class='muted'><font><i>" . $gpid2 . "</i></font></td>";
+                                                } else {
+                                                    echo "<td>" . $gpid2 . "</td>";
+                                                }
                                                 //Methods
 
+                                                if ($method === "N/A") {
+                                                    echo "<td class='muted'><font><i>" . $method . "</i></font></td>";
+                                                } else {
                                                     $line = array();
                                                     $line = explode("#", $method);
                                                     $line = implode(",", $line);
                                                     $method = $line;
-                                                    echo "<td>(" . $methodID . ")&nbsp; " . $method . "</td>";
-                                               // location
-                                                $line = array();
-                                                $line = explode("#", $location);
-                                                $line = implode(",", $line);
-                                                $location = $line;
-                                                echo "<td>(" . $locID . ")&nbsp; " . $location . "</td>";
-                                                echo '</tr>';
-
+                                                    echo "<td>" . $methodID . "&nbsp; <i>" . $method . "</i></td>";
+                                                }
+                                                // location
+                                                if ($method === "N/A") {
+                                                    echo "<td class='muted'><font><i>" . $method . "</i></font></td>";
+                                                } else {
+                                                    $line = array();
+                                                    $line = explode("#", $location);
+                                                    $line = implode(",", $line);
+                                                    $location = $line;
+                                                    echo "<td>" . $locID . "&nbsp; <i>" . $location . "</i></td>";
+                                                    echo '</tr>';
+                                                }
                                             endforeach;
                                             ?>
-                                            </tbody>
+                                        </tbody>
                                     </table>
                                     <?php
                                     // print out the page numbers beneath the results
                                     //$pageNumbers = $pagination->getLinks2($_GET, $processed, $row_count, $not_standard);
+                                    //echo "<br>row_count: ".$row_count;
+                                   // echo "<br>processed: ".$processed;
                                     $pageNumbers = $pagination->getLinks2($_GET, $processed, $row_count);
                                     echo " <div class='panel-footer'>";
                                     echo "<ul class='pager'>";
@@ -349,7 +372,8 @@ if (count($final)) {
 
                                             return "<b>" . CHtml::tag("span", array("title" => CHtml::encode($data["fremarks"]), "class" => "tooltipster"), CHtml::encode($data["female"])) . "</b>" . "" . $fgid . "";
                                         } else {
-                                            return "<div class='j'><font style='color:#FF6600; font-weight:bold;'>" . CHtml::link(CHtml::encode($data["female"]), Yii::app()->createUrl("site/editGermplasm", array("germplasm" => $data["female"], "error" => $data["fremarks"])), array('title' => CHtml::encode($data["fremarks"]), 'class' => 'tooltipster')) . "</font></div>";
+                                            return "<font style='color:#FF6600; '>" . CHtml::tag("span", array("title" => $fremarks, "class" => "tooltipster"), CHtml::encode($data["female"])) . "</font>";
+                                            //return "<div class='j'><font style='color:#FF6600; font-weight:bold;'>" . CHtml::link(CHtml::encode($data["female"]), Yii::app()->createUrl("site/editGermplasm", array("germplasm" => $data["female"], "error" => $data["fremarks"])), array('title' => CHtml::encode($data["fremarks"]), 'class' => 'tooltipster')) . "</font></div>";
                                             // return '<a data-toggle="tooltip" title="' .CHtml::encode($data["mremarks"]) . '" data-placement="right" style="color:rgb(255, 0, 0); font-weight:bold;" href="/GMGR/index.php?r=site/editGermplasm.php?germplasm=' .CHtml::encode($data["female"]) . '&error=' .CHtml::encode($data["fremarks"]). '">' . CHtml::encode($data["female"]) . '<a>';
                                         }
                                     },
@@ -371,7 +395,8 @@ if (count($final)) {
                                             $mgid = $your_array;
                                             return "<b>" . CHtml::tag("span", array("title" => CHtml::encode($data["mremarks"]), "class" => "tooltipster"), CHtml::encode($data["male"])) . "</b>" . "" . $mgid . "";
                                         } else {
-                                            return "<div class='j'><font style='color:#FF6600; font-weight:bold;'>" . CHtml::link(CHtml::encode($data["male"]), Yii::app()->createUrl("site/editGermplasm", array("germplasm" => $data["male"], "error" => $data["mremarks"])), array('title' => CHtml::encode($data["mremarks"]), 'class' => 'tooltipster')) . "</font></div>";
+                                            return "<font style='color:#FF6600; '>" . CHtml::tag("span", array("title" => $mremarks, "class" => "tooltipster"), CHtml::encode($data["male"])) . "</font>";
+                                            //turn "<div class='j'><font style='color:#FF6600; font-weight:bold;'>" . CHtml::link(CHtml::encode($data["male"]), Yii::app()->createUrl("site/editGermplasm", array("germplasm" => $data["male"], "error" => $data["mremarks"])), array('title' => CHtml::encode($data["mremarks"]), 'class' => 'tooltipster')) . "</font></div>";
                                             //echo '<a data-toggle="tooltip" data-placement="right" title="' . $mremarks . '" style="color:rgb(255, 0, 0); font-weight:bold;" href="/GMGR/index.php?r=site/editGermplasm.php?germplasm=' . CHtml::encode($data["male"]) . '&error=' . $mremarks . '">' . CHtml::encode($data["male"]) . '<a>';
                                         }
                                     },
@@ -469,9 +494,10 @@ if (count($final)) {
                         document.getElementById('checked').value = localStorage.checked;
                         document.getElementById('existing').value = localStorage.existing;
                         document.getElementById('createdGID').value = localStorage.createdGID;
-                    } catch (e) {
-                        if (e === QUOTA_EXCEEDED_ERR) {
-                            alert('Quota exceeded!');
+                    } catch (exception) {
+                        if ((exception != QUOTA_EXCEEDED_ERR) &&
+                                (exception != NS_ERROR_DOM_QUOTA_REACHED)) {
+                            throw exception;
                         }
                     }
                 } else {
@@ -484,7 +510,7 @@ if (count($final)) {
             }
 </script>
 <script type="text/javascript">
-    
+
     function show(row_count, newGID_count, not_standard, to_process) {
         storeLocal();
         $.pnotify(
@@ -541,7 +567,7 @@ if (count($final)) {
         $.ajax({
             cache: false,
             type: 'POST',
-            url: 'modules_folder/chooseGID.php',
+            url: '<?php echo Yii::app()->createUrl('site/chooseGID')?>',
             data: {termId: term, arr_terms: m_values},
             success: function(data) {
                 $("#new-Modal").html(data);
@@ -575,7 +601,7 @@ if (count($final)) {
      return false;
      }*/
 
-   
+
     var pop = function() {
         $('#new-Modal').css({'z-index': '1000'});
         $('#screen').css({'opacity': '0.4', 'width': $(document).width(), 'height': $(document).height()});

@@ -118,6 +118,8 @@ class SiteController extends Controller {
             if ($model->validate() && $model->login()) {
 // $this->redirect(Yii::app()->user->returnUrl);
                 $this->redirect(array('/site/importer'));
+            } else {
+                $this->redirect(Yii::app()->baseUrl);
             }
         }
 
@@ -139,46 +141,45 @@ class SiteController extends Controller {
 
         //if ($model->validate()) {
 
-            if (isset($_POST['searchBtn']) || isset($_POST['updateBtn'])) {
-                Yii::import('application.modules.curl');
+        if (isset($_POST['searchBtn']) || isset($_POST['updateBtn'])) {
+            Yii::import('application.modules.curl');
 
-                $curl = new curl();
-                $arr = $curl->searchGID();
-                //print_r($arr);
-				
-				$tree = $arr['tree'];
-				//$rows = $tree;
-				
-				$out = json_decode($tree);
-				//echo "<br/>rows:<br/>";
-                //print_r($rows);
-                //echo "<br/>";
-				$Data = $tree; 
-				$File = dirname(__FILE__) . '/../../json_files/treePHP.json';
-				//file_put_contents($File, $tree);
-				$Handle = fopen($File, 'w');
-				
-				fwrite($Handle, $tree); 
-				print "Data Written"; 
-				fclose($Handle); 
- 
-                $this->redirect(array('/site/editor'));
-            }
-			
-			if (isset($_POST['save'])) {
-                Yii::import('application.modules.curl');
-				
-				$curl = new curl();
-                $arr = $curl->editGermplasm();
-			}
-            //if (isset($_POST['showMore'])) {
-            //    Yii::import('application.modules.curl');
-            //    $curl = new curl();
-               // $arr = $curl->show_germplasm_details();
-                //print_r($arr);
-                //$this->redirect(array('/site/editor'));
-            //}
+            $curl = new curl();
+            $arr = $curl->searchGID();
+            //print_r($arr);
 
+            $tree = $arr['tree'];
+            //$rows = $tree;
+
+            $out = json_decode($tree);
+            //echo "<br/>rows:<br/>";
+            //print_r($rows);
+            //echo "<br/>";
+            $Data = $tree;
+            $File = dirname(__FILE__) . '/../../json_files/treePHP.json';
+            //file_put_contents($File, $tree);
+            $Handle = fopen($File, 'w');
+
+            fwrite($Handle, $tree);
+            print "Data Written";
+            fclose($Handle);
+
+            $this->redirect(array('/site/editor'));
+        }
+
+        if (isset($_POST['save'])) {
+            Yii::import('application.modules.curl');
+
+            $curl = new curl();
+            $arr = $curl->editGermplasm();
+        }
+        //if (isset($_POST['showMore'])) {
+        //    Yii::import('application.modules.curl');
+        //    $curl = new curl();
+        // $arr = $curl->show_germplasm_details();
+        //print_r($arr);
+        //$this->redirect(array('/site/editor'));
+        //}
         //}
         $this->render('editor');
     }
@@ -250,7 +251,7 @@ class SiteController extends Controller {
 
 
                     if (file_exists($newName)) {
-                        unlink($dir . '/' . $newName);
+                        //  unlink($dir . '/' . $newName);
                     }
                     //***check if file is not null
                     if (isset($file)) {
@@ -324,31 +325,6 @@ class SiteController extends Controller {
                         $arr[] = array('id' => CJSON::encode(array($fid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date' => $date);
                     endforeach;
 
-                    /* if(isset($_POST['next']) && empty($_POST['refresh'])){
-                      foreach ($id as $row) :
-                      list($GID, $nval, $female, $fid, $fremarks, $fgid, $male, $mid, $mremarks, $mgid,$date) = $row;
-                      $arr[] = array('id' => CJSON::encode(array($fid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date' => $date);
-                      endforeach;
-                      }elseif(isset($_POST['refresh']) && empty($_POST['next'])){
-                      foreach ($id as $row) :
-                      //list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male, $date) = $row;
-                      list($GID, $nval, $female, $fid, $fremarks, $fgid, $male, $mid, $mremarks, $mgid,$date) = $row;
-                      $arr[] = array('id' => CJSON::encode(array($fid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date' => $date);
-                      endforeach;
-                      } */
-                    /* if (isset($_POST['refresh'])) {
-                      foreach ($id as $row) :
-                      //list($GID, $nval, $female, $fid, $fremarks, $fgid, $male, $mid, $mremarks, $mgid,$date) = $row;
-                      list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male, $date) = $row;
-                      $arr[] = array('id' => CJSON::encode(array($fid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date' => $date);
-                      endforeach;
-                      }else {
-                      foreach ($id as $row) :
-                      //list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male, $date) = $row;
-                      list($GID, $nval, $female, $fid, $fremarks, $fgid, $male, $mid, $mremarks, $mgid,$date) = $row;
-                      $arr[] = array('id' => CJSON::encode(array($fid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date' => $date);
-                      endforeach;
-                      } */
 
                     if (isset($_GET['FilterPedigreeForm'])) {
                         $filtersForm->filters = $_GET['FilterPedigreeForm'];
@@ -662,12 +638,14 @@ class SiteController extends Controller {
             Yii::import('application.modules.file_toArray');
             Yii::import('application.modules.json');
             Yii::import('application.modules.curl');
+            Yii::import('application.modules.model');
             $file_toArray = new file_toArray();
             $curl = new curl();
+            $model = new model();
 
             $arrSelectedIds = array();
             $filtersForm = new FilterPedigreeForm;
-            if (isset($_POST['locationID']) || isset($_POST['location']) || isset($_GET['page']) || isset($_POST['process'])) {
+            if (isset($_POST['locationID']) || isset($_POST['location']) || isset($_POST['process'])) {
 
                 if ((isset($_POST['Germplasm']['gid']) && ($_POST['Germplasm']['gid'] != '')) || isset($_POST['process'])) {
                     $data = $_POST['list'];
@@ -716,6 +694,7 @@ class SiteController extends Controller {
                         //print_r($rows);
                         //echo "<br/>";
                     } elseif (isset($_POST['process'])) {
+<<<<<<< HEAD
                         //echo "entered post process";
                         $locationID = $_POST['location'];
                         $checked = json_decode($_POST['checked'], true);
@@ -725,14 +704,22 @@ class SiteController extends Controller {
                         $rows = $list;
                     } else {
                      
+=======
+                        //echo "here 1";
+>>>>>>> develop
                         $locationID = $_POST['location'];
                         $checked = json_decode($_POST['checked'], true);
                         $createdGID = json_decode($_POST['createdGID'], true);
                         $existing = json_decode($_POST['existing'], true);
                         $unselected = $file_toArray->get_unselected_rows($checked, $list);
                         $standardized = $file_toArray->checkIf_standardize($unselected, $list);
+<<<<<<< HEAD
 
                         
+=======
+                        $checked = $standardized;
+
+>>>>>>> develop
                         $a = array(
                             'list' => $list,
                             'checked' => $standardized,
@@ -765,6 +752,7 @@ class SiteController extends Controller {
                     $female = strip_tags($_POST['female']);
                     $male = strip_tags($_POST['male']);
                     $locationID = strip_tags($_POST['locationID']);
+                    $theParent = strip_tags($_POST['theParent']);
 
                     $list = unserialize(base64_decode($_POST['list']));
                     $createdGID = unserialize(base64_decode($_POST['createdGID']));
@@ -772,7 +760,7 @@ class SiteController extends Controller {
                     $checked = unserialize(base64_decode($_POST['checked']));
 
                     $userID = Yii::app()->user->id;
-                    $output = $file_toArray->updateGID_createdGID($term, $pedigree, $id, $choose, $fid, $mid, $female, $male, $createdGID, $existing, $list, $userID);
+                    $output = $file_toArray->updateGID_createdGID($term, $pedigree, $id, $choose, $fid, $mid, $female, $male, $createdGID, $existing, $list, $userID, $theParent);
                     $output = $curl->chooseGID(json_encode($output));
 
                     $createdGID = array();
@@ -780,73 +768,14 @@ class SiteController extends Controller {
                     $createdGID = $output['createdGID'];
                     $list = $output['list'];
                     $rows = $list;
-// update corrected.csv
-//$file_toArray->update_csv_correctedGID($fid, $mid, $checked);
-                } elseif (isset($_POST['selectMethod']) && $_POST['selectMethod'] != 0) {
-                    $arrayStringMethod = $_POST['selectMethod'];
-                    $locationID = $_POST['locationID'];
-
-                    $list = unserialize(base64_decode($_POST['list']));
-                    $createdGID = unserialize(base64_decode($_POST['createdGID']));
-                    $existing = unserialize(base64_decode($_POST['existing']));
-                    $checked = unserialize(base64_decode($_POST['checked']));
-
-                    $arr = explode(",", $arrayStringMethod);
-                    $mid = $arr[0];
-                    $gid = $arr[1];
-                    $id = $arr[2];
-
-//*****if the user selects the radio button with the typeahead*****
-                    $array = array(
-                        "mid" => $mid,
-                        "gid" => $gid,
-                        "id" => $id,
-                        "createdGID" => $createdGID
-                    );
-                    $curl = new curl();
-                    $output = $curl->updateMethod(json_encode($array));
-                    $createdGID = $output['createdGID'];
-                    $rows = $list;
-                } elseif (isset($_GET['page']) || isset($_POST['refresh'])) {
-                    ?>
-                   <!-- <html>
-                        <body onload="storeLocal2()">
-                            <form action="" method="post" id='importFileDisplay-rfrsh'>
-                                <input type="hidden" name="refresh" value="true">
-                                <input type="hidden" id ="location" name="location" value="">
-                                <input type="hidden" id="list" name="list" value="">
-                                <input type="hidden" id="existing" name="existing" value="">
-                                <input type="hidden" id="createdGID" name="createdGID" value="">
-                                <input type="hidden" id="checked" name="checked" value="">
-                            </form>  
-                        </body>
-                    </html>-->
-                   
-                    <?php
-                    
-                        $locationID = $_POST['location'];
-                        $createdGID = json_decode($_POST['createdGID']);
-                        $existing = json_decode($_POST['existing']);
-                        $list = json_decode($_POST['list']);
-                        $checked = json_decode($_POST['checked']);
-                        $rows = $list;
-                    
                 } else {
+                    //echo "<br><br><br> no curl";
                     $locationID = $_POST['location'];
                     $createdGID = json_decode($_POST['createdGID']);
                     $existing = json_decode($_POST['existing']);
                     $list = json_decode($_POST['list']);
                     $checked = json_decode($_POST['checked']);
                     $rows = $list;
-                }
-                if (isset($_POST['next'])) {
-                    $list = json_decode($_POST['list']);
-                    $rows = $list;
-                    $locationID = $_POST['location'];
-                    $createdGID = json_decode($_POST['createdGID']);
-                    $existing = json_decode($_POST['existing']);
-                    $list = json_decode($_POST['list']);
-                    $checked = json_decode($_POST['checked']);
                 }
 
                 if (count($rows)) {
@@ -874,12 +803,31 @@ class SiteController extends Controller {
                     'existing' => $existing,
                     'createdGID' => $createdGID
                 ));
+<<<<<<< HEAD
             } elseif (isset($_GET['yes']) || isset($_GET['pagea'])) {
                 //echo "yes page";
+=======
+            } elseif (isset($_GET['yes'])) {//to process the remaining entries
+                //echo "<br><br><br>yes page";
+                $url = $model->curPageURL();
+                $values = parse_url($url);
+                $query = explode('&', $values['query']);
+
+                for ($i = 0; $i < count($query); $i++) {
+                    if ('yes=1' != $query[$i]) {
+                        $append[] = $query[$i];
+                    }
+                }
+                $query = implode('&', $append);
+                $values['query'] = $query;
+                $url = $values['scheme'] . '://' . $values['host'] . '/' . $values['path'] . '?' . $values['query'];
+                //echo $values['path'] . "?" . $values['query'];
+                //header("Location: " . $values['path'] . "?" . $values['query'] . "");
+>>>>>>> develop
                 ?>
                 <html>
                     <body onload="storeLocal2()">
-                        <form action="" method="post" id='importFileDisplay-rfrsh'>
+                        <form action="<?php echo $values['path'] . "?" . $values['query']; ?>" method="post" id='importFileDisplay-rfrsh'>
                             <input type="hidden" name="process" value="true">
                             <input type="hidden" id ="location" name="location" value="">
                             <input type="hidden" id="list" name="list" value="">
@@ -890,11 +838,11 @@ class SiteController extends Controller {
                     </body>
                 </html>
                 <?php
-            } else {
+            } else {    // when page is refreshed
                 ?>
                 <html>
                     <body onload="storeLocal2()">
-                        <form action="index.php?r=site/assignGID" method="post" id='importFileDisplay-rfrsh'>
+                        <form action="" method="post" id='importFileDisplay-rfrsh'>
                             <input type="hidden" name="refresh" value="true">
                             <input type="hidden" id ="location" name="location" value="">
                             <input type="hidden" id="list" name="list" value="">
@@ -926,8 +874,8 @@ class SiteController extends Controller {
     public function actionContactUs() {
         $this->render('contactUs');
     }
-    
-     public function actionDiagram() {
+
+    public function actionDiagram() {
         $this->render('diagram');
     }
 

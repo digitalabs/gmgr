@@ -100,14 +100,10 @@ $file_toArray = new file_toArray();
                             echo "</td>";
                             echo "<td>" . $existing[$j][6] . "</td>";
                             
-                            /* echo "<td>" . $existing[$j][6] . '<form action="index.php?r=site/editor" method="post" target="_blank">
-
-                              <input type="hidden" name="inputGID" value="' . $existing[$j][6] . '">
-                              <input type="hidden" name="maxStep" value="">
-                              <input type="submit" value="See Pedigree Tree">
-                              </form>
-
-                              </td>'; */
+                            /*
+                             *   echo "<td>" . $existing[$j][6] . "</td>";
+                             echo "<td>".CHtml::link('Show Pedigree Tree',array('site/diagram'),array("target"=>"_blank"))."</td>";
+                             */
 
                             echo "<td>(" . $existing[$j][2] . ")&nbsp; " . $existing[$j][3] . "</td>";
                             echo "<td>(" . $existing[$j][4] . ")&nbsp; " . $existing[$j][5] . "</td>";
@@ -147,7 +143,7 @@ $file_toArray = new file_toArray();
                 $('#submit').click(pop);
                 /* Initialise datatables */
 
-                $(".open-modal").click(function() {
+               /* $(".open-modal").click(function() {
                     alert("hey");
                     var term = $(this).data("id");
                     var arr = document.getElementsByClassName(term);
@@ -169,7 +165,7 @@ $file_toArray = new file_toArray();
 
                         }
                     });
-                });
+                });*/
 
                 $('#model').dataTable({
                     "bPaginate": false,
