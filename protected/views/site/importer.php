@@ -84,7 +84,7 @@
                                // if (count($line) != 3) {
                                  //   print_r($line);
 
-                                    echo '<option name="location[]" id=location value="' . $line[0] . '">' . $line[2] . ': ' . $line[1] . '</option>';
+                                    echo '<option name="location[]"  value="' . $line[0] . '">' . $line[2] . ': ' . $line[1] . '</option>';
                                 //}
                             }
                             ?>

@@ -300,8 +300,8 @@ if (count($final)) {
                                     <?php
                                     // print out the page numbers beneath the results
                                     //$pageNumbers = $pagination->getLinks2($_GET, $processed, $row_count, $not_standard);
-                                    echo "<br>row_count: ".$row_count;
-                                    echo "<br>processed: ".$processed;
+                                    //echo "<br>row_count: ".$row_count;
+                                   // echo "<br>processed: ".$processed;
                                     $pageNumbers = $pagination->getLinks2($_GET, $processed, $row_count);
                                     echo " <div class='panel-footer'>";
                                     echo "<ul class='pager'>";
@@ -567,7 +567,7 @@ if (count($final)) {
         $.ajax({
             cache: false,
             type: 'POST',
-            url: 'modules_folder/chooseGID.php',
+            url: '<?php echo Yii::app()->createUrl('site/chooseGID')?>',
             data: {termId: term, arr_terms: m_values},
             success: function(data) {
                 $("#new-Modal").html(data);
