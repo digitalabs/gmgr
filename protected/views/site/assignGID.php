@@ -623,7 +623,7 @@ if (count($final)) {
         var href = $(this).attr('href');
         if (!$('#dataConfirmModal').length) {
             $('body').append('<div id="dataConfirmModal" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true"><div class="modal-header">\n\
-                                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">ï¿½\n\
+                                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;\n\
                                     </button>\n\
                                     <div id="dataConfirmLabel">\n\
                                         You have reached the last row selected.Do you want to proceed to the next entry?\n\
