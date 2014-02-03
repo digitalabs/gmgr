@@ -82,6 +82,27 @@ $file_toArray = new file_toArray();
                           echo "existing[j][0]: ".$existing[$j][0]."<br>";
                          */
                         if ($m_term === $existing[$j][11] && $existing[$j][0] === $m_id) {
+                            $date_creation = $existing[$j][12];
+                            $locationID_l = $existing[$j][9];
+                            $location_l = $existing[$j][10];
+                            $methodID_l = $existing[$j][7];
+                            $method_l = $existing[$j][8];
+                            $gpid1_l = $existing[$j][2];
+                            $gpid1_nval = $existing[$j][3];
+                            $gpid2_l = $existing[$j][4];
+                            $gpid2_nval = $existing[$j][5];
+                            $gid_l = $existing[$j][6];
+
+                            $line = array();
+                            $line = explode("#", $method_l);
+                            $line = implode(",", $line);
+                            $method_l = $line;
+
+                            $line = array();
+                            $line = explode("#", $location_l);
+                            $line = implode(",", $line);
+                            $location_l = $line;
+
                             echo '<tr>';
                             echo "<td>";
                             echo '<input type = "radio" name="choose" value="' . $existing[$j][2] . '">' . '</option>';
@@ -97,9 +118,10 @@ $file_toArray = new file_toArray();
                             echo '<input type="hidden" name="existing" value="' . base64_encode(serialize($existing)) . '" />';
                             echo '<input type="hidden" name="checked" value="' . base64_encode(serialize($checked)) . '" />';
                             echo '<input type="hidden" name="locationID" value="' . $locationID . '" />';
+                            echo '<input type="hidden" name="theParent" value="' . $m_nval . '" />';
                             echo "</td>";
-                            echo "<td>" . $existing[$j][6] . "</td>";
-                            
+                            echo "<td>" . $gid_l . "</td>";
+
                             /* echo "<td>" . $existing[$j][6] . '<form action="index.php?r=site/editor" method="post" target="_blank">
 
                               <input type="hidden" name="inputGID" value="' . $existing[$j][6] . '">
@@ -109,11 +131,11 @@ $file_toArray = new file_toArray();
 
                               </td>'; */
 
-                            echo "<td>(" . $existing[$j][2] . ")&nbsp; " . $existing[$j][3] . "</td>";
-                            echo "<td>(" . $existing[$j][4] . ")&nbsp; " . $existing[$j][5] . "</td>";
-                            echo "<td>(" . $existing[$j][7] . ")&nbsp; " . $existing[$j][8] . "</td>";
-                            echo "<td>(" . $existing[$j][9] . ")&nbsp;" . $existing[$j][10] . "</td>";
-                            echo "<td>" . $existing[$j][12] . "</td>";
+                            echo "<td>(" . $gpid1_l . ")&nbsp; " . $gpid1_nval . "</td>";
+                            echo "<td>(" . $gpid2_l . ")&nbsp; " . $gpid2_nval . "</td>";
+                            echo "<td>(" . $methodID_l . ")&nbsp; " . $method_l . "</td>";
+                            echo "<td>(" . $locationID_l . ")&nbsp;" . $location_l . "</td>";
+                            echo "<td>" . $date_creation . "</td>";
                             echo '</tr>';
                         }
                     }
@@ -162,7 +184,7 @@ $file_toArray = new file_toArray();
                     $.ajax({
                         cache: false,
                         type: 'POST',
-                        url:  '/GMGR/index.php?r=site/diagram',
+                        url: '/GMGR/index.php?r=site/diagram',
                         data: {termId: term, arr_terms: m_values},
                         success: function(data) {
                             $("#modal-pedTree").html(data);
@@ -171,10 +193,12 @@ $file_toArray = new file_toArray();
                     });
                 });
 
-                $('#model').dataTable({
+                var oTable = $('#model').dataTable({
                     "bPaginate": false,
                     "bSort": false,
-                    "bSearchable": false
+                    "bSearchable": false,
+                    "bScrollCollapse": true,
+                    "bPaginate": false
                 }).columnFilter({sPlaceHolder: "head:after",
                     aoColumns: [{type: "none"},
                         {type: "text"},
@@ -189,8 +213,15 @@ $file_toArray = new file_toArray();
                 });
 
 
+                new FixedColumns(oTable, {
+                    "sLeftWidth": 'relative',
+                    "iLeftWidth": 150
+                });
+
+
             });
             function change() {
+
                 var elem = document.getElementById("filter");
                 if (elem.value == "Show Germplasm older than the cross") {
                     elem.value = "Show All";
@@ -230,7 +261,7 @@ $file_toArray = new file_toArray();
                         }
                 );
                 //Update table
-                $('#model').dataTable().fnDraw();
+                oTable.fnDraw();
                 //Deleting the filtering funtion if we need the original table later.
             }
             //************For opening a modal dialog***************

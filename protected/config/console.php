@@ -33,10 +33,10 @@ return array(
 		),*/
 			'db'=>array(
 		    'class'=>'CDbConnection',
-			'connectionString' => 'mysql:host=127.0.0.1;port=3306;dbname=iris_mysiam_20121002',
+			'connectionString' => 'mysql:host=127.0.0.1;port=3306;dbname=central',
 			'emulatePrepare' => true,
-			'username' => 'datasourceuser',
-			'password' => 'ici$rule$',
+			'username' => 'root',
+			'password' => '',
 			'charset' => 'utf8',
 
 		),

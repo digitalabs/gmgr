@@ -16,16 +16,18 @@ class file_toArray {
         
     }
 
-   public function uploadedFile($filePath) {
+    public function uploadedFile($filePath) {
 
         $f = fopen($filePath, "r");
 
         //get headers
-        $row1 = fgetcsv($f, 1000, ',');
+        $row1 = fgetcsv($f, 1000, ';');
         for ($i = 0; $i < count($row1); $i++) {
             $header = array();
-            $header = explode(";", $row1[$i]);
+            $header = explode(",", $row1[$i]);
         }
+       // echo "<br>HEADER<br>";
+       // print_r($header);
 
         $column_female = -1;
         $column_male = -1;
@@ -47,6 +49,7 @@ class file_toArray {
                 $column_date = $i;
             }
         }
+        // echo "cross: ".$column_cross . "<br>";
 
         $fr = fread($f, filesize($filePath));
         fclose($f);
@@ -56,10 +59,10 @@ class file_toArray {
         //echo $column_date . "<br>";
         for ($i = 0; $i < count($lines); $i++) {
             $cells = array();
-            $cells = explode(";", $lines[$i]); // use the cell/row delimiter ;
+            $cells = explode(",", $lines[$i]); // use the cell/row delimiter ;
             //print_r($cells);
             //echo "<br>";
-            // echo $column_cross . "<br>";
+            
             for ($k = 0; $k < count($cells) - 1; $k++) {
 
                 if ($k == $column_cross) {
@@ -71,7 +74,8 @@ class file_toArray {
                 } elseif ($k == $column_date) {
                     $date = $cells[$k];
                 }
-            }// for k end	
+                
+            }// for k end
             array_push($dataString, $cross);
             array_push($dataString, $female);
             array_push($dataString, $male);
@@ -84,8 +88,6 @@ class file_toArray {
         return $dataString;
     }
 
-    
-
     public function hasChecked($checked, $fid) {
         for ($i = 0; $i < count($checked); $i++) {
             if ($checked[$i] === $fid) {
@@ -95,7 +97,7 @@ class file_toArray {
         return false;
     }
 
-    public function updateGID_createdGID($term, $pedigree, $id, $choose, $fid, $mid, $female, $male, $createdGID, $existingTerm, $list, $userID) {
+    public function updateGID_createdGID($term, $pedigree, $id, $choose, $fid, $mid, $female, $male, $createdGID, $existingTerm, $list, $userID, $theParent) {
 
         $data = array();
         for ($i = 0, $k = count($existingTerm); $i < $k; $i++) {
@@ -170,6 +172,7 @@ class file_toArray {
         $data3["list"] = $list;
         $data3["existingTerm"] = $existingTerm;
         $data3["userID"] = $userID;
+        $data3["theParent"] = $theParent;
 
         return $data3;
     }
@@ -310,6 +313,7 @@ class file_toArray {
         $json->create_tree();
         return $fid_i;
     }
+
 }
 
 ?>
