@@ -12,6 +12,7 @@
     <div id="editGermplasmNameModal" class="modal hide fade in" style="display: none;"></div>
     <br><br>
    <?php
+       echo CHtml::hiddenField('non_standard_size',$nonstandardized_size);
     if (isset($dataProvider2)) {
         ?>
         <div id="non_standardized_table">
@@ -221,6 +222,7 @@
             $url = Yii::app()->createUrl('site/assignGID');
             $this->widget('bootstrap.widgets.TbButton', array(
                 'type' => 'primary',
+                'id' => 'assignGID_btn',
                 'label' => 'AssignGID',
                 //'url' =>array('site/assignGID'),
                 'htmlOptions' => array(
@@ -263,7 +265,25 @@
     </div>
     <?php $this->endWidget(); ?>
 </body>
+<script type="text/javascript" src="./assets/pnotify-1.2.0/jquery.pnotify.js"></script>
 <script type="text/javascript">
+    $(document).ready(function(){
+          var non_stardardized = $('#non_standard_size').val();
+          if(non_stardardized != 0){
+              $('#assignGID_btn').attr('disabled',true);
+              $.pnotify(
+                  {
+                      text: "There are still " +  $('#non_standard_size').val() + " remaining non-standardized names. Click to standardize before you are allowed to assign a gid.",
+                      type: "info",
+                      hide:false,
+                  }
+              );
+          } else{
+              $('#assignGID_btn').attr('disabled',false);
+          }
+       
+    });
+    
     function storeLocal() {
         if ('localStorage' in window && window['localStorage'] != null) {
             try {
