@@ -1,4 +1,3 @@
-
     <?php
     Yii::import("ext.graphviz.components.*");
     Yii::import("ext.graphviz.widgets.*");
@@ -13,8 +12,8 @@
     <?php
        $in_gid = $_GET['inputGID'];
        $max_step = $_GET['maxStep'];
-       echo "<br/>max:".$max_step;
-       echo "<br/>gid:".$in_gid;
+      // echo "<br/>max:".$max_step;
+       //echo "<br/>gid:".$in_gid;
     ?>
     
     
