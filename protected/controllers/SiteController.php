@@ -419,6 +419,8 @@ class SiteController extends Controller {
                         'pagination' => array(
                             'pageSize' => 5,
                     )));
+                    $not_standard_size = count($notStandard);
+                    echo "<br>this:".$not_standard_size;
                 }
                 //get array data and create dataProvider
                 $filteredData = $filtersForm->filter($arr);
@@ -435,6 +437,7 @@ class SiteController extends Controller {
                         'filtersForm2' => $filtersForm2,
                         'dataProvider' => $dataProvider,
                         'dataProvider2' => $dataProvider2,
+                        'nonstandardized_size'=>$not_standard_size,
                         'locationID' => $locationID,
                         'list' => $list
                     ));
@@ -442,6 +445,7 @@ class SiteController extends Controller {
                     $this->render('output', array(
                         'filtersForm' => $filtersForm,
                         'dataProvider' => $dataProvider,
+                        'nonstandardized_size'=> 0,
                         'locationID' => $locationID,
                         'list' => $list
                     ));
