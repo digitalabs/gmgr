@@ -1,14 +1,14 @@
-<script src="./modules_folder/js/jquery-1.4.4.min.js" type="text/javascript"></script>
+<!--<script src="./modules_folder/js/jquery-1.4.4.min.js" type="text/javascript"></script>
 <script src="./modules_folder/js/jquery.dataTables.js" type="text/javascript"></script>
-<script src="./modules_folder/js/jquery.dataTables.columnFilter.js" type="text/javascript"></script>
+<script src="./modules_folder/js/jquery.dataTables.columnFilter.js" type="text/javascript"></script>-->
 
 <?php
-include_once(dirname(__FILE__) . "/../protected/modules/file_toArray.php");
-$file_toArray = new file_toArray();
+//include_once(dirname(__FILE__) . "/../protected/modules/file_toArray.php");
+//$file_toArray = new file_toArray();
 ?>
 <form class="contact" name="contact" action="index.php?r=site/assignGID" method="POST" id="choose-frm">
     <div class="modal-header">
-        <a class="close" data-dismiss="modal">X</a>
+        <a class="close" data-dismiss="modal">&times;</a>
         <?php
         if (isset($_POST['termId'])) {
             $m_term = $_POST['termId'];
@@ -55,22 +55,14 @@ $file_toArray = new file_toArray();
                     <tr>
                         <th></th>
                         <th>GID</th>
-
+                        <th></th>
                         <th>GPID1</th>
                         <th>GPID2</th>
                         <th>Method Type</th>
                         <th>Location</th>
                         <th>Date of Creation</th>
                     </tr>   
-                    <tr>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
+                
                 </thead>
 
                 <tbody>
@@ -98,12 +90,12 @@ $file_toArray = new file_toArray();
                             echo '<input type="hidden" name="checked" value="' . base64_encode(serialize($checked)) . '" />';
                             echo '<input type="hidden" name="locationID" value="' . $locationID . '" />';
                             echo "</td>";
-                            echo "<td>" . $existing[$j][6] . "</td>";
+                            //echo "<td>" . $existing[$j][6] . "</td>";
                             
-                            /*
-                             *   echo "<td>" . $existing[$j][6] . "</td>";
-                             echo "<td>".CHtml::link('Show Pedigree Tree',array('site/diagram'),array("target"=>"_blank"))."</td>";
-                             */
+                            
+                             echo "<td>" . $existing[$j][6] . "</td>";
+                             echo "<td>".CHtml::link('Show Pedigree Tree',array('site/diagram&inputGID="50533"&maxStep="2"'),array("target"=>"_blank"))."</td>";
+                             
 
                             echo "<td>(" . $existing[$j][2] . ")&nbsp; " . $existing[$j][3] . "</td>";
                             echo "<td>(" . $existing[$j][4] . ")&nbsp; " . $existing[$j][5] . "</td>";

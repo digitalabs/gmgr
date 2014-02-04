@@ -483,7 +483,6 @@ class SiteController extends Controller {
             $rows = $file_toArray->csv_corrected();
 
             foreach ($rows as $i => $row) :
-//foreach ($rows as $row) :
                 list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male) = $row;
 
                 CHtml::hiddenField('hiddenMid', $mid);
@@ -542,10 +541,7 @@ class SiteController extends Controller {
         }
     }
 
-    public function actionUpdateAjax() {
-        
-    }
-
+    
     public function actionSaveGermplasm() {
         Yii::app()->session['username'] = Yii::app()->user->id;
         $this->browserSession = Yii::app()->session['username'];
@@ -666,7 +662,7 @@ class SiteController extends Controller {
                         $checked = $standardized;
                         $a = array(
                             'list' => $list,
-                            'checked' => $standardized,
+                            'checked' => $checked,
                             'existingTerm' => array(),
                             'locationID' => $locationID,
                             'userID' => Yii::app()->user->id
@@ -694,35 +690,18 @@ class SiteController extends Controller {
                         //print_r($rows);
                         //echo "<br/>";
                     } elseif (isset($_POST['process'])) {
-<<<<<<< HEAD
-                        //echo "entered post process";
-                        $locationID = $_POST['location'];
-                        $checked = json_decode($_POST['checked'], true);
-                        $createdGID = json_decode($_POST['createdGID'], true);
-                        $existing = json_decode($_POST['existing'], true);
-                        
-                        $rows = $list;
-                    } else {
-                     
-=======
                         //echo "here 1";
->>>>>>> develop
                         $locationID = $_POST['location'];
                         $checked = json_decode($_POST['checked'], true);
                         $createdGID = json_decode($_POST['createdGID'], true);
                         $existing = json_decode($_POST['existing'], true);
                         $unselected = $file_toArray->get_unselected_rows($checked, $list);
                         $standardized = $file_toArray->checkIf_standardize($unselected, $list);
-<<<<<<< HEAD
-
-                        
-=======
                         $checked = $standardized;
 
->>>>>>> develop
                         $a = array(
                             'list' => $list,
-                            'checked' => $standardized,
+                            'checked' => $checked,
                             'existingTerm' => $existing,
                             'createdGID' => $createdGID,
                             'locationID' => $locationID,
@@ -796,6 +775,7 @@ class SiteController extends Controller {
                         'pageSize' => 5,
                     ),
                 ));
+
                 $this->render('assignGID', array('filtersForm' => $filtersForm,
                     'checked' => $checked, 'GdataProvider' => $GdataProvider,
                     'locationID' => $locationID,
@@ -803,10 +783,6 @@ class SiteController extends Controller {
                     'existing' => $existing,
                     'createdGID' => $createdGID
                 ));
-<<<<<<< HEAD
-            } elseif (isset($_GET['yes']) || isset($_GET['pagea'])) {
-                //echo "yes page";
-=======
             } elseif (isset($_GET['yes'])) {//to process the remaining entries
                 //echo "<br><br><br>yes page";
                 $url = $model->curPageURL();
@@ -823,7 +799,6 @@ class SiteController extends Controller {
                 $url = $values['scheme'] . '://' . $values['host'] . '/' . $values['path'] . '?' . $values['query'];
                 //echo $values['path'] . "?" . $values['query'];
                 //header("Location: " . $values['path'] . "?" . $values['query'] . "");
->>>>>>> develop
                 ?>
                 <html>
                     <body onload="storeLocal2()">
@@ -876,6 +851,28 @@ class SiteController extends Controller {
     }
 
     public function actionDiagram() {
+        
+         Yii::import('application.modules.curl');
+
+            $curl = new curl();
+            $arr = $curl->showDiagram();
+            //print_r($arr);
+
+            $tree = $arr['tree'];
+            //$rows = $tree;
+
+            $out = json_decode($tree);
+            //echo "<br/>rows:<br/>";
+            //print_r($rows);
+            //echo "<br/>";
+            $Data = $tree;
+            $File = dirname(__FILE__) . '/../../json_files/diagram.json';
+            //file_put_contents($File, $tree);
+            $Handle = fopen($File, 'w');
+
+            fwrite($Handle, $tree);
+            print "Data Written";
+            fclose($Handle);
         $this->render('diagram');
     }
 

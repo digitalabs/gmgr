@@ -87,7 +87,25 @@ body
     font-weight: 300;
     margin: 10px 25px !important;
 }
-
+#inputGID{
+    max-height: 1240px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-weight: 300;
+    margin: 0px 0px !important;
+}
+#id-gid{
+     margin: 0px 25px !important;
+}
+#maxStep{
+    max-height: 1240px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-weight: 300;
+    margin: 0px 0px !important;
+}
 .j a{
   color:#FF0000;
 }

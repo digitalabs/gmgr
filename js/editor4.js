@@ -13,7 +13,7 @@ var data = (function () {
     $.ajax({
         'async': false,
         'global': false,
-        'url': "/../gmgr/json_files/treePHP.json",
+        'url': '/../gmgr/json_files/treePHP.json', //"/../gmgr/json_files/treePHP.json",
         'dataType': "json",
         'success': function (data) {
             jason = data;

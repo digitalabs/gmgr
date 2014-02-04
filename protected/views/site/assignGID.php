@@ -52,7 +52,6 @@ if (count($final)) {
           count all rows
          */
         $row_count = count($list);
-// echo "<br><br><br><br><br><br><br><br><br><br>all:".$row_count;
         /* END count all rows */
 
         /*
@@ -419,6 +418,7 @@ if (count($final)) {
                         echo CHtml::hiddenField('checked', '');
                         echo CHtml::hiddenField('existing', '');
                         echo CHtml::hiddenField('createdGID', '');
+                        echo CHtml::hiddenField('row_count',$row_count);
                         ?>
                     </div>
                     <!--  </div>
@@ -479,6 +479,7 @@ if (count($final)) {
 
 <script type="text/javascript" src="./assets/pnotify-1.2.0/jquery.pnotify.js"></script>
 <script type="text/javascript">
+  
             function storeLocal() {
                 if ('localStorage' in window && window['localStorage'] != null) {
                     try {

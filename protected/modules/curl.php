@@ -139,6 +139,34 @@ class curl {
 		//echo $result;
 		return $try;
     }
+    public function showDiagram(){
+        $gid = $_GET['inputGID'];
+        $level = $_GET['maxStep'];
+        $a = array('GID' => $gid, 'LEVEL' => $level);
+        $data = json_encode($a);
+		
+		$url = "http://172.29.4.99:8083/ws/standardization/term/searchGID";
+        $this->exec($url,$data);
+        
+        //$ch = curl_init();
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+            'Content-Length: ' . strlen($data))
+        );
+		
+		//$results
+        $result = curl_exec($ch);
+        $jsonfile = "trydocinfo.json";
+        $try = json_decode($result, true); 
+		
+		
+		//echo $result;
+		return $try;
+    }
 	
 	public function editGermplasm() {
 	
