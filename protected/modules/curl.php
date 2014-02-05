@@ -117,7 +117,7 @@ class curl {
         $a = array('GID' => $gid, 'LEVEL' => $level);
         $data = json_encode($a);
 		
-		$url = "http://172.29.4.99:8083:8080/ws/standardization/term/searchGID";
+		$url = "http://172.29.4.99:8083/ws/standardization/term/searchGID";
         $this->exec($url,$data);
         
         //$ch = curl_init();
