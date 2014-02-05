@@ -9,9 +9,9 @@ return array(
     'preload' => array('log'),
     // application components
     'components' => array(
-        /* 'db'=>array(
+         'db'=>array(
           'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
-          ), */
+          ), 
         // uncomment the following to use a MySQL database
         /* 'db'=>array(
           'class'=>'CDbConnection',
@@ -29,14 +29,14 @@ return array(
           'password' => '',
           'charset' => 'utf8',
           ), */
-        'db' => array(
+        /*'db' => array(
             'class' => 'CDbConnection',
             'connectionString' => 'mysql:host=127.0.0.1;port=3306;dbname=iris_mysiam_20121002',
             'emulatePrepare' => true,
             'username' => 'datasourceuser',
             'password' => 'ici$rule$',
             'charset' => 'utf8',
-        ),
+        ),*/
         'log' => array(
             'class' => 'CLogRouter',
             'routes' => array(

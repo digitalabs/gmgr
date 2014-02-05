@@ -192,7 +192,7 @@
 
     <script src='<?php echo Yii::app()->baseUrl; ?>/js/jquery.storage.js'></script>
     <script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/d3.v3.min.js"></script>
-    <script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/editor4.js"></script>
+    <script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/diagram.js"></script>
             <!--<script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/editor5b.js"></script>
             <script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
             <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>-->
