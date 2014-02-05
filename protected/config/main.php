@@ -44,6 +44,7 @@ return array(
         'user' => array(
             // enable cookie-based authentication
             'allowAutoLogin' => true,
+            'class'=>'WebUser',
         ),
         // uncomment the following to enable URLs in path-format
         /*
@@ -73,6 +74,8 @@ return array(
           'username' => 'datasourceuser',
           'password' => 'ici$rule$',
           'charset' => 'utf8',
+          'enableProfiling' => true,
+          'enableParamLogging'=>true,
           ),
 
         'errorHandler' => array(
