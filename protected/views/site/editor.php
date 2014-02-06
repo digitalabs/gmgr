@@ -65,8 +65,11 @@ if (isset($_GET['searchBtn']))
 						<svg width="3500" height="5000" style="height: auto;width: auto;" id="graphDiv"></svg>
 					</div>
 					
-					<div id="opener" style="position:fixed; bottom:70px; left:50px">
-						<a href="#1" name="1" onclick="show();">Show Germplasm details</a>
+					<div id="opener" style="position:fixed; bottom:60px; left:50px">
+						<a href="#1" name="1" onclick="show();">View Names    </a>
+					</div>
+					<div id="opener2" style="position:fixed; bottom:60px; left:130px">
+						<a href="#2" name="2" onclick="show2();">View Attributes</a>
 					</div>
 					<div id="benefits" style="position:fixed; bottom:80px; left:50px; display:none;">
 						<b>&nbsp;Alternate Names</b>
@@ -100,7 +103,37 @@ if (isset($_GET['searchBtn']))
 									<td id="d3"></td>
 								</tr>
 							</table>
-						<div id="upbutton"><a onclick="conceal();">&nbsp;Hide</a></div>
+						<!--<div id="upbutton"><a onclick="conceal();">&nbsp;Hide</a></div>-->
+					</div>
+					<div id="benefits2" style="position:fixed; bottom:80px; left:50px; display:none;">
+							<b>&nbsp;Attributes</b>
+							<table style="margin:5px;width:700px;">
+								<tr>
+									<th bgcolor="lightblue">Name</th>
+									<th bgcolor="lightblue">Description</th>
+									<th bgcolor="lightblue">Value</th>
+									<th bgcolor="lightblue">Date</th>
+								</tr>
+								<tr style="border:1px solid gray">
+									<td id="an1"></td>
+									<td id="ad1"></td>
+									<td id="av1"></td>
+									<td id="adt1"></td>
+								</tr>
+								<tr style="border:1px solid gray">
+									<td id="an2"></td>
+									<td id="ad2"></td>
+									<td id="av2"></td>
+									<td id="adt2"></td>
+								</tr>
+								<tr style="border:1px solid gray">
+									<td id="an3"></td>
+									<td id="ad3"></td>
+									<td id="av3"></td>
+									<td id="adt3"></td>
+								</tr>
+							</table>
+							<!--<div id="upbutton2"><a onclick="conceal2();">&nbsp;Hide</a></div>-->
 					</div>
 					<!--<div>
 						
@@ -415,11 +448,29 @@ if (isset($_GET['searchBtn']))
 					  document.getElementById('opener').style.display='block';
 					}
 				}  
+				
+			function conceal2() {      
+					if(document.getElementById('benefits2').style.display=='block') {
+					  document.getElementById('benefits2').style.display='none';
+					  document.getElementById('opener2').style.display='block';
+					}
+				}
 
 			function show() {
+				document.getElementById('benefits2').style.display='none';
+					  document.getElementById('opener2').style.display='block';
 				if(document.getElementById('benefits').style.display=='none') {
 				  document.getElementById('benefits').style.display='block';
 				  document.getElementById('opener').style.display='none';
+				}
+			}
+			
+			function show2() {
+				document.getElementById('benefits').style.display='none';
+				document.getElementById('opener').style.display='block';
+				if(document.getElementById('benefits2').style.display=='none') {
+				  document.getElementById('benefits2').style.display='block';
+				  document.getElementById('opener2').style.display='none';
 				}
 			}
 		
@@ -515,4 +566,3 @@ if (isset($_GET['searchBtn']))
 </body>
 
 </html>
-
