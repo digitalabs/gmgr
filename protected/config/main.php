@@ -44,13 +44,9 @@ return array(
         /*'user' => array(
             // enable cookie-based authentication
             'allowAutoLogin' => true,
-<<<<<<< Updated upstream
+
            // 'class'=>'WebUser',
         ),
-=======
-            //'class'=>'WebUser',
-        ),*/
->>>>>>> Stashed changes
         // uncomment the following to enable URLs in path-format
         /*
           'urlManager'=>array(
@@ -84,11 +80,8 @@ return array(
 <<<<<<< Updated upstream
           'enableProfiling' => true,
           'enableParamLogging'=>true,
-          ),
-=======
-          'enableProfiling' 
           ),*/
->>>>>>> Stashed changes
+
 
         'errorHandler' => array(
             // use 'site/error' action to display errors
