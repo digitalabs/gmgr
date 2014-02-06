@@ -16,7 +16,7 @@ return array(
     ),
     'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..',
     'name' => 'Genealogy Manager',
-    'defaultController' => 'login',
+    'defaultController' => 'importer',
     // preloading 'log' component
     'preload' => array('log', 'bootstrap',),
     // autoloading model and component classes
@@ -41,10 +41,16 @@ return array(
         'bootstrap' => array('class' => 'ext.bootstrap.components.Bootstrap',
             'responsiveCss' => true,
         ),
-        'user' => array(
+        /*'user' => array(
             // enable cookie-based authentication
             'allowAutoLogin' => true,
+<<<<<<< Updated upstream
+           // 'class'=>'WebUser',
         ),
+=======
+            //'class'=>'WebUser',
+        ),*/
+>>>>>>> Stashed changes
         // uncomment the following to enable URLs in path-format
         /*
           'urlManager'=>array(
@@ -58,14 +64,16 @@ return array(
          */
 
         // uncomment the following to use a MySQL database
-         /*   'db'=>array(
+         /* 'db'=>array(
           'connectionString' => 'mysql:host=localhost;dbname=central6',
           'emulatePrepare' => true,
           'username' => 'root',
           'password' => '',
           'charset' => 'utf8',
-          ),*/ 
-
+          'enableProfiling' => true,
+           'enableParamLogging'=>true,   
+          ),*/
+          /*
           'db'=>array(
           'class'=>'CDbConnection',
           'connectionString' => 'mysql:host=127.0.0.1;port=3306;dbname=iris_mysiam_20121002',
@@ -73,7 +81,14 @@ return array(
           'username' => 'datasourceuser',
           'password' => 'ici$rule$',
           'charset' => 'utf8',
+<<<<<<< Updated upstream
+          'enableProfiling' => true,
+          'enableParamLogging'=>true,
           ),
+=======
+          'enableProfiling' 
+          ),*/
+>>>>>>> Stashed changes
 
         'errorHandler' => array(
             // use 'site/error' action to display errors
@@ -99,6 +114,7 @@ return array(
     // using Yii::app()->params['paramName']
     'params' => array(
         // this is used in contact page
+        'defaultPageSize' => 10,
         'adminEmail' => 'webmaster@example.com',
     ),
 );

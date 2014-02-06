@@ -271,15 +271,17 @@
           var non_stardardized = $('#non_standard_size').val();
           if(non_stardardized != 0){
               $('#assignGID_btn').attr('disabled',true);
+              $('#submit-btn').attr('disabled',true);
               $.pnotify(
                   {
                       text: "There are still " +  $('#non_standard_size').val() + " remaining non-standardized names. Click to standardize before you are allowed to assign a gid.",
-                      type: "info",
+                      type: "warning",
                       hide:false,
                   }
               );
           } else{
               $('#assignGID_btn').attr('disabled',false);
+              $('#submit-btn').attr('disabled',false);
           }
        
     });

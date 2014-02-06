@@ -209,7 +209,7 @@
             $('body').css({'overflow': 'hidden'});
             $('#ajax-loading-indicator').css({'display': 'block'});
            }
-             window.onload(pop);
+
              $.localStorage('GID', jQuery("input#inputGID").val());
              $.localStorage('level', jQuery("input#maxStep").val()); 
         });
