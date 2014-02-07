@@ -97,7 +97,7 @@
             <small>
                 <div style="padding-left:5px;padding-right:5px;"> 
 
-                    <form action="index.php?r=site/editor" method="post">
+                    <form action="index.php?r=site/diagram" method="post">
                         <table style="border-collapse: separate !important;border-radius: 6px 6px 6px 6px;
                                -moz-border-radius: 6px 6px 6px 6px;
                                -webkit-border-radius: 6px 6px 6px 6px;
