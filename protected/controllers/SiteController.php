@@ -192,7 +192,7 @@ class SiteController extends Controller {
         $model2 = new LoginForm;
         $dir = dirname(__FILE__) . '/../../uploadedFiles/';
 
-        //if (isset($this->browserSession)) {
+        if (isset($this->browserSession)) {
 
             $model = new ImporterForm;
             $uploaded = false;
@@ -214,9 +214,9 @@ class SiteController extends Controller {
                     'model' => $model,
                 ));
             }
-        /*} else {
+        } else {
             $this->render('login', array('model' => $model2));
-        }*/
+        }
     }
 
     public function actionImportFileDisplay() {
@@ -235,7 +235,7 @@ class SiteController extends Controller {
 
         $importedFile = new ImporterForm;
 
-        //if (isset($this->browserSession)) {
+        if (isset($this->browserSession)) {
 
             if (isset($_POST['ImporterForm'])) {
                 //print_r($_POST['ImporterForm']);
@@ -356,9 +356,9 @@ class SiteController extends Controller {
                 </html>
                 <?php
             }
-       /* } else {
+        } else {
             $this->render('login', array('model' => $model2));
-        }*/
+        }
     }
 
     public function actionOutput() {
@@ -373,7 +373,7 @@ class SiteController extends Controller {
         $this->browserSession = Yii::app()->session['username'];
         $model2 = new LoginForm;
         //static $locationID, $list;
-       //if (isset($this->browserSession)) {
+        if (isset($this->browserSession)) {
             if (isset($_POST['locationID']) || isset($_POST['location'])) {
                 //echo "<br>enter here"; 
                 if (isset($_POST['next']) || isset($_POST['refresh'])) {
@@ -420,7 +420,7 @@ class SiteController extends Controller {
                             'pageSize' => 5,
                     )));
                     $not_standard_size = count($notStandard);
-                    echo "<br>this:".$not_standard_size;
+                    echo "<br>this:" . $not_standard_size;
                 }
                 //get array data and create dataProvider
                 $filteredData = $filtersForm->filter($arr);
@@ -437,7 +437,7 @@ class SiteController extends Controller {
                         'filtersForm2' => $filtersForm2,
                         'dataProvider' => $dataProvider,
                         'dataProvider2' => $dataProvider2,
-                        'nonstandardized_size'=>$not_standard_size,
+                        'nonstandardized_size' => $not_standard_size,
                         'locationID' => $locationID,
                         'list' => $list
                     ));
@@ -445,7 +445,7 @@ class SiteController extends Controller {
                     $this->render('output', array(
                         'filtersForm' => $filtersForm,
                         'dataProvider' => $dataProvider,
-                        'nonstandardized_size'=> 0,
+                        'nonstandardized_size' => 0,
                         'locationID' => $locationID,
                         'list' => $list
                     ));
@@ -467,9 +467,9 @@ class SiteController extends Controller {
 
                 <?php
             }
-        /*} else {
+        } else {
             $this->render('login', array('model' => $model2));
-        }*/
+        }
     }
 
     public function actionStandardTable() {
@@ -529,7 +529,7 @@ class SiteController extends Controller {
         $this->browserSession = Yii::app()->session['username'];
         $model2 = new LoginForm;
 
-        //if (isset($this->browserSession)) {
+        if (isset($this->browserSession)) {
 
             $model = new editGermplasmForm;
 //print_r($model);
@@ -540,25 +540,24 @@ class SiteController extends Controller {
                 }
             }
             $this->renderPartial('editGermplasm', array('model' => $model));
-        /*} else {
+        } else {
             $this->render('login', array('model' => $model2));
-        }*/
+        }
     }
 
-    
     public function actionSaveGermplasm() {
         Yii::app()->session['username'] = Yii::app()->user->id;
         $this->browserSession = Yii::app()->session['username'];
         $model2 = new LoginForm;
 
-        //if (isset($this->browserSession)) {
+        if (isset($this->browserSession)) {
 //<!---*******Notifications for any page changes******-->
             Yii::app()->user->setFlash('success', array('title' => 'Edit Successful!', 'text' => 'You successfully edited parent.'));
 //<!----*******************************************-->
             $this->renderPartial('savegermplasm');
-        /*} else {
+        } else {
             $this->render('login', array('model' => $model2));
-        }*/
+        }
     }
 
     public function actionCreatedGID() {
@@ -566,7 +565,7 @@ class SiteController extends Controller {
         $this->browserSession = Yii::app()->session['username'];
         $model2 = new LoginForm;
 
-        //if (isset($this->browserSession)) {
+        if (isset($this->browserSession)) {
             $filtersForm = new FilterPedigreeForm;
             if (isset($_POST["refresh"])) {
                 $list = json_decode($_POST['list']);
@@ -624,9 +623,9 @@ class SiteController extends Controller {
                 </html>
                 <?php
             }
-        /*} else {
+        } else {
             $this->render('login', array('model' => $model2));
-        }*/
+        }
     }
 
     public function actionAssignGID() {
@@ -634,7 +633,7 @@ class SiteController extends Controller {
         $this->browserSession = Yii::app()->session['username'];
         $model2 = new LoginForm;
 
-        //if (isset($this->browserSession)) {
+        if (isset($this->browserSession)) {
             Yii::import('application.modules.file_toArray');
             Yii::import('application.modules.json');
             Yii::import('application.modules.curl');
@@ -833,9 +832,9 @@ class SiteController extends Controller {
                 </html>
                 <?php
             }
-        /*} else {
+        } else {
             $this->render('login', array('model' => $model2));
-        }*/
+        }
     }
 
     public function actionChooseGID() {
@@ -843,11 +842,11 @@ class SiteController extends Controller {
         $this->browserSession = Yii::app()->session['username'];
         $model2 = new LoginForm;
 
-        //if (isset($this->browserSession)) {
+        if (isset($this->browserSession)) {
             $this->render('chooseGID');
-        /*} else {
+        } else {
             $this->render('login', array('model' => $model2));
-        }*/
+        }
     }
 
     public function actionContactUs() {
@@ -855,8 +854,12 @@ class SiteController extends Controller {
     }
 
     public function actionDiagram() {
-        
-         Yii::import('application.modules.curl');
+        Yii::app()->session['username'] = Yii::app()->user->id;
+        $this->browserSession = Yii::app()->session['username'];
+        $model2 = new LoginForm;
+
+        if (isset($this->browserSession)) {
+            Yii::import('application.modules.curl');
 
             $curl = new curl();
             $arr = $curl->showDiagram();
@@ -877,8 +880,10 @@ class SiteController extends Controller {
             fwrite($Handle, $tree);
             print "Data Written";
             fclose($Handle);
-        $this->render('diagram');
+            $this->render('diagram');
+        } else {
+            $this->render('login', array('model' => $model2));
+        }
     }
 
-}
-
+} 
