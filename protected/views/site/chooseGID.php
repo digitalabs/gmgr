@@ -95,7 +95,7 @@
                             
                             
                              echo "<td>" . $existing[$j][6] . "</td>";
-                             echo "<td>".CHtml::link('Show Pedigree Tree',array('site/diagram&inputGID="50533"&maxStep="2"'),array("target"=>"_blank"))."</td>";
+                             echo "<td>".CHtml::link('Show Pedigree Tree',array('site/diagram&inputGID=50533&maxStep=2'),array("target"=>"_blank"))."</td>";
                              
 
                             echo "<td>(" . $existing[$j][2] . ")&nbsp; " . $existing[$j][3] . "</td>";
