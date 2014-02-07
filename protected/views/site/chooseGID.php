@@ -89,6 +89,7 @@
                             echo '<input type="hidden" name="existing" value="' . base64_encode(serialize($existing)) . '" />';
                             echo '<input type="hidden" name="checked" value="' . base64_encode(serialize($checked)) . '" />';
                             echo '<input type="hidden" name="locationID" value="' . $locationID . '" />';
+                            echo '<input type="hidden" name="theParent" value="' . $m_nval . '" />';
                             echo "</td>";
                             //echo "<td>" . $existing[$j][6] . "</td>";
                             
