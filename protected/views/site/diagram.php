@@ -32,7 +32,7 @@
     <div id='screen'>
 
     </div>
-    <div id="graph" style="height: auto;width: auto;">
+    <div id="graph" style="height: auto;width: auto;"  height="6500">
         <svg width="3500" height="5000" style="height: auto;width: auto;" id="graphDiv"></svg>
     </div>
 
