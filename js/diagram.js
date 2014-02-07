@@ -60,8 +60,8 @@ var customNodes = new Array(),
 	//Create a svg canvas
     depencencyChart = d3.select("#graphDiv").append("svg:svg")
 			//.data(d3.entries(orientation))
-            .attr("width", 5000)
-            .attr("height", 5000)
+            .attr("width", 6000)
+            .attr("height", 5500)
             .append("svg:g")
 			.attr("class","drawarea")
             .attr("transform", "translate(0, 900)") // shift everything to the right
