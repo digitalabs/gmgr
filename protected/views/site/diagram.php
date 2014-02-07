@@ -33,7 +33,7 @@
 
     </div>
     <div id="graph" style="height: auto;width: auto;">
-        <svg width="900" height="500" style="height: auto;width: auto;" id="graphDiv"></svg>
+        <svg width="3500" height="5000" style="height: auto;width: auto;" id="graphDiv"></svg>
     </div>
 
     <div id="opener" style="position:fixed; bottom:70px; left:50px">
