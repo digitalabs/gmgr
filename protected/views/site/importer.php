@@ -1,4 +1,4 @@
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <html>
 
     <body>
@@ -14,12 +14,12 @@
         </span>
         <?php
         /** @var BootActiveForm $form */
-           $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+        $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
             'type' => 'horizontal',
             'id' => 'pedigreeImport',
-            'method' =>'post',
+            'method' => 'post',
             'enableAjaxValidation' => false,
-            'htmlOptions' => array('class'=>'well','enctype' => 'multipart/form-data'),
+            'htmlOptions' => array('class' => 'well', 'enctype' => 'multipart/form-data'),
             'action' => array('site/importFileDisplay')
         ));
         ?>
@@ -29,17 +29,17 @@
 
         </div>
 
-        <div style="margin-left:70px;" class="row">
+        <div id="div-container" class="row">
 
-            <div class="span11">
+            <div class="span14">
                 <div class="row">
                     <div class="span4">
                         <fieldset>
                             <legend>Select List Type</legend>
                             <input type="radio" name="group1" value="BreedersCrossHistories" checked> Breeders Cross Histories &nbsp; &nbsp;<a href="Nomenclature Rules/NomenclatureRules.htm">Nomenclature Rules</a> <br>
 
-                            <input type="radio" name="group1" value="CultivarList" disabled="true"> Cultivar List<br>
-                            <input type="radio" name="group1" value="Accession" disabled="true"> Accession
+                            <!--<input type="radio" name="group1" value="CultivarList" disabled="true"> Cultivar List<br>
+                            <input type="radio" name="group1" value="Accession" disabled="true"> Accession-->
                             <?php
                             //echo $form->radioButtonListRow($model,'rButtons',array ('Breeders Cross Histories','Cultivar List','Accession'));   
                             ?>
@@ -52,108 +52,135 @@
                             <legend>Options</legend>
                             <input type="radio" name="group2" value="singleHit" checked> Accept single hit search<br>
                             <br>
-                            <br>
-                            <br>
+
                         </fieldset><br>
+                          <fieldset>
+                            <legend>Local Database</legend>
+                            <?php
+                            $dbFormModel->database_name = 'local';
+                            echo $form->textFieldRow($dbFormModel, 'database_name');
+                            $dbFormModel->port_name = '3306';
+                            echo $form->textFieldRow($dbFormModel, 'port_name');
+                            $dbFormModel->database_username = Yii::app()->user->name;
+                            echo $form->textFieldRow($dbFormModel, 'database_username');
+                            $dbFormModel->database_password = '';
+                            echo $form->passwordFieldRow($dbFormModel, 'database_password');
+                            ?>
+                        </fieldset>
+
                     </div>
+                    <div class="span1"></div>
                     <div class="span6">
+                        <fieldset>
+                            <legend>Central Database</legend>
+                            <?php
+                            $centralDBForm->database_name = 'central';
+                            echo $form->textFieldRow($centralDBForm, 'database_name');
+                            $centralDBForm->port_name = '3306';
+                            echo $form->textFieldRow($centralDBForm, 'port_name');
+                            $centralDBForm->database_username = Yii::app()->user->name;
+                            echo $form->textFieldRow($centralDBForm, 'database_username');
+                            $dbFormModel->database_password = '';
+                            echo $form->passwordFieldRow($dbFormModel, 'database_password');
+                            ?>
+                        </fieldset>
                         <fieldset>
                             <legend>Upload File</legend>
                             <br>
-                           <?php
-                                //echo $form->labelEx($model, 'file');
-                                echo CHtml::activefileField($model, 'file');
-                                echo CHtml::error($model, 'file');
+                            <?php
+                            //echo $form->labelEx($model, 'file');
+                            echo CHtml::activefileField($model, 'file');
+                            echo CHtml::error($model, 'file');
                             ?>
                             <?php
-                              echo CHtml::link('Download sample file', Yii::app()->baseUrl. '/csv_files/germplasmList.csv');
+                            echo CHtml::link('Download sample file', Yii::app()->baseUrl . '/csv_files/germplasmList.csv');
                             ?>
                             <br><br/>
                             <div id="select-location">
-                            <span>Location: </span>
-                            
-                            <?php
-                            $myfile = dirname(__FILE__) . '/../../../csv_files/location.csv';
-
-
-                            $fin = fopen($myfile, 'r');
-                       
-                            echo '<select name="location"  class="ddlClass" >';
-
-                            while ($line = fgetcsv($fin, 0, "#")) {
-                               // if (count($line) != 3) {
-                                 //   print_r($line);
-
-                                    echo '<option name="location[]"  value="' . $line[0] . '">' . $line[2] . ': ' . $line[1] . '</option>';
-                                //}
-                            }
-                            ?>
-                            </div>
-                            <?php
-                                fclose($fin);
-                                echo "</select></br>";
-                                ?>
+                                <span>Location: </span>
 
                                 <?php
-                                echo "</br>";
-                                $this->widget('bootstrap.widgets.TbButton', array(
-                                    'buttonType' => 'submit',
-                                    'id' => 'uploadFile',
-                                    'type' => 'primary',
-                                    'label' => 'Upload list',
-                                    'htmlOptions' => array(
-                                        'onclick' => 'js:
+                                $myfile = dirname(__FILE__) . '/../../../csv_files/location.csv';
+
+
+                                $fin = fopen($myfile, 'r');
+
+                                echo '<select name="location"  class="ddlClass" >';
+
+                                while ($line = fgetcsv($fin, 0, "#")) {
+                                    // if (count($line) != 3) {
+                                    //   print_r($line);
+
+                                    echo '<option name="location[]"  value="' . $line[0] . '">' . $line[2] . ': ' . $line[1] . '</option>';
+                                    //}
+                                }
+                                ?>
+                            </div>
+                            <?php
+                            fclose($fin);
+                            echo "</select></br>";
+                            ?>
+
+                            <?php
+                            echo "</br>";
+                            $this->widget('bootstrap.widgets.TbButton', array(
+                                'buttonType' => 'submit',
+                                'id' => 'uploadFile',
+                                'type' => 'primary',
+                                'label' => 'Upload list',
+                                'htmlOptions' => array(
+                                    'onclick' => 'js:
                                         var dataUser = $(".ddlClass option:selected").val();
                                         $("#location").val(dataUser);
                                         
                                     ',
-                                    ),
-                                ));
-                                ?>
-                                <!--</div>-->
-                            </fieldset><br>
-                        </div>
-                        <?php
-                        echo CHtml::textField('location', '', array(
-                            'id' => 'location',
-                            'form' => 'pedigreeImport',
-                            'class' => 'hidden',
-                        ));
-                        echo CHtml::submitButton('Submit', array(
-                            'id' => 'submit-btn',
-                            'class' => 'hidden',
-                            'form' => 'pedigreeImport'
-                        ));
-                        ?>
-                        <!--</div>-->
+                                ),
+                            ));
+                            ?>
+
                         </fieldset><br>
                     </div>
-                    <!-- <div class="divider"></div>-->
-
-                    <!--</form>-->
+                    <?php
+                    echo CHtml::textField('location', '', array(
+                        'id' => 'location',
+                        'form' => 'pedigreeImport',
+                        'class' => 'hidden',
+                    ));
+                    echo CHtml::submitButton('Submit', array(
+                        'id' => 'submit-btn',
+                        'class' => 'hidden',
+                        'form' => 'pedigreeImport'
+                    ));
+                    ?>
+                    <!--</div>-->
+                    </fieldset><br>
                 </div>
             </div>
-            <?php if (Yii::app()->user->hasFlash('success')): ?>
-                <div class="info">
-                    <?php echo Yii::app()->user->getFlash('success'); ?>
-                </div>
-            <?php endif; ?>
+        </div>
+        <?php if (Yii::app()->user->hasFlash('success')): ?>
+            <div class="info">
+                <?php echo Yii::app()->user->getFlash('success'); ?>
+            </div>
+        <?php endif; ?>
 
-            <?php $this->endWidget(); ?>
-        </body></html>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            var pop = function() {
-                $('#screen').css({opacity: 0.4, 'width': $(document).width(), 'height': $(document).height()});
-                $('body').css({'overflow': 'hidden'});
-                $('#ajax-loading-indicator').css({'display': 'block'});
-            }
-            $('#uploadFile').click(pop);
+        <?php $this->endWidget(); ?>
+    </body></html>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var pop = function() {
+            $('#screen').css({opacity: 0.4, 'width': $(document).width(), 'height': $(document).height()});
+            $('body').css({'overflow': 'hidden'});
+            $('#ajax-loading-indicator').css({'display': 'block'});
+        }
+        $('#uploadFile').click(pop);
 
-        });
-    <?php
-    Yii::app()->clientScript->registerScript(
-            'myHideEffect', '$(".info").animate({opacity: 1.0}, 3000).fadeOut("slow");', CClientScript::POS_READY
-    );
-    ?>
+    });
+	window.onbeforeload = function(){
+	    
+	}
+<?php
+Yii::app()->clientScript->registerScript(
+        'myHideEffect', '$(".info").animate({opacity: 1.0}, 3000).fadeOut("slow");', CClientScript::POS_READY
+);
+?>
 </script>

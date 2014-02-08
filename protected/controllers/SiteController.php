@@ -195,6 +195,9 @@ class SiteController extends Controller {
         if (isset($this->browserSession)) {
 
             $model = new ImporterForm;
+            $dbFormModel = new databaseForm;
+            $centralDBForm = new centralDBForm;
+            
             $uploaded = false;
 
             //Collect user input form
@@ -211,7 +214,9 @@ class SiteController extends Controller {
                 }
             } else {
                 $this->render('importer', array(
-                    'model' => $model,
+                    'model' => $model, 
+                    'dbFormModel' => $dbFormModel,
+                    'centralDBForm'=> $centralDBForm,
                 ));
             }
         } else {
@@ -234,6 +239,8 @@ class SiteController extends Controller {
         $newName = "germplasmFile.csv";
 
         $importedFile = new ImporterForm;
+        $dbFormModel = new databaseForm;
+        $centralDBForm = new centralDBForm;
 
         if (isset($this->browserSession)) {
 
@@ -248,7 +255,8 @@ class SiteController extends Controller {
 
                     $importedFile->file = $file;
                     $filePath = $dir . '/' . $importedFile->file;
-
+                    $dbFormModel->database_name = $_POST['databaseForm']['database_name'];
+                    echo "<br/>dbname:" . $dbFormModel->database_name;
 
                     if (file_exists($newName)) {
                         //  unlink($dir . '/' . $newName);
@@ -305,7 +313,8 @@ class SiteController extends Controller {
                         ));
                     }
                 } else {
-                    $this->render('importer', array('model' => $importedFile));
+                    $this->render('importer', array('model' => $importedFile, 
+                                    'dbFormModel' => $dbFormModel, 'centralDBForm' => $centralDBForm));
                 }
             } elseif (isset($_POST['next']) || isset($_POST['refresh'])) {
 
@@ -886,4 +895,5 @@ class SiteController extends Controller {
         }
     }
 
-} 
+}
+

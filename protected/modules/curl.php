@@ -82,12 +82,12 @@ class curl {
         $url = "http://172.29.4.99:8083/ws/standardization/term/updateMethod";
         return $this->exec($url, $data);
     }
-
+ 
     public function editGermplasmName($data) {
         $url = "http://172.29.4.99:8083/ws/standardization/term/checkEditedString";
         return $this->exec($url, $data);
     }
-
+      
     public function show_germplasm_details() {
         $url = "http://172.29.4.99:8083/ws/standardization/term/show_germplasm_details";
         $this->exec($url);
