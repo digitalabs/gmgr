@@ -114,7 +114,15 @@ class curl {
 	
         $gid = $_POST['inputGID'];
         $level = $_POST['maxStep'];
-        $a = array('GID' => $gid, 'LEVEL' => $level);
+        
+        if(isset($_POST['cbox']))
+		{
+		  $selhis = '1';
+		}
+		else $selhis = '0';
+		
+        $a = array('GID' => $gid, 'LEVEL' => $level, 'SEL' => $selhis);
+      
         $data = json_encode($a);
 		
 
