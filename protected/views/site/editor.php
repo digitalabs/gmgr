@@ -41,8 +41,7 @@ if (isset($_GET['searchBtn']))
 					  <form action="index.php?r=site/editor" method="post">
 						<input title="This feature is a work in progress" style="width:155px;height:30px;" class="span2" id="inputGID" name="inputGID" type="text" placeholder="Search by GID">
 						<button name="searchBtn" id="searchBtn" class="btn btn-primary" onclick="clik()" type="submit">GO</button>
-					  
-					  </div>  
+						</div>  
                              
             </div>
 			<span id="ajax-loading-indicator">
@@ -79,11 +78,12 @@ if (isset($_GET['searchBtn']))
                             <input title="This feature is a work in progress" placeholder="All" style="width:50px;height:30px;" value=" " id="maxStep" type="number" name="maxStep" min="1" max="100"> 
 							
                             <small><a data-toggle="tooltip" title="By default, a regular pedigree for a particular germplasm is created up to the certain number of known parents. You can, however, choose to show a smaller number of parental generations (steps), or to choose all." data-placement="right">Maximum Steps</a></small>
-                        </div><br>
-                        <label class="checkbox" style="padding-left: 30px;">
-                          <small><input title="This feature is a work in progress" type="checkbox" id="cbox" name="cbox"><a data-placement="right" data-toggle="tooltip" title="Derivative and maintenance steps will be included in the pedigree.">Show Selection History</a></input></small><br>
+                        </div>
+						<div style="margin-left:20px;">
+                          <small><input class="checkbox" title="This feature is a work in progress" type="checkbox" id="cbox" name="cbox">
+							<a data-placement="right" data-toggle="tooltip" title="Derivative and maintenance steps will be included in the pedigree.">Show Selection History</a></input></small><br>
                           <!--<small><input title="This feature is a work in progress" type="checkbox"><a data-placement="right" data-toggle="tooltip" title="The pedigree graph can label its edges by the name of germplasm methods.">Show Method</a></input></small>-->
-                        </label>
+                        </div>
                      </form>  
 					<div style="padding-left: 5px;padding-right: 5px; text-align: right;">
 							<!--<button name="updateBtn" id="updateBtn" type="submit" class="btn btn-mini btn-primary" onclick="graph2b();">Update</button></form>
@@ -340,6 +340,11 @@ if (isset($_GET['searchBtn']))
 		<script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/svgenie.js"></script>
         <script type="text/javascript">
 		
+			jQuery("#cbox").altCheckbox({
+				outlineUnchecked: false, 
+				sizeClass: "small"
+			  });
+  
 			document.getElementById('inputGID').value = $.localStorage('GID');
 			document.getElementById('maxStep').value = $.localStorage('level');
 			
