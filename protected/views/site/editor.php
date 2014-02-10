@@ -61,144 +61,10 @@ if (isset($_GET['searchBtn']))
 					</svg>
 						<div id="graphDiv" width="5000" style="width:2000px;"></div>
 					</div> -->
-					<div id="graph" style="height: auto;width: auto;" height="6500">
+					<div id="graph" style="height: auto !important;width: auto;min-height:30px;">
 						<svg width="3500" height="5000" style="height: auto;width: auto;" id="graphDiv"></svg>
 					</div>
-					
-					<div id="opener" style="position:fixed; bottom:60px; left:50px">
-						<a href="#1" name="1" onclick="show();">View Names    </a>
-					</div>
-					<div id="opener2" style="position:fixed; bottom:60px; left:130px">
-						<a href="#2" name="2" onclick="show2();">View Attributes</a>
-					</div>
-					<div id="benefits" style="position:fixed; bottom:80px; left:50px; display:none;">
-						<b>&nbsp;Alternate Names</b>
-							<table style="background-color:white;margin:5px;width:800px;" width="1000px" class="table table-hover table-condensed">
-								<tr>
-									<th height="10" bgcolor="lightgreen">Name Type</th>
-									<th height="10" bgcolor="lightblue">Name</th>
-									<th height="10" bgcolor="lightblue">Location</th>
-									<th height="10" bgcolor="lightblue">Status</th>
-									<th height="10" bgcolor="lightblue">Date</th>
-								</tr>
-								<tr style="border:1px solid gray">
-									<td id="nt1"></td>
-									<td id="n1"></td>
-									<td id="l1"></td>
-									<td id="ns1"></td>
-									<td id="d1"></td>
-								</tr>
-								<tr style="border:1px solid gray">
-									<td id="nt2"></td>
-									<td id="n2"></td>
-									<td id="l2"></td>
-									<td id="ns2"></td>
-									<td id="d2"></td>
-								</tr>
-								<tr style="border:1px solid gray">
-									<td id="nt3"></td>
-									<td id="n3"></td>
-									<td id="l3"></td>
-									<td id="ns3"></td>
-									<td id="d3"></td>
-								</tr>
-							</table>
-						<!--<div id="upbutton"><a onclick="conceal();">&nbsp;Hide</a></div>-->
-					</div>
-					<div id="benefits2" style="position:fixed; bottom:80px; left:50px; display:none;">
-							<b>&nbsp;Attributes</b>
-							<table style="margin:5px;width:700px;">
-								<tr>
-									<th bgcolor="lightblue">Name</th>
-									<th bgcolor="lightblue">Description</th>
-									<th bgcolor="lightblue">Value</th>
-									<th bgcolor="lightblue">Date</th>
-								</tr>
-								<tr style="border:1px solid gray">
-									<td id="an1"></td>
-									<td id="ad1"></td>
-									<td id="av1"></td>
-									<td id="adt1"></td>
-								</tr>
-								<tr style="border:1px solid gray">
-									<td id="an2"></td>
-									<td id="ad2"></td>
-									<td id="av2"></td>
-									<td id="adt2"></td>
-								</tr>
-								<tr style="border:1px solid gray">
-									<td id="an3"></td>
-									<td id="ad3"></td>
-									<td id="av3"></td>
-									<td id="adt3"></td>
-								</tr>
-							</table>
-							<!--<div id="upbutton2"><a onclick="conceal2();">&nbsp;Hide</a></div>-->
-					</div>
-					<!--<div>
-						
-						<div style="margin:5px;border:1px solid gray;border-radius: 6px 6px 6px 6px;position:fixed; bottom:60px; left:50px" id="gDetail">
-							<b>&nbsp;Alternate Names</b>
-							<table style="margin:5px;width:700px;" width="1000px ">
-								<tr>
-									<th height="10" bgcolor="lightblue">Name</th>
-									<th height="10" bgcolor="lightblue">Location</th>
-									<th height="10" bgcolor="lightblue">Status</th>
-									<th height="10" bgcolor="lightblue">Date</th>
-								</tr>
-								<tr style="border:1px solid gray">
-									<td id="n1"></td>
-									<td id="l1"></td>
-									<td ></td>
-									<td id="d1"></td>
-								</tr>
-								<tr style="border:1px solid gray">
-									<td id="n2"></td>
-									<td id="l2"></td>
-									<td></td>
-									<td id="d2"></td>
-								</tr>
-								<tr style="border:1px solid gray">
-									<td id="n3"></td>
-									<td id="l3"></td>
-									<td></td>
-									<td id="d3"></td>
-								</tr>
-							</table>
-						</div>
-						<div style="margin:5px;border:1px solid gray;border-radius: 6px 6px 6px 6px;position:fixed; bottom:60px; left:780px" id="gDetail2">
-							<b>&nbsp;Attributes</b>
-							<table style="margin:5px;width:700px;">
-								<tr>
-									<th bgcolor="lightblue">Name</th>
-									<th bgcolor="lightblue">Description</th>
-									<th bgcolor="lightblue">Value</th>
-									<th bgcolor="lightblue">Date</th>
-								</tr>
-								<tr style="border:1px solid gray">
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr style="border:1px solid gray">
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr style="border:1px solid gray">
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-							</table>
-						</div>
-						
-					</div>-->
-					
-					
+		
                     <!--<div id="graphDiv" style="z-index:50;">-->
 					<!--<a href="#" id="generate">Generate download preview</a>	-->
 					</div>
@@ -209,16 +75,16 @@ if (isset($_GET['searchBtn']))
                         
                         <!--<div style="padding-left:5px;padding-right:5px;"><hr></div>-->
                         <br>
-                        <div class="form-horizontal" style="padding: 5px;">
+                        <div class="form-horizontal" style="padding-left: 15px;">
                             <input title="This feature is a work in progress" placeholder="All" style="width:50px;height:30px;" value=" " id="maxStep" type="number" name="maxStep" min="1" max="100"> 
 							
                             <small><a data-toggle="tooltip" title="By default, a regular pedigree for a particular germplasm is created up to the certain number of known parents. You can, however, choose to show a smaller number of parental generations (steps), or to choose all." data-placement="right">Maximum Steps</a></small>
                         </div><br>
                         <label class="checkbox" style="padding-left: 30px;">
-                          <small><input title="This feature is a work in progress" type="checkbox"><a data-placement="right" data-toggle="tooltip" title="Derivative and maintenance steps will be included in the pedigree.">Show Selection History</a></input></small><br>
-                          <small><input title="This feature is a work in progress" type="checkbox"><a data-placement="right" data-toggle="tooltip" title="The pedigree graph can label its edges by the name of germplasm methods.">Show Method</a></input></small>
+                          <small><input title="This feature is a work in progress" type="checkbox" id="cbox" name="cbox"><a data-placement="right" data-toggle="tooltip" title="Derivative and maintenance steps will be included in the pedigree.">Show Selection History</a></input></small><br>
+                          <!--<small><input title="This feature is a work in progress" type="checkbox"><a data-placement="right" data-toggle="tooltip" title="The pedigree graph can label its edges by the name of germplasm methods.">Show Method</a></input></small>-->
                         </label>
-                        
+                     </form>  
 					<div style="padding-left: 5px;padding-right: 5px; text-align: right;">
 							<!--<button name="updateBtn" id="updateBtn" type="submit" class="btn btn-mini btn-primary" onclick="graph2b();">Update</button></form>
 							<button title="This feature is a work in progress" class="btn btn-mini btn-success" id="generate" value="" >Save image</button>-->
@@ -229,7 +95,7 @@ if (isset($_GET['searchBtn']))
                         <div style="padding-left:5px;padding-right:5px;"><hr></div>
                         <center>
 						<div style="padding-left:5px;padding-right:5px;">Basic Information
-						<button data-toggle="modal" data-target="#myModal" onclick="info()" style="width:50px" name="showMore" id="showMore" class="btn btn-primary" onclick="validate()" type="submit">Edit</button>
+						<!--<button data-toggle="modal" data-target="#myModal" onclick="info()" style="width:50px" name="showMore" id="showMore" class="btn btn-primary" onclick="validate()" type="submit">Edit</button>-->
 						</center> 
 						
 						<br>
@@ -301,7 +167,79 @@ if (isset($_GET['searchBtn']))
 							<small>Apply the <i>changes</i> made by clicking the <b>Update</b> button.
                                                 Click node to view germplasm information.</small>
                         </span>
-                    </div>            
+                    </div>    
+
+				<div id="opener" style="position:fixed; bottom:60px; left:50px">
+						<a href="#1" name="1" onclick="show();">View Names    </a>
+					</div>
+					<div id="opener2" style="position:fixed; bottom:60px; left:130px">
+						<a href="#2" name="2" onclick="show2();">View Attributes</a>
+					</div>
+					<div id="benefits" style="position:fixed; bottom:80px; left:50px; display:none;">
+						<b>&nbsp;Alternate Names</b>
+							<table style="background-color:white;margin:5px;width:800px;" width="1000px" class="table table-hover table-condensed">
+								<tr>
+									<th height="10" bgcolor="lightgreen">Name Type</th>
+									<th height="10" bgcolor="lightblue">Name</th>
+									<th height="10" bgcolor="lightblue">Location</th>
+									<th height="10" bgcolor="lightblue">Status</th>
+									<th height="10" bgcolor="lightblue">Date</th>
+								</tr>
+								<tr style="border:1px solid gray">
+									<td id="nt1"></td>
+									<td id="n1"></td>
+									<td id="l1"></td>
+									<td id="ns1"></td>
+									<td id="d1"></td>
+								</tr>
+								<tr style="border:1px solid gray">
+									<td id="nt2"></td>
+									<td id="n2"></td>
+									<td id="l2"></td>
+									<td id="ns2"></td>
+									<td id="d2"></td>
+								</tr>
+								<tr style="border:1px solid gray">
+									<td id="nt3"></td>
+									<td id="n3"></td>
+									<td id="l3"></td>
+									<td id="ns3"></td>
+									<td id="d3"></td>
+								</tr>
+							</table>
+						<!--<div id="upbutton"><a onclick="conceal();">&nbsp;Hide</a></div>-->
+					</div>
+					<div id="benefits2" style="position:fixed; bottom:80px; left:50px; display:none;">
+							<b>&nbsp;Attributes</b>
+							<table style="margin:5px;width:700px;">
+								<tr>
+									<th bgcolor="lightblue">Name</th>
+									<th bgcolor="lightblue">Description</th>
+									<th bgcolor="lightblue">Value</th>
+									<th bgcolor="lightblue">Date</th>
+								</tr>
+								<tr style="border:1px solid gray">
+									<td id="an1"></td>
+									<td id="ad1"></td>
+									<td id="av1"></td>
+									<td id="adt1"></td>
+								</tr>
+								<tr style="border:1px solid gray">
+									<td id="an2"></td>
+									<td id="ad2"></td>
+									<td id="av2"></td>
+									<td id="adt2"></td>
+								</tr>
+								<tr style="border:1px solid gray">
+									<td id="an3"></td>
+									<td id="ad3"></td>
+									<td id="av3"></td>
+									<td id="adt3"></td>
+								</tr>
+							</table>
+							<!--<div id="upbutton2"><a onclick="conceal2();">&nbsp;Hide</a></div>-->
+					</div>
+					
                 </div>
 				<div style="position:fixed;left:40px;top:80px;">
 					<!--<span>Zoom</span>-->
