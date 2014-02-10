@@ -270,8 +270,8 @@ class SiteController extends Controller {
 
         $importedFile = new ImporterForm;
         
-        echo '<br>'.$_SERVER['REQUEST_URI'];
-        echo "<br>".$_SERVER['REQUEST_METHOD'];
+        //echo '<br>'.$_SERVER['REQUEST_URI'];
+        //echo "<br>".$_SERVER['REQUEST_METHOD'];
       
         if( $_SERVER['REQUEST_METHOD']=='GET' || $_SERVER['REQUEST_METHOD']=='POST'){
         if (isset($this->browserSession)) {
