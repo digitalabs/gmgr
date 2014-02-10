@@ -103,28 +103,58 @@ class SiteController extends Controller {
      */
     public function actionLogin() {
         $model = new LoginForm;
+        $dbForm = new databaseForm;
+        $centralForm = new centralDBForm;
 
-
-// if it is ajax validation request
+        // if it is ajax validation request
         if (isset($_POST['ajax']) && $_POST['ajax'] === 'login-form') {
             echo CActiveForm::validate($model);
             Yii::app()->end();
         }
 
-// collect user input data
+        // collect user input data
         if (isset($_POST['LoginForm'])) {
             $model->attributes = $_POST['LoginForm'];
-// validate user input and redirect to the previous page if valid
+            // validate user input and redirect to the previous page if valid
             if ($model->validate() && $model->login()) {
-// $this->redirect(Yii::app()->user->returnUrl);
+            // $this->redirect(Yii::app()->user->returnUrl);
                 $this->redirect(array('/site/importer'));
             } else {
                 $this->redirect(Yii::app()->baseUrl);
             }
         }
+        
+        //backend details
+        if (isset($_POST['databaseForm']) && isset($_POST['centralDBForm'])) {
+            if ($dbFormModel->validate() && $centralDBForm->validate()) {
+                //local database
+                $local_db_name = $_POST['databaseForm']['database_name'];
+                $local_db_port = $_POST['databaseForm']['port_name'];
+                $local_db_username = $_POST['databaseForm']['database_username'];
 
-// display the login form
-        $this->render('login', array('model' => $model));
+            
+                //central database
+                $central_db_name = $_POST['centralDBForm']['database_name'];
+                $central_db_port = $_POST['centralDBForm']['port_name'];
+                $central_db_username = $_POST['centralDBForm']['database_username'];
+
+                
+                $database_details = array(
+                     'local_db_name' => $local_db_name,
+                     'local_db_port' => $local_db_port,
+                     'local_db_username'=>$local_db_username,
+                     'central_db_name' => $central_db_name,
+                     'central_db_port' => $central_db_port,
+                     'central_db_username' => $central_db_username
+                );
+                $data = json_encode($database_details);
+               
+            }
+             $this->render('login', array('model' => $model,'dbModelForm'=>$dbForm,'centralDBForm'=>$centralForm));
+        }else{
+            // display the login form
+            $this->render('login', array('model' => $model));
+        }
     }
 
     /**
@@ -197,7 +227,7 @@ class SiteController extends Controller {
             $model = new ImporterForm;
             $dbFormModel = new databaseForm;
             $centralDBForm = new centralDBForm;
-            
+
             $uploaded = false;
 
             //Collect user input form
@@ -214,9 +244,9 @@ class SiteController extends Controller {
                 }
             } else {
                 $this->render('importer', array(
-                    'model' => $model, 
+                    'model' => $model,
                     'dbFormModel' => $dbFormModel,
-                    'centralDBForm'=> $centralDBForm,
+                    'centralDBForm' => $centralDBForm,
                 ));
             }
         } else {
@@ -239,9 +269,11 @@ class SiteController extends Controller {
         $newName = "germplasmFile.csv";
 
         $importedFile = new ImporterForm;
-        $dbFormModel = new databaseForm;
-        $centralDBForm = new centralDBForm;
-
+        
+        echo '<br>'.$_SERVER['REQUEST_URI'];
+        echo "<br>".$_SERVER['REQUEST_METHOD'];
+      
+        if( $_SERVER['REQUEST_METHOD']=='GET' || $_SERVER['REQUEST_METHOD']=='POST'){
         if (isset($this->browserSession)) {
 
             if (isset($_POST['ImporterForm'])) {
@@ -255,8 +287,6 @@ class SiteController extends Controller {
 
                     $importedFile->file = $file;
                     $filePath = $dir . '/' . $importedFile->file;
-                    $dbFormModel->database_name = $_POST['databaseForm']['database_name'];
-                    echo "<br/>dbname:" . $dbFormModel->database_name;
 
                     if (file_exists($newName)) {
                         //  unlink($dir . '/' . $newName);
@@ -272,7 +302,7 @@ class SiteController extends Controller {
                     if (isset($_POST['location'])) {
                         $location = $_POST['location'];
 
-                        if (isset($_POST['refresh'])) {
+                        if (isset($_POST['refresh'])) { 
 
                             $location = $_POST['location'];
                             $locationID = $location;
@@ -313,8 +343,7 @@ class SiteController extends Controller {
                         ));
                     }
                 } else {
-                    $this->render('importer', array('model' => $importedFile, 
-                                    'dbFormModel' => $dbFormModel, 'centralDBForm' => $centralDBForm));
+                    $this->render('importer', array('model' => $importedFile));
                 }
             } elseif (isset($_POST['next']) || isset($_POST['refresh'])) {
 
@@ -364,7 +393,7 @@ class SiteController extends Controller {
                     </body>
                 </html>
                 <?php
-            }
+        }}
         } else {
             $this->render('login', array('model' => $model2));
         }
@@ -429,7 +458,7 @@ class SiteController extends Controller {
                             'pageSize' => 5,
                     )));
                     $not_standard_size = count($notStandard);
-                    echo "<br>this:" . $not_standard_size;
+                   // echo "<br>this:" . $not_standard_size;
                 }
                 //get array data and create dataProvider
                 $filteredData = $filtersForm->filter($arr);
@@ -892,6 +921,49 @@ class SiteController extends Controller {
             $this->render('diagram');
         } else {
             $this->render('login', array('model' => $model2));
+        }
+    }
+
+    public function actionBackend() {
+        $dbFormModel = new databaseForm;
+        $centralDBForm = new centralDBForm;
+        
+        $this->render('backend', array(
+            'dbFormModel' => $dbFormModel,
+            'centralDBForm' => $centralDBForm
+        ));
+    }
+    public function actionDatabaseDetails() {
+        $dbFormModel = new databaseForm;
+        $centralDBForm = new centralDBForm;
+        Yii::import('application.modules.curl');
+        $curl = new curl();
+        
+        if (isset($_POST['databaseForm']) && isset($_POST['centralDBForm'])) {
+            if ($dbFormModel->validate() && $centralDBForm->validate()) {
+                //local database
+                $local_db_name = $_POST['databaseForm']['database_name'];
+                $local_db_port = $_POST['databaseForm']['port_name'];
+                $local_db_username = $_POST['databaseForm']['database_username'];
+
+            
+                //central database
+                $central_db_name = $_POST['centralDBForm']['database_name'];
+                $central_db_port = $_POST['centralDBForm']['port_name'];
+                $central_db_username = $_POST['centralDBForm']['database_username'];
+
+                
+                $database_details = array(
+                     'local_db_name' => $local_db_name,
+                     'local_db_port' => $local_db_port,
+                     'local_db_username'=>$local_db_username,
+                     'central_db_name' => $central_db_name,
+                     'central_db_port' => $central_db_port,
+                     'central_db_username' => $central_db_username
+                );
+                $data = json_encode($database_details);
+               
+            }
         }
     }
 

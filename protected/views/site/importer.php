@@ -54,36 +54,12 @@
                             <br>
 
                         </fieldset><br>
-                          <fieldset>
-                            <legend>Local Database</legend>
-                            <?php
-                            $dbFormModel->database_name = 'local';
-                            echo $form->textFieldRow($dbFormModel, 'database_name');
-                            $dbFormModel->port_name = '3306';
-                            echo $form->textFieldRow($dbFormModel, 'port_name');
-                            $dbFormModel->database_username = Yii::app()->user->name;
-                            echo $form->textFieldRow($dbFormModel, 'database_username');
-                            $dbFormModel->database_password = '';
-                            echo $form->passwordFieldRow($dbFormModel, 'database_password');
-                            ?>
-                        </fieldset>
+
 
                     </div>
                     <div class="span1"></div>
                     <div class="span6">
-                        <fieldset>
-                            <legend>Central Database</legend>
-                            <?php
-                            $centralDBForm->database_name = 'central';
-                            echo $form->textFieldRow($centralDBForm, 'database_name');
-                            $centralDBForm->port_name = '3306';
-                            echo $form->textFieldRow($centralDBForm, 'port_name');
-                            $centralDBForm->database_username = Yii::app()->user->name;
-                            echo $form->textFieldRow($centralDBForm, 'database_username');
-                            $dbFormModel->database_password = '';
-                            echo $form->passwordFieldRow($dbFormModel, 'database_password');
-                            ?>
-                        </fieldset>
+
                         <fieldset>
                             <legend>Upload File</legend>
                             <br>
@@ -175,9 +151,9 @@
         $('#uploadFile').click(pop);
 
     });
-	window.onbeforeload = function(){
-	    
-	}
+    window.onbeforeload = function() {
+
+    }
 <?php
 Yii::app()->clientScript->registerScript(
         'myHideEffect', '$(".info").animate({opacity: 1.0}, 3000).fadeOut("slow");', CClientScript::POS_READY
