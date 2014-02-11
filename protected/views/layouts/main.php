@@ -95,7 +95,7 @@
             'htmlOptions'=>array('class'=>'pull-right'),
             'items'=>array(
                 array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
-                //array('htmlOptions'=>array('class'=>'pull-right'),'label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
+                array('htmlOptions'=>array('class'=>'pull-right'),'label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
             ),
         ),
     ),
