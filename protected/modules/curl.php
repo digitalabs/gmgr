@@ -45,26 +45,26 @@ class curl {
     }
 
     public function updateGermplasmName($data) {
-        //http://localhost:8080/ws/standardization/term/parse
-        $url = "http://localhost:8080/ws/standardization/term/updateGermplasmName";
+        //http://172.29.4.99:8083/ws/standardization/term/parse
+        $url = "http://172.29.4.99:8083/ws/standardization/term/updateGermplasmName";
         echo "<br>here";
         return $this->exec($url, $data);
     }
 
     public function parse($data) {
-        //http://localhost:8080/ws/standardization/term/parse
-        $url = "http://localhost:8080/ws/standardization/term/post";
+        //http://172.29.4.99:8083/ws/standardization/term/parse
+        $url = "http://172.29.4.99:8083/ws/standardization/term/post";
 
         return $this->exec($url, $data);
     }
 
     public function standardize($data) {
-        $url = "http://localhost:8080/ws/standardization/term/standardize2";
+        $url = "http://172.29.4.99:8083/ws/standardization/term/standardize2";
         return $this->exec($url, $data);
     }
 
     public function createGID($data) {
-        $url = "http://localhost:8080/ws/standardization/term/createGID2";
+        $url = "http://172.29.4.99:8083/ws/standardization/term/createGID2";
         return $this->exec($url, $data);
     }
 
@@ -111,7 +111,7 @@ class curl {
     }
 
     public function searchGID($data) {
-        $url = "http://localhost:8080/ws/standardization/term/searchGID";
+        $url = "http://172.29.4.99:8083/ws/standardization/term/searchGID";
 
         $this->exec($url, $data);
 
