@@ -304,6 +304,12 @@ function drawChart2(node) {
 					return "rotate(90)" 
 				})
 				.on("click", function(d,i) { click(node); })
+				.on("mouseup", legendclick )
+				setTimeout(function () {
+        //drawLegend();
+        //display();
+        setcursor("pointer");
+	}, 0);
 				
 				var txtW = txtBox.node().getComputedTextLength();
 			
@@ -441,6 +447,28 @@ function click(d)
 	else document.getElementById('adt3').innerHTML = d.adate2;
 	
 	
+	
+}
+
+function legendclick()
+{
+   //--- get mouse pos
+   var origin = d3.mouse(this);
+
+   //---  get channel
+   var ch=Math.floor((origin[1]-4)/15);
+
+  setTimeout(function () {
+        //drawLegend();
+        //display();
+        setcursor("pointer");
+	}, 0);
+ }
+
+//===== set cursor
+function setcursor(cursor)
+{
+  d3.select("#graphDiv").style("cursor", cursor);
 }
 
 function writeDownloadLink()
