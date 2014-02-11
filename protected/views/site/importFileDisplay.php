@@ -96,7 +96,7 @@
                         $your_array = implode("<br>", $your_array);
                         $fgid = $your_array;
 
-                        return "<b>" . CHtml::encode($data["female"]) . "</b>" . "" . $fgid . "";
+                        return "" . CHtml::encode($data["female"]) . "" . "<span class='muted'>" . $fgid . "</span>";
                     }
                     else{
                         $your_array = array();
@@ -117,9 +117,9 @@
 
                         $your_array = array();
                         $your_array = explode("#", CHtml::encode($data["mgid"]));
-                        $your_array = implode("<br>", $your_array);
+                        $your_array = implode("<br />", $your_array);
                         $mgid = $your_array;
-                        return "<b>" . CHtml::encode($data["male"]) . "</b>" . "" . $mgid . "";
+                        return "" . CHtml::encode($data["male"]) . "" . "<span class='muted'>" . $mgid . "</span>";
                     }
                     else{
                         $your_array = array();
