@@ -277,6 +277,11 @@ if (isset($_GET['searchBtn']))
 		<script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/svgenie.js"></script>
         <script type="text/javascript">
 		
+			function Scrolldown() {
+				 window.scroll(0,2880); 
+			}
+
+			window.onload = Scrolldown;
 			jQuery("#cbox").altCheckbox({
 				outlineUnchecked: false, 
 				sizeClass: "small"
