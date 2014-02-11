@@ -164,7 +164,7 @@ if (isset($_GET['searchBtn']))
                     <div style="vertical-align:right;text-align: right;">
 						
                         <p style="position:fixed;bottom:0px;left:50px;padding:5px;"><span class="label label-warning">Note</span> 
-							<small>Apply the <i>changes</i> made by clicking the <b>Update</b> button.
+							<small>Apply the <i>changes</i> made by clicking the <b>GO</b> button.
                                                 Click node to view germplasm information.</small>
                         </span>
                     </div>    
