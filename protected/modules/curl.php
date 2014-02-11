@@ -109,7 +109,26 @@ class curl {
         json_decode($result, true);
     }
 
+<<<<<<< HEAD
     public function searchGID($data) {
+=======
+    public function searchGID() {
+	
+        $gid = $_POST['inputGID'];
+        $level = $_POST['maxStep'];
+        
+        if(isset($_POST['cbox']))
+		{
+		  $selhis = '1';
+		}
+		else $selhis = '0';
+		
+        $a = array('GID' => $gid, 'LEVEL' => $level, 'SEL' => $selhis);
+      
+        $data = json_encode($a);
+		
+
+>>>>>>> b6636dc23edcff68341277ab41cd47602eba8bc7
 		$url = "http://172.29.4.99:8083/ws/standardization/term/searchGID";
 
         $this->exec($url,$data);

@@ -117,42 +117,42 @@ class SiteController extends Controller {
             $model->attributes = $_POST['LoginForm'];
             // validate user input and redirect to the previous page if valid
             if ($model->validate() && $model->login()) {
-            // $this->redirect(Yii::app()->user->returnUrl);
+                // $this->redirect(Yii::app()->user->returnUrl);
                 $this->redirect(array('/site/importer'));
             } else {
                 $this->redirect(Yii::app()->baseUrl);
             }
         }
-        
+
         //****backend details
         if (isset($_POST['databaseForm']) && isset($_POST['centralDBForm'])) {
-         
-           // if ($dbFormModel->validate() && $centralDBForm->validate()) {
-                //local database
-                $local_db_name = $_POST['databaseForm']['database_name'];
-                $local_db_port = $_POST['databaseForm']['port_name'];
-                $local_db_username = $_POST['databaseForm']['database_username'];
 
-            
-                //central database
-                $central_db_name = $_POST['centralDBForm']['database_name'];
-                $central_db_port = $_POST['centralDBForm']['port_name'];
-                $central_db_username = $_POST['centralDBForm']['database_username'];
+            // if ($dbFormModel->validate() && $centralDBForm->validate()) {
+            //local database
+            $local_db_name = $_POST['databaseForm']['database_name'];
+            $local_db_port = $_POST['databaseForm']['port_name'];
+            $local_db_username = $_POST['databaseForm']['database_username'];
 
-                
-                $database_details = array(
-                     'local_db_name' => $local_db_name,
-                     'local_db_port' => $local_db_port,
-                     'local_db_username'=>$local_db_username,
-                     'central_db_name' => $central_db_name,
-                     'central_db_port' => $central_db_port,
-                     'central_db_username' => $central_db_username
-                );
-                $data = json_encode($database_details);
-              
-           // }
-             $this->render('login', array('model' => $model,'database_details'=>$database_details));
-        }else{
+
+            //central database
+            $central_db_name = $_POST['centralDBForm']['database_name'];
+            $central_db_port = $_POST['centralDBForm']['port_name'];
+            $central_db_username = $_POST['centralDBForm']['database_username'];
+
+
+            $database_details = array(
+                'local_db_name' => $local_db_name,
+                'local_db_port' => $local_db_port,
+                'local_db_username' => $local_db_username,
+                'central_db_name' => $central_db_name,
+                'central_db_port' => $central_db_port,
+                'central_db_username' => $central_db_username
+            );
+            $data = json_encode($database_details);
+
+            // }
+            $this->render('login', array('model' => $model, 'database_details' => $database_details));
+        } else {
             echo "nothing to display";
             // display the login form
             $this->render('login', array('model' => $model));
@@ -175,41 +175,41 @@ class SiteController extends Controller {
         if (isset($_POST['searchBtn']) || isset($_POST['updateBtn'])) {
             Yii::import('application.modules.curl');
 
-			 	$gid = $_POST['inputGID'];
-				$level = $_POST['maxStep'];
-				//database settings
-				$local_db_name = Yii::app()->request->getParam('local_db_name');
-				$local_db_port = Yii::app()->request->getParam('local_db_port');
-				$local_db_username = Yii::app()->request->getParam('local_db_username');
-				$central_db_name = Yii::app()->request->getParam('central_db_name');
-				$central_db_port = Yii::app()->request->getParam('central_db_port');
-				$central_db_username = Yii::app()->request->getParam('central_db_username');
-				
-				$a = array(
-				    'GID' => $gid, 
-				    'LEVEL' => $level,
-					'local_db_name' => $local_db_name,
-					'local_db_port' => $local_db_port,
-					'local_db_username' => $local_db_username,
-					'central_db_name' => $central_db_name,
-					'central_db_port' => $central_db_port,
-					'central_db_username' => $central_db_username
-			    );
-		
-        
-				$data = json_encode($a);
-						
+            $gid = $_POST['inputGID'];
+            $level = $_POST['maxStep'];
+            //database settings
+            $local_db_name = Yii::app()->request->getParam('local_db_name');
+            $local_db_port = Yii::app()->request->getParam('local_db_port');
+            $local_db_username = Yii::app()->request->getParam('local_db_username');
+            $central_db_name = Yii::app()->request->getParam('central_db_name');
+            $central_db_port = Yii::app()->request->getParam('central_db_port');
+            $central_db_username = Yii::app()->request->getParam('central_db_username');
+
+            $a = array(
+                'GID' => $gid,
+                'LEVEL' => $level,
+                'local_db_name' => $local_db_name,
+                'local_db_port' => $local_db_port,
+                'local_db_username' => $local_db_username,
+                'central_db_name' => $central_db_name,
+                'central_db_port' => $central_db_port,
+                'central_db_username' => $central_db_username
+            );
+
+
+            $data = json_encode($a);
+
             $curl = new curl();
             $arr = $curl->searchGID($data);
-         
+
             $tree = $arr['tree'];
-          
+
 
             $out = json_decode($tree);
-         
+
             $Data = $tree;
             $File = dirname(__FILE__) . '/../../json_files/treePHP.json';
-           
+
             $Handle = fopen($File, 'w');
 
             fwrite($Handle, $tree);
@@ -221,31 +221,31 @@ class SiteController extends Controller {
 
         if (isset($_POST['save'])) {
             Yii::import('application.modules.curl');
-				//database settings
-				$local_db_name = Yii::app()->request->getParam('local_db_name');
-				$local_db_port = Yii::app()->request->getParam('local_db_port');
-				$local_db_username = Yii::app()->request->getParam('local_db_username');
-				$central_db_name = Yii::app()->request->getParam('central_db_name');
-				$central_db_port = Yii::app()->request->getParam('central_db_port');
-				$central_db_username = Yii::app()->request->getParam('central_db_username');
-				
-				$a = array(
-				    'GID' => 50533, 
-				    'LEVEL' => 2,
-					'local_db_name' => $local_db_name,
-					'local_db_port' => $local_db_port,
-					'local_db_username' => $local_db_username,
-					'central_db_name' => $central_db_name,
-					'central_db_port' => $central_db_port,
-					'central_db_username' => $central_db_username
-			    );
-		
-			$data = json_encode($a);
-            
-			$curl = new curl();
+            //database settings
+            $local_db_name = Yii::app()->request->getParam('local_db_name');
+            $local_db_port = Yii::app()->request->getParam('local_db_port');
+            $local_db_username = Yii::app()->request->getParam('local_db_username');
+            $central_db_name = Yii::app()->request->getParam('central_db_name');
+            $central_db_port = Yii::app()->request->getParam('central_db_port');
+            $central_db_username = Yii::app()->request->getParam('central_db_username');
+
+            $a = array(
+                'GID' => 50533,
+                'LEVEL' => 2,
+                'local_db_name' => $local_db_name,
+                'local_db_port' => $local_db_port,
+                'local_db_username' => $local_db_username,
+                'central_db_name' => $central_db_name,
+                'central_db_port' => $central_db_port,
+                'central_db_username' => $central_db_username
+            );
+
+            $data = json_encode($a);
+
+            $curl = new curl();
             $arr = $curl->editGermplasm();
         }
-        
+
         $this->render('editor');
     }
 
@@ -304,65 +304,98 @@ class SiteController extends Controller {
         $newName = "germplasmFile.csv";
 
         $importedFile = new ImporterForm;
-        
-<<<<<<< HEAD
-        //echo '<br>'.$_SERVER['REQUEST_URI'];
-        //echo "<br>".$_SERVER['REQUEST_METHOD'];
-      
-=======
-        
->>>>>>> joanie
-        if( $_SERVER['REQUEST_METHOD']=='GET' || $_SERVER['REQUEST_METHOD']=='POST'){
-        if (isset($this->browserSession)) {
 
-            if (isset($_POST['ImporterForm'])) {
-                //print_r($_POST['ImporterForm']);
-                $importedFile->attributes = $_POST['ImporterForm'];
-                if ($importedFile->validate()) {
-                    //  if(!empty($_FILES['ImporterForm']['file'])){
-                    $file = CUploadedFile::getInstance($importedFile, 'file');
 
-                    static $filePath;
+        if ($_SERVER['REQUEST_METHOD'] == 'GET' || $_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (isset($this->browserSession)) {
 
-                    $importedFile->file = $file;
-                    $filePath = $dir . '/' . $importedFile->file;
+                if (isset($_POST['ImporterForm'])) {
+                    //print_r($_POST['ImporterForm']);
+                    $importedFile->attributes = $_POST['ImporterForm'];
+                    if ($importedFile->validate()) {
+                        //  if(!empty($_FILES['ImporterForm']['file'])){
+                        $file = CUploadedFile::getInstance($importedFile, 'file');
 
-                    if (file_exists($newName)) {
-                        //  unlink($dir . '/' . $newName);
+                        static $filePath;
+
+                        $importedFile->file = $file;
+                        $filePath = $dir . '/' . $importedFile->file;
+
+                        if (file_exists($newName)) {
+                            //  unlink($dir . '/' . $newName);
+                        }
+                        //***check if file is not null
+                        if (isset($file)) {
+                            $file = $importedFile->file;
+                            $importedFile->file->saveAs($dir . '/' . $file);
+                            rename($filePath, $dir . '/' . $newName);
+                        }
+                        $newFilename = $dir . '/' . $newName;
+
+                        if (isset($_POST['location'])) {
+                            $location = $_POST['location'];
+
+                            if (isset($_POST['refresh'])) {
+
+                                $location = $_POST['location'];
+                                $locationID = $location;
+                                $list = json_decode($_POST['list']);
+                            } else {
+                                //echo "no refresh";
+                                $location = $_POST['location'];
+                                $locationID = $location;
+                                $json = new json('');
+                                $output = $json->getFile($newFilename);
+                                $curl = new curl();
+                                $list = $curl->parse($output);
+                            }
+                            $id = $list;
+
+
+                            foreach ($id as $row) :
+
+                                list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male, $date) = $row;
+                                $arr[] = array('id' => CJSON::encode(array($fid, $mid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date' => $date);
+                            endforeach;
+
+                            if (isset($_GET['FilterPedigreeForm'])) {
+                                $filtersForm->filters = $_GET['FilterPedigreeForm'];
+                            }
+                            $filteredData = $filtersForm->filter($arr);
+                            $dataProvider = new CArrayDataProvider($filteredData, array(
+                                'pagination' => array(
+                                    'pageSize' => 5,
+                                ),
+                            ));
+
+                            $this->render('importFileDisplay', array(
+                                'filtersForm' => $filtersForm,
+                                'dataProvider' => $dataProvider,
+                                'locationID' => $locationID,
+                                'list' => $list
+                            ));
+                        }
+                    } else {
+                        $this->render('importer', array('model' => $importedFile));
                     }
-                    //***check if file is not null
-                    if (isset($file)) {
-                        $file = $importedFile->file;
-                        $importedFile->file->saveAs($dir . '/' . $file);
-                        rename($filePath, $dir . '/' . $newName);
-                    }
-                    $newFilename = $dir . '/' . $newName;
+                } elseif (isset($_POST['next']) || isset($_POST['refresh'])) {
 
                     if (isset($_POST['location'])) {
                         $location = $_POST['location'];
 
-                        if (isset($_POST['refresh'])) { 
+                        if (isset($_POST['next']) || isset($_POST['refresh'])) {
 
                             $location = $_POST['location'];
                             $locationID = $location;
                             $list = json_decode($_POST['list']);
-                        } else {
-                            //echo "no refresh";
-                            $location = $_POST['location'];
-                            $locationID = $location;
-                            $json = new json('');
-                            $output = $json->getFile($newFilename);
-                            $curl = new curl();
-                            $list = $curl->parse($output);
                         }
                         $id = $list;
-
-
                         foreach ($id as $row) :
-
+                            //list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male, $date) = $row;
                             list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male, $date) = $row;
-                            $arr[] = array('id' => CJSON::encode(array($fid, $mid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date' => $date);
+                            $arr[] = array('id' => CJSON::encode(array($fid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date' => $date);
                         endforeach;
+
 
                         if (isset($_GET['FilterPedigreeForm'])) {
                             $filtersForm->filters = $_GET['FilterPedigreeForm'];
@@ -382,57 +415,19 @@ class SiteController extends Controller {
                         ));
                     }
                 } else {
-                    $this->render('importer', array('model' => $importedFile));
+                    ?>
+                    <html>
+                        <body onload="storeLocal1()">
+                            <form action="index.php?r=site/importFileDisplay" method="post" id='importFileDisplay-rfrsh'>
+                                <input type="hidden" name="refresh" value="true">
+                                <input type="hidden" id ="location" name="location" value="">
+                                <input type="hidden" id="list" name="list" value="">
+                            </form>
+                        </body>
+                    </html>
+                    <?php
                 }
-            } elseif (isset($_POST['next']) || isset($_POST['refresh'])) {
-
-                if (isset($_POST['location'])) {
-                    $location = $_POST['location'];
-
-                    if (isset($_POST['next']) || isset($_POST['refresh'])) {
-
-                        $location = $_POST['location'];
-                        $locationID = $location;
-                        $list = json_decode($_POST['list']);
-                    }
-                    $id = $list;
-                    foreach ($id as $row) :
-                        //list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male, $date) = $row;
-                        list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male, $date) = $row;
-                        $arr[] = array('id' => CJSON::encode(array($fid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date' => $date);
-                    endforeach;
-
-
-                    if (isset($_GET['FilterPedigreeForm'])) {
-                        $filtersForm->filters = $_GET['FilterPedigreeForm'];
-                    }
-                    $filteredData = $filtersForm->filter($arr);
-                    $dataProvider = new CArrayDataProvider($filteredData, array(
-                        'pagination' => array(
-                            'pageSize' => 5,
-                        ),
-                    ));
-
-                    $this->render('importFileDisplay', array(
-                        'filtersForm' => $filtersForm,
-                        'dataProvider' => $dataProvider,
-                        'locationID' => $locationID,
-                        'list' => $list
-                    ));
-                }
-            } else {
-                ?>
-                <html>
-                    <body onload="storeLocal1()">
-                        <form action="index.php?r=site/importFileDisplay" method="post" id='importFileDisplay-rfrsh'>
-                            <input type="hidden" name="refresh" value="true">
-                            <input type="hidden" id ="location" name="location" value="">
-                            <input type="hidden" id="list" name="list" value="">
-                        </form>
-                    </body>
-                </html>
-                <?php
-        }}
+            }
         } else {
             $this->render('login', array('model' => $model2));
         }
@@ -497,7 +492,7 @@ class SiteController extends Controller {
                             'pageSize' => 5,
                     )));
                     $not_standard_size = count($notStandard);
-                   // echo "<br>this:" . $not_standard_size;
+                    // echo "<br>this:" . $not_standard_size;
                 }
                 //get array data and create dataProvider
                 $filteredData = $filtersForm->filter($arr);
@@ -740,33 +735,33 @@ class SiteController extends Controller {
                         $checked = $arrSelectedIds;
                         $standardized = $file_toArray->checkIf_standardize($checked, $list);
                         $checked = $standardized;
-						
-						//database settings
-						$local_db_name = Yii::app()->request->getParam('local_db_name');
-						$local_db_port = Yii::app()->request->getParam('local_db_port');
-						$local_db_username = Yii::app()->request->getParam('local_db_username');
-						$central_db_name = Yii::app()->request->getParam('central_db_name');
-						$central_db_port = Yii::app()->request->getParam('central_db_port');
-						$central_db_username = Yii::app()->request->getParam('central_db_username');
-						
+
+                        //database settings
+                        $local_db_name = Yii::app()->request->getParam('local_db_name');
+                        $local_db_port = Yii::app()->request->getParam('local_db_port');
+                        $local_db_username = Yii::app()->request->getParam('local_db_username');
+                        $central_db_name = Yii::app()->request->getParam('central_db_name');
+                        $central_db_port = Yii::app()->request->getParam('central_db_port');
+                        $central_db_username = Yii::app()->request->getParam('central_db_username');
+
                         $a = array(
                             'list' => $list,
                             'checked' => $checked,
                             'existingTerm' => array(),
                             'locationID' => $locationID,
                             'userID' => Yii::app()->user->id,
-							'local_db_name' => $local_db_name,
-							'local_db_port' => $local_db_port,
-							'local_db_username' => $local_db_username,
-							'central_db_name' => $central_db_name,
-							'central_db_port' => $central_db_port,
-							'central_db_username' => $central_db_username
+                            'local_db_name' => $local_db_name,
+                            'local_db_port' => $local_db_port,
+                            'local_db_username' => $local_db_username,
+                            'central_db_name' => $central_db_name,
+                            'central_db_port' => $central_db_port,
+                            'central_db_username' => $central_db_username
                         );
-                        
+
                         $data = json_encode($a);
-						
+
                         $output = $curl->createGID($data);
-                     
+
                         $createdGID = array();
                         $list = array();
                         $createdGID = $output['createdGID'];
@@ -774,7 +769,6 @@ class SiteController extends Controller {
                         $existing = $output['existingTerm'];
 
                         $rows = $list;
-                        
                     } elseif (isset($_POST['process'])) {
                         //echo "here 1";
                         $locationID = $_POST['location'];
@@ -785,15 +779,15 @@ class SiteController extends Controller {
                         $standardized = $file_toArray->checkIf_standardize($unselected, $list);
                         $checked = $standardized;
 
-						//database settings
-						$local_db_name = Yii::app()->request->getParam('local_db_name');
-						$local_db_port = Yii::app()->request->getParam('local_db_port');
-						$local_db_username = Yii::app()->request->getParam('local_db_username');
-						$central_db_name = Yii::app()->request->getParam('central_db_name');
-						$central_db_port = Yii::app()->request->getParam('central_db_port');
-						$central_db_username = Yii::app()->request->getParam('central_db_username');
-						
-						
+                        //database settings
+                        $local_db_name = Yii::app()->request->getParam('local_db_name');
+                        $local_db_port = Yii::app()->request->getParam('local_db_port');
+                        $local_db_username = Yii::app()->request->getParam('local_db_username');
+                        $central_db_name = Yii::app()->request->getParam('central_db_name');
+                        $central_db_port = Yii::app()->request->getParam('central_db_port');
+                        $central_db_username = Yii::app()->request->getParam('central_db_username');
+
+
                         $a = array(
                             'list' => $list,
                             'checked' => $checked,
@@ -801,12 +795,12 @@ class SiteController extends Controller {
                             'createdGID' => $createdGID,
                             'locationID' => $locationID,
                             'userID' => Yii::app()->user->id,
-							'local_db_name' => $local_db_name,
-							'local_db_port' => $local_db_port,
-							'local_db_username' => $local_db_username,
-							'central_db_name' => $central_db_name,
-							'central_db_port' => $central_db_port,
-							'central_db_username' => $central_db_username
+                            'local_db_name' => $local_db_name,
+                            'local_db_port' => $local_db_port,
+                            'local_db_username' => $local_db_username,
+                            'central_db_name' => $central_db_name,
+                            'central_db_port' => $central_db_port,
+                            'central_db_username' => $central_db_username
                         );
 
                         $data = json_encode($a);
@@ -840,25 +834,25 @@ class SiteController extends Controller {
                     $checked = unserialize(base64_decode($_POST['checked']));
 
                     $userID = Yii::app()->user->id;
-					
-					//database settings
-					 $local_db_name = Yii::app()->request->getParam('local_db_name');
-					 $local_db_port = Yii::app()->request->getParam('local_db_port');
-					 $local_db_username = Yii::app()->request->getParam('local_db_username');
-					 $central_db_name = Yii::app()->request->getParam('central_db_name');
-					 $central_db_port = Yii::app()->request->getParam('central_db_port');
-					 $central_db_username = Yii::app()->request->getParam('central_db_username');
-						
-						
+
+                    //database settings
+                    $local_db_name = Yii::app()->request->getParam('local_db_name');
+                    $local_db_port = Yii::app()->request->getParam('local_db_port');
+                    $local_db_username = Yii::app()->request->getParam('local_db_username');
+                    $central_db_name = Yii::app()->request->getParam('central_db_name');
+                    $central_db_port = Yii::app()->request->getParam('central_db_port');
+                    $central_db_username = Yii::app()->request->getParam('central_db_username');
+
+
                     $output = $file_toArray->updateGID_createdGID($term, $pedigree, $id, $choose, $fid, $mid, $female, $male, $createdGID, $existing, $list, $userID, $theParent);
-					
-					$output['local_db_name'] = $local_db_name;	
-					$output['local_db_port'] = $local_db_port;
-					$output['local_db_username'] = $local_db_username;
-					$output['central_db_name'] = $central_db_name;
-					$output['central_db_port'] = $central_db_port;
-					$output['central_db_username'] = $central_db_username;
-					
+
+                    $output['local_db_name'] = $local_db_name;
+                    $output['local_db_port'] = $local_db_port;
+                    $output['local_db_username'] = $local_db_username;
+                    $output['central_db_name'] = $central_db_name;
+                    $output['central_db_port'] = $central_db_port;
+                    $output['central_db_username'] = $central_db_username;
+
                     $output = $curl->chooseGID(json_encode($output));
 
                     $createdGID = array();
@@ -885,9 +879,9 @@ class SiteController extends Controller {
                 if (isset($_GET['FilterPedigreeForm']))
                     $filtersForm->filters = $_GET['FilterPedigreeForm'];
 
-				//get array data and create dataProvider
+                //get array data and create dataProvider
                 $filteredData = $filtersForm->filter($arr2);
-				//DataProvider for the lower table, Germplasm List
+                //DataProvider for the lower table, Germplasm List
                 $GdataProvider = new CArrayDataProvider($filteredData, array(
                     'keyField' => 'id',
                     'pagination' => array(
@@ -977,29 +971,29 @@ class SiteController extends Controller {
         if (isset($this->browserSession)) {
             Yii::import('application.modules.curl');
 
-			$gid = $_GET['inputGID'];
-			$level = $_GET['maxStep'];
-				
-				//database settings
-				$local_db_name = Yii::app()->request->getParam('local_db_name');
-				$local_db_port = Yii::app()->request->getParam('local_db_port');
-				$local_db_username = Yii::app()->request->getParam('local_db_username');
-				$central_db_name = Yii::app()->request->getParam('central_db_name');
-				$central_db_port = Yii::app()->request->getParam('central_db_port');
-				$central_db_username = Yii::app()->request->getParam('central_db_username');
-				
-				$a = array(
-				    'GID' => $gid, 
-					'LEVEL' => $level,
-					'local_db_name' => $local_db_name,
-					'local_db_port' => $local_db_port,
-					'local_db_username' => $local_db_username,
-					'central_db_name' => $central_db_name,
-					'central_db_port' => $central_db_port,
-					'central_db_username' => $central_db_username
-			    );
-		    $data = json_encode($a);
-			
+            $gid = $_GET['inputGID'];
+            $level = $_GET['maxStep'];
+
+            //database settings
+            $local_db_name = Yii::app()->request->getParam('local_db_name');
+            $local_db_port = Yii::app()->request->getParam('local_db_port');
+            $local_db_username = Yii::app()->request->getParam('local_db_username');
+            $central_db_name = Yii::app()->request->getParam('central_db_name');
+            $central_db_port = Yii::app()->request->getParam('central_db_port');
+            $central_db_username = Yii::app()->request->getParam('central_db_username');
+
+            $a = array(
+                'GID' => $gid,
+                'LEVEL' => $level,
+                'local_db_name' => $local_db_name,
+                'local_db_port' => $local_db_port,
+                'local_db_username' => $local_db_username,
+                'central_db_name' => $central_db_name,
+                'central_db_port' => $central_db_port,
+                'central_db_username' => $central_db_username
+            );
+            $data = json_encode($a);
+
             $curl = new curl();
             $arr = $curl->showDiagram($data);
             //print_r($arr);
@@ -1028,7 +1022,7 @@ class SiteController extends Controller {
     public function actionBackend() {
         $dbFormModel = new databaseForm;
         $centralDBForm = new centralDBForm;
-        
+
         $this->render('backend', array(
             'dbFormModel' => $dbFormModel,
             'centralDBForm' => $centralDBForm
