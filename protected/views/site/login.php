@@ -1,67 +1,97 @@
-<?php
-/* @var $this SiteController */
-/* @var $model LoginForm */
-/* @var $form CActiveForm  */
-/*
-$this->pageTitle=Yii::app()->name . ' - Login';
-$this->breadcrumbs=array(
-	'Login',
-);*/
-?>
-<body>
-<div class="container">
+<body onload='storeLocal()'>
+  
+    <div class="container">
 
 
 <!--<p>Please fill out the following form with your login credentials:</p>-->
 
-<div class="form">
-<?php /** @var BootActiveForm $form */ 
-     $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-	'id'=>'login-form',
-	'type'=>'horizontal',
-	'htmlOptions'=>array('class'=>'well'),
-	'enableClientValidation'=>true,
-	'clientOptions'=>array(
-		'validateOnSubmit'=>true,
-	),
-)); ?>
-    <h1>Please Sign In</h1>
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
-    
-	<div class="row">
-	    <?php $model->username='GUEST';?>
-		<?php echo $form->labelEx($model,'username'); ?>
-		<?php echo $form->textField($model,'username'); ?>
-		<?php echo $form->error($model,'username'); ?>
-		
-	</div>
+        <div class="form">
+            <?php
+            $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+                'id' => 'login-form',
+                'type' => 'horizontal',
+                'htmlOptions' => array('class' => 'well'),
+                'enableClientValidation' => true,
+                'clientOptions' => array(
+                    'validateOnSubmit' => true,
+                ),
+            ));
+            ?>
+            <h1>Please Sign In</h1>
+            <p class="note">Fields with <span class="required">*</span> are required.</p>
 
-	<div class="row">
+            <div class="row">
+                <?php $model->username = 'GUEST'; ?>
+                <?php echo $form->labelEx($model, 'username'); ?>
+                <?php echo $form->textField($model, 'username'); ?>
+                <?php echo $form->error($model, 'username'); ?>
 
-	    <?php $model->password='GUEST';?>
-		<?php echo $form->labelEx($model,'password'); ?>
-		<?php echo $form->passwordField($model,'password'); ?>
-		<?php echo $form->error($model,'password'); ?>
+            </div>
 
-		<!--<p class="hint">
-			Hint: You may login with <kbd>demo</kbd>/<kbd>demo</kbd> or <kbd>admin</kbd>/<kbd>admin</kbd>.
-		</p>-->
-	</div>
+            <div class="row">
 
-	<div class="row rememberMe">
-		<?php echo $form->checkBox($model,'rememberMe'); ?>
-		<?php echo $form->label($model,'rememberMe'); ?>
-		<?php echo $form->error($model,'rememberMe'); ?>
-	</div>
+                <?php $model->password = 'GUEST'; ?>
+                <?php echo $form->labelEx($model, 'password'); ?>
+                <?php echo $form->passwordField($model, 'password'); ?>
+                <?php echo $form->error($model, 'password'); ?>
 
-	<div class="row buttons">
-		<?php 
-		   //echo CHtml::submitButton('Login'); 
-		   $this->widget('bootstrap.widgets.TbButton',array('buttonType'=>'submit','label'=>'Login'));
-		?>
-	</div>
+                <!--<p class="hint">
+                        Hint: You may login with <kbd>demo</kbd>/<kbd>demo</kbd> or <kbd>admin</kbd>/<kbd>admin</kbd>.
+                </p>-->
+            </div>
 
-<?php $this->endWidget(); ?>
-</div><!-- form -->
-</div>
+            <div class="row rememberMe">
+                <?php echo $form->checkBox($model, 'rememberMe'); ?>
+                <?php echo $form->label($model, 'rememberMe'); ?>
+                <?php echo $form->error($model, 'rememberMe'); ?>
+            </div>
+
+            <div class="row buttons">
+                <?php
+                $this->widget('bootstrap.widgets.TbButton', array('buttonType' => 'submit', 'label' => 'Login'));
+                ?>
+            </div>
+
+            <?php $this->endWidget(); ?>
+        </div><!-- form -->
+    </div>
 </body>
+<script type='text/javascript'>
+    function storeLocal() {
+        if (<?php echo isset($database_details); ?>) {
+
+            if ('localStorage' in window && window['localStorage'] != null) {
+                try {
+                    var local_db_name = '<?php echo $database_details['local_db_name'] ?>';
+                    var local_db_port = '<?php echo $database_details['local_db_port'] ?>';
+                    var local_db_username = '<?php echo $database_details['local_db_username'] ?>';
+
+                    var central_db_name = '<?php echo $database_details['central_db_name'] ?>';
+                    var central_db_port = '<?php echo $database_details['central_db_port'] ?>';
+                    var central_db_username = '<?php echo $database_details['central_db_username'] ?>';
+
+                    localStorage.setItem('local_database_name', local_db_name);
+                    localStorage.setItem('local_database_port', local_db_port);
+                    localStorage.setItem('local_database_username', local_db_username);
+                    localStorage.setItem('central_database_name', central_db_name);
+                    localStorage.setItem('central_database_port', central_db_port);
+                    localStorage.setItem('central_database_username', central_db_username);
+
+                } catch (e) {
+                    if (e === QUOTA_EXCEEDED_ERR) {
+                        alert('Quota exceeded!');
+                    }
+                }
+            } else {
+                alert('Cannot store user preferences as your browser do not support local storage');
+            }
+        } else {
+        }
+    }
+
+    window.addEventListener('storage', storageEventHandler, false);
+    function storageEventHandler(event) {
+        storeLocal();
+    }
+
+</script>    

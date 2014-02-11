@@ -5,6 +5,7 @@
         <input type="hidden" name="list" id="list" value="">
     </form>    
     <br>
+   
     <h3>Germplasm List</h3>
     <p >
         <i><strong>Note:</strong>&nbsp; 
@@ -160,10 +161,9 @@
                 localStorage.setItem('list', JSON.stringify(<?php echo json_encode($list); ?>));
 
                 var locationID = document.getElementById('location').value;
-                //var list=document.getElementById('list').value;
-                //console.log("ss"+locationID);
-                //console.log("sssw"+list);
+             
                 localStorage.setItem('locationID', locationID);
+               
                 storeLocal1();
             } catch (e) {
                 if (e === QUOTA_EXCEEDED_ERR) {
@@ -201,8 +201,16 @@
             $('body').css({'overflow': 'hidden'});
             $('#ajax-loading-indicator').css({'display': 'block'});
         }
-        $('#btnStandard').click(pop);
+        $('#btnStandard').click(pop); 
+       
+        var server_method = '<?php echo $_SERVER['REQUEST_METHOD'] ?>';
+        if( server_method == 'GET'){
+                  window.location = '<?php echo Yii::app()->createUrl('site/importFileDisplay')?>';
+        }
+     
     });
+    
+     
 </script>
 <?php
 $this->endWidget();

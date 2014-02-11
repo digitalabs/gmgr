@@ -52,7 +52,6 @@ if (count($final)) {
           count all rows
          */
         $row_count = count($list);
-// echo "<br><br><br><br><br><br><br><br><br><br>all:".$row_count;
         /* END count all rows */
 
         /*
@@ -308,8 +307,13 @@ if (count($final)) {
                                     <?php
                                     // print out the page numbers beneath the results
                                     //$pageNumbers = $pagination->getLinks2($_GET, $processed, $row_count, $not_standard);
+<<<<<<< HEAD
                                    // echo "<br>row_count: " . $row_count;
                                    // echo "<br>processed: " . $processed;
+=======
+                                    //echo "<br>row_count: ".$row_count;
+                                   // echo "<br>processed: ".$processed;
+>>>>>>> develop
                                     $pageNumbers = $pagination->getLinks2($_GET, $processed, $row_count);
                                     echo " <div class='panel-footer'>";
                                     echo "<ul class='pager'>";
@@ -427,6 +431,7 @@ if (count($final)) {
                         echo CHtml::hiddenField('checked', '');
                         echo CHtml::hiddenField('existing', '');
                         echo CHtml::hiddenField('createdGID', '');
+                        echo CHtml::hiddenField('row_count',$row_count);
                         ?>
                     </div>
                     <!--  </div>
@@ -487,6 +492,7 @@ if (count($final)) {
 
 <script type="text/javascript" src="./assets/pnotify-1.2.0/jquery.pnotify.js"></script>
 <script type="text/javascript">
+  
             function storeLocal() {
                 if ('localStorage' in window && window['localStorage'] != null) {
                     try {
@@ -575,7 +581,7 @@ if (count($final)) {
         $.ajax({
             cache: false,
             type: 'POST',
-            url: 'modules_folder/chooseGID.php',
+            url: '<?php echo Yii::app()->createUrl('site/chooseGID')?>',
             data: {termId: term, arr_terms: m_values},
             success: function(data) {
                 $("#new-Modal").html(data);
@@ -631,7 +637,7 @@ if (count($final)) {
         var href = $(this).attr('href');
         if (!$('#dataConfirmModal').length) {
             $('body').append('<div id="dataConfirmModal" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true"><div class="modal-header">\n\
-                                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">ï¿½\n\
+                                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;\n\
                                     </button>\n\
                                     <div id="dataConfirmLabel">\n\
                                         You have reached the last row selected.Do you want to proceed to the next entry?\n\

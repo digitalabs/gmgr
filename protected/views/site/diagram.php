@@ -1,30 +1,33 @@
-<?php
-/* @var $this SiteController */
-/* @var $model LoginForm */
-/* @var $form CActiveForm  */
+    <?php
+    Yii::import("ext.graphviz.components.*");
+    Yii::import("ext.graphviz.widgets.*");
+    Yii::import('application.modules.curl');
+    Yii::import('application.modules.file_toArray');
 
-
-Yii::import("ext.graphviz.components.*");
-Yii::import("ext.graphviz.widgets.*");
-Yii::import('application.modules.curl');
-Yii::import('application.modules.file_toArray');
-
-if (isset($_GET['searchBtn'])) {
-    //foo();
-    echo "Success";
-}
-?>
-<div class="modal-body" style="overflow-x: hidden;overflow-y: hidden;">
-    <meta charset="utf-8">
+    if (isset($_GET['searchBtn'])) {
+        //foo();
+        echo "Success";
+    }
+    ?>
+    <?php
+       $in_gid = $_GET['inputGID'];
+       $max_step = $_GET['maxStep'];
+      // echo "<br/>max:".$max_step;
+       //echo "<br/>gid:".$in_gid;
+    ?>
+    
+    
+    <meta charset="utf-8" name="viewport" content="width=device-width,initial-scale=1">
+    <!-- blueprint CSS framework -->
     <!-- blueprint CSS framework -->
     <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/editor.css" />
-
+    <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap.min.css" />
     <br><br> 
     <div style="text-align:right;vertical-align:right;margin-left:10px;margin-right: 10px;">       <br>
     </div>
     <span id="ajax-loading-indicator">
     </span>
-
+   
     <!--bg while loading indicator is on-->
     <div id='screen'>
 
@@ -94,7 +97,7 @@ if (isset($_GET['searchBtn'])) {
             <small>
                 <div style="padding-left:5px;padding-right:5px;"> 
 
-                    <form action="index.php?r=site/editor" method="post">
+                    <form action="index.php?r=site/diagram" method="post">
                         <table style="border-collapse: separate !important;border-radius: 6px 6px 6px 6px;
                                -moz-border-radius: 6px 6px 6px 6px;
                                -webkit-border-radius: 6px 6px 6px 6px;
@@ -156,9 +159,9 @@ if (isset($_GET['searchBtn'])) {
                 </span>
         </div>            
     </div>
-    <div style="position:fixed;left:300px;top:150px;">
+    <div style="position:absolute;left:300px;top:150px;">
             <!--<span>Zoom</span>-->
-        <select class="selectpicker" style="width:80px" width="50px" id='zooming' onchange="zoomings(this);">
+        <select class="selectpicker" style="width:auto" width="auto" id='zooming' onchange="zoomings(this);">
             <option value="100%"  selected="selected">Zoom</option>
             <option value="100%">------------</option>
             <option value="25%">25%</option>
@@ -170,134 +173,145 @@ if (isset($_GET['searchBtn'])) {
             <option value="250%">250%</option>
             <option value="300%">300%</option>
         </select>
-
+        
+        <span id="id-gid">GID:</span>
+        <input name="inputGID" id="inputGID" readonly="readonly"  value = <?php echo $in_gid; ?>/>
+        <span id="id-gid">steps:</span>
+        <input name="maxStep" id="maxStep" readonly="readonly" value = <?php echo $max_step; ?>/> 
+        
     </div> 
     <!--</div>-->
     <br><br><br><br><br><br>
     <!-- end editor content -->
-
+ 
+    
     <form id="svgform" method="post" action="download.pl">
         <input type="hidden" id="output_format" name="output_format" value="">
         <input type="hidden" id="data" name="data" value="">
     </form>
-</div>
-    
-<div class="modal-footer">
-            <a id="close" href="#" class="btn" data-dismiss="modal">Close</a>
 
-        </div>
-<script src='<?php echo Yii::app()->baseUrl; ?>/js/jquery.storage.js'></script>
-<script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/d3.v3.min.js"></script>
-<script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/editor4.js"></script>
-        <!--<script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/editor5b.js"></script>
-        <script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
-        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>-->
-<script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/html2canvas.js"></script>
-<script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/jquery.plugin.html2canvas.js"></script>
-<script src="<?php echo Yii::app()->baseUrl; ?>/js/vkbeautify.0.99.00.beta.js"></script>
-<script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/rgbcolor.js"></script>
-<script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/canvg.js"></script>
-<script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/svgenie.js"></script>
-<script type="text/javascript">
+    <script src='<?php echo Yii::app()->baseUrl; ?>/js/jquery.storage.js'></script>
+    <script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/d3.v3.min.js"></script>
+    <script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/diagram.js"></script>
+            <!--<script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/editor5b.js"></script>
+            <script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
+            <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>-->
+    <script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/html2canvas.js"></script>
+    <script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/jquery.plugin.html2canvas.js"></script>
+    <script src="<?php echo Yii::app()->baseUrl; ?>/js/vkbeautify.0.99.00.beta.js"></script>
+    <script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/rgbcolor.js"></script>
+    <script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/canvg.js"></script>
+    <script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/svgenie.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var pop = function() {
+            $('#screen').css({opacity: 0.4, 'width': $(document).width(), 'height': $(document).height()});
+            $('body').css({'overflow': 'hidden'});
+            $('#ajax-loading-indicator').css({'display': 'block'});
+           }
 
-            document.getElementById('inputGID').value = $.localStorage('GID');
-            document.getElementById('maxStep').value = $.localStorage('level');
+             $.localStorage('GID', jQuery("input#inputGID").val());
+             $.localStorage('level', jQuery("input#maxStep").val()); 
+        });
+        
+    document.getElementById('inputGID').value = $.localStorage('GID');
+    document.getElementById('maxStep').value = $.localStorage('level');
 
-            function info()
-            {
-                //document.getElementById('egid').value = document.getElementById('gid').value;
-                $.localStorage('EGID', jQuery("input#hidGID").val());
-                $.localStorage('NAME', jQuery("input#hidname").val());
-                $.localStorage('METHOD', jQuery("input#hidmethod").val());
-                $.localStorage('MTYPE', jQuery("input#hidmtype").val());
-                $.localStorage('DATE', jQuery("input#hiddate").val());
-                $.localStorage('CTY', jQuery("input#hidcountry").val());
-                $.localStorage('LOC', jQuery("input#hidloc").val());
-                $.localStorage('CNAME', jQuery("input#hidcname").val());
-                $.localStorage('REF', jQuery("input#hidref").val());
-                $.localStorage('GPID1', jQuery("input#hidgpid1").val());
-                $.localStorage('GPID2', jQuery("input#hidgpid2").val());
+    function info()
+    {
+        //document.getElementById('egid').value = document.getElementById('gid').value;
+        $.localStorage('EGID', jQuery("input#hidGID").val());
+        $.localStorage('NAME', jQuery("input#hidname").val());
+        $.localStorage('METHOD', jQuery("input#hidmethod").val());
+        $.localStorage('MTYPE', jQuery("input#hidmtype").val());
+        $.localStorage('DATE', jQuery("input#hiddate").val());
+        $.localStorage('CTY', jQuery("input#hidcountry").val());
+        $.localStorage('LOC', jQuery("input#hidloc").val());
+        $.localStorage('CNAME', jQuery("input#hidcname").val());
+        $.localStorage('REF', jQuery("input#hidref").val());
+        $.localStorage('GPID1', jQuery("input#hidgpid1").val());
+        $.localStorage('GPID2', jQuery("input#hidgpid2").val());
 
-                document.getElementById('egid').value = $.localStorage('EGID');
-                document.getElementById('ename').value = $.localStorage('NAME');
-                document.getElementById('emethod').value = $.localStorage('METHOD');
-                document.getElementById('emtype').value = $.localStorage('MTYPE');
-                document.getElementById('edate').value = $.localStorage('DATE');
-                document.getElementById('ecountry').value = $.localStorage('CTY');
-                document.getElementById('eloc').value = $.localStorage('LOC');
-                document.getElementById('ecname').value = $.localStorage('CNAME');
-                document.getElementById('eref').value = $.localStorage('REF');
-                document.getElementById('egpid1').value = $.localStorage('GPID1');
-                document.getElementById('egpid2').value = $.localStorage('GPID2');
+        document.getElementById('egid').value = $.localStorage('EGID');
+        document.getElementById('ename').value = $.localStorage('NAME');
+        document.getElementById('emethod').value = $.localStorage('METHOD');
+        document.getElementById('emtype').value = $.localStorage('MTYPE');
+        document.getElementById('edate').value = $.localStorage('DATE');
+        document.getElementById('ecountry').value = $.localStorage('CTY');
+        document.getElementById('eloc').value = $.localStorage('LOC');
+        document.getElementById('ecname').value = $.localStorage('CNAME');
+        document.getElementById('eref').value = $.localStorage('REF');
+        document.getElementById('egpid1').value = $.localStorage('GPID1');
+        document.getElementById('egpid2').value = $.localStorage('GPID2');
+    }
+
+    function clik()
+    {
+        //alert(jQuery("input#inputGID").val())
+        $.localStorage('GID', jQuery("input#inputGID").val());
+        $.localStorage('level', jQuery("input#maxStep").val());
+        //document.getElementById('inputGID').value = jQuery("input#inputGID").val();
+        //
+    }
+
+    function conceal() {
+        if (document.getElementById('benefits').style.display == 'block') {
+            document.getElementById('benefits').style.display = 'none';
+            document.getElementById('opener').style.display = 'block';
+        }
+    }
+
+    function show() {
+        if (document.getElementById('benefits').style.display == 'none') {
+            document.getElementById('benefits').style.display = 'block';
+            document.getElementById('opener').style.display = 'none';
+        }
+    }
+
+    function capture() {
+        $('#graph').html2canvas({
+            onrendered: function(svg) {
+                //Set hidden field's value to image data (base-64 string)
+                $('#img_val').val(svg.toDataURL("image/png"));
+                //Submit the form manually
+                document.getElementById("myForm").submit();
             }
+        });
+    }
 
-            function clik()
-            {
-                //alert(jQuery("input#inputGID").val())
-                $.localStorage('GID', jQuery("input#inputGID").val());
-                $.localStorage('level', jQuery("input#maxStep").val());
-                //document.getElementById('inputGID').value = jQuery("input#inputGID").val();
-                //
-            }
+    function validate()
+    {
+        //if(document.getElementById('searchBtn')=='' || document.getElementById('searchBtn')==' ' || document.getElementById('searchBtn')=='Search Germplasm')
+        var tmp = document.getElementById('maxStep').value;
+        var tmp2 = document.getElementById('inputGID').value;
+        //alert(tmp2);
+        //alert(tmp);
+    }
 
-            function conceal() {
-                if (document.getElementById('benefits').style.display == 'block') {
-                    document.getElementById('benefits').style.display = 'none';
-                    document.getElementById('opener').style.display = 'block';
-                }
-            }
+    window.onclick = function() {
+        svgenie.save(document.getElementById('graphDiv'), {name: "this.png"});
+    }
 
-            function show() {
-                if (document.getElementById('benefits').style.display == 'none') {
-                    document.getElementById('benefits').style.display = 'block';
-                    document.getElementById('opener').style.display = 'none';
-                }
-            }
+    function zoomings(optionSel)
+    {
+        var OptionSelected = optionSel.selectedIndex;
+        var val = optionSel.options[OptionSelected].text;
+        //alert(val);
+        var div = document.getElementById("graphDiv");
+        div.style.zoom = val;
+    }
 
-            function capture() {
-                $('#graph').html2canvas({
-                    onrendered: function(svg) {
-                        //Set hidden field's value to image data (base-64 string)
-                        $('#img_val').val(svg.toDataURL("image/png"));
-                        //Submit the form manually
-                        document.getElementById("myForm").submit();
-                    }
-                });
-            }
+    $(document).ready(function() {
+        var pop = function() {
+            $('#screen').css({opacity: 0.4, 'width': $(document).width(), 'height': $(document).height()});
+            $('body').css({'overflow': 'hidden'});
+            $('#ajax-loading-indicator').css({'display': 'block'});
+        }
+        $('#searchBtn').click(pop);
+        $('#updateBtn').click(pop);
+        $('#save').click(pop);
 
-            function validate()
-            {
-                //if(document.getElementById('searchBtn')=='' || document.getElementById('searchBtn')==' ' || document.getElementById('searchBtn')=='Search Germplasm')
-                var tmp = document.getElementById('maxStep').value;
-                var tmp2 = document.getElementById('inputGID').value;
-                //alert(tmp2);
-                //alert(tmp);
-            }
-
-            window.onclick = function() {
-                svgenie.save(document.getElementById('graphDiv'), {name: "this.png"});
-            }
-
-            function zoomings(optionSel)
-            {
-                var OptionSelected = optionSel.selectedIndex;
-                var val = optionSel.options[OptionSelected].text;
-                //alert(val);
-                var div = document.getElementById("graphDiv");
-                div.style.zoom = val;
-            }
-
-            $(document).ready(function() {
-                var pop = function() {
-                    $('#screen').css({opacity: 0.4, 'width': $(document).width(), 'height': $(document).height()});
-                    $('body').css({'overflow': 'hidden'});
-                    $('#ajax-loading-indicator').css({'display': 'block'});
-                }
-                $('#searchBtn').click(pop);
-                $('#updateBtn').click(pop);
-                $('#save').click(pop);
-
-            });
+    });
 
 
 <?php
@@ -307,5 +321,4 @@ Yii::app()->clientScript->registerScript(
 ?>
 
 
-</script>
-
+    </script>

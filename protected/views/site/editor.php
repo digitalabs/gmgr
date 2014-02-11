@@ -41,8 +41,7 @@ if (isset($_GET['searchBtn']))
 					  <form action="index.php?r=site/editor" method="post">
 						<input title="This feature is a work in progress" style="width:155px;height:30px;" class="span2" id="inputGID" name="inputGID" type="text" placeholder="Search by GID">
 						<button name="searchBtn" id="searchBtn" class="btn btn-primary" onclick="clik()" type="submit">GO</button>
-					  
-					  </div>  
+						</div>  
                              
             </div>
 			<span id="ajax-loading-indicator">
@@ -61,111 +60,10 @@ if (isset($_GET['searchBtn']))
 					</svg>
 						<div id="graphDiv" width="5000" style="width:2000px;"></div>
 					</div> -->
-					<div id="graph" style="height: auto;width: auto;" height="6500">
+					<div id="graph" style="height: auto !important;width: auto;min-height:30px;">
 						<svg width="3500" height="5000" style="height: auto;width: auto;" id="graphDiv"></svg>
 					</div>
-					
-					<div id="opener" style="position:fixed; bottom:70px; left:50px">
-						<a href="#1" name="1" onclick="show();">Show Germplasm details</a>
-					</div>
-					<div id="benefits" style="position:fixed; bottom:80px; left:50px; display:none;">
-						<b>&nbsp;Alternate Names</b>
-							<table style="background-color:white;margin:5px;width:800px;" width="1000px" class="table table-hover table-condensed">
-								<tr>
-									<th height="10" bgcolor="lightgreen">Name Type</th>
-									<th height="10" bgcolor="lightblue">Name</th>
-									<th height="10" bgcolor="lightblue">Location</th>
-									<th height="10" bgcolor="lightblue">Status</th>
-									<th height="10" bgcolor="lightblue">Date</th>
-								</tr>
-								<tr style="border:1px solid gray">
-									<td id="nt1"></td>
-									<td id="n1"></td>
-									<td id="l1"></td>
-									<td id="ns1"></td>
-									<td id="d1"></td>
-								</tr>
-								<tr style="border:1px solid gray">
-									<td id="nt2"></td>
-									<td id="n2"></td>
-									<td id="l2"></td>
-									<td id="ns2"></td>
-									<td id="d2"></td>
-								</tr>
-								<tr style="border:1px solid gray">
-									<td id="nt3"></td>
-									<td id="n3"></td>
-									<td id="l3"></td>
-									<td id="ns3"></td>
-									<td id="d3"></td>
-								</tr>
-							</table>
-						<div id="upbutton"><a onclick="conceal();">&nbsp;Hide</a></div>
-					</div>
-					<!--<div>
-						
-						<div style="margin:5px;border:1px solid gray;border-radius: 6px 6px 6px 6px;position:fixed; bottom:60px; left:50px" id="gDetail">
-							<b>&nbsp;Alternate Names</b>
-							<table style="margin:5px;width:700px;" width="1000px ">
-								<tr>
-									<th height="10" bgcolor="lightblue">Name</th>
-									<th height="10" bgcolor="lightblue">Location</th>
-									<th height="10" bgcolor="lightblue">Status</th>
-									<th height="10" bgcolor="lightblue">Date</th>
-								</tr>
-								<tr style="border:1px solid gray">
-									<td id="n1"></td>
-									<td id="l1"></td>
-									<td ></td>
-									<td id="d1"></td>
-								</tr>
-								<tr style="border:1px solid gray">
-									<td id="n2"></td>
-									<td id="l2"></td>
-									<td></td>
-									<td id="d2"></td>
-								</tr>
-								<tr style="border:1px solid gray">
-									<td id="n3"></td>
-									<td id="l3"></td>
-									<td></td>
-									<td id="d3"></td>
-								</tr>
-							</table>
-						</div>
-						<div style="margin:5px;border:1px solid gray;border-radius: 6px 6px 6px 6px;position:fixed; bottom:60px; left:780px" id="gDetail2">
-							<b>&nbsp;Attributes</b>
-							<table style="margin:5px;width:700px;">
-								<tr>
-									<th bgcolor="lightblue">Name</th>
-									<th bgcolor="lightblue">Description</th>
-									<th bgcolor="lightblue">Value</th>
-									<th bgcolor="lightblue">Date</th>
-								</tr>
-								<tr style="border:1px solid gray">
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr style="border:1px solid gray">
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr style="border:1px solid gray">
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-							</table>
-						</div>
-						
-					</div>-->
-					
-					
+		
                     <!--<div id="graphDiv" style="z-index:50;">-->
 					<!--<a href="#" id="generate">Generate download preview</a>	-->
 					</div>
@@ -176,16 +74,17 @@ if (isset($_GET['searchBtn']))
                         
                         <!--<div style="padding-left:5px;padding-right:5px;"><hr></div>-->
                         <br>
-                        <div class="form-horizontal" style="padding: 5px;">
+                        <div class="form-horizontal" style="padding-left: 15px;">
                             <input title="This feature is a work in progress" placeholder="All" style="width:50px;height:30px;" value=" " id="maxStep" type="number" name="maxStep" min="1" max="100"> 
 							
                             <small><a data-toggle="tooltip" title="By default, a regular pedigree for a particular germplasm is created up to the certain number of known parents. You can, however, choose to show a smaller number of parental generations (steps), or to choose all." data-placement="right">Maximum Steps</a></small>
-                        </div><br>
-                        <label class="checkbox" style="padding-left: 30px;">
-                          <small><input title="This feature is a work in progress" type="checkbox"><a data-placement="right" data-toggle="tooltip" title="Derivative and maintenance steps will be included in the pedigree.">Show Selection History</a></input></small><br>
-                          <small><input title="This feature is a work in progress" type="checkbox"><a data-placement="right" data-toggle="tooltip" title="The pedigree graph can label its edges by the name of germplasm methods.">Show Method</a></input></small>
-                        </label>
-                        
+                        </div>
+						<div style="margin-left:20px;">
+                          <small><input class="checkbox" title="This feature is a work in progress" type="checkbox" id="cbox" name="cbox">
+							<a data-placement="right" data-toggle="tooltip" title="Derivative and maintenance steps will be included in the pedigree.">Show Selection History</a></input></small><br>
+                          <!--<small><input title="This feature is a work in progress" type="checkbox"><a data-placement="right" data-toggle="tooltip" title="The pedigree graph can label its edges by the name of germplasm methods.">Show Method</a></input></small>-->
+                        </div>
+                     </form>  
 					<div style="padding-left: 5px;padding-right: 5px; text-align: right;">
 							<!--<button name="updateBtn" id="updateBtn" type="submit" class="btn btn-mini btn-primary" onclick="graph2b();">Update</button></form>
 							<button title="This feature is a work in progress" class="btn btn-mini btn-success" id="generate" value="" >Save image</button>-->
@@ -196,7 +95,7 @@ if (isset($_GET['searchBtn']))
                         <div style="padding-left:5px;padding-right:5px;"><hr></div>
                         <center>
 						<div style="padding-left:5px;padding-right:5px;">Basic Information
-						<button data-toggle="modal" data-target="#myModal" onclick="info()" style="width:50px" name="showMore" id="showMore" class="btn btn-primary" onclick="validate()" type="submit">Edit</button>
+						<!--<button data-toggle="modal" data-target="#myModal" onclick="info()" style="width:50px" name="showMore" id="showMore" class="btn btn-primary" onclick="validate()" type="submit">Edit</button>-->
 						</center> 
 						
 						<br>
@@ -265,10 +164,82 @@ if (isset($_GET['searchBtn']))
                     <div style="vertical-align:right;text-align: right;">
 						
                         <p style="position:fixed;bottom:0px;left:50px;padding:5px;"><span class="label label-warning">Note</span> 
-							<small>Apply the <i>changes</i> made by clicking the <b>Update</b> button.
+							<small>Apply the <i>changes</i> made by clicking the <b>GO</b> button.
                                                 Click node to view germplasm information.</small>
                         </span>
-                    </div>            
+                    </div>    
+
+				<div id="opener" style="position:fixed; bottom:60px; left:50px">
+						<a href="#1" name="1" onclick="show();">View Names    </a>
+					</div>
+					<div id="opener2" style="position:fixed; bottom:60px; left:130px">
+						<a href="#2" name="2" onclick="show2();">View Attributes</a>
+					</div>
+					<div id="benefits" style="position:fixed; bottom:80px; left:50px; display:none;">
+						<b>&nbsp;Alternate Names</b>
+							<table style="background-color:white;margin:5px;width:800px;" width="1000px" class="table table-hover table-condensed">
+								<tr>
+									<th height="10" bgcolor="lightgreen">Name Type</th>
+									<th height="10" bgcolor="lightblue">Name</th>
+									<th height="10" bgcolor="lightblue">Location</th>
+									<th height="10" bgcolor="lightblue">Status</th>
+									<th height="10" bgcolor="lightblue">Date</th>
+								</tr>
+								<tr style="border:1px solid gray">
+									<td id="nt1"></td>
+									<td id="n1"></td>
+									<td id="l1"></td>
+									<td id="ns1"></td>
+									<td id="d1"></td>
+								</tr>
+								<tr style="border:1px solid gray">
+									<td id="nt2"></td>
+									<td id="n2"></td>
+									<td id="l2"></td>
+									<td id="ns2"></td>
+									<td id="d2"></td>
+								</tr>
+								<tr style="border:1px solid gray">
+									<td id="nt3"></td>
+									<td id="n3"></td>
+									<td id="l3"></td>
+									<td id="ns3"></td>
+									<td id="d3"></td>
+								</tr>
+							</table>
+						<!--<div id="upbutton"><a onclick="conceal();">&nbsp;Hide</a></div>-->
+					</div>
+					<div id="benefits2" style="position:fixed; bottom:80px; left:50px; display:none;">
+							<b>&nbsp;Attributes</b>
+							<table style="margin:5px;width:700px;">
+								<tr>
+									<th bgcolor="lightblue">Name</th>
+									<th bgcolor="lightblue">Description</th>
+									<th bgcolor="lightblue">Value</th>
+									<th bgcolor="lightblue">Date</th>
+								</tr>
+								<tr style="border:1px solid gray">
+									<td id="an1"></td>
+									<td id="ad1"></td>
+									<td id="av1"></td>
+									<td id="adt1"></td>
+								</tr>
+								<tr style="border:1px solid gray">
+									<td id="an2"></td>
+									<td id="ad2"></td>
+									<td id="av2"></td>
+									<td id="adt2"></td>
+								</tr>
+								<tr style="border:1px solid gray">
+									<td id="an3"></td>
+									<td id="ad3"></td>
+									<td id="av3"></td>
+									<td id="adt3"></td>
+								</tr>
+							</table>
+							<!--<div id="upbutton2"><a onclick="conceal2();">&nbsp;Hide</a></div>-->
+					</div>
+					
                 </div>
 				<div style="position:fixed;left:40px;top:80px;">
 					<!--<span>Zoom</span>-->
@@ -291,69 +262,14 @@ if (isset($_GET['searchBtn']))
             <br><br><br><br><br><br>
         <!-- end editor content -->
 		
-				<!-- Hidden <FORM> to submit the SVG data to the server, which will convert it to SVG/PDF/PNG downloadable file.
-			 The form is populated and submitted by the JavaScript below. -->
-		<form id="svgform" method="post" action="download.pl">
-		 <input type="hidden" id="output_format" name="output_format" value="">
-		 <input type="hidden" id="data" name="data" value="">
-		</form>
-		
-		<!-- Modal -->
-		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		  <div class="modal-dialog">
-			<div class="modal-content">
-			  <div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="myModalLabel">Edit Germplasm Information</h4>
-			  </div>
-			  <div class="modal-body">
-				<table class="table table-hover">
-				<form action="index.php?r=site/editor" method="post">
-					<tr><td width="50px" bgcolor="#0080FF" style="color: white;"><b>GID</b></td>
-						<td name="gid" id="gid"  align="left" bgcolor="white" style=" vertical-align: left; text-align: left;">
-							<input style="width:400px;" type="text" id="egid"></td></tr>
-					<tr><td bgcolor="#0080FF" style="color: white;">Name</td>
-						<td id="gname" bgcolor="white" style=" vertical-align: left; text-align: left;">
-							<input style="width:400px;" type="text" id="ename"></td></tr>
-					<tr><td bgcolor="#0080FF" style="color: white;">Method</td>
-						<td id="gmethod" bgcolor="white" style=" vertical-align: left; text-align: left;">
-							<input style="width:400px;" type="text" id="emethod"></td></tr>
-					<tr><td bgcolor="#0080FF" style="color: white;">Method Type</td>
-						<td id="gmtype" bgcolor="white" style=" vertical-align: left; text-align: left;">
-							<input style="width:400px;" type="text" id="emtype"></td></tr>
-					<tr><td bgcolor="#0080FF" style="color: white;">Date</td>
-						<td id="gdate" bgcolor="white" style=" vertical-align: left; text-align: left;">
-							<input style="width:400px;" type="text" id="edate"></td></tr>
-					<tr><td bgcolor="#0080FF" style="color: white;">Country</td>
-						<td id="gcountry" bgcolor="white" style=" vertical-align: left; text-align: left;">
-							<input style="width:400px;" type="text" id="ecountry"></td></tr>
-					<tr><td bgcolor="#0080FF" style="color: white;">Location</td>
-						<td id="gloc" bgcolor="white" style=" vertical-align: left; text-align: left;">
-							<input style="width:400px;" type="text" id="eloc"></td></tr>
-					<tr><td bgcolor="#0080FF" style="color: white;">Crop Name</td>
-						<td id="gcname" bgcolor="white" style=" vertical-align: left; text-align: left;">
-							<input style="width:400px;" type="text" id="ecname"></td></tr>
-					<tr><td bgcolor="#0080FF" style="color: white;">Reference</td>
-						<td id="gref" bgcolor="white" style=" vertical-align: left; text-align: left;">
-							<input style="width:400px;" type="text" id="eref"></td></tr>
-					<tr><td bgcolor="#0080FF" style="color: white;">GPID1</td>
-						<td id="gpid1" bgcolor="white" style=" vertical-align: left; text-align: left;">
-							<input style="width:400px;" type="text" id="egpid1"></td></tr>
-					<tr><td bgcolor="#0080FF" style="color: white;">GPID2</td>
-						<td id="gpid2" bgcolor="white" style=" vertical-align: left; text-align: left;">
-							<input style="width:400px;" type="text" id="egpid2"></td></tr>
-				</table>
-			  </div>
-			  <div class="modal-footer">
-			  
-					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-					<button type="submit" class="btn btn-primary" id="save" name="save">Save changes</button>
-				</form>
-			  </div>
-			</div><!-- /.modal-content -->
-		  </div><!-- /.modal-dialog -->
-		</div><!-- /.modal -->
-        
+        <?php
+			   echo CHtml::hiddenField('local_db_name', '');
+			   echo CHtml::hiddenField('local_db_port','');
+			   echo CHtml::hiddenField('local_db_username','');
+			   echo CHtml::hiddenField('central_db_name','');
+			   echo CHtml::hiddenField('central_db_port','');
+			   echo CHtml::hiddenField('central_db_username','');
+			?>
 		
 		<script src='<?php echo Yii::app()->baseUrl;?>/js/jquery.storage.js'></script>
         <script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/d3.v3.min.js"></script>
@@ -369,6 +285,12 @@ if (isset($_GET['searchBtn']))
 		<script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/svgenie.js"></script>
         <script type="text/javascript">
 		
+			function Scrolldown() {
+				 window.scroll(0,2760); 
+			}
+
+			window.onload = Scrolldown;
+			
 			document.getElementById('inputGID').value = $.localStorage('GID');
 			document.getElementById('maxStep').value = $.localStorage('level');
 			
@@ -405,8 +327,14 @@ if (isset($_GET['searchBtn']))
 			  //alert(jQuery("input#inputGID").val())
 			  $.localStorage('GID', jQuery("input#inputGID").val());
 			  $.localStorage('level', jQuery("input#maxStep").val());
-			  //document.getElementById('inputGID').value = jQuery("input#inputGID").val();
-			  //
+			  
+			  //******get database settings
+				document.getElementById('local_db_name').value = localStorage.local_database_name;
+				document.getElementById('local_db_port').value = localStorage.local_database_port;
+				document.getElementById('local_db_username').value = localStorage.local_database_username;
+				document.getElementById('central_db_name').value = localStorage.central_database_name;
+				document.getElementById('central_db_port').value = localStorage.central_database_port;
+				document.getElementById('central_db_username').value = localStorage.central_database_username;
 			}
 		
 			function conceal() {      
@@ -415,11 +343,29 @@ if (isset($_GET['searchBtn']))
 					  document.getElementById('opener').style.display='block';
 					}
 				}  
+				
+			function conceal2() {      
+					if(document.getElementById('benefits2').style.display=='block') {
+					  document.getElementById('benefits2').style.display='none';
+					  document.getElementById('opener2').style.display='block';
+					}
+				}
 
 			function show() {
+				document.getElementById('benefits2').style.display='none';
+					  document.getElementById('opener2').style.display='block';
 				if(document.getElementById('benefits').style.display=='none') {
 				  document.getElementById('benefits').style.display='block';
 				  document.getElementById('opener').style.display='none';
+				}
+			}
+			
+			function show2() {
+				document.getElementById('benefits').style.display='none';
+				document.getElementById('opener').style.display='block';
+				if(document.getElementById('benefits2').style.display=='none') {
+				  document.getElementById('benefits2').style.display='block';
+				  document.getElementById('opener2').style.display='none';
 				}
 			}
 		
@@ -515,4 +461,3 @@ if (isset($_GET['searchBtn']))
 </body>
 
 </html>
-

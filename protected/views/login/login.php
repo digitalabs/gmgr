@@ -15,7 +15,8 @@ $this->breadcrumbs=array(
 <!--<p>Please fill out the following form with your login credentials:</p>-->
 
 <div class="form">
-<?php /** @var BootActiveForm $form */ 
+<?php 
+    
      $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 	'id'=>'login-form',
 	'type'=>'horizontal',
@@ -56,12 +57,11 @@ $this->breadcrumbs=array(
 
 	<div class="row buttons">
 		<?php 
-		   //echo CHtml::submitButton('Login'); 
 		   $this->widget('bootstrap.widgets.TbButton',array('buttonType'=>'submit','label'=>'Login'));
 		?>
 	</div>
-
+   
 <?php $this->endWidget(); ?>
 </div><!-- form -->
 </div>
-</body>
+</body>  

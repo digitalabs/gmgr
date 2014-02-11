@@ -22,6 +22,115 @@ body
 	border-top: 3px solid #C9E0ED;
 	color:#ffffff;
 }
+<<<<<<< HEAD
+/*
+#modal_Table{
+    position: fixed;
+    top: 0;
+    left: -100%;
+    height: 100%;
+    width: 100%;
+}
+
+*/
+=======
+
+#database_link{
+     background-color:#87CEFA;
+	 padding-right: 9px;
+	 padding-left: 9px;
+	 -webkit-border-radius:9px;
+	 border-radius: 9px;
+	 display: inline-block;
+	 padding:2px 4px;
+	 font-size: 100%;
+	 line-height:14px;
+	 text-shadow: 0 -1px 0;
+	 vertical-align: baseline;
+	 
+}
+>>>>>>> joanie
+@media
+  only screen and (max-width:760px),
+  (min-device-width:768px) and (max-device-width:1024px){
+      #modalTable, thead, tbody,th, td,tr{
+          display: block;
+      }
+      thead tr{
+          position:absolute;
+          top: -9999px;
+          left: -9999px;
+      }
+      tr{
+          border: 1px solid #ccc;
+      }
+      td{
+          border: none;
+          border-bottom: 1px solid #eee;
+          position: relative;
+          padding-left: 50%;
+      }
+      td:before{
+          position: absolute;
+          top: 6px;
+          left: 6px;
+          width: 45%;
+          padding-right: 10px;
+          white-space: nowrap;
+      }
+  }
+#md-body{
+    position: relative;
+    height: auto;
+    width: auto;
+    min-height: 80px;
+    margin: 0 auto;
+    overflow: auto;
+}
+#modal-pedTree{
+    max-width: 1000px;
+}
+#choose-frm{
+    font-size: 91%;
+    margin: 0 0 15px;
+}
+#assignGID-header{
+    font-size: 20px;
+}
+.ddlClass{
+    max-height: 1240px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-weight: 300;
+    margin: 10px 25px !important;
+}
+#inputGID{
+    max-height: 1240px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-weight: 300;
+    margin: 0px 0px !important;
+}
+#id-gid{
+     margin: 0px 25px !important;
+}
+#maxStep{
+    max-height: 1240px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-weight: 300;
+    margin: 0px 0px !important;
+}
+<<<<<<< HEAD
+/*#backend_container{
+    margin: 80px auto;
+    width: 400px;
+}*/
+=======
+>>>>>>> joanie
 .j a{
   color:#FF0000;
 }
@@ -35,7 +144,7 @@ body
     left: 10px;
     width: auto;
     margin: 0;
-	z-index: 10;
+    z-index: 10;
   }
   .modal.fade.in {
     top: auto;
@@ -44,25 +153,7 @@ body
     padding: 10px;
     margin: -10px;
   }
-  /*.close{
-      background: #606061;
-	  color: #FFFFFF;
-	  line-height: 25px;
-	  position: absolute;
-	  right:-12px;
-	  text-align:center;
-	  top: -10px;
-	  width: 24px;
-	  text-decoration:none;
-	  font-weight:bold;
-	  -webkit-border-radius:12px;
-	  -moz-border-radius: 12px;
-	  border-radius:12px;
-	  -moz-box-shadow: 1px 1px 3px #000;
-	  -webkit-box-shadow:1px 1px 3px #000;
-	  box-shadow: 1px 1px 3px #000;
-  }
-  .close:hover{background: #00d9ff;}*/
+
   .side { 
     vertical-align:absbottom; 
 	display:inline ;
@@ -94,6 +185,7 @@ body
 #content
 {
     padding: 20px;
+  
 }
 
 #sidebar

@@ -12,6 +12,7 @@
     <div id="editGermplasmNameModal" class="modal hide fade in" style="display: none;"></div>
     <br><br>
    <?php
+       echo CHtml::hiddenField('non_standard_size',$nonstandardized_size);
     if (isset($dataProvider2)) {
         ?>
         <div id="non_standardized_table">
@@ -221,6 +222,7 @@
             $url = Yii::app()->createUrl('site/assignGID');
             $this->widget('bootstrap.widgets.TbButton', array(
                 'type' => 'primary',
+                'id' => 'assignGID_btn',
                 'label' => 'AssignGID',
                 //'url' =>array('site/assignGID'),
                 'htmlOptions' => array(
@@ -259,16 +261,67 @@
              <input type="hidden" id ="list1" name="list1" value="">
              <input type="hidden" id ="location1" name="location" value="">
             -->
+			<?php
+			   echo CHtml::hiddenField('local_db_name', '');
+			   echo CHtml::hiddenField('local_db_port','');
+			   echo CHtml::hiddenField('local_db_username','');
+			   echo CHtml::hiddenField('central_db_name','');
+			   echo CHtml::hiddenField('central_db_port','');
+			   echo CHtml::hiddenField('central_db_username','');
+			?>
         </div>
+        <br/>
+        <div id="back_btn">
+        <?php 
+            $this->widget('boostrap.widgets.TbButton',array(
+                 'type' => 'primary',
+                 'id' => 'back_btn',
+                 'label' => 'back'
+            ));
+        ?>
+       </div>      
     </div>
     <?php $this->endWidget(); ?>
 </body>
+<script type="text/javascript" src="./assets/pnotify-1.2.0/jquery.pnotify.js"></script>
 <script type="text/javascript">
+    $(document).ready(function(){
+          var non_stardardized = $('#non_standard_size').val();
+          if(non_stardardized != 0){
+              $('#assignGID_btn').attr('disabled',true);
+              $('#submit-btn').attr('disabled',true);
+              $.pnotify(
+                  {
+                      text: "There are still " +  $('#non_standard_size').val() + " remaining non-standardized names. Click to standardize before you are allowed to assign a gid.",
+                      type: "warning",
+                      hide:false,
+                  }
+              );
+          } else{
+              $('#assignGID_btn').attr('disabled',false);
+              $('#submit-btn').attr('disabled',false);
+          }
+          
+          $('#back_btn').click(function(){
+              window.location = '<?php echo Yii::app()->createUrl('site/importFileDisplay')?>';
+          });
+    
+    });
+
     function storeLocal() {
         if ('localStorage' in window && window['localStorage'] != null) {
             try {
                 console.log(JSON.stringify(<?php echo json_encode($list); ?>));
                 localStorage.setItem('list', JSON.stringify(<?php echo json_encode($list); ?>));
+				
+				//******get database settings
+				document.getElementById('local_db_name').value = localStorage.local_database_name;
+				document.getElementById('local_db_port').value = localStorage.local_database_port;
+				document.getElementById('local_db_username').value = localStorage.local_database_username;
+				document.getElementById('central_db_name').value = localStorage.central_database_name;
+				document.getElementById('central_db_port').value = localStorage.central_database_port;
+				document.getElementById('central_db_username').value = localStorage.central_database_username;
+				
             } catch (e) {
                 if (e === QUOTA_EXCEEDED_ERR) {
                     alert('Quota exceeded!');

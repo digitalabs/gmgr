@@ -45,63 +45,63 @@ class curl {
     }
 
     public function createNew($data) {
-        //http://localhost:8080/ws/standardization/term/parse
-        $url = "http://localhost:8080/ws/standardization/term/createNew";
+        //http://172.29.4.99:8083/ws/standardization/term/parse
+        $url = "http://172.29.4.99:8083/ws/standardization/term/createNew";
         //echo "<br>here";
         return $this->exec($url, $data);
     }
 
     public function updateGermplasmName($data) {
-        //http://localhost:8080/ws/standardization/term/parse
-        $url = "http://localhost:8080/ws/standardization/term/updateGermplasmName";
+        //http://172.29.4.99:8083/ws/standardization/term/parse
+        $url = "http://172.29.4.99:8083/ws/standardization/term/updateGermplasmName";
         //echo "<br>here";
         return $this->exec($url, $data);
     }
 
     public function parse($data) {
-        //http://localhost:8080/ws/standardization/term/parse
-        $url = "http://localhost:8080/ws/standardization/term/post";
+        //http://172.29.4.99:8083/ws/standardization/term/parse
+        $url = "http://172.29.4.99:8083/ws/standardization/term/post";
 
         return $this->exec($url, $data);
     }
 
     public function standardize($data) {
-        $url = "http://localhost:8080/ws/standardization/term/standardize2";
+        $url = "http://172.29.4.99:8083/ws/standardization/term/standardize2";
         return $this->exec($url, $data);
     }
 
     public function createGID($data) {
-        $url = "http://localhost:8080/ws/standardization/term/createGID2";
+        $url = "http://172.29.4.99:8083/ws/standardization/term/createGID2";
         return $this->exec($url, $data);
     }
 
     public function createGID2($data) {
-        $url = "http://localhost:8080/ws/standardization/term/createGID3";
+        $url = "http://172.29.4.99:8083/ws/standardization/term/createGID3";
         return $this->exec($url, $data);
     }
 
     public function chooseGID($data) {
-        $url = "http://localhost:8080/ws/standardization/term/chooseGID2";
+        $url = "http://172.29.4.99:8083/ws/standardization/term/chooseGID2";
         return $this->exec($url, $data);
     }
 
     public function updateMethod($data) {
-        $url = "http://localhost:8080/ws/standardization/term/updateMethod";
+        $url = "http://172.29.4.99:8083/ws/standardization/term/updateMethod";
         return $this->exec($url, $data);
     }
 
     public function chooseGID_cross($data) {
-        $url = "http://localhost:8080/ws/standardization/term/chooseGID_cross";
+        $url = "http://172.29.4.99:8083/ws/standardization/term/chooseGID_cross";
         return $this->exec($url, $data);
     }
 
     public function editGermplasmName($data) {
-        $url = "http://localhost:8080/ws/standardization/term/checkEditedString";
+        $url = "http://172.29.4.99:8083/ws/standardization/term/checkEditedString";
         return $this->exec($url, $data);
     }
 
     public function show_germplasm_details() {
-        $url = "http://localhost:8080/ws/standardization/term/show_germplasm_details";
+        $url = "http://172.29.4.99:8083/ws/standardization/term/show_germplasm_details";
         $this->exec($url);
 
         $gid = $_POST['hidGID'];
@@ -122,14 +122,9 @@ class curl {
         json_decode($result, true);
     }
 
-    public function searchGID() {
+    public function searchGID($data) {
+        $url = "http://172.29.4.99:8083/ws/standardization/term/searchGID";
 
-        $gid = $_POST['inputGID'];
-        $level = $_POST['maxStep'];
-        $a = array('GID' => $gid, 'LEVEL' => $level);
-        $data = json_encode($a);
-
-        $url = "http://localhost:8080/ws/standardization/term/searchGID";
         $this->exec($url, $data);
 
         //$ch = curl_init();
@@ -152,14 +147,35 @@ class curl {
         return $try;
     }
 
-    public function editGermplasm() {
 
-        //$gid = $_POST['inputGID'];
-        //$level = $_POST['maxStep'];
-        $a = array('GID' => 50533, 'LEVEL' => 2);
-        $data = json_encode($a);
+    public function showDiagram($data) {
 
-        $url = "http://localhost:8080/ws/standardization/term/editGermplasm";
+        $url = "http://172.29.4.99:8083/ws/standardization/term/searchGID";
+        $this->exec($url, $data);
+
+        //$ch = curl_init();
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+            'Content-Length: ' . strlen($data))
+        );
+
+        //$results
+        $result = curl_exec($ch);
+        $jsonfile = "trydocinfo.json";
+        $try = json_decode($result, true);
+
+
+        //echo $result;
+        return $try;
+    }
+
+    public function editGermplasm($data) {
+        $url = "http://172.29.4.99:8083/ws/standardization/term/editGermplasm";
+
         $this->exec($url, $data);
 
         //$ch = curl_init();
