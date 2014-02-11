@@ -1,5 +1,5 @@
-
 <body onload='storeLocal()'>
+  
     <div class="container">
 
 
@@ -58,7 +58,8 @@
 </body>
 <script type='text/javascript'>
     function storeLocal() {
-        if (<?php echo isset($database_details) ?>) {
+        if (<?php echo isset($database_details); ?>) {
+
             if ('localStorage' in window && window['localStorage'] != null) {
                 try {
                     var local_db_name = '<?php echo $database_details['local_db_name'] ?>';
@@ -84,6 +85,7 @@
             } else {
                 alert('Cannot store user preferences as your browser do not support local storage');
             }
+        } else {
         }
     }
 

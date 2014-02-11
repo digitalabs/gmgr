@@ -153,9 +153,26 @@ class SiteController extends Controller {
             // }
             $this->render('login', array('model' => $model, 'database_details' => $database_details));
         } else {
-            echo "nothing to display";
-            // display the login form
-            $this->render('login', array('model' => $model));
+                //local database
+            $local_db_name = '';
+            $local_db_port = '';
+            $local_db_username = '';
+
+
+            //central database
+            $central_db_name = '';
+            $central_db_port = '';
+            $central_db_username = '';
+
+            $database_details = array(
+                'local_db_name' => $local_db_name,
+                'local_db_port' => $local_db_port,
+                'local_db_username' => $local_db_username,
+                'central_db_name' => $central_db_name,
+                'central_db_port' => $central_db_port,
+                'central_db_username' => $central_db_username
+            );
+            $this->render('login', array('model' => $model,'database_details' => $database_details));
         }
     }
 
