@@ -282,11 +282,7 @@ if (isset($_GET['searchBtn']))
 			}
 
 			window.onload = Scrolldown;
-			jQuery("#cbox").altCheckbox({
-				outlineUnchecked: false, 
-				sizeClass: "small"
-			  });
-  
+			
 			document.getElementById('inputGID').value = $.localStorage('GID');
 			document.getElementById('maxStep').value = $.localStorage('level');
 			
