@@ -262,69 +262,6 @@ if (isset($_GET['searchBtn']))
             <br><br><br><br><br><br>
         <!-- end editor content -->
 		
-				<!-- Hidden <FORM> to submit the SVG data to the server, which will convert it to SVG/PDF/PNG downloadable file.
-			 The form is populated and submitted by the JavaScript below. -->
-		<form id="svgform" method="post" action="download.pl">
-		 <input type="hidden" id="output_format" name="output_format" value="">
-		 <input type="hidden" id="data" name="data" value="">
-		</form>
-		
-		<!-- Modal -->
-		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		  <div class="modal-dialog">
-			<div class="modal-content">
-			  <div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="myModalLabel">Edit Germplasm Information</h4>
-			  </div>
-			  <div class="modal-body">
-				<table class="table table-hover">
-				<form action="index.php?r=site/editor" method="post">
-					<tr><td width="50px" bgcolor="#0080FF" style="color: white;"><b>GID</b></td>
-						<td name="gid" id="gid"  align="left" bgcolor="white" style=" vertical-align: left; text-align: left;">
-							<input style="width:400px;" type="text" id="egid"></td></tr>
-					<tr><td bgcolor="#0080FF" style="color: white;">Name</td>
-						<td id="gname" bgcolor="white" style=" vertical-align: left; text-align: left;">
-							<input style="width:400px;" type="text" id="ename"></td></tr>
-					<tr><td bgcolor="#0080FF" style="color: white;">Method</td>
-						<td id="gmethod" bgcolor="white" style=" vertical-align: left; text-align: left;">
-							<input style="width:400px;" type="text" id="emethod"></td></tr>
-					<tr><td bgcolor="#0080FF" style="color: white;">Method Type</td>
-						<td id="gmtype" bgcolor="white" style=" vertical-align: left; text-align: left;">
-							<input style="width:400px;" type="text" id="emtype"></td></tr>
-					<tr><td bgcolor="#0080FF" style="color: white;">Date</td>
-						<td id="gdate" bgcolor="white" style=" vertical-align: left; text-align: left;">
-							<input style="width:400px;" type="text" id="edate"></td></tr>
-					<tr><td bgcolor="#0080FF" style="color: white;">Country</td>
-						<td id="gcountry" bgcolor="white" style=" vertical-align: left; text-align: left;">
-							<input style="width:400px;" type="text" id="ecountry"></td></tr>
-					<tr><td bgcolor="#0080FF" style="color: white;">Location</td>
-						<td id="gloc" bgcolor="white" style=" vertical-align: left; text-align: left;">
-							<input style="width:400px;" type="text" id="eloc"></td></tr>
-					<tr><td bgcolor="#0080FF" style="color: white;">Crop Name</td>
-						<td id="gcname" bgcolor="white" style=" vertical-align: left; text-align: left;">
-							<input style="width:400px;" type="text" id="ecname"></td></tr>
-					<tr><td bgcolor="#0080FF" style="color: white;">Reference</td>
-						<td id="gref" bgcolor="white" style=" vertical-align: left; text-align: left;">
-							<input style="width:400px;" type="text" id="eref"></td></tr>
-					<tr><td bgcolor="#0080FF" style="color: white;">GPID1</td>
-						<td id="gpid1" bgcolor="white" style=" vertical-align: left; text-align: left;">
-							<input style="width:400px;" type="text" id="egpid1"></td></tr>
-					<tr><td bgcolor="#0080FF" style="color: white;">GPID2</td>
-						<td id="gpid2" bgcolor="white" style=" vertical-align: left; text-align: left;">
-							<input style="width:400px;" type="text" id="egpid2"></td></tr>
-				</table>
-			  </div>
-			  <div class="modal-footer">
-			  
-					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-					<button type="submit" class="btn btn-primary" id="save" name="save">Save changes</button>
-				</form>
-			  </div>
-			</div><!-- /.modal-content -->
-		  </div><!-- /.modal-dialog -->
-		</div><!-- /.modal -->
-        
 		
 		<script src='<?php echo Yii::app()->baseUrl;?>/js/jquery.storage.js'></script>
         <script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/d3.v3.min.js"></script>
