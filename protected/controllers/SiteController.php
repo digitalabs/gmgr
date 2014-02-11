@@ -653,7 +653,7 @@ class SiteController extends Controller {
                     $list = json_decode($data, true);
 
                     if (!empty($_POST['Germplasm']['gid'])) {
-                        // echo "here 0";
+                        echo "here 0";
                         $selected = $_POST['Germplasm']['gid'];
                         $idArr = explode(',', $selected);
                         foreach ($idArr as $index => $id) {
@@ -724,9 +724,51 @@ class SiteController extends Controller {
 
                         $rows = $list;
                     }
+                } elseif (isset($_POST['createNew'])) {
+
+                    $cross = strip_tags($_POST['createNew']);
+                    $term = strip_tags($_POST['term']);
+                    $chosenID = strip_tags($_POST['chosenID']);
+                    $fid = strip_tags($_POST['fid']);
+                    $mid = strip_tags($_POST['mid']);
+                    $gpid1_nval = strip_tags($_POST['gpid1_nval']);
+                    $gpid2_nval = strip_tags($_POST['gpid2_nval']);
+                    $locationID = strip_tags($_POST['locationID']);
+                    $theParent = strip_tags($_POST['theParent']);
+
+                    $list = unserialize(base64_decode($_POST['list']));
+                    $createdGID = unserialize(base64_decode($_POST['createdGID']));
+                    $existing = unserialize(base64_decode($_POST['existing']));
+                    $checked = unserialize(base64_decode($_POST['checked']));
+
+                    $a = array(
+                        'cross' => $cross,
+                        'chosenID' => $chosenID,
+                        'term' => $term,
+                        'theParent' => $theParent,
+                        'fid' => $fid,
+                        'mid' => $mid,
+                        'gpid1_nval' => $gpid1_nval,
+                        'gpid2_nval' => $gpid2_nval,
+                        'list' => $list,
+                        'existingTerm' => $existing,
+                        'createdGID' => $createdGID,
+                        'locationID' => $locationID,
+                        'userID' => Yii::app()->user->id
+                    );
+
+                    $output = $curl->createNew(json_encode($a));
+
+                    $createdGID = array();
+                    $list = array();
+                    $createdGID = $output['createdGID'];
+                    $list = $output['list'];
+                    $existing = $output['existingTerm'];
+                    $rows = $list;
                 } elseif (isset($_POST['choose'])) {
 
                     $term = strip_tags($_POST['term']);
+                    $cross = strip_tags($_POST['cross']);
                     $pedigree = strip_tags($_POST['pedigree']);
                     $id = strip_tags($_POST['id']);
                     $choose = strip_tags($_POST['choose']);
@@ -736,6 +778,9 @@ class SiteController extends Controller {
                     $male = strip_tags($_POST['male']);
                     $locationID = strip_tags($_POST['locationID']);
                     $theParent = strip_tags($_POST['theParent']);
+                    $gid = strip_tags($_POST['gid']);
+                    $gpid1 = strip_tags($_POST['gpid1']);
+                    $gpid2 = strip_tags($_POST['gpid2']);
 
                     $list = unserialize(base64_decode($_POST['list']));
                     $createdGID = unserialize(base64_decode($_POST['createdGID']));
@@ -743,14 +788,32 @@ class SiteController extends Controller {
                     $checked = unserialize(base64_decode($_POST['checked']));
 
                     $userID = Yii::app()->user->id;
+
                     $output = $file_toArray->updateGID_createdGID($term, $pedigree, $id, $choose, $fid, $mid, $female, $male, $createdGID, $existing, $list, $userID, $theParent);
-                    $output = $curl->chooseGID(json_encode($output));
+
+                    //  echo "choose: ".$choose;
+                    // echo ": ".$cross;
+                    if ($term == $cross) {
+                        $output["female"] = $female;
+                        $output["male"] = $male;
+                        $output["female_id"] = $fid;
+                        $output["male_id"] = $mid;
+                        $output["gpid1"] = $gpid1;
+                        $output["gpid2"] = $gpid2;
+                        $output["gid"] = $gid;
+                        $output["locationID"] = $locationID;
+//echo "<br><choose gid for cross>";
+                        $output = $curl->chooseGID_cross(json_encode($output));
+                    } else {
+                        $output = $curl->chooseGID(json_encode($output));
+                    }
 
                     $createdGID = array();
                     $list = array();
                     $createdGID = $output['createdGID'];
                     $list = $output['list'];
                     $rows = $list;
+                    $existing = $output['existingTerm'];
                 } else {
                     //echo "<br><br><br> no curl";
                     $locationID = $_POST['location'];
