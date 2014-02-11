@@ -278,7 +278,7 @@ if (isset($_GET['searchBtn']))
         <script type="text/javascript">
 		
 			function Scrolldown() {
-				 window.scroll(0,2880); 
+				 window.scroll(0,2760); 
 			}
 
 			window.onload = Scrolldown;
