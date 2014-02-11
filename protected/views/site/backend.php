@@ -7,26 +7,37 @@
          * Febuary 7, 2014
          * developer: Joanie C. Antonio <j.antonio@irri.org>
          */
-
-        $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-            'type' => 'horizontal',
-            'id' => 'db_details',
-            'htmlOptions' => array(
-                'class' => 'well',
-                'enctype' => 'multipart/form-data'
-            ),
-           'action' => array('site/login') 
-        ));
+        if (Yii::app()->user->id != NULL) { //logged in
+            $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+                'type' => 'horizontal',
+                'id' => 'db_details',
+                'htmlOptions' => array(
+                    'class' => 'well',
+                    'enctype' => 'multipart/form-data'
+                ),
+                'action' => array('site/importer')
+            ));
+        } else { //not logged in
+            $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+                'type' => 'horizontal',
+                'id' => 'db_details',
+                'htmlOptions' => array(
+                    'class' => 'well',
+                    'enctype' => 'multipart/form-data'
+                ),
+                'action' => array('site/login')
+            ));
+        }
         ?>
         <div id="backend_container" class="row">
-		  
+
             <div class="span6">
-			 <br/>
-			 <div>
-		       <?php
-			      echo CHtml::link('Back to main',array('site/importer'));
-			   ?>
-		       </div>
+                <br/>
+                <div>
+                    <?php
+                    echo CHtml::link('Back to main', array('site/importer'));
+                    ?>
+                </div>
                 <div class="span5">
                     <fieldset>
                         <legend>Local Database</legend>
@@ -72,52 +83,52 @@
 </html>
 <script type='text/javascript'>
     /*$(document).ready(function(){
-          $('#submit_btn').bind('click',function(){
-               if ('localStorage' in window && window['localStorage'] != null) {
-            try {
-               
-                var local_db_name = '<?php //echo $local_database['db_name'] ?>';
-                var local_db_port = '<?php //echo $local_database['db_port']  ?>';
-                var local_db_username = '<?php //echo $local_database['db_username'] ?>';
-                
-                var central_db_name = '<?php //echo $central_database['db_name'] ?>';
-                var central_db_port = '<?php //echo $central_database['db_port'] ?>';
-                var central_db_username = '<?php //echo $central_database['db_username'] ?>';
-                
-                localStorage.setItem('local_database_name', local_db_name);
-                localStorage.setItem('local_database_port', local_db_port);
-                localStorage.setItem('local_database_username', local_db_username);
-                localStorage.setItem('central_database_name', central_db_name);
-                localStorage.setItem('central_database_port', central_db_port);
-                localStorage.setItem('central_database_username', central_db_username);
-                
-            } catch (e) {
-                if (e === QUOTA_EXCEEDED_ERR) {
-                    alert('Quota exceeded!');
-                }
-            }
-        } else {
-            alert('Cannot store user preferences as your browser do not support local storage');
-        }
-          });
-    });
-       window.addEventListener('storage', storageEventHandler, false);
-    function storageEventHandler(event) {
-        storeLocal();
-    }
-    function storeLocal1() {
-        if ('localStorage' in window && window['localStorage'] != null) {
-            try {
-                document.getElementById('list1').value = localStorage.list;
-                document.getElementById('location1').value = localStorage.locationID;
-
-            } catch (e) {
-                if (e === QUOTA_EXCEEDED_ERR) {
-                    alert('Quota exceeded!');
-                }
-            }
-        } else {
-            alert('Cannot store user preferences as your browser do not support local storage');
-        }
-    }*/
+     $('#submit_btn').bind('click',function(){
+     if ('localStorage' in window && window['localStorage'] != null) {
+     try {
+     
+     var local_db_name = '<?php //echo $local_database['db_name']  ?>';
+     var local_db_port = '<?php //echo $local_database['db_port']   ?>';
+     var local_db_username = '<?php //echo $local_database['db_username']  ?>';
+     
+     var central_db_name = '<?php //echo $central_database['db_name']  ?>';
+     var central_db_port = '<?php //echo $central_database['db_port']  ?>';
+     var central_db_username = '<?php //echo $central_database['db_username']  ?>';
+     
+     localStorage.setItem('local_database_name', local_db_name);
+     localStorage.setItem('local_database_port', local_db_port);
+     localStorage.setItem('local_database_username', local_db_username);
+     localStorage.setItem('central_database_name', central_db_name);
+     localStorage.setItem('central_database_port', central_db_port);
+     localStorage.setItem('central_database_username', central_db_username);
+     
+     } catch (e) {
+     if (e === QUOTA_EXCEEDED_ERR) {
+     alert('Quota exceeded!');
+     }
+     }
+     } else {
+     alert('Cannot store user preferences as your browser do not support local storage');
+     }
+     });
+     });
+     window.addEventListener('storage', storageEventHandler, false);
+     function storageEventHandler(event) {
+     storeLocal();
+     }
+     function storeLocal1() {
+     if ('localStorage' in window && window['localStorage'] != null) {
+     try {
+     document.getElementById('list1').value = localStorage.list;
+     document.getElementById('location1').value = localStorage.locationID;
+     
+     } catch (e) {
+     if (e === QUOTA_EXCEEDED_ERR) {
+     alert('Quota exceeded!');
+     }
+     }
+     } else {
+     alert('Cannot store user preferences as your browser do not support local storage');
+     }
+     }*/
 </script>    
