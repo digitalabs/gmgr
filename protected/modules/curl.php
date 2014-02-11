@@ -45,26 +45,25 @@ class curl {
     }
 
     public function updateGermplasmName($data) {
-        //http://172.29.4.99:8083/ws/standardization/term/parse
-        $url = "http://172.29.4.99:8083/ws/standardization/term/updateGermplasmName";
+        //http://localhost:8080/ws/standardization/term/parse
+        $url = "http://localhost:8080/ws/standardization/term/updateGermplasmName";
         echo "<br>here";
         return $this->exec($url, $data);
     }
-
     public function parse($data) {
-        //http://172.29.4.99:8083/ws/standardization/term/parse
-        $url = "http://172.29.4.99:8083/ws/standardization/term/post";
+        //http://localhost:8080/ws/standardization/term/parse
+        $url = "http://localhost:8080/ws/standardization/term/post";
 
         return $this->exec($url, $data);
     }
 
     public function standardize($data) {
-        $url = "http://172.29.4.99:8083/ws/standardization/term/standardize2";
+        $url = "http://localhost:8080/ws/standardization/term/standardize2";
         return $this->exec($url, $data);
     }
 
     public function createGID($data) {
-        $url = "http://172.29.4.99:8083/ws/standardization/term/createGID2";
+        $url = "http://localhost:8080/ws/standardization/term/createGID2";
         return $this->exec($url, $data);
     }
 
@@ -110,14 +109,7 @@ class curl {
         json_decode($result, true);
     }
 
-    public function searchGID() {
-	
-        $gid = $_POST['inputGID'];
-        $level = $_POST['maxStep'];
-        $a = array('GID' => $gid, 'LEVEL' => $level);
-        $data = json_encode($a);
-		
-
+    public function searchGID($data) {
 		$url = "http://172.29.4.99:8083/ws/standardization/term/searchGID";
 
         $this->exec($url,$data);
@@ -141,11 +133,7 @@ class curl {
 		//echo $result;
 		return $try;
     }
-    public function showDiagram(){
-        $gid = $_GET['inputGID'];
-        $level = $_GET['maxStep'];
-        $a = array('GID' => $gid, 'LEVEL' => $level);
-        $data = json_encode($a);
+    public function showDiagram($data){
 		
 		$url = "http://172.29.4.99:8083/ws/standardization/term/searchGID";
         $this->exec($url,$data);
@@ -171,11 +159,6 @@ class curl {
     }
 	
 	public function editGermplasm() {
-	
-        //$gid = $_POST['inputGID'];
-        //$level = $_POST['maxStep'];
-        $a = array('GID' => 50533, 'LEVEL' => 2);
-        $data = json_encode($a);
 		
 		$url = "http://172.29.4.99:8083/ws/standardization/term/editGermplasm";
         $this->exec($url,$data);
@@ -199,6 +182,7 @@ class curl {
 		//echo $result;
 		return $try;
     }
+  
 
 }
 

@@ -161,26 +161,9 @@
                 localStorage.setItem('list', JSON.stringify(<?php echo json_encode($list); ?>));
 
                 var locationID = document.getElementById('location').value;
-                //var list=document.getElementById('list').value;
-                //console.log("ss"+locationID);
-                //console.log("sssw"+list);
+             
                 localStorage.setItem('locationID', locationID);
-               /* var local_db_name = '<?php //echo $local_database['db_name']?>';
-                var local_db_port = '<?php //echo $local_database['db_port'] ?>';
-                var local_db_username = '<?php //echo $local_database['db_username']?>';
-                
-                var central_db_name = '<?php //echo $central_database['db_name']?>';
-                var central_db_port = '<?php //echo $central_database['db_port']?>';
-                var central_db_username = '<?php //echo $central_database['db_username']?>';
-                
-                localStorage.setItem('local_database_name', local_db_name);
-                localStorage.setItem('local_database_port', local_db_port);
-                localStorage.setItem('local_database_username', local_db_username);
-                localStorage.setItem('central_database_name', central_db_name);
-                localStorage.setItem('central_database_port', central_db_port);
-                localStorage.setItem('central_database_username', central_db_username);
-                */
-                
+               
                 storeLocal1();
             } catch (e) {
                 if (e === QUOTA_EXCEEDED_ERR) {

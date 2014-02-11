@@ -22,6 +22,7 @@ body
 	border-top: 3px solid #C9E0ED;
 	color:#ffffff;
 }
+<<<<<<< HEAD
 /*
 #modal_Table{
     position: fixed;
@@ -32,6 +33,23 @@ body
 }
 
 */
+=======
+
+#database_link{
+     background-color:#87CEFA;
+	 padding-right: 9px;
+	 padding-left: 9px;
+	 -webkit-border-radius:9px;
+	 border-radius: 9px;
+	 display: inline-block;
+	 padding:2px 4px;
+	 font-size: 100%;
+	 line-height:14px;
+	 text-shadow: 0 -1px 0;
+	 vertical-align: baseline;
+	 
+}
+>>>>>>> joanie
 @media
   only screen and (max-width:760px),
   (min-device-width:768px) and (max-device-width:1024px){
@@ -106,10 +124,13 @@ body
     font-weight: 300;
     margin: 0px 0px !important;
 }
+<<<<<<< HEAD
 /*#backend_container{
     margin: 80px auto;
     width: 400px;
 }*/
+=======
+>>>>>>> joanie
 .j a{
   color:#FF0000;
 }
