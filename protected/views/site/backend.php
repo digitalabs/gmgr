@@ -15,11 +15,18 @@
                 'class' => 'well',
                 'enctype' => 'multipart/form-data'
             ),
-            'action' => array('site/login') 
+           'action' => array('site/login') 
         ));
         ?>
         <div id="backend_container" class="row">
+		  
             <div class="span6">
+			 <br/>
+			 <div>
+		       <?php
+			      echo CHtml::link('Back to main',array('site/importer'));
+			   ?>
+		       </div>
                 <div class="span5">
                     <fieldset>
                         <legend>Local Database</legend>
@@ -64,18 +71,18 @@
     </body>
 </html>
 <script type='text/javascript'>
-    $(document).ready(function(){
+    /*$(document).ready(function(){
           $('#submit_btn').bind('click',function(){
                if ('localStorage' in window && window['localStorage'] != null) {
             try {
                
-                var local_db_name = '<?php echo $local_database['db_name'] ?>';
-                var local_db_port = '<?php echo $local_database['db_port']  ?>';
-                var local_db_username = '<?php echo $local_database['db_username'] ?>';
+                var local_db_name = '<?php //echo $local_database['db_name'] ?>';
+                var local_db_port = '<?php //echo $local_database['db_port']  ?>';
+                var local_db_username = '<?php //echo $local_database['db_username'] ?>';
                 
-                var central_db_name = '<?php echo $central_database['db_name'] ?>';
-                var central_db_port = '<?php echo $central_database['db_port'] ?>';
-                var central_db_username = '<?php echo $central_database['db_username'] ?>';
+                var central_db_name = '<?php //echo $central_database['db_name'] ?>';
+                var central_db_port = '<?php //echo $central_database['db_port'] ?>';
+                var central_db_username = '<?php //echo $central_database['db_username'] ?>';
                 
                 localStorage.setItem('local_database_name', local_db_name);
                 localStorage.setItem('local_database_port', local_db_port);
@@ -112,5 +119,5 @@
         } else {
             alert('Cannot store user preferences as your browser do not support local storage');
         }
-    }
+    }*/
 </script>    

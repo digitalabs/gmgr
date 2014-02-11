@@ -386,7 +386,14 @@ if (isset($_GET['searchBtn']))
 			</div><!-- /.modal-content -->
 		  </div><!-- /.modal-dialog -->
 		</div><!-- /.modal -->
-        
+        <?php
+			   echo CHtml::hiddenField('local_db_name', '');
+			   echo CHtml::hiddenField('local_db_port','');
+			   echo CHtml::hiddenField('local_db_username','');
+			   echo CHtml::hiddenField('central_db_name','');
+			   echo CHtml::hiddenField('central_db_port','');
+			   echo CHtml::hiddenField('central_db_username','');
+			?>
 		
 		<script src='<?php echo Yii::app()->baseUrl;?>/js/jquery.storage.js'></script>
         <script type="text/javascript" src="<?php echo Yii::app()->baseUrl;?>/js/d3.v3.min.js"></script>
@@ -438,8 +445,14 @@ if (isset($_GET['searchBtn']))
 			  //alert(jQuery("input#inputGID").val())
 			  $.localStorage('GID', jQuery("input#inputGID").val());
 			  $.localStorage('level', jQuery("input#maxStep").val());
-			  //document.getElementById('inputGID').value = jQuery("input#inputGID").val();
-			  //
+			  
+			  //******get database settings
+				document.getElementById('local_db_name').value = localStorage.local_database_name;
+				document.getElementById('local_db_port').value = localStorage.local_database_port;
+				document.getElementById('local_db_username').value = localStorage.local_database_username;
+				document.getElementById('central_db_name').value = localStorage.central_database_name;
+				document.getElementById('central_db_port').value = localStorage.central_database_port;
+				document.getElementById('central_db_username').value = localStorage.central_database_username;
 			}
 		
 			function conceal() {      

@@ -261,7 +261,25 @@
              <input type="hidden" id ="list1" name="list1" value="">
              <input type="hidden" id ="location1" name="location" value="">
             -->
+			<?php
+			   echo CHtml::hiddenField('local_db_name', '');
+			   echo CHtml::hiddenField('local_db_port','');
+			   echo CHtml::hiddenField('local_db_username','');
+			   echo CHtml::hiddenField('central_db_name','');
+			   echo CHtml::hiddenField('central_db_port','');
+			   echo CHtml::hiddenField('central_db_username','');
+			?>
         </div>
+        <br/>
+        <div id="back_btn">
+        <?php 
+            $this->widget('boostrap.widgets.TbButton',array(
+                 'type' => 'primary',
+                 'id' => 'back_btn',
+                 'label' => 'back'
+            ));
+        ?>
+       </div>      
     </div>
     <?php $this->endWidget(); ?>
 </body>
@@ -283,14 +301,27 @@
               $('#assignGID_btn').attr('disabled',false);
               $('#submit-btn').attr('disabled',false);
           }
-       
-    });
+          
+          $('#back_btn').click(function(){
+              window.location = '<?php echo Yii::app()->createUrl('site/importFileDisplay')?>';
+          });
     
+    });
+
     function storeLocal() {
         if ('localStorage' in window && window['localStorage'] != null) {
             try {
                 console.log(JSON.stringify(<?php echo json_encode($list); ?>));
                 localStorage.setItem('list', JSON.stringify(<?php echo json_encode($list); ?>));
+				
+				//******get database settings
+				document.getElementById('local_db_name').value = localStorage.local_database_name;
+				document.getElementById('local_db_port').value = localStorage.local_database_port;
+				document.getElementById('local_db_username').value = localStorage.local_database_username;
+				document.getElementById('central_db_name').value = localStorage.central_database_name;
+				document.getElementById('central_db_port').value = localStorage.central_database_port;
+				document.getElementById('central_db_username').value = localStorage.central_database_username;
+				
             } catch (e) {
                 if (e === QUOTA_EXCEEDED_ERR) {
                     alert('Quota exceeded!');

@@ -32,10 +32,17 @@
         <div id="div-container" class="row">
 
             <div class="span14">
+			 	<div id='div_link'>
+				   <p class='instruction'>
+							<?php
+								echo CHtml::link('Check database settings',array('site/backend'),array('id' => 'database_link'));
+							?>
+				   </p>			
+				</div>
                 <div class="row">
                     <div class="span4">
                         <fieldset>
-                            <legend>Select List Type</legend>
+                            <legend>List Type</legend>
                             <input type="radio" name="group1" value="BreedersCrossHistories" checked> Breeders Cross Histories &nbsp; &nbsp;<a href="Nomenclature Rules/NomenclatureRules.htm">Nomenclature Rules</a> <br>
 
                             <!--<input type="radio" name="group1" value="CultivarList" disabled="true"> Cultivar List<br>
@@ -49,12 +56,12 @@
                             <br>
                         </fieldset><br>
                         <fieldset>
-                            <legend>Options</legend>
+                            <legend></legend>
                             <input type="radio" name="group2" value="singleHit" checked> Accept single hit search<br>
                             <br>
-
+                          
                         </fieldset><br>
-
+					
 
                     </div>
                     <div class="span1"></div>
@@ -64,7 +71,6 @@
                             <legend>Upload File</legend>
                             <br>
                             <?php
-                            //echo $form->labelEx($model, 'file');
                             echo CHtml::activefileField($model, 'file');
                             echo CHtml::error($model, 'file');
                             ?>
