@@ -22,6 +22,10 @@ var data = (function () {
     return jason;
 })(); 
 
+
+if (data==null)
+		alert("Search returned 0 results");
+		
 var realWidth = window.innerWidth;
 var realHeight = window.innerHeight;
 var margin = {top: 950, right: 50, bottom: 200, left: 1500},
@@ -60,11 +64,12 @@ var customNodes = new Array(),
 	//Create a svg canvas
     depencencyChart = d3.select("#graphDiv").append("svg:svg")
 			//.data(d3.entries(orientation))
-            .attr("width", 6000)
-            .attr("height", 5500)
+            .attr("width", 10000)
+            .attr("height", 7500)
             .append("svg:g")
 			.attr("class","drawarea")
-            .attr("transform", "translate(0, 900)") // shift everything to the right
+			.attr("transform", "translate(1000, 900)")
+            //.attr("transform", "translate(0, 900)") // shift everything to the right
 			
 			
 
@@ -179,7 +184,9 @@ function customSpline(d) {
 
 function drawChart(ms) {
 	var cnt=0;
-	
+	if (data==null)
+		alert("Search returned 0 results");
+		
     customNodes.forEach(function(node) { //alert(node.layer);
 		if(node.depth <= ms){
 		cnt++;
@@ -266,6 +273,9 @@ function drawChart2(node) {
 	
 	var cnt=0;
 	
+	if (data==null)
+		alert("Search returned 0 results");
+		
     customNodes.forEach(function(node) {
 		//if(node.depth <= ms){
 		cnt++;
@@ -372,6 +382,12 @@ function click(d)
         d._children = null;
     }
 	
+	document.getElementById('benefits2').style.display='none';
+					  document.getElementById('opener2').style.display='block';
+				if(document.getElementById('benefits').style.display=='none') {
+				  document.getElementById('benefits').style.display='block';
+				  document.getElementById('opener').style.display='none';
+				}
     //update(d);
 	
 	document.getElementById('gid').innerHTML = d.gid;
@@ -413,6 +429,18 @@ function click(d)
 	document.getElementById('d2').innerHTML = d.dates1;
 	if(d.name2==undefined)document.getElementById('d3').innerHTML = "---";
 	else document.getElementById('d3').innerHTML = d.dates2;
+	
+	document.getElementById('av1').innerHTML = d.aval0;
+	document.getElementById('av2').innerHTML = d.aval1;
+	if(d.aval2==undefined)document.getElementById('av3').innerHTML = "---";
+	else document.getElementById('av3').innerHTML = d.aval2;
+	
+	document.getElementById('adt1').innerHTML = d.adate0;
+	document.getElementById('adt2').innerHTML = d.adate1;
+	if(d.adt2==undefined)document.getElementById('adt3').innerHTML = "---";
+	else document.getElementById('adt3').innerHTML = d.adate2;
+	
+	
 }
 
 function writeDownloadLink()
