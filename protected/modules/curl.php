@@ -50,6 +50,7 @@ class curl {
         echo "<br>here";
         return $this->exec($url, $data);
     }
+
     public function parse($data) {
         //http://localhost:8080/ws/standardization/term/parse
         $url = "http://localhost:8080/ws/standardization/term/post";
@@ -81,12 +82,12 @@ class curl {
         $url = "http://172.29.4.99:8083/ws/standardization/term/updateMethod";
         return $this->exec($url, $data);
     }
- 
+
     public function editGermplasmName($data) {
         $url = "http://172.29.4.99:8083/ws/standardization/term/checkEditedString";
         return $this->exec($url, $data);
     }
-      
+
     public function show_germplasm_details() {
         $url = "http://172.29.4.99:8083/ws/standardization/term/show_germplasm_details";
         $this->exec($url);
@@ -109,30 +110,11 @@ class curl {
         json_decode($result, true);
     }
 
-<<<<<<< HEAD
     public function searchGID($data) {
-=======
-    public function searchGID() {
-	
-        $gid = $_POST['inputGID'];
-        $level = $_POST['maxStep'];
-        
-        if(isset($_POST['cbox']))
-		{
-		  $selhis = '1';
-		}
-		else $selhis = '0';
-		
-        $a = array('GID' => $gid, 'LEVEL' => $level, 'SEL' => $selhis);
-      
-        $data = json_encode($a);
-		
+        $url = "http://localhost:8080/ws/standardization/term/searchGID";
 
->>>>>>> b6636dc23edcff68341277ab41cd47602eba8bc7
-		$url = "http://172.29.4.99:8083/ws/standardization/term/searchGID";
+        $this->exec($url, $data);
 
-        $this->exec($url,$data);
-        
         //$ch = curl_init();
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
@@ -142,21 +124,22 @@ class curl {
             'Content-Type: application/json',
             'Content-Length: ' . strlen($data))
         );
-		
-		//$results
+
+        //$results
         $result = curl_exec($ch);
         $jsonfile = "trydocinfo.json";
-        $try = json_decode($result, true); 
-		
-		
-		//echo $result;
-		return $try;
+        $try = json_decode($result, true);
+
+
+        //echo $result;
+        return $try;
     }
-    public function showDiagram($data){
-		
-		$url = "http://172.29.4.99:8083/ws/standardization/term/searchGID";
-        $this->exec($url,$data);
-        
+
+    public function showDiagram($data) {
+
+        $url = "http://172.29.4.99:8083/ws/standardization/term/searchGID";
+        $this->exec($url, $data);
+
         //$ch = curl_init();
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
@@ -166,22 +149,21 @@ class curl {
             'Content-Type: application/json',
             'Content-Length: ' . strlen($data))
         );
-		
-		//$results
+
+        //$results
         $result = curl_exec($ch);
         $jsonfile = "trydocinfo.json";
-        $try = json_decode($result, true); 
-		
-		
-		//echo $result;
-		return $try;
+        $try = json_decode($result, true);
+
+
+        //echo $result;
+        return $try;
     }
-	
-	public function editGermplasm() {
-		
-		$url = "http://172.29.4.99:8083/ws/standardization/term/editGermplasm";
-        $this->exec($url,$data);
-        
+
+    public function editGermplasm($data) {
+        $url = "http://172.29.4.99:8083/ws/standardization/term/editGermplasm";
+        $this->exec($url, $data);
+
         //$ch = curl_init();
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
@@ -191,17 +173,16 @@ class curl {
             'Content-Type: application/json',
             'Content-Length: ' . strlen($data))
         );
-		
-		//$results
+
+        //$results
         $result = curl_exec($ch);
         $jsonfile = "trydocinfo.json";
-        $try = json_decode($result, true); 
-		
-		
-		//echo $result;
-		return $try;
+        $try = json_decode($result, true);
+
+
+        //echo $result;
+        return $try;
     }
-  
 
 }
 

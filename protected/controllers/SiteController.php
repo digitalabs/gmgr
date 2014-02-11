@@ -243,7 +243,7 @@ class SiteController extends Controller {
             $data = json_encode($a);
 
             $curl = new curl();
-            $arr = $curl->editGermplasm();
+            $arr = $curl->editGermplasm($data);
         }
 
         $this->render('editor');
