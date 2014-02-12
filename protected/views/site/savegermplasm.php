@@ -9,7 +9,7 @@
             $list_array = json_decode($_POST['list']);
 
             $output = callCurl($new, $list_array, $germplasm);
-            //var_dump($output);
+            var_dump($output);
             echo "<br>";
             $list_array = $output['list'];
             print_r($list_array);
@@ -19,8 +19,10 @@
             if ($output['updated'] == true) {
 
                 echo "output:" . $output['updated'];
-                $error = $output['newString'][2];
-                $gid = $output['newString'][3];
+               // $error = $output['newString'][2];
+               // $gid = $output['newString'][3];
+                $error="";
+                $gid = "";
             } else {
 
                 echo "output2:" . $output['updated'];
@@ -55,7 +57,7 @@
         ?>
     </body></html>
 
-<?php
+<?php/*
 $error = $output['newString'][2];
 $gid = $output['newString'][3];
 echo "errrror: " . $error . "<br>";
@@ -65,4 +67,6 @@ $your_array = array();
 $your_array = explode("#", $error);
 $your_array = implode("\n", $your_array);
 $error = $your_array;
+ * */
+ 
 ?>
