@@ -45,63 +45,63 @@ class curl {
     }
 
     public function createNew($data) {
-        //http://172.29.4.99:8083/ws/standardization/term/parse
-        $url = "http://172.29.4.99:8083/ws/standardization/term/createNew";
+        //http://localhost:8080/ws/standardization/term/parse
+        $url = "http://localhost:8080/ws/standardization/term/createNew";
         //echo "<br>here";
         return $this->exec($url, $data);
     }
 
     public function updateGermplasmName($data) {
-        //http://172.29.4.99:8083/ws/standardization/term/parse
-        $url = "http://172.29.4.99:8083/ws/standardization/term/updateGermplasmName";
+        //http://localhost:8080/ws/standardization/term/parse
+        $url = "http://localhost:8080/ws/standardization/term/updateGermplasmName";
         //echo "<br>here";
         return $this->exec($url, $data);
     }
 
     public function parse($data) {
-        //http://172.29.4.99:8083/ws/standardization/term/parse
-        $url = "http://172.29.4.99:8083/ws/standardization/term/post";
+        //http://localhost:8080/ws/standardization/term/parse
+        $url = "http://localhost:8080/ws/standardization/term/post";
 
         return $this->exec($url, $data);
     }
 
     public function standardize($data) {
-        $url = "http://172.29.4.99:8083/ws/standardization/term/standardize2";
+        $url = "http://localhost:8080/ws/standardization/term/standardize2";
         return $this->exec($url, $data);
     }
 
     public function createGID($data) {
-        $url = "http://172.29.4.99:8083/ws/standardization/term/createGID2";
+        $url = "http://localhost:8080/ws/standardization/term/createGID2";
         return $this->exec($url, $data);
     }
 
     public function createGID2($data) {
-        $url = "http://172.29.4.99:8083/ws/standardization/term/createGID3";
+        $url = "http://localhost:8080/ws/standardization/term/createGID3";
         return $this->exec($url, $data);
     }
 
     public function chooseGID($data) {
-        $url = "http://172.29.4.99:8083/ws/standardization/term/chooseGID2";
+        $url = "http://localhost:8080/ws/standardization/term/chooseGID2";
         return $this->exec($url, $data);
     }
 
     public function updateMethod($data) {
-        $url = "http://172.29.4.99:8083/ws/standardization/term/updateMethod";
+        $url = "http://localhost:8080/ws/standardization/term/updateMethod";
         return $this->exec($url, $data);
     }
 
     public function chooseGID_cross($data) {
-        $url = "http://172.29.4.99:8083/ws/standardization/term/chooseGID_cross";
+        $url = "http://localhost:8080/ws/standardization/term/chooseGID_cross";
         return $this->exec($url, $data);
     }
 
     public function editGermplasmName($data) {
-        $url = "http://172.29.4.99:8083/ws/standardization/term/checkEditedString";
+        $url = "http://localhost:8080/ws/standardization/term/checkEditedString";
         return $this->exec($url, $data);
     }
 
     public function show_germplasm_details() {
-        $url = "http://172.29.4.99:8083/ws/standardization/term/show_germplasm_details";
+        $url = "http://localhost:8080/ws/standardization/term/show_germplasm_details";
         $this->exec($url);
 
         $gid = $_POST['hidGID'];
@@ -122,12 +122,44 @@ class curl {
         json_decode($result, true);
     }
 
-    public function searchGID($data) {
+    public function searchGID() {
+	      $gid = $_POST['inputGID'];
+			echo '<br/>gid:';
+			print_r($gid);
+            $level = $_POST['maxStep'];
+			if(isset($_POST['cbox']))
+			{
+				 $selhis = '1';
+			}
+				else $selhis = '0';
+				
+            //database settings
+            $local_db_name = Yii::app()->request->getParam('local_db_name');
+            $local_db_port = Yii::app()->request->getParam('local_db_port');
+            $local_db_username = Yii::app()->request->getParam('local_db_username');
+            $central_db_name = Yii::app()->request->getParam('central_db_name');
+            $central_db_port = Yii::app()->request->getParam('central_db_port');
+            $central_db_username = Yii::app()->request->getParam('central_db_username');
+
+            $a = array(
+                'GID' => $gid,
+                'LEVEL' => $level,
+				'SEL'   => $selhis,
+                'local_db_name' => $local_db_name,
+                'local_db_port' => $local_db_port,
+                'local_db_username' => $local_db_username,
+                'central_db_name' => $central_db_name,
+                'central_db_port' => $central_db_port,
+                'central_db_username' => $central_db_username
+            );
+
+
+            $data = json_encode($a);
+
         $url = "http://172.29.4.99:8083/ws/standardization/term/searchGID";
 
         $this->exec($url, $data);
 
-        //$ch = curl_init();
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
@@ -143,14 +175,42 @@ class curl {
         $try = json_decode($result, true);
 
 
-        //echo $result;
         return $try;
     }
 
 
-    public function showDiagram($data) {
+    public function showDiagram($in, $max) {
+            
+			$gid = $in;//$_GET['inputGID'];
+            $level = $max;//$_GET['maxStep'];
+			if(isset($_POST['cbox']))
+			{
+				 $selhis = '1';
+			}
+				else $selhis = '0';
+				
+            //database settings
+            $local_db_name = Yii::app()->request->getParam('local_db_name');
+            $local_db_port = Yii::app()->request->getParam('local_db_port');
+            $local_db_username = Yii::app()->request->getParam('local_db_username');
+            $central_db_name = Yii::app()->request->getParam('central_db_name');
+            $central_db_port = Yii::app()->request->getParam('central_db_port');
+            $central_db_username = Yii::app()->request->getParam('central_db_username');
 
-        $url = "http://172.29.4.99:8083/ws/standardization/term/searchGID";
+            $a = array(
+                'GID' => $gid,
+                'LEVEL' => $level,
+				'SEL' =>$selhis,
+                'local_db_name' => $local_db_name,
+                'local_db_port' => $local_db_port,
+                'local_db_username' => $local_db_username,
+                'central_db_name' => $central_db_name,
+                'central_db_port' => $central_db_port,
+                'central_db_username' => $central_db_username
+            );
+            $data = json_encode($a);
+
+        $url = "http://localhost:8080/ws/standardization/term/searchGID";
         $this->exec($url, $data);
 
         //$ch = curl_init();
@@ -174,7 +234,7 @@ class curl {
     }
 
     public function editGermplasm($data) {
-        $url = "http://172.29.4.99:8083/ws/standardization/term/editGermplasm";
+        $url = "http://localhost:8080/ws/standardization/term/editGermplasm";
 
         $this->exec($url, $data);
 

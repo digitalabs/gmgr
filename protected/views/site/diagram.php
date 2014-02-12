@@ -32,8 +32,8 @@
     <div id='screen'>
 
     </div>
-    <div id="graph" style="height: auto;width: auto;">
-        <svg width="900" height="500" style="height: auto;width: auto;" id="graphDiv"></svg>
+    <div id="graph" style="z-index:500;height: auto;width: auto;">
+        <svg width="3500" height="5000" style="height: auto;width: auto;" id="graphDiagram"></svg>
     </div>
 
     <div id="opener" style="position:fixed; bottom:70px; left:50px">
@@ -83,9 +83,6 @@
         <div style="padding-left: 5px;padding-right: 5px; text-align: right;">
             <!--<button name="updateBtn" id="updateBtn" type="submit" class="btn btn-mini btn-primary" onclick="graph2b();">Update</button></form>
             <button title="This feature is a work in progress" class="btn btn-mini btn-success" id="generate" value="" >Save image</button>-->
-            <form method="POST" enctype="multipart/form-data" action="<?php echo Yii::app()->baseUrl; ?>/save.php" id="myForm">
-                <input type="hidden" name="img_val" id="img_val" value="" />
-            </form>
 
             <div style="padding-left:5px;padding-right:5px;"><hr></div>
             <center>
@@ -174,10 +171,10 @@
             <option value="300%">300%</option>
         </select>
         
-        <span id="id-gid">GID:</span>
-        <input name="inputGID" id="inputGID" readonly="readonly"  value = <?php echo $in_gid; ?>/>
+        <!--<span id="id-gid">GID:</span>
+        <input name="inputGID" id="inputGID" readonly="readonly"  value = <?php //echo $in_gid; ?>/>
         <span id="id-gid">steps:</span>
-        <input name="maxStep" id="maxStep" readonly="readonly" value = <?php echo $max_step; ?>/> 
+        <input name="maxStep" id="maxStep" readonly="readonly" value = <?php //echo $max_step; ?>/> -->
         
     </div> 
     <!--</div>-->
@@ -214,8 +211,8 @@
              $.localStorage('level', jQuery("input#maxStep").val()); 
         });
         
-    document.getElementById('inputGID').value = $.localStorage('GID');
-    document.getElementById('maxStep').value = $.localStorage('level');
+    //document.getElementById('inputGID').value = $.localStorage('GID');
+    //document.getElementById('maxStep').value = $.localStorage('level');
 
     function info()
     {
@@ -297,7 +294,7 @@
         var OptionSelected = optionSel.selectedIndex;
         var val = optionSel.options[OptionSelected].text;
         //alert(val);
-        var div = document.getElementById("graphDiv");
+        var div = document.getElementById("graphDiagram");
         div.style.zoom = val;
     }
 

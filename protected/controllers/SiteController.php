@@ -187,37 +187,14 @@ class SiteController extends Controller {
     public function actionEditor() {
 
         $model = new ImporterForm;
-
+		Yii::import('application.modules.curl');
 
         if (isset($_POST['searchBtn']) || isset($_POST['updateBtn'])) {
-            Yii::import('application.modules.curl');
+            
 
-            $gid = $_POST['inputGID'];
-            $level = $_POST['maxStep'];
-            //database settings
-            $local_db_name = Yii::app()->request->getParam('local_db_name');
-            $local_db_port = Yii::app()->request->getParam('local_db_port');
-            $local_db_username = Yii::app()->request->getParam('local_db_username');
-            $central_db_name = Yii::app()->request->getParam('central_db_name');
-            $central_db_port = Yii::app()->request->getParam('central_db_port');
-            $central_db_username = Yii::app()->request->getParam('central_db_username');
-
-            $a = array(
-                'GID' => $gid,
-                'LEVEL' => $level,
-                'local_db_name' => $local_db_name,
-                'local_db_port' => $local_db_port,
-                'local_db_username' => $local_db_username,
-                'central_db_name' => $central_db_name,
-                'central_db_port' => $central_db_port,
-                'central_db_username' => $central_db_username
-            );
-
-
-            $data = json_encode($a);
-
+          
             $curl = new curl();
-            $arr = $curl->searchGID($data);
+            $arr = $curl->searchGID();
 
             $tree = $arr['tree'];
 
@@ -262,8 +239,64 @@ class SiteController extends Controller {
             $curl = new curl();
             $arr = $curl->editGermplasm($data);
         }
+		else
+			if(isset($_GET['inputGID'])&& isset($_GET['maxStep']))
+			{
+				$in = $_GET['inputGID'];
+				$max = $_GET['maxStep'];
+				$curl = new curl();
+				$arr = $curl->showDiagram($in,$max);
+
+				$tree = $arr['tree'];
+
+
+				$out = json_decode($tree);
+
+				$Data = $tree;
+				$File = dirname(__FILE__) . '/../../json_files/treePHP.json';
+
+				$Handle = fopen($File, 'w');
+
+				fwrite($Handle, $tree);
+				print "Data Written";
+				fclose($Handle);
+
+				$this->redirect(array('/site/editor'));
+			}
 
         $this->render('editor');
+    }
+	
+	public function actionViewDiagram() {
+
+        $model = new ImporterForm;
+		Yii::import('application.modules.curl');
+
+			if(isset($_GET['inputGID'])&& isset($_GET['maxStep']))
+			{
+				$in = $_GET['inputGID'];
+				$max = $_GET['maxStep'];
+				$curl = new curl();
+				$arr = $curl->showDiagram($in,$max);
+
+				$tree = $arr['tree'];
+
+
+				$out = json_decode($tree);
+
+				$Data = $tree;
+				$File = dirname(__FILE__) . '/../../json_files/diagram.json';
+
+				$Handle = fopen($File, 'w');
+
+				fwrite($Handle, $tree);
+				print "Data Written";
+				fclose($Handle);
+
+				$this->redirect(array('/site/viewDiagram'));
+			}
+
+        $this->render('viewDiagram');
     }
 
     public function actionImporter() {
@@ -741,7 +774,7 @@ class SiteController extends Controller {
                     $list = json_decode($data, true);
 
                     if (!empty($_POST['Germplasm']['gid'])) {
-                        echo "here 0";
+                        //echo "here 0";
                         $selected = $_POST['Germplasm']['gid'];
                         $idArr = explode(',', $selected);
                         foreach ($idArr as $index => $id) {
@@ -1040,7 +1073,7 @@ class SiteController extends Controller {
         $this->render('contactUs');
     }
 
-    public function actionDiagram() {
+    /*public function actionDiagram() {
         Yii::app()->session['username'] = Yii::app()->user->id;
         $this->browserSession = Yii::app()->session['username'];
         $model2 = new LoginForm;
@@ -1048,31 +1081,8 @@ class SiteController extends Controller {
         if (isset($this->browserSession)) {
             Yii::import('application.modules.curl');
 
-            $gid = $_GET['inputGID'];
-            $level = $_GET['maxStep'];
-
-            //database settings
-            $local_db_name = Yii::app()->request->getParam('local_db_name');
-            $local_db_port = Yii::app()->request->getParam('local_db_port');
-            $local_db_username = Yii::app()->request->getParam('local_db_username');
-            $central_db_name = Yii::app()->request->getParam('central_db_name');
-            $central_db_port = Yii::app()->request->getParam('central_db_port');
-            $central_db_username = Yii::app()->request->getParam('central_db_username');
-
-            $a = array(
-                'GID' => $gid,
-                'LEVEL' => $level,
-                'local_db_name' => $local_db_name,
-                'local_db_port' => $local_db_port,
-                'local_db_username' => $local_db_username,
-                'central_db_name' => $central_db_name,
-                'central_db_port' => $central_db_port,
-                'central_db_username' => $central_db_username
-            );
-            $data = json_encode($a);
-
             $curl = new curl();
-            $arr = $curl->showDiagram($data);
+            $arr = $curl->showDiagram();
             //print_r($arr);
 
             $tree = $arr['tree'];
@@ -1094,7 +1104,7 @@ class SiteController extends Controller {
         } else {
             $this->render('login', array('model' => $model2));
         }
-    }
+    }*/
 
     public function actionBackend() {
         $dbFormModel = new databaseForm;

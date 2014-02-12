@@ -108,7 +108,7 @@ if (count($final)) {
                                             <h4>Summary info</h4>
                                             <p>
                                                 <?php
-                                                $female_id = (int) $pages[0][0][0];
+                                       $female_id = (int) $pages[0][0][0];
                                                 $i = 0;
                                                 $male_id = $file_toArray->output_tree_json($pages); // get what ith element in the array is the male parent
                                                 foreach ($pages[0] as $r) : list($id, $nval, $term, $GID, $methodID, $method, $locID, $location, $gpid1, $gpid2, $newGID) = $r;
@@ -178,7 +178,6 @@ if (count($final)) {
                                         <th>GPID2</th>
                                         <th>Method </th>
                                         <th>Location</th>
-                                        <th>Date of creation (yyyyMMdd)</th>
 
                                         </thead>
                                         <tbody>
@@ -186,7 +185,7 @@ if (count($final)) {
                                             <?php
                                             $i = 0;
                                             $j = 0;
-                                            foreach ($pages[0] as $r) : list($id, $nval, $term, $GID, $methodID, $method, $locID, $location, $gpid1, $gpid2, $newGID, $date_list, $date) = $r;
+                                            foreach ($pages[0] as $r) : list($id, $nval, $term, $GID, $methodID, $method, $locID, $location, $gpid1, $gpid2, $newGID) = $r;
 
                                                 if ($i == 0) {
                                                     echo '<tr style="border-left: 4px solid #f38787; /*background-color:rgba(243, 135, 135, 0.10);*/" > ';
@@ -241,9 +240,7 @@ if (count($final)) {
                                                     echo "<input type='hidden' class='$term' name='existing' value='" . base64_encode(serialize($existing)) . "'>";
                                                     echo "<input type='hidden' class='$term' name='checked' value='" . base64_encode(serialize($checked)) . "'>";
                                                     echo "<input type='hidden' class='$term' name='locationID' value='" . $locationID . "'>";
-                                                    echo "<input type='hidden' class='$term' name='cross' value='" . $pages[0][count($pages[0]) - 1][2] . "'>";
 
-                                                    //echo "cross<br>". $pages[0][count($pages[0])-1][2];
                                                     $m_term = $term;
                                                     $m_id = $id;
                                                     $m_pedigree = $nval;
@@ -284,7 +281,7 @@ if (count($final)) {
                                                     $line = explode("#", $method);
                                                     $line = implode(",", $line);
                                                     $method = $line;
-                                                    echo "<td><b>" . $methodID . "</b>&nbsp; <i>" . $method . "</i></td>";
+                                                    echo "<td>" . $methodID . "&nbsp; <i>" . $method . "</i></td>";
                                                 }
                                                 // location
                                                 if ($method === "N/A") {
@@ -294,14 +291,9 @@ if (count($final)) {
                                                     $line = explode("#", $location);
                                                     $line = implode(",", $line);
                                                     $location = $line;
-                                                    echo "<td><b>" . $locID . "</b>&nbsp; <i>" . $location . "</i></td>";
+                                                    echo "<td>" . $locID . "&nbsp; <i>" . $location . "</i></td>";
+                                                    echo '</tr>';
                                                 }
-                                                if ($date === "N/A") {
-                                                    echo "<td class='muted'><font><i>" . $date . "</i></font></td>";
-                                                } else {
-                                                    echo "<td>" . $date . "</td>";
-                                                }
-                                                echo '</tr>';
                                             endforeach;
                                             ?>
                                         </tbody>
@@ -309,13 +301,8 @@ if (count($final)) {
                                     <?php
                                     // print out the page numbers beneath the results
                                     //$pageNumbers = $pagination->getLinks2($_GET, $processed, $row_count, $not_standard);
-<<<<<<< HEAD
-                                   // echo "<br>row_count: " . $row_count;
-                                   // echo "<br>processed: " . $processed;
-=======
                                     //echo "<br>row_count: ".$row_count;
                                    // echo "<br>processed: ".$processed;
->>>>>>> develop
                                     $pageNumbers = $pagination->getLinks2($_GET, $processed, $row_count);
                                     echo " <div class='panel-footer'>";
                                     echo "<ul class='pager'>";
