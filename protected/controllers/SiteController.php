@@ -190,8 +190,6 @@ class SiteController extends Controller {
 		Yii::import('application.modules.curl');
 
         if (isset($_POST['searchBtn']) || isset($_POST['updateBtn'])) {
-            
-
           
             $curl = new curl();
             $arr = $curl->searchGID();
@@ -209,60 +207,7 @@ class SiteController extends Controller {
             fwrite($Handle, $tree);
             print "Data Written";
             fclose($Handle);
-
-            $this->redirect(array('/site/editor'));
         }
-
-        if (isset($_POST['save'])) {
-            Yii::import('application.modules.curl');
-            //database settings
-            $local_db_name = Yii::app()->request->getParam('local_db_name');
-            $local_db_port = Yii::app()->request->getParam('local_db_port');
-            $local_db_username = Yii::app()->request->getParam('local_db_username');
-            $central_db_name = Yii::app()->request->getParam('central_db_name');
-            $central_db_port = Yii::app()->request->getParam('central_db_port');
-            $central_db_username = Yii::app()->request->getParam('central_db_username');
-
-            $a = array(
-                'GID' => 50533,
-                'LEVEL' => 2,
-                'local_db_name' => $local_db_name,
-                'local_db_port' => $local_db_port,
-                'local_db_username' => $local_db_username,
-                'central_db_name' => $central_db_name,
-                'central_db_port' => $central_db_port,
-                'central_db_username' => $central_db_username
-            );
-
-            $data = json_encode($a);
-
-            $curl = new curl();
-            $arr = $curl->editGermplasm($data);
-        }
-		else
-			if(isset($_GET['inputGID'])&& isset($_GET['maxStep']))
-			{
-				$in = $_GET['inputGID'];
-				$max = $_GET['maxStep'];
-				$curl = new curl();
-				$arr = $curl->showDiagram($in,$max);
-
-				$tree = $arr['tree'];
-
-
-				$out = json_decode($tree);
-
-				$Data = $tree;
-				$File = dirname(__FILE__) . '/../../json_files/treePHP.json';
-
-				$Handle = fopen($File, 'w');
-
-				fwrite($Handle, $tree);
-				print "Data Written";
-				fclose($Handle);
-
-				$this->redirect(array('/site/editor'));
-			}
 
         $this->render('editor');
     }
@@ -946,9 +891,14 @@ class SiteController extends Controller {
                     $output['central_db_name'] = $central_db_name;
                     $output['central_db_port'] = $central_db_port;
                     $output['central_db_username'] = $central_db_username;
-                    //  echo "choose: ".$choose;
-                    // echo ": ".$cross;
-                    if ($term == $cross) {
+                   /*     echo "choose: ".$cross;
+                    echo ": ".$term."<br>";
+                    
+                    echo "r: ".$r;
+                    * */
+                    $r=strcmp($term, $cross);
+                    if ($r===0) {    
+                        echo "<br>choose gid for cross";
                         $output["female"] = $female;
                         $output["male"] = $male;
                         $output["female_id"] = $fid;
@@ -958,7 +908,7 @@ class SiteController extends Controller {
                         $output["gid"] = $gid;
                         $output["locationID"] = $locationID;
                         
-//echo "<br><choose gid for cross>";
+
                         $output = $curl->chooseGID_cross(json_encode($output));
                     } else {
                         $output = $curl->chooseGID(json_encode($output));
@@ -979,8 +929,7 @@ class SiteController extends Controller {
                     $checked = json_decode($_POST['checked']);
                     $rows = $list;
                 }
-
-                if (count($rows)) {
+if (count($rows)) {
                     foreach ($rows as $i => $row) : list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male, $date) = $row;
                         $arr2[] = array('id' => $i + 1, 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date' => $date);
 
@@ -1006,6 +955,7 @@ class SiteController extends Controller {
                     'existing' => $existing,
                     'createdGID' => $createdGID
                 ));
+               
             } elseif (isset($_GET['yes'])) {//to process the remaining entries
                 //echo "<br><br><br>yes page";
                 $url = $model->curPageURL();
