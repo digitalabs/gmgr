@@ -191,7 +191,11 @@ class SiteController extends Controller {
 
         if (isset($_POST['searchBtn']) || isset($_POST['updateBtn'])) {
             Yii::import('application.modules.curl');
-
+            if(isset($_POST['cbox'])){
+                $sel="1";
+            }else{
+                $sel="0";
+            }
             $gid = $_POST['inputGID'];
             $level = $_POST['maxStep'];
             //database settings
@@ -205,6 +209,7 @@ class SiteController extends Controller {
             $a = array(
                 'GID' => $gid,
                 'LEVEL' => $level,
+                'SEL' => $sel,
                 'local_db_name' => $local_db_name,
                 'local_db_port' => $local_db_port,
                 'local_db_username' => $local_db_username,
