@@ -36,6 +36,11 @@
 
             <div class="span6">
                 <br/>
+                <div>
+                    <?php
+                         echo CHtml::link('Back to main', array('site/importer'));
+                    ?>
+                </div>
                 <div class="span5">
                     <fieldset>
                         <legend>Local Database</legend>

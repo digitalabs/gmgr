@@ -13,7 +13,6 @@ Yii::import('application.modules.configDB');
 Yii::import('application.modules.model');
 
 $file_toArray = new file_toArray();
-
 $unselected = 0;
 //print_r($checked);
 //print_r($createdGID);
@@ -48,10 +47,13 @@ if (count($final)) {
             }
         endforeach;
 
-        /*
-          count all rows
-         */
-        $row_count = count($list);
+        //  count all rows
+        if(isset($list)){
+           $row_count = count($list);
+        }   
+        else{ 
+            $row_count = $_POST['row_count'];
+        }    
         /* END count all rows */
 
         /*
@@ -337,6 +339,7 @@ if (count($final)) {
                                                         checked: $("#checked").val(),
                                                         existing: $("#existing").val(),
                                                         createdGID: $("#createdGID").val(),
+                                                        row_count: $("#row_count").val(),
 							next:1
 						};
 						options.type = "post";
@@ -418,7 +421,10 @@ if (count($final)) {
                         echo CHtml::hiddenField('checked', '');
                         echo CHtml::hiddenField('existing', '');
                         echo CHtml::hiddenField('createdGID', '');
-                        echo CHtml::hiddenField('row_count',$row_count);
+                        if(isset($_POST['row_count'])){
+                           echo CHtml::hiddenField('row_count',$_POST['row_count']);
+                        }else    
+                              echo CHtml::hiddenField('row_count',$row_count);
                         ?>
                     </div>
                     <!--  </div>
