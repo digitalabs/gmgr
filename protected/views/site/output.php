@@ -166,7 +166,7 @@
                             $your_array = explode("#", CHtml::encode($data["fgid"]));
                             $your_array = implode("<br>", $your_array);
                             $fgid = $your_array;
-                            return "<b>" . CHtml::encode($data["female"]) . "</b>" . "" . $fgid . "";
+                            return "" . CHtml::encode($data["female"]) . "" . "<span class='muted'>" . $fgid . "</span>";
                         } else {
                             //return "<font style='color:#FF6600; font-weight:bold;'>".CHtml::encode($data["female"])."</font>";
 
@@ -190,7 +190,7 @@
                             $your_array = explode("#", CHtml::encode($data["mgid"]));
                             $your_array = implode("<br>", $your_array);
                             $mgid = $your_array;
-                            return "<b>" . CHtml::encode($data["male"]) . "</b>" . "" . $mgid . "";
+                            return "" . CHtml::encode($data["male"]) . "" . "<span class='muted'>" . $mgid . "</span>";
                         } else {
                             echo "<input type='hidden' class='" . $data["male"] . "' name='male' value='" . $data["male"] . "'>";
                             echo "<input type='hidden' class='" . $data["male"] . "' name='mremarks' value='" . $data["mremarks"] . "'>";

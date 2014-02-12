@@ -1078,3 +1078,6 @@ Stack trace:
 REQUEST_URI=/GMGR/index.php?r=site/assignGID
 in E:\Installed Software\XAMPP\htdocs\GMGR\protected\controllers\SiteController.php (883)
 in E:\Installed Software\XAMPP\htdocs\GMGR\index.php (13)
+2014/02/11 09:51:34 [warning] [application] Failed to set unsafe attribute "file" of "ImporterForm".
+in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (331)
+in E:\xampp\htdocs\GMGR\index.php (13)

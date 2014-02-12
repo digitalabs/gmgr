@@ -26,8 +26,8 @@ class file_toArray {
             $header = array();
             $header = explode(",", $row1[$i]);
         }
-       // echo "<br>HEADER<br>";
-       // print_r($header);
+        // echo "<br>HEADER<br>";
+        // print_r($header);
 
         $column_female = -1;
         $column_male = -1;
@@ -62,7 +62,7 @@ class file_toArray {
             $cells = explode(",", $lines[$i]); // use the cell/row delimiter ;
             //print_r($cells);
             //echo "<br>";
-            
+
             for ($k = 0; $k < count($cells) - 1; $k++) {
 
                 if ($k == $column_cross) {
@@ -74,7 +74,6 @@ class file_toArray {
                 } elseif ($k == $column_date) {
                     $date = $cells[$k];
                 }
-                
             }// for k end
             array_push($dataString, $cross);
             array_push($dataString, $female);
@@ -101,7 +100,7 @@ class file_toArray {
 
         $data = array();
         for ($i = 0, $k = count($existingTerm); $i < $k; $i++) {
-            if ($existingTerm[$i][2] === $choose) {
+            if ($existingTerm[$i][6] === $choose) {
                 $data[] = $existingTerm[$i]; //existingTerm data
             }
         }
@@ -120,6 +119,7 @@ class file_toArray {
                 $createdGID[$i][7] = $data[0][10];
                 $createdGID[$i][8] = $data[0][2];
                 $createdGID[$i][9] = $data[0][4];
+                $createdGID[$i][12] = $data[0][12];
                 //$germplasm = $createdGID; //data 4 is the details of the chosen GID	
 
                 $germplasm[0] = $createdGID[$i][0];
@@ -138,9 +138,8 @@ class file_toArray {
         }
 
         //array from createdGID.csv
-
-        print_r($germplasm);
-        echo "<br><br>";
+        //print_r($germplasm);
+        //echo "<br><br>";
 
 
         for ($i = 0; $i < count($createdGID); $i++) {
@@ -166,6 +165,9 @@ class file_toArray {
         $data3["parent1"] = $pedigree; // data 3 is the container for json file
         $data3["term"] = $term;
         $data3["germplasm"] = $germplasm;
+        // echo "<br><br><br><br><br><br>term: ".$term."<br>";
+        //print_r($germplasm);
+        //echo "<br>";
         $data3["cross"] = $cross;
         $data3["is_female"] = $is_female;
         $data3["createdGID"] = $createdGID;

@@ -44,10 +44,17 @@ class curl {
         return $output;
     }
 
+    public function createNew($data) {
+        //http://172.29.4.99:8083/ws/standardization/term/parse
+        $url = "http://172.29.4.99:8083/ws/standardization/term/createNew";
+        //echo "<br>here";
+        return $this->exec($url, $data);
+    }
+
     public function updateGermplasmName($data) {
         //http://172.29.4.99:8083/ws/standardization/term/parse
         $url = "http://172.29.4.99:8083/ws/standardization/term/updateGermplasmName";
-        echo "<br>here";
+        //echo "<br>here";
         return $this->exec($url, $data);
     }
 
@@ -80,6 +87,11 @@ class curl {
 
     public function updateMethod($data) {
         $url = "http://172.29.4.99:8083/ws/standardization/term/updateMethod";
+        return $this->exec($url, $data);
+    }
+
+    public function chooseGID_cross($data) {
+        $url = "http://172.29.4.99:8083/ws/standardization/term/chooseGID_cross";
         return $this->exec($url, $data);
     }
 
@@ -135,6 +147,7 @@ class curl {
         return $try;
     }
 
+
     public function showDiagram($data) {
 
         $url = "http://172.29.4.99:8083/ws/standardization/term/searchGID";
@@ -162,6 +175,7 @@ class curl {
 
     public function editGermplasm($data) {
         $url = "http://172.29.4.99:8083/ws/standardization/term/editGermplasm";
+
         $this->exec($url, $data);
 
         //$ch = curl_init();
