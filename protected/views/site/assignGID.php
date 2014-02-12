@@ -119,7 +119,7 @@ if (count($final)) {
                                                             }
                                                         } else {
                                                             if ($newGID === "new") {
-                                                                echo "The female parent <b>" . $term . "</b> has been added to the local database with a suggested method of <b>(" . $methodID . ")" . $method . "</b>. 
+                                                                echo "The female parent <b>" . $term . "</b> has been added to the local database.
 															<br>";
                                                             } else {
                                                                 if ($i + 1 == $male_id) {
@@ -138,7 +138,7 @@ if (count($final)) {
                                                             }
                                                         } else {
                                                             if ($newGID === "new") {
-                                                                echo "The male parent <b>" . $term . "</b> has been added to the local database with a suggested method of <b>(" . $methodID . ")" . $method . "</b>.
+                                                                echo "The male parent <b>" . $term . "</b> has been added to the local database.
 															<br>";
                                                             } else {
                                                                 if (($i + 1) == count($pages[0]) - 1) {
@@ -152,8 +152,7 @@ if (count($final)) {
 
                                                     if ($id == $fid . "/" . $mid) {
                                                         if ($newGID === "new") {
-                                                            echo "The cross <b>" . $term . "</b> has been added to the local database with a suggested method of <b>(" . $methodID . ")" . $method . "</b>. You may change the method type by 
-														typing the method id, type, code, or name and clicking the update button.
+                                                            echo "The cross <b>" . $term . "</b> has been added to the local database.
 															<br>";
                                                         } else {
                                                             echo "The cross <b>" . $term . "</b> is already existing in the local or central database.<br>";
@@ -307,13 +306,8 @@ if (count($final)) {
                                     <?php
                                     // print out the page numbers beneath the results
                                     //$pageNumbers = $pagination->getLinks2($_GET, $processed, $row_count, $not_standard);
-<<<<<<< HEAD
-                                   // echo "<br>row_count: " . $row_count;
-                                   // echo "<br>processed: " . $processed;
-=======
                                     //echo "<br>row_count: ".$row_count;
                                    // echo "<br>processed: ".$processed;
->>>>>>> develop
                                     $pageNumbers = $pagination->getLinks2($_GET, $processed, $row_count);
                                     echo " <div class='panel-footer'>";
                                     echo "<ul class='pager'>";
