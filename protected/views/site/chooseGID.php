@@ -1,28 +1,10 @@
-<<<<<<< HEAD:modules_folder/chooseGID.php
-<script src='./modules_folder/js/jquery-1.4.4.min.js' type='text/javascript'></script>
-<script src='./modules_folder/js/jquery.dataTables.js' type='text/javascript'></script>
-<script src='./modules_folder/js/jquery.dataTables.columnFilter.js' type='text/javascript'></script>
+<script src='./js/jquery-1.4.4.min.js' type='text/javascript'></script>
+<script src='./js/jquery.dataTables.js' type='text/javascript'></script>
+<script src='./js/jquery.dataTables.columnFilter.js' type='text/javascript'></script>
 
-<?php
-include_once(dirname(__FILE__) . '/../protected/modules/file_toArray.php');
-$file_toArray = new file_toArray();
-?>
-<form class='contact' name='contact' action='index.php?r=site/assignGID' method='POST' id='choose-frm'>
+<form class='contact' name='contact' action='' method='POST' id='choose-frm'>
     <div class='modal-header'>
         <a class='close' data-dismiss='modal'>X</a>
-=======
-<!--<script src="./modules_folder/js/jquery-1.4.4.min.js" type="text/javascript"></script>
-<script src="./modules_folder/js/jquery.dataTables.js" type="text/javascript"></script>
-<script src="./modules_folder/js/jquery.dataTables.columnFilter.js" type="text/javascript"></script>-->
-
-<?php
-//include_once(dirname(__FILE__) . "/../protected/modules/file_toArray.php");
-//$file_toArray = new file_toArray();
-?>
-<form class="contact" name="contact" action="index.php?r=site/assignGID" method="POST" id="choose-frm">
-    <div class="modal-header">
-        <a class="close" data-dismiss="modal">&times;</a>
->>>>>>> develop:protected/views/site/chooseGID.php
         <?php
         if (isset($_POST['termId'])) {
             $m_term = $_POST['termId'];
@@ -79,7 +61,7 @@ $file_toArray = new file_toArray();
             }
             if ($existing[$index][13] != 'not specified' && $existing[$index][13] != $existing[$index][12]) {
                 //echo "<br>";
-                echo "No germplasm <br><br>";
+                //echo "No germplasm <br><br>";
                 ?>
                 <input type='hidden'  value="<?php echo $existing[0][13]; ?>"  id='sToId' name='sToId'>
                 <input type='button' class='btn btn-success' value='Show Germplasm older than the cross' id='filter' onclick='change()'>&nbsp;&nbsp;
@@ -93,14 +75,22 @@ $file_toArray = new file_toArray();
                     <tr>
                         <th></th>
                         <th>GID</th>
-                        <th></th>
+
                         <th>GPID1</th>
                         <th>GPID2</th>
                         <th>Method Type</th>
                         <th>Location</th>
                         <th>Date of Creation</th>
                     </tr>   
-                
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
                 </thead>
 
                 <tbody>
@@ -112,7 +102,6 @@ $file_toArray = new file_toArray();
                           echo 'existing[j][0]: '.$existing[$j][0]."<br>";
                          */
                         if ($m_term === $existing[$j][11] && $existing[$j][0] === $m_id) {
-<<<<<<< HEAD:modules_folder/chooseGID.php
                             $date_creation = $existing[$j][12];
 
                             $locationID_l = $existing[$j][9];
@@ -173,37 +162,6 @@ $file_toArray = new file_toArray();
                             echo "<td>(" . $locationID_l . ")&nbsp;" . $location_l . "</td>";
                             echo "<td>" . $date_creation . "</td>";
                             echo "</tr>";
-=======
-                            echo '<tr>';
-                            echo "<td>";
-                            echo '<input type = "radio" name="choose" value="' . $existing[$j][2] . '">' . '</option>';
-                            echo '<input type="hidden" name="term" value="' . $m_term . '" />';
-                            echo '<input type="hidden" name="id" value="' . $m_id . '" />';
-                            echo '<input type="hidden" name="pedigree" value="' . $m_pedigree . '" />';
-                            echo '<input type="hidden" name="fid" value="' . $m_fid . '" />';
-                            echo '<input type="hidden" name="mid" value="' . $m_mid . '" />';
-                            echo '<input type="hidden" name="female" value="' . $m_female . '" />';
-                            echo '<input type="hidden" name="male" value="' . $m_male . '" />';
-                            echo '<input type="hidden" name="list" value="' . base64_encode(serialize($list)) . '" />';
-                            echo '<input type="hidden" name="createdGID" value="' . base64_encode(serialize($createdGID)) . '" />';
-                            echo '<input type="hidden" name="existing" value="' . base64_encode(serialize($existing)) . '" />';
-                            echo '<input type="hidden" name="checked" value="' . base64_encode(serialize($checked)) . '" />';
-                            echo '<input type="hidden" name="locationID" value="' . $locationID . '" />';
-                            echo "</td>";
-                            //echo "<td>" . $existing[$j][6] . "</td>";
-                            
-                            
-                             echo "<td>" . $existing[$j][6] . "</td>";
-                             echo "<td>".CHtml::link('Show Pedigree Tree',array('site/diagram&inputGID=50533&maxStep=2'),array("target"=>"_blank"))."</td>";
-                             
-
-                            echo "<td>(" . $existing[$j][2] . ")&nbsp; " . $existing[$j][3] . "</td>";
-                            echo "<td>(" . $existing[$j][4] . ")&nbsp; " . $existing[$j][5] . "</td>";
-                            echo "<td>(" . $existing[$j][7] . ")&nbsp; " . $existing[$j][8] . "</td>";
-                            echo "<td>(" . $existing[$j][9] . ")&nbsp;" . $existing[$j][10] . "</td>";
-                            echo "<td>" . $existing[$j][12] . "</td>";
-                            echo '</tr>';
->>>>>>> develop:protected/views/site/chooseGID.php
                         }
                     }
                     ?>
@@ -216,7 +174,7 @@ $file_toArray = new file_toArray();
                 <input class='btn btn-primary' type='submit' value='Assign' id='id-submit' >
                 </form> 
             
-                <form action='index.php?r=site/assignGID' method='POST' style=" display:inline-block;" >
+                <form action='' method='POST' style=" display:inline-block;" >
                     <?php
                     // if ($existing[0][13] == 'not specified') {
                     echo "<input type = 'hidden' name='createNew' value='" . $cross . "' />";
@@ -244,7 +202,6 @@ $file_toArray = new file_toArray();
             <a href='#' class='btn' data-dismiss='modal'>Cancel</a>
 
         </div>
-<<<<<<< HEAD:modules_folder/chooseGID.php
 
         <?php
     }
@@ -329,45 +286,6 @@ $file_toArray = new file_toArray();
                             $('#id-submit').show();
                             // $('#id-create-submit').show();
                         }
-=======
-    </form> 
-    <?php
-}
-?>
-<script type="text/javascript">
-            //function for the loading indicator
-            //************For opening a modal dialog***************
-
-            $(document).ready(function() {
-                var pop = function() {
-                    $('#choose-frm').hide();
-                    $('#screen').css({opacity: 0.4, 'width': $(document).width(), 'height': $(document).height()});
-                    $('body').css({'overflow': 'hidden'});
-                    $('#ajax-loading-indicator').css({'display': 'block'});
-                }
-                $('#submit').click(pop);
-                /* Initialise datatables */
-
-               /* $(".open-modal").click(function() {
-                    alert("hey");
-                    var term = $(this).data("id");
-                    var arr = document.getElementsByClassName(term);
-
-                    var m_values = new Array();
-                    m_values.length = 0;
-                    for (var i = 0; i < arr.length; i++) {
-                        m_values.push(arr[i].value);
-                    }
-
-                    //******assign the obtained value in the modal*****
-                    $.ajax({
-                        cache: false,
-                        type: 'POST',
-                        url:  '/GMGR/index.php?r=site/diagram',
-                        data: {termId: term, arr_terms: m_values},
-                        success: function(data) {
-                            $("#modal-pedTree").html(data);
->>>>>>> develop:protected/views/site/chooseGID.php
 
                         //Deleting the filtering funtion if we need the original table later.
                     }
@@ -378,7 +296,6 @@ $file_toArray = new file_toArray();
                             $('body').css({'overflow': 'hidden'});
                             $('#ajax-loading-indicator').css({'display': 'block'});
                         }
-<<<<<<< HEAD:modules_folder/chooseGID.php
                         $('#submit').click(pop);
                         /* Initialise datatables */
 
@@ -392,43 +309,6 @@ $file_toArray = new file_toArray();
                             for (var i = 0; i < arr.length; i++) {
                                 m_values.push(arr[i].value);
                             }
-=======
-                    });
-                });*/
-
-                $('#model').dataTable({
-                    "bPaginate": false,
-                    "bSort": false,
-                    "bSearchable": false
-                }).columnFilter({sPlaceHolder: "head:after",
-                    aoColumns: [{type: "none"},
-                        {type: "text"},
-                        {type: "text"},
-                        {type: "text"},
-                        {type: "text"},
-                        {type: "text"},
-                        {type: "text"},
-                        {type: "text"}
-                    ]
-
-                });
-
-
-            });
-            function change() {
-                var elem = document.getElementById("filter");
-                if (elem.value == "Show Germplasm older than the cross") {
-                    elem.value = "Show All";
-                    iMax = $('#sToId').attr("value");
-                } else {
-                    elem.value = "Show Germplasm older than the cross";
-                    iMax = "";
-                }
-                $.fn.dataTableExt.afnFiltering.push(
-                        function(oSettings, aData, iDataIndex) {
-                            // "date-range" is the id for my input
-                            var dateRange = $('#sToId').attr("value");
->>>>>>> develop:protected/views/site/chooseGID.php
 
                             //******assign the obtained value in the modal*****
                             $.ajax({
@@ -473,7 +353,6 @@ $file_toArray = new file_toArray();
                                 iMax = '';
                             }
                         }
-<<<<<<< HEAD:modules_folder/chooseGID.php
                         $.fn.dataTableExt.afnFiltering.push(
                                 function(oSettings, aData, iDataIndex) {
                                     // 'date-range' is the id for my input
@@ -529,16 +408,3 @@ $file_toArray = new file_toArray();
                      alert('hey');
                      });*/
     </script>    
-=======
-                );
-                //Update table
-                $('#model').dataTable().fnDraw();
-                //Deleting the filtering funtion if we need the original table later.
-            }
-            //************For opening a modal dialog***************
-            /*$(document).on("click", ".open-modal", function() {
-             //*****the term to be placed on the heading in the modal
-             alert("hey");
-             });*/
-</script>    
->>>>>>> develop:protected/views/site/chooseGID.php
