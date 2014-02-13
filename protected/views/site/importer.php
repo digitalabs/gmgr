@@ -40,6 +40,7 @@
                 <div class="row">
                     <div class="span4">
                         <fieldset>
+
                             <br/>
                             
                             <input type="radio" name="group1" value="BreedersCrossHistories" checked> Breeders Cross Histories &nbsp; &nbsp;
@@ -47,10 +48,6 @@
                              <input type="radio" name="group2" value="singleHit" checked> Accept single hit search<br><br/>
                             <?php
                             echo CHtml::link('Check database settings', array('site/settings_browser'), array('id' => 'database_link'));
-                            ?>
-                            
-                            <?php
-                            //echo $form->radioButtonListRow($model,'rButtons',array ('Breeders Cross Histories','Cultivar List','Accession'));   
                             ?>
 
                             <br>
