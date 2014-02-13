@@ -31,7 +31,9 @@
         $existing = unserialize(base64_decode($termArray[9]));
         $checked = unserialize(base64_decode($termArray[10]));
         $locationID = $termArray[11];
+       // print_r($existing);
         $cross = $termArray[12];
+        
     }
 
     if (count($existing) !== 0) {
@@ -61,7 +63,7 @@
             }
             if ($existing[$index][13] != 'not specified' && $existing[$index][13] != $existing[$index][12]) {
                 //echo "<br>";
-                echo "No germplasm <br><br>";
+               // echo "No germplasm <br><br>";
                 ?>
                 <input type='hidden'  value="<?php echo $existing[0][13]; ?>"  id='sToId' name='sToId'>
                 <input type='button' class='btn btn-success' value='Show Germplasm older than the cross' id='filter' onclick='change()'>&nbsp;&nbsp;
@@ -146,9 +148,8 @@
                             echo "<input type='hidden' name='gpid2' value='" . $gpid2_l . "' />";
                             echo "<input type='hidden' name='cdate' value='" . $existing[$index][13] . "' />";
                             echo "</td>";
-                            echo "<td>" . $gid_l . "</td>";
+                            echo "<td>" . $gid_l ." &nbsp;&nbsp;".CHtml::link('Show Pedigree Tree',array('site/viewDiagram&inputGID='.$gid_l.'&maxStep=5'),array('target'=>'_blank'))."</td>";
                             
-                            echo "<td>".CHtml::link('Show Pedigree Tree',array('site/viewDiagram&inputGID='.$gid_l.'&maxStep=5'),array("target"=>"_blank"))."</td>";
 
                             /* echo "<td>" . $existing[$j][6] . "<form action='index.php?r=site/editor' method='post' target='_blank'>
 
