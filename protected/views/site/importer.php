@@ -43,7 +43,7 @@
                     <div class="span4">
                         <fieldset>
                             <legend>List Type</legend>
-                            <input type="radio" name="group1" value="BreedersCrossHistories" checked> Breeders Cross Histories &nbsp; &nbsp;<a href="Nomenclature Rules/NomenclatureRules.htm">Nomenclature Rules</a> <br>
+                            <input type="radio" name="group1" value="BreedersCrossHistories" checked> Breeders Cross Histories &nbsp; &nbsp;<a href="Nomenclature Rules/Nomenclature%20Rules.htm">Nomenclature Rules</a> <br>
 
                             <!--<input type="radio" name="group1" value="CultivarList" disabled="true"> Cultivar List<br>
                             <input type="radio" name="group1" value="Accession" disabled="true"> Accession-->
