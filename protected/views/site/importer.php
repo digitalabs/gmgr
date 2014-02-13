@@ -49,7 +49,7 @@
                             ?>
                             <legend>Upload File</legend>
                              <b>File Type:</b> Breeders Cross Histories &nbsp; &nbsp;
-                            <a href="Nomenclature Rules/NomenclatureRules.htm">View Nomenclature Rules</a> <br/><br/>
+                            <a href="Nomenclature Rules/Nomenclature%20Rules.htm">View Nomenclature Rules</a> <br/><br/>
                             <br>
                             <?php
                             echo CHtml::activefileField($model, 'file');
