@@ -195,7 +195,12 @@ class SiteController extends Controller {
             $arr = $curl->searchGID();
 
             $tree = $arr['tree'];
-
+            $found = $arr['found'];
+			
+			if($found==="1")
+			{
+				echo "<script type='text/javascript'>alert('Search returned 0 results. ');</script>";
+			}
 
             $out = json_decode($tree);
 
