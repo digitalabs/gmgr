@@ -148,7 +148,7 @@
                             echo "</td>";
                             echo "<td>" . $gid_l . "</td>";
                             
-                            echo "<td>".CHtml::link('Show Pedigree Tree',array('site/viewDiagram&inputGID=50533&maxStep=5'),array("target"=>"_blank"))."</td>";
+                            echo "<td>".CHtml::link('Show Pedigree Tree',array('site/viewDiagram&inputGID='.$gid_l.'&maxStep=5'),array("target"=>"_blank"))."</td>";
 
                             /* echo "<td>" . $existing[$j][6] . "<form action='index.php?r=site/editor' method='post' target='_blank'>
 
