@@ -144,6 +144,7 @@
                             echo "<input type='hidden' name='gid' value='" . $gid_l . "' />";
                             echo "<input type='hidden' name='gpid1' value='" . $gpid1_l . "' />";
                             echo "<input type='hidden' name='gpid2' value='" . $gpid2_l . "' />";
+                            echo "<input type='hidden' name='cdate' value='" . $existing[$index][13] . "' />";
                             echo "</td>";
                             echo "<td>" . $gid_l . "</td>";
                             
@@ -192,6 +193,7 @@
                     echo "<input type='hidden' name='existing' value='" . base64_encode(serialize($existing)) . "' />";
                     echo "<input type='hidden' name='checked' value='" . base64_encode(serialize($checked)) . "' />";
                     echo "<input type='hidden' name='locationID' value='" . $locationID . "' />";
+                    echo "<input type='hidden' name='cdate' value='" . $existing[$index][13] . "' />";
                     ?>
 
                     <input id='id-create-new' class='btn btn-success' type='submit' value='Create New'>
