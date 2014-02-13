@@ -823,6 +823,7 @@ class SiteController extends Controller {
                     $gpid2_nval = strip_tags($_POST['gpid2_nval']);
                     $locationID = strip_tags($_POST['locationID']);
                     $theParent = strip_tags($_POST['theParent']);
+                    $cdate = strip_tags($_POST['cdate']);
 
                     $list = unserialize(base64_decode($_POST['list']));
                     $createdGID = unserialize(base64_decode($_POST['createdGID']));
@@ -830,6 +831,7 @@ class SiteController extends Controller {
                     $checked = unserialize(base64_decode($_POST['checked']));
 
                     $a = array(
+                        'cdate'=>$cdate,
                         'cross' => $cross,
                         'chosenID' => $chosenID,
                         'term' => $term,
@@ -869,6 +871,7 @@ class SiteController extends Controller {
                     $gid = strip_tags($_POST['gid']);
                     $gpid1 = strip_tags($_POST['gpid1']);
                     $gpid2 = strip_tags($_POST['gpid2']);
+                    $cdate = strip_tags($_POST['cdate']);
 
                     $list = unserialize(base64_decode($_POST['list']));
                     $createdGID = unserialize(base64_decode($_POST['createdGID']));
@@ -878,6 +881,7 @@ class SiteController extends Controller {
                     $userID = Yii::app()->user->id;
 
                     $output = $file_toArray->updateGID_createdGID($term, $pedigree, $id, $choose, $fid, $mid, $female, $male, $createdGID, $existing, $list, $userID, $theParent);
+                    $output['cdate']=$cdate;
                     
                     $local_db_name = Yii::app()->request->getParam('local_db_name');
                     $local_db_port = Yii::app()->request->getParam('local_db_port');
