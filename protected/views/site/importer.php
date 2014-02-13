@@ -34,27 +34,29 @@
             <div class="span14">
                 <div id='div_link'>
                     <p class='instruction'>
-                        <?php
-                        echo CHtml::link('Check database settings', array('site/settings_browser'), array('id' => 'database_link'));
-                        ?>
+
                     </p>			
                 </div>
                 <div class="row">
-                   <!-- <div class="span4">
+                    <div class="span4">
                         <fieldset>
-                            <legend>List Type</legend>
-                            <input type="radio" name="group1" value="BreedersCrossHistories" checked> Breeders Cross Histories &nbsp; &nbsp;<a href="Nomenclature Rules/NomenclatureRules.htm">Nomenclature Rules</a> <br>
-
-                            <!--<input type="radio" name="group1" value="CultivarList" disabled="true"> Cultivar List<br>
-                            <input type="radio" name="group1" value="Accession" disabled="true"> Accession-->
+                            <br/>
+                            
+                            <input type="radio" name="group1" value="BreedersCrossHistories" checked> Breeders Cross Histories &nbsp; &nbsp;
+                            <a href="Nomenclature Rules/NomenclatureRules.htm">Nomenclature Rules</a> <br/><br/>
+                             <input type="radio" name="group2" value="singleHit" checked> Accept single hit search<br><br/>
+                            <?php
+                            echo CHtml::link('Check database settings', array('site/settings_browser'), array('id' => 'database_link'));
+                            ?>
+                            
                             <?php
                             //echo $form->radioButtonListRow($model,'rButtons',array ('Breeders Cross Histories','Cultivar List','Accession'));   
                             ?>
 
-                       <!--     <br>
                             <br>
                             <br>
-                        </fieldset><br>
+                            <br>
+                        </fieldset><!--<br>
                         <fieldset>
                             <legend></legend>
                             <input type="radio" name="group2" value="singleHit" checked> Accept single hit search<br>
@@ -62,9 +64,9 @@
 
                         </fieldset><br>
 
-
                     </div>
                     <div class="span1"></div>-->
+                    </div>  
                     <div class="span6">
 
                         <fieldset>
@@ -149,20 +151,20 @@
     </body></html>
 <script type="text/javascript">
     $(document).ready(function() {
-    var pop = function() {
-    $('#screen').css({opacity: 0.4, 'width': $(document).width(), 'height': $(document).height()});
-    $('body').css({'overflow': 'hidden'});
-    $('#ajax-loading-indicator').css({'display': 'block'});
-    }
-    $('#uploadFile').click(pop);
+        var pop = function() {
+            $('#screen').css({opacity: 0.4, 'width': $(document).width(), 'height': $(document).height()});
+            $('body').css({'overflow': 'hidden'});
+            $('#ajax-loading-indicator').css({'display': 'block'});
+        }
+        $('#uploadFile').click(pop);
 
     });
     window.onbeforeload = function() {
 
     }
-    <?php
-    Yii::app()->clientScript->registerScript(
-            'myHideEffect', '$(".info").animate({opacity: 1.0}, 3000).fadeOut("slow");', CClientScript::POS_READY
-    );
-    ?>
+<?php
+Yii::app()->clientScript->registerScript(
+        'myHideEffect', '$(".info").animate({opacity: 1.0}, 3000).fadeOut("slow");', CClientScript::POS_READY
+);
+?>
 </script>
