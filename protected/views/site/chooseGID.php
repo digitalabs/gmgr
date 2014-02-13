@@ -31,6 +31,7 @@
         $existing = unserialize(base64_decode($termArray[9]));
         $checked = unserialize(base64_decode($termArray[10]));
         $locationID = $termArray[11];
+        // print_r($existing);
         $cross = $termArray[12];
     }
 
@@ -61,7 +62,7 @@
             }
             if ($existing[$index][13] != 'not specified' && $existing[$index][13] != $existing[$index][12]) {
                 //echo "<br>";
-                echo "No germplasm <br><br>";
+                // echo "No germplasm <br><br>";
                 ?>
                 <input type='hidden'  value="<?php echo $existing[0][13]; ?>"  id='sToId' name='sToId'>
                 <input type='button' class='btn btn-success' value='Show Germplasm older than the cross' id='filter' onclick='change()'>&nbsp;&nbsp;
@@ -146,10 +147,7 @@
                             echo "<input type='hidden' name='gpid2' value='" . $gpid2_l . "' />";
                             echo "<input type='hidden' name='cdate' value='" . $existing[$index][13] . "' />";
                             echo "</td>";
-                            echo "<td>" . $gid_l . "</td>";
-                            
-                            echo "<td>".CHtml::link('Show Pedigree Tree',array('site/viewDiagram&inputGID=50533&maxStep=5'),array("target"=>"_blank"))."</td>";
-
+                            echo "<td>" . $gid_l . " &nbsp;&nbsp;" . CHtml::link('Show Pedigree Tree', array('site/viewDiagram&inputGID=' . $gid_l . '&maxStep=5'), array('target' => '_blank')) . "</td>";
                             /* echo "<td>" . $existing[$j][6] . "<form action='index.php?r=site/editor' method='post' target='_blank'>
 
                               <input type='hidden' name='inputGID' value='" . $existing[$j][6] . ''>
@@ -174,35 +172,35 @@
 
         </div>
         <div class='modal-footer'>
-                <input class='btn btn-primary' type='submit' value='Assign' id='id-submit' >
-                </form> 
-            
-                <form action='index.php?r=site/assignGID' method='POST' style=" display:inline-block;" >
-                    <?php
-                    // if ($existing[0][13] == 'not specified') {
-                    echo "<input type = 'hidden' name='createNew' value='" . $cross . "' />";
-                    echo "<input type='hidden' name='theParent' value='" . $m_nval . "' />";
-                    echo "<input type='hidden' name='term' value='" . $m_term . "' />";
-                    echo "<input type='hidden' name='chosenID' value='" . $m_id . "' />";
-                    echo "<input type = 'hidden' name='mid' value='" . $m_mid . "' />";
-                    echo "<input type = 'hidden' name='fid' value='" . $m_fid . "' />";
-                    echo "<input type = 'hidden' name='gpid2_nval' value='" . $gpid2_nval . "' />";
-                    echo "<input type = 'hidden' name='gpid1_nval' value='" . $gpid1_nval . "' />";
-                    echo "<input type='hidden' name='list' value='" . base64_encode(serialize($list)) . "' />";
-                    echo "<input type='hidden' name='createdGID' value='" . base64_encode(serialize($createdGID)) . "' />";
-                    echo "<input type='hidden' name='existing' value='" . base64_encode(serialize($existing)) . "' />";
-                    echo "<input type='hidden' name='checked' value='" . base64_encode(serialize($checked)) . "' />";
-                    echo "<input type='hidden' name='locationID' value='" . $locationID . "' />";
-                    echo "<input type='hidden' name='cdate' value='" . $existing[$index][13] . "' />";
-                    ?>
+            <input class='btn btn-primary' type='submit' value='Assign' id='id-submit' >
+            </form> 
 
-                    <input id='id-create-new' class='btn btn-success' type='submit' value='Create New'>
-
-                </form>
+            <form action='index.php?r=site/assignGID' method='POST' style=" display:inline-block;" >
                 <?php
-                // }
+                // if ($existing[0][13] == 'not specified') {
+                echo "<input type = 'hidden' name='createNew' value='" . $cross . "' />";
+                echo "<input type='hidden' name='theParent' value='" . $m_nval . "' />";
+                echo "<input type='hidden' name='term' value='" . $m_term . "' />";
+                echo "<input type='hidden' name='chosenID' value='" . $m_id . "' />";
+                echo "<input type = 'hidden' name='mid' value='" . $m_mid . "' />";
+                echo "<input type = 'hidden' name='fid' value='" . $m_fid . "' />";
+                echo "<input type = 'hidden' name='gpid2_nval' value='" . $gpid2_nval . "' />";
+                echo "<input type = 'hidden' name='gpid1_nval' value='" . $gpid1_nval . "' />";
+                echo "<input type='hidden' name='list' value='" . base64_encode(serialize($list)) . "' />";
+                echo "<input type='hidden' name='createdGID' value='" . base64_encode(serialize($createdGID)) . "' />";
+                echo "<input type='hidden' name='existing' value='" . base64_encode(serialize($existing)) . "' />";
+                echo "<input type='hidden' name='checked' value='" . base64_encode(serialize($checked)) . "' />";
+                echo "<input type='hidden' name='locationID' value='" . $locationID . "' />";
+                echo "<input type='hidden' name='cdate' value='" . $existing[$index][13] . "' />";
                 ?>
-            
+
+                <input id='id-create-new' class='btn btn-success' type='submit' value='Create New'>
+
+            </form>
+            <?php
+            // }
+            ?>
+
             <a href='#' class='btn' data-dismiss='modal'>Cancel</a>
 
         </div>
