@@ -273,11 +273,11 @@
         <br/>
         <div id="back_btn">
         <?php 
-            $this->widget('boostrap.widgets.TbButton',array(
+            /*$this->widget('boostrap.widgets.TbButton',array(
                  'type' => 'primary',
                  'id' => 'back_btn',
                  'label' => 'back'
-            ));
+            ));*/
         ?>
        </div>      
     </div>
