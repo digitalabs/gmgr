@@ -2,7 +2,7 @@
 <script src='./js/jquery.dataTables.js' type='text/javascript'></script>
 <script src='./js/jquery.dataTables.columnFilter.js' type='text/javascript'></script>
 
-<form class='contact' name='contact' action='index.php?r=site/assignGID' method='POST' id='choose-frm'>
+<form class='contact' name='contact' action='' method='POST' id='choose-frm'>
     <div class='modal-header'>
         <a class='close' data-dismiss='modal'>&times;</a>
         <?php
@@ -175,7 +175,7 @@
             <input class='btn btn-primary' type='submit' value='Assign' id='id-submit' >
             </form> 
 
-            <form action='index.php?r=site/assignGID' method='POST' style=" display:inline-block;" >
+            <form action='' method='POST' style=" display:inline-block;" >
                 <?php
                 // if ($existing[0][13] == 'not specified') {
                 echo "<input type = 'hidden' name='createNew' value='" . $cross . "' />";
