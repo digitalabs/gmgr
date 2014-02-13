@@ -38,36 +38,18 @@
                     </p>			
                 </div>
                 <div class="row">
-                    <div class="span4">
-                        <fieldset>
-
-                            <br/>
-                            
-                            <input type="radio" name="group1" value="BreedersCrossHistories" checked> Breeders Cross Histories &nbsp; &nbsp;
-                            <a href="Nomenclature Rules/NomenclatureRules.htm">Nomenclature Rules</a> <br/><br/>
-                             <input type="radio" name="group2" value="singleHit" checked> Accept single hit search<br><br/>
-                            <?php
-                            echo CHtml::link('Check database settings', array('site/settings_browser'), array('id' => 'database_link'));
-                            ?>
-
-                            <br>
-                            <br>
-                            <br>
-                        </fieldset><!--<br>
-                        <fieldset>
-                            <legend></legend>
-                            <input type="radio" name="group2" value="singleHit" checked> Accept single hit search<br>
-                            <br>
-
-                        </fieldset><br>
-
-                    </div>
-                    <div class="span1"></div>-->
+                    
+                    <div class="span1"></div>
                     </div>  
                     <div class="span6">
 
                         <fieldset>
+                             <?php
+                           // echo CHtml::link('Check database settings', array('site/settings_browser'), array('id' => 'database_link'));
+                            ?>
                             <legend>Upload File</legend>
+                             <b>File Type:</b> Breeders Cross Histories &nbsp; &nbsp;
+                            <a href="Nomenclature Rules/NomenclatureRules.htm">View Nomenclature Rules</a> <br/><br/>
                             <br>
                             <?php
                             echo CHtml::activefileField($model, 'file');
