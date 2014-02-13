@@ -22,13 +22,13 @@ var data = (function () {
     return jason;
 })(); 
 
+$("#searchBtn").on("click", function() {
+    if (data==null)
+    {
+        alert("Search returned 0 results");
+    }		
+});
 
-if (data==null)
-{
-    $('searchBtn').observe('click', function () {
-      alert("Search returned 0 results");
-    });	
-}		
 
 var realWidth = window.innerWidth;
 var realHeight = window.innerHeight;
