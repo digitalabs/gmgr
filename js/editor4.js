@@ -24,8 +24,12 @@ var data = (function () {
 
 
 if (data==null)
-		alert("Search returned 0 results");
-		
+{
+    $('searchBtn').observe('click', function () {
+      alert("Search returned 0 results");
+    });	
+}		
+
 var realWidth = window.innerWidth;
 var realHeight = window.innerHeight;
 var margin = {top: 950, right: 50, bottom: 200, left: 1500},
