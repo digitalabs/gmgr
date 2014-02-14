@@ -76,11 +76,10 @@ if (isset($_GET['searchBtn'])) {
 
             <small><a data-toggle="tooltip" title="By default, a regular pedigree for a particular germplasm is created up to the certain number of known parents. You can, however, choose to show a smaller number of parental generations (steps), or to choose all." data-placement="right">Maximum Steps</a></small>
         </div>
-        <div style="margin-left:20px;visibility:hidden;">
+        <!--<div style="margin-left:20px;visibility:hidden;">
            <small><input style="visibility:hidden;" disabled="true" class="checkbox" title="This feature is a work in progress" type="checkbox" id="cbox" name="cbox">
                 <a style="visibility:hidden;" data-placement="right" data-toggle="tooltip" title="Derivative and maintenance steps will be included in the pedigree.">Show Selection History</a></input></small><br>
-<!--<small><input title="This feature is a work in progress" type="checkbox"><a data-placement="right" data-toggle="tooltip" title="The pedigree graph can label its edges by the name of germplasm methods.">Show Method</a></input></small>-->
-        </div>
+        </div>-->
     </form>  
     <div style="padding-left: 5px;padding-right: 5px; text-align: right;">
         <!--<button name="updateBtn" id="updateBtn" type="submit" class="btn btn-mini btn-primary" onclick="graph2b();">Update</button></form>
