@@ -71,7 +71,7 @@ if (isset($_GET['searchBtn'])) {
 
         <!--<div style="padding-left:5px;padding-right:5px;"><hr></div>-->
         <br>
-        <div class="form-horizontal" style="padding-left: 15px;">
+        <div class="form-horizontal" style="visibility: hidden; padding-left: 15px;">
             <input disabled="true" title="This feature is a work in progress" placeholder="All" style="width:50px;height:30px;" value=" " id="maxStep" type="number" name="maxStep" min="1" max="100"> 
 
             <small><a data-toggle="tooltip" title="By default, a regular pedigree for a particular germplasm is created up to the certain number of known parents. You can, however, choose to show a smaller number of parental generations (steps), or to choose all." data-placement="right">Maximum Steps</a></small>
