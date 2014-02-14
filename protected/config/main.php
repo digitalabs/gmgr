@@ -59,7 +59,7 @@ return array(
           ),
           ),
          */
-
+/*
         // uncomment the following to use a MySQL database
          'db'=>array(
           'connectionString' => 'mysql:host=localhost;dbname=central6',
@@ -70,8 +70,8 @@ return array(
           'enableProfiling' => true,
            'enableParamLogging'=>true,   
           ),
-          
-          /*'db'=>array(
+  */        
+          'db'=>array(
           'class'=>'CDbConnection',
           'connectionString' => 'mysql:host=127.0.0.1;port=3306;dbname=iris_mysiam_20121002',
           'emulatePrepare' => true,
@@ -81,7 +81,7 @@ return array(
           'enableProfiling' => true,
           'enableParamLogging'=>true,
           ),
-         */
+         
         'errorHandler' => array(
             // use 'site/error' action to display errors
             'errorAction' => 'site/error',
