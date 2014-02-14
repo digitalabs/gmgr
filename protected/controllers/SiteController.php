@@ -153,7 +153,7 @@ class SiteController extends Controller {
             // }
             $this->render('login', array('model' => $model, 'database_details' => $database_details));
         } else {
-                //local database
+            //local database
             $local_db_name = '';
             $local_db_port = '';
             $local_db_username = '';
@@ -172,7 +172,7 @@ class SiteController extends Controller {
                 'central_db_port' => $central_db_port,
                 'central_db_username' => $central_db_username
             );
-            $this->render('login', array('model' => $model,'database_details' => $database_details));
+            $this->render('login', array('model' => $model, 'database_details' => $database_details));
         }
     }
 
@@ -187,20 +187,19 @@ class SiteController extends Controller {
     public function actionEditor() {
 
         $model = new ImporterForm;
-		Yii::import('application.modules.curl');
+        Yii::import('application.modules.curl');
 
         if (isset($_POST['searchBtn']) || isset($_POST['updateBtn'])) {
-          
+
             $curl = new curl();
             $arr = $curl->searchGID();
 
             $tree = $arr['tree'];
             $found = $arr['found'];
-			
-			if($found==="1")
-			{
-				echo "<script type='text/javascript'>alert('Search returned 0 results. ');</script>";
-			}
+
+            if ($found === "1") {
+                echo "<script type='text/javascript'>alert('Search returned 0 results. ');</script>";
+            }
 
             $out = json_decode($tree);
 
@@ -216,35 +215,34 @@ class SiteController extends Controller {
 
         $this->render('editor');
     }
-	
-	public function actionViewDiagram() {
+
+    public function actionViewDiagram() {
 
         $model = new ImporterForm;
-		Yii::import('application.modules.curl');
+        Yii::import('application.modules.curl');
 
-			if(isset($_GET['inputGID'])&& isset($_GET['maxStep']))
-			{
-				$in = $_GET['inputGID'];
-				$max = $_GET['maxStep'];
-				$curl = new curl();
-				$arr = $curl->showDiagram($in,$max);
+        if (isset($_GET['inputGID']) && isset($_GET['maxStep'])) {
+            $in = $_GET['inputGID'];
+            $max = $_GET['maxStep'];
+            $curl = new curl();
+            $arr = $curl->showDiagram($in, $max);
 
-				$tree = $arr['tree'];
+            $tree = $arr['tree'];
 
 
-				$out = json_decode($tree);
+            $out = json_decode($tree);
 
-				$Data = $tree;
-				$File = dirname(__FILE__) . '/../../json_files/diagram.json';
+            $Data = $tree;
+            $File = dirname(__FILE__) . '/../../json_files/diagram.json';
 
-				$Handle = fopen($File, 'w');
+            $Handle = fopen($File, 'w');
 
-				fwrite($Handle, $tree);
-				print "Data Written";
-				fclose($Handle);
+            fwrite($Handle, $tree);
+            print "Data Written";
+            fclose($Handle);
 
-				$this->redirect(array('/site/viewDiagram'));
-			}
+            $this->redirect(array('/site/viewDiagram'));
+        }
 
         $this->render('viewDiagram');
     }
@@ -734,7 +732,7 @@ class SiteController extends Controller {
                         $locationID = $_POST['locationID'];
                         $checked = $arrSelectedIds;
                         $standardized = $file_toArray->checkIf_standardize($checked, $list);
-                        
+
                         $checked = $standardized;
 
                         //database settings
@@ -778,7 +776,17 @@ class SiteController extends Controller {
                         $existing = json_decode($_POST['existing'], true);
                         $unselected = $file_toArray->get_unselected_rows($checked, $list);
                         $standardized = $file_toArray->checkIf_standardize($unselected, $list);
-                        
+                       // echo "checked: ";
+                       // print_r($checked);
+                        $checked_all=array();
+                        for($i=0;$i<count($checked);$i++){
+                            $checked_all[$i]=$checked[$i];
+                        }
+                        $j=count($checked_all);
+                        for($i=0;$i<count($unselected);$i++){
+                            $checked_all[$j]=$unselected[$i];
+                            $j++;
+                        }
                         $checked = $standardized;
 
                         //database settings
@@ -813,7 +821,12 @@ class SiteController extends Controller {
                         $createdGID = $output['createdGID'];
                         $list = $output['list'];
                         $existing = $output['existingTerm'];
-
+                        $checked=$checked_all;
+                        
+                        //echo "<br>standardized ";
+                        //print_r($standardized);
+                        //echo "<br>checked ";
+                        //print_r($checked_all);
 
                         $rows = $list;
                     }
@@ -836,7 +849,7 @@ class SiteController extends Controller {
                     $checked = unserialize(base64_decode($_POST['checked']));
 
                     $a = array(
-                        'cdate'=>$cdate,
+                        'cdate' => $cdate,
                         'cross' => $cross,
                         'chosenID' => $chosenID,
                         'term' => $term,
@@ -886,8 +899,8 @@ class SiteController extends Controller {
                     $userID = Yii::app()->user->id;
 
                     $output = $file_toArray->updateGID_createdGID($term, $pedigree, $id, $choose, $fid, $mid, $female, $male, $createdGID, $existing, $list, $userID, $theParent);
-                    $output['cdate']=$cdate;
-                    
+                    $output['cdate'] = $cdate;
+
                     $local_db_name = Yii::app()->request->getParam('local_db_name');
                     $local_db_port = Yii::app()->request->getParam('local_db_port');
                     $local_db_username = Yii::app()->request->getParam('local_db_username');
@@ -900,13 +913,13 @@ class SiteController extends Controller {
                     $output['central_db_name'] = $central_db_name;
                     $output['central_db_port'] = $central_db_port;
                     $output['central_db_username'] = $central_db_username;
-                   /*     echo "choose: ".$cross;
-                    echo ": ".$term."<br>";
-                    
-                    echo "r: ".$r;
-                    * */
-                    $r=strcmp($term, $cross);
-                    if ($r===0) {    
+                    /*     echo "choose: ".$cross;
+                      echo ": ".$term."<br>";
+
+                      echo "r: ".$r;
+                     * */
+                    $r = strcmp($term, $cross);
+                    if ($r === 0) {
                         echo "<br>choose gid for cross";
                         $output["female"] = $female;
                         $output["male"] = $male;
@@ -916,7 +929,7 @@ class SiteController extends Controller {
                         $output["gpid2"] = $gpid2;
                         $output["gid"] = $gid;
                         $output["locationID"] = $locationID;
-                        
+
 
                         $output = $curl->chooseGID_cross(json_encode($output));
                     } else {
@@ -938,7 +951,7 @@ class SiteController extends Controller {
                     $checked = json_decode($_POST['checked']);
                     $rows = $list;
                 }
-if (count($rows)) {
+                if (count($rows)) {
                     foreach ($rows as $i => $row) : list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male, $date) = $row;
                         $arr2[] = array('id' => $i + 1, 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date' => $date);
 
@@ -964,7 +977,6 @@ if (count($rows)) {
                     'existing' => $existing,
                     'createdGID' => $createdGID
                 ));
-               
             } elseif (isset($_GET['yes'])) {//to process the remaining entries
                 //echo "<br><br><br>yes page";
                 $url = $model->curPageURL();
@@ -1032,38 +1044,38 @@ if (count($rows)) {
         $this->render('contactUs');
     }
 
-    /*public function actionDiagram() {
-        Yii::app()->session['username'] = Yii::app()->user->id;
-        $this->browserSession = Yii::app()->session['username'];
-        $model2 = new LoginForm;
+    /* public function actionDiagram() {
+      Yii::app()->session['username'] = Yii::app()->user->id;
+      $this->browserSession = Yii::app()->session['username'];
+      $model2 = new LoginForm;
 
-        if (isset($this->browserSession)) {
-            Yii::import('application.modules.curl');
+      if (isset($this->browserSession)) {
+      Yii::import('application.modules.curl');
 
-            $curl = new curl();
-            $arr = $curl->showDiagram();
-            //print_r($arr);
+      $curl = new curl();
+      $arr = $curl->showDiagram();
+      //print_r($arr);
 
-            $tree = $arr['tree'];
-            //$rows = $tree;
+      $tree = $arr['tree'];
+      //$rows = $tree;
 
-            $out = json_decode($tree);
-            //echo "<br/>rows:<br/>";
-            //print_r($rows);
-            //echo "<br/>";
-            $Data = $tree;
-            $File = dirname(__FILE__) . '/../../json_files/diagram.json';
-            //file_put_contents($File, $tree);
-            $Handle = fopen($File, 'w');
+      $out = json_decode($tree);
+      //echo "<br/>rows:<br/>";
+      //print_r($rows);
+      //echo "<br/>";
+      $Data = $tree;
+      $File = dirname(__FILE__) . '/../../json_files/diagram.json';
+      //file_put_contents($File, $tree);
+      $Handle = fopen($File, 'w');
 
-            fwrite($Handle, $tree);
-            print "Data Written";
-            fclose($Handle);
-            $this->render('diagram');
-        } else {
-            $this->render('login', array('model' => $model2));
-        }
-    }*/
+      fwrite($Handle, $tree);
+      print "Data Written";
+      fclose($Handle);
+      $this->render('diagram');
+      } else {
+      $this->render('login', array('model' => $model2));
+      }
+      } */
 
     public function actionBackend() {
         $dbFormModel = new databaseForm;

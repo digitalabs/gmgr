@@ -2171,3 +2171,34 @@ REQUEST_URI=/GMGR/index.php?r=site/assignGID
 in E:\xampp\htdocs\GMGR\protected\modules\file_toArray.php (282)
 in E:\xampp\htdocs\GMGR\protected\views\site\assignGID.php (113)
 in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (966)
+2014/02/14 03:55:49 [warning] [application] Failed to set unsafe attribute "file" of "ImporterForm".
+in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (314)
+in E:\xampp\htdocs\GMGR\index.php (13)
+2014/02/14 06:05:21 [warning] [application] Failed to set unsafe attribute "file" of "ImporterForm".
+in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (312)
+in E:\xampp\htdocs\GMGR\index.php (13)
+2014/02/14 06:05:23 [error] [php] Invalid argument supplied for foreach() (E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php:353)
+Stack trace:
+#0 E:\xampp\htdocs\yii\framework\web\CController.php(286): SiteController->runAction()
+#1 E:\xampp\htdocs\yii\framework\web\CController.php(265): SiteController->runActionWithFilters()
+#2 E:\xampp\htdocs\yii\framework\web\CWebApplication.php(282): SiteController->run()
+#3 E:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#4 E:\xampp\htdocs\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#5 E:\xampp\htdocs\GMGR\index.php(13): CWebApplication->run()
+REQUEST_URI=/GMGR/index.php?r=site/importFileDisplay
+in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (353)
+in E:\xampp\htdocs\GMGR\index.php (13)
+2014/02/14 06:06:26 [warning] [application] Failed to set unsafe attribute "file" of "ImporterForm".
+in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (312)
+in E:\xampp\htdocs\GMGR\index.php (13)
+2014/02/14 06:12:13 [error] [php] Undefined variable: print_r (E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php:825)
+Stack trace:
+#0 E:\xampp\htdocs\yii\framework\web\CController.php(286): SiteController->runAction()
+#1 E:\xampp\htdocs\yii\framework\web\CController.php(265): SiteController->runActionWithFilters()
+#2 E:\xampp\htdocs\yii\framework\web\CWebApplication.php(282): SiteController->run()
+#3 E:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#4 E:\xampp\htdocs\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#5 E:\xampp\htdocs\GMGR\index.php(13): CWebApplication->run()
+REQUEST_URI=/GMGR/index.php?pagea=3&r=site%2FassignGID
+in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (825)
+in E:\xampp\htdocs\GMGR\index.php (13)
