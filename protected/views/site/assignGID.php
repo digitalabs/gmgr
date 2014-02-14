@@ -239,7 +239,7 @@ if (count($final)) {
                                                     echo "<input type='hidden' class='$term' name='existing' value='" . base64_encode(serialize($existing)) . "'>";
                                                     echo "<input type='hidden' class='$term' name='checked' value='" . base64_encode(serialize($checked)) . "'>";
                                                     echo "<input type='hidden' class='$term' name='locationID' value='" . $locationID . "'>";
-                                                    echo "<input type='hidden' class='$term' name='cross' value='" . $term . "'>";
+                                                    echo "<input type='hidden' class='$term' name='cross' value='" . $pages[0][count($pages[0])-1][2] . "'>";
 
                                                     $m_term = $term;
                                                     $m_id = $id;
