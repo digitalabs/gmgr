@@ -36,8 +36,8 @@ if (isset($_GET['searchBtn'])) {
                     <button type="button" class="btn">GID</button>    
                 </div>-->
                 <form action="index.php?r=site/editor" method="post">
-                    <input disabled="true" title="This feature is a work in progress" style="width:155px;height:30px;" class="span2" id="inputGID" name="inputGID" type="text" placeholder="Search by GID">
-                    <button disabled="true" name="searchBtn" id="searchBtn" class="btn btn-primary" onclick="clik()" type="submit">GO</button>
+                    <input disabled="true" title="This feature is a work in progress" style="width:155px;height:30px; visibility:hidden;" class="span2" id="inputGID" name="inputGID" type="text" placeholder="Search by GID">
+                    <button style="visibility:hidden;" disabled="true" name="searchBtn" id="searchBtn" class="btn btn-primary" onclick="clik()" type="submit">GO</button>
             </div>  
 
         </div>
@@ -77,8 +77,8 @@ if (isset($_GET['searchBtn'])) {
             <small><a data-toggle="tooltip" title="By default, a regular pedigree for a particular germplasm is created up to the certain number of known parents. You can, however, choose to show a smaller number of parental generations (steps), or to choose all." data-placement="right">Maximum Steps</a></small>
         </div>
         <div style="margin-left:20px;">
-           <small><input disabled="true" class="checkbox" title="This feature is a work in progress" type="checkbox" id="cbox" name="cbox">
-                <a data-placement="right" data-toggle="tooltip" title="Derivative and maintenance steps will be included in the pedigree.">Show Selection History</a></input></small><br>
+           <small><input style="visibility:hidden;" disabled="true" class="checkbox" title="This feature is a work in progress" type="checkbox" id="cbox" name="cbox">
+                <a style="visibility:hidden;" data-placement="right" data-toggle="tooltip" title="Derivative and maintenance steps will be included in the pedigree.">Show Selection History</a></input></small><br>
 <!--<small><input title="This feature is a work in progress" type="checkbox"><a data-placement="right" data-toggle="tooltip" title="The pedigree graph can label its edges by the name of germplasm methods.">Show Method</a></input></small>-->
         </div>
     </form>  
