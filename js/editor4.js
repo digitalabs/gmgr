@@ -433,10 +433,10 @@ function click(d)
 	if(d.name2==undefined)document.getElementById('nt3').innerHTML = "---";
 	else document.getElementById('nt3').innerHTML = d.ntype2;
     
-    document.getElementById('ns1').innerHTML = "1";
-	document.getElementById('ns2').innerHTML = "1";
-	if(d.name2==undefined)document.getElementById('ns3').innerHTML = "1";
-	else document.getElementById('ns3').innerHTML = "1";
+    document.getElementById('ns1').innerHTML = d.nstat0;
+	document.getElementById('ns2').innerHTML = d.nstat1;
+	if(d.name2==undefined)document.getElementById('ns3').innerHTML = d.nstat2;
+	else document.getElementById('ns3').innerHTML = d.nstat2;
     
 	document.getElementById('d1').innerHTML = d.dates0;
 	document.getElementById('d2').innerHTML = d.dates1;
