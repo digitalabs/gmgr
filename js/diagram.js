@@ -429,6 +429,16 @@ function click(d)
 	if(d.name2==undefined)document.getElementById('l3').innerHTML = "---";
 	else document.getElementById('l3').innerHTML = d.loc2;
 	
+    document.getElementById('nt1').innerHTML = d.ntype0;
+	document.getElementById('nt2').innerHTML = d.ntype1;
+	if(d.name2==undefined)document.getElementById('nt3').innerHTML = "---";
+	else document.getElementById('nt3').innerHTML = d.ntype2;
+    
+    document.getElementById('ns1').innerHTML = "1";
+	document.getElementById('ns2').innerHTML = "1";
+	if(d.name2==undefined)document.getElementById('ns3').innerHTML = "1";
+	else document.getElementById('ns3').innerHTML = "1";
+    
 	document.getElementById('d1').innerHTML = d.dates0;
 	document.getElementById('d2').innerHTML = d.dates1;
 	if(d.name2==undefined)document.getElementById('d3').innerHTML = "---";
@@ -438,14 +448,22 @@ function click(d)
 	document.getElementById('av2').innerHTML = d.aval1;
 	if(d.aval2==undefined)document.getElementById('av3').innerHTML = "---";
 	else document.getElementById('av3').innerHTML = d.aval2;
+    
+    document.getElementById('an1').innerHTML = d.aname0;
+	document.getElementById('an2').innerHTML = d.aname1;
+	if(d.aval2==undefined)document.getElementById('an3').innerHTML = "---";
+	else document.getElementById('an3').innerHTML = d.aname2;
+    
+    document.getElementById('ad1').innerHTML = d.ades0;
+	document.getElementById('ad2').innerHTML = d.ades1;
+	if(d.aval2==undefined)document.getElementById('ad3').innerHTML = "---";
+	else document.getElementById('ad3').innerHTML = d.ades2;
 	
 	document.getElementById('adt1').innerHTML = d.adate0;
 	document.getElementById('adt2').innerHTML = d.adate1;
 	if(d.adt2==undefined)document.getElementById('adt3').innerHTML = "---";
 	else document.getElementById('adt3').innerHTML = d.adate2;
-	
-	
-	
+
 }
 
 function legendclick()
