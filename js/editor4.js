@@ -245,7 +245,7 @@ function drawChart(ms) {
                     .data(links)
                     .enter().insert("svg:path", "g")
                     .attr("class", function(d) {
-                return d.warning === "true" ? "link warning" : "link"
+                return d.warning === "true" ? "link" : "link"
             })
                     .attr("d", customSpline)
 				
@@ -331,7 +331,7 @@ function drawChart2(node) {
                     .data(links)
                     .enter().insert("svg:path", "g")
                     .attr("class", function(d) {
-						return d.warning === "true" ? "link warning" : "link"
+						return d.warning === "true" ? "link" : "link"
 					})
                     .attr("d", customSpline)
 					//.on("click",click(node))
