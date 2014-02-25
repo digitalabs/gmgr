@@ -333,6 +333,17 @@ echo CHtml::hiddenField('central_db_username', '');
     document.getElementById('central_db_username').value = localStorage.central_database_username;
     }
 
+    function hideTab(){
+    if(document.getElementById('benefits').style.display=='block') {
+    document.getElementById('benefits').style.display='none';
+    document.getElementById('opener').style.display='block';
+    }
+    if(document.getElementById('benefits2').style.display=='block') {
+    document.getElementById('benefits2').style.display='none';
+    document.getElementById('opener2').style.display='block';
+    }
+    }
+    
     function conceal() {      
     if(document.getElementById('benefits').style.display=='block') {
     document.getElementById('benefits').style.display='none';
