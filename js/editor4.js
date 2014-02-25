@@ -443,23 +443,31 @@ function click(d)
 	if(d.name2==undefined)document.getElementById('d3').innerHTML = "---";
 	else document.getElementById('d3').innerHTML = d.dates2;
 	
-	document.getElementById('av1').innerHTML = d.aval0;
-	document.getElementById('av2').innerHTML = d.aval1;
+	if(d.aval0==undefined)document.getElementById('av1').innerHTML = "---";
+    else document.getElementById('av1').innerHTML = d.aval0;
+	if(d.aval1==undefined)document.getElementById('av2').innerHTML = "---";
+    else document.getElementById('av2').innerHTML = d.aval1;
 	if(d.aval2==undefined)document.getElementById('av3').innerHTML = "---";
 	else document.getElementById('av3').innerHTML = d.aval2;
     
-    document.getElementById('an1').innerHTML = d.aname0;
-	document.getElementById('an2').innerHTML = d.aname1;
+    if(d.aval0==undefined)document.getElementById('an1').innerHTML = "---";
+    else document.getElementById('an1').innerHTML = d.aname0;
+	if(d.aval1==undefined)document.getElementById('an2').innerHTML = "---";
+    else document.getElementById('an2').innerHTML = d.aname1;
 	if(d.aval2==undefined)document.getElementById('an3').innerHTML = "---";
 	else document.getElementById('an3').innerHTML = d.aname2;
     
-    document.getElementById('ad1').innerHTML = d.ades0;
-	document.getElementById('ad2').innerHTML = d.ades1;
+    if(d.aval0==undefined)document.getElementById('ad1').innerHTML = "---";
+    else document.getElementById('ad1').innerHTML = d.ades0;
+	if(d.aval1==undefined)document.getElementById('ad2').innerHTML = "---";
+    else document.getElementById('ad2').innerHTML = d.ades1;
 	if(d.aval2==undefined)document.getElementById('ad3').innerHTML = "---";
 	else document.getElementById('ad3').innerHTML = d.ades2;
 	
-	document.getElementById('adt1').innerHTML = d.adate0;
-	document.getElementById('adt2').innerHTML = d.adate1;
+	if(d.adt0==undefined)document.getElementById('adt1').innerHTML = "---";
+    else document.getElementById('adt1').innerHTML = d.adate0;
+	if(d.adt1==undefined)document.getElementById('adt2').innerHTML = "---";
+    else document.getElementById('adt2').innerHTML = d.adate1;
 	if(d.adt2==undefined)document.getElementById('adt3').innerHTML = "---";
 	else document.getElementById('adt3').innerHTML = d.adate2;
 
