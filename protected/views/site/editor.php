@@ -173,7 +173,7 @@ if (isset($_GET['searchBtn'])) {
         <a href="#2" name="2" onclick="show2();">View Attributes</a>
     </div>
     <div id="benefits" style="position:fixed; bottom:80px; left:50px; display:none;">
-        <b>&nbsp;Alternate Names</b>
+        <b>&nbsp;Alternate Names</b><a href="#2" name="2" onclick="hidetab();">     Hide</a>
         <table style="background-color:white;margin:5px;width:800px;" width="1000px" class="table table-hover table-condensed">
             <tr>
                 <th height="10" bgcolor="lightgreen">Name Type</th>
@@ -207,7 +207,7 @@ if (isset($_GET['searchBtn'])) {
         <!--<div id="upbutton"><a onclick="conceal();">&nbsp;Hide</a></div>-->
     </div>
     <div id="benefits2" style="position:fixed; bottom:80px; left:50px; display:none;">
-        <b>&nbsp;Attributes</b>
+        <b>&nbsp;Attributes</b><a href="#2" name="2" onclick="hidetab();">     Hide</a>
         <table style="margin:5px;width:700px;">
             <tr>
                 <th bgcolor="lightblue">Name</th>
