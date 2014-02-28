@@ -245,7 +245,7 @@ function drawChart(ms) {
                     .data(links)
                     .enter().insert("svg:path", "g")
                     .attr("class", function(d) {
-                return d.warning === "true" ? "link warning" : "link"
+                return d.warning === "true" ? "link" : "link"
             })
                     .attr("d", customSpline)
 				
@@ -331,7 +331,7 @@ function drawChart2(node) {
                     .data(links)
                     .enter().insert("svg:path", "g")
                     .attr("class", function(d) {
-						return d.warning === "true" ? "link warning" : "link"
+						return d.warning === "true" ? "link" : "link"
 					})
                     .attr("d", customSpline)
 					//.on("click",click(node))
@@ -428,23 +428,49 @@ function click(d)
 	if(d.name2==undefined)document.getElementById('l3').innerHTML = "---";
 	else document.getElementById('l3').innerHTML = d.loc2;
 	
+    document.getElementById('nt1').innerHTML = d.ntype0;
+	document.getElementById('nt2').innerHTML = d.ntype1;
+	if(d.name2==undefined)document.getElementById('nt3').innerHTML = "---";
+	else document.getElementById('nt3').innerHTML = d.ntype2;
+    
+    document.getElementById('ns1').innerHTML = d.nstat0;
+	document.getElementById('ns2').innerHTML = d.nstat1;
+	if(d.name2==undefined)document.getElementById('ns3').innerHTML = d.nstat2;
+	else document.getElementById('ns3').innerHTML = d.nstat2;
+    
 	document.getElementById('d1').innerHTML = d.dates0;
 	document.getElementById('d2').innerHTML = d.dates1;
 	if(d.name2==undefined)document.getElementById('d3').innerHTML = "---";
 	else document.getElementById('d3').innerHTML = d.dates2;
 	
-	document.getElementById('av1').innerHTML = d.aval0;
-	document.getElementById('av2').innerHTML = d.aval1;
+	if(d.aval0==undefined)document.getElementById('av1').innerHTML = "---";
+    else document.getElementById('av1').innerHTML = d.aval0;
+	if(d.aval1==undefined)document.getElementById('av2').innerHTML = "---";
+    else document.getElementById('av2').innerHTML = d.aval1;
 	if(d.aval2==undefined)document.getElementById('av3').innerHTML = "---";
 	else document.getElementById('av3').innerHTML = d.aval2;
+    
+    if(d.aval0==undefined)document.getElementById('an1').innerHTML = "---";
+    else document.getElementById('an1').innerHTML = d.aname0;
+	if(d.aval1==undefined)document.getElementById('an2').innerHTML = "---";
+    else document.getElementById('an2').innerHTML = d.aname1;
+	if(d.aval2==undefined)document.getElementById('an3').innerHTML = "---";
+	else document.getElementById('an3').innerHTML = d.aname2;
+    
+    if(d.aval0==undefined)document.getElementById('ad1').innerHTML = "---";
+    else document.getElementById('ad1').innerHTML = d.ades0;
+	if(d.aval1==undefined)document.getElementById('ad2').innerHTML = "---";
+    else document.getElementById('ad2').innerHTML = d.ades1;
+	if(d.aval2==undefined)document.getElementById('ad3').innerHTML = "---";
+	else document.getElementById('ad3').innerHTML = d.ades2;
 	
-	document.getElementById('adt1').innerHTML = d.adate0;
-	document.getElementById('adt2').innerHTML = d.adate1;
+	if(d.adt0==undefined)document.getElementById('adt1').innerHTML = "---";
+    else document.getElementById('adt1').innerHTML = d.adate0;
+	if(d.adt1==undefined)document.getElementById('adt2').innerHTML = "---";
+    else document.getElementById('adt2').innerHTML = d.adate1;
 	if(d.adt2==undefined)document.getElementById('adt3').innerHTML = "---";
 	else document.getElementById('adt3').innerHTML = d.adate2;
-	
-	
-	
+
 }
 
 function legendclick()

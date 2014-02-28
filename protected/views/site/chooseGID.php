@@ -2,6 +2,10 @@
 <script src='./js/jquery.dataTables.js' type='text/javascript'></script>
 <script src='./js/jquery.dataTables.columnFilter.js' type='text/javascript'></script>
 
+<div id='screen'>
+</div>
+<span id="ajax-loading-indicator">
+</span>
 <form class='contact' name='contact' action='' method='POST' id='choose-frm'>
     <div class='modal-header'>
         <a class='close' data-dismiss='modal'>&times;</a>
@@ -209,7 +213,22 @@
     }
     ?>
     <script type='text/javascript'>
+                    $(document).ready(function() {
 
+                        var pop = function() {
+                            $('#screen').css({opacity: 0.4, 'width': $(document).width(), 'height': $(document).height()});
+                            $('body').css({'overflow': 'hidden'});
+                            $('#ajax-loading-indicator').css({'display': 'block'});
+                        }
+                        $('#id-submit').click(pop);
+                        
+                        var pop = function() {
+                            $('#screen').css({opacity: 0.4, 'width': $(document).width(), 'height': $(document).height()});
+                            $('body').css({'overflow': 'hidden'});
+                            $('#ajax-loading-indicator').css({'display': 'block'});
+                        }
+                        $('#id-create-new').click(pop);
+                    });
                     //function for the loading indicator
                     //************For opening a modal dialog***************
                     $(document).ready(function() {
@@ -302,7 +321,7 @@
                         /* Initialise datatables */
 
                         $('.open-modal').click(function() {
-                            alert('hey');
+                            //alert('hey');
                             var term = $(this).data('id');
                             var arr = document.getElementsByClassName(term);
 
