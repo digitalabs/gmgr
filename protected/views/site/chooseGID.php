@@ -80,12 +80,12 @@
                     <tr>
                         <th></th>
                         <th>GID</th>
-
+                        <th>Date of Creation</th>
                         <th>GPID1</th>
                         <th>GPID2</th>
                         <th>Method Type</th>
                         <th>Location</th>
-                        <th>Date of Creation</th>
+
                     </tr>   
                     <tr>
                         <th></th>
@@ -160,12 +160,12 @@
                               </form>
 
                               </td>"; */
-
+                            echo "<td>" . $date_creation . "</td>";
                             echo "<td>(" . $gpid1_l . ")&nbsp; " . $gpid1_nval . "</td>";
                             echo "<td>(" . $gpid2_l . ")&nbsp; " . $gpid2_nval . "</td>";
                             echo "<td>(" . $methodID_l . ")&nbsp;  " . $method_l . "</td>";
                             echo "<td>(" . $locationID_l . ")&nbsp;" . $location_l . "</td>";
-                            echo "<td>" . $date_creation . "</td>";
+
                             echo "</tr>";
                         }
                     }
@@ -213,219 +213,219 @@
     }
     ?>
     <script type='text/javascript'>
-                    $(document).ready(function() {
+            $(document).ready(function() {
 
-                        var pop = function() {
-                            $('#screen').css({opacity: 0.4, 'width': $(document).width(), 'height': $(document).height()});
-                            $('body').css({'overflow': 'hidden'});
-                            $('#ajax-loading-indicator').css({'display': 'block'});
+                var pop = function() {
+                    $('#screen').css({opacity: 0.4, 'width': $(document).width(), 'height': $(document).height()});
+                    $('body').css({'overflow': 'hidden'});
+                    $('#ajax-loading-indicator').css({'display': 'block'});
+                }
+                $('#id-submit').click(pop);
+
+                var pop = function() {
+                    $('#screen').css({opacity: 0.4, 'width': $(document).width(), 'height': $(document).height()});
+                    $('body').css({'overflow': 'hidden'});
+                    $('#ajax-loading-indicator').css({'display': 'block'});
+                }
+                $('#id-create-new').click(pop);
+            });
+            //function for the loading indicator
+            //************For opening a modal dialog***************
+            $(document).ready(function() {
+                var oTable = $('#model').dataTable({
+                    'bPaginate': false,
+                    'bSort': false,
+                    'bSearchable': false,
+                    'bScrollCollapse': true,
+                    'bPaginate': false
+                }).columnFilter({sPlaceHolder: 'head:after',
+                    aoColumns: [{type: 'none'},
+                        {type: 'text'},
+                        {type: 'text'},
+                        {type: 'text'},
+                        {type: 'text'},
+                        {type: 'text'},
+                        {type: 'text'},
+                        {type: 'text'}
+                    ]
+
+                });
+                filterTable();
+                //console.log('count: ' + oTable.fnSettings().fnRecordsDisplay());
+            });
+            function filterTable() {
+
+                var elem = document.getElementById('filter');
+
+                elem.value = 'Show All';
+                iMax = $('#sToId').attr('value');
+
+                $.fn.dataTableExt.afnFiltering.push(
+                        function(oSettings, aData, iDataIndex) {
+                            // 'date-range' is the id for my input
+                            var dateRange = $('#sToId').attr('value');
+
+                            // parse the range from a single field into min and max, remove ' - '
+                            iMin = '';
+
+                            // 4 here is the column where my dates are.
+                            var iValue = aData[1];
+
+                            if (iMax == '') {
+                                return true;
+                            }
+                            var date1 = new Date(iValue);
+                            var date2 = new Date(iMax);
+                            var result = date1 - date2;
+                            //console.log(date1 + '-' + date2 + '= ' + result);
+
+                            //var f=dates.compare(iValue,iMax);
+                            if (result === 0) {
+                                return true;
+                            } else if (result < 0) {
+                                return true;
+                            }
+                            return false;
+
+
                         }
-                        $('#id-submit').click(pop);
-                        
-                        var pop = function() {
-                            $('#screen').css({opacity: 0.4, 'width': $(document).width(), 'height': $(document).height()});
-                            $('body').css({'overflow': 'hidden'});
-                            $('#ajax-loading-indicator').css({'display': 'block'});
+                );
+                //Update table
+                oTable.fnDraw();
+                if (oTable.fnSettings().fnRecordsDisplay() === 0) {
+                    //console.log('here ');
+                    // $('id-row-count').value();
+                    $('#id-row-count').textContent = 'The cross and its parents have matches from the database but does not match the specified date in the list. \n\
+                                                                              Choose from the matches or Create a new GID.';
+                    $('#id-create-new').show();
+                    $('#id-submit').hide();
+                    // $('#id-create-submit').hide();
+
+
+                } else {
+                    $('#id-create-new').show();
+                    $('#id-submit').show();
+                    // $('#id-create-submit').show();
+                }
+
+                //Deleting the filtering funtion if we need the original table later.
+            }
+            $(document).ready(function() {
+                var pop = function() {
+                    $('#choose-frm').hide();
+                    $('#screen').css({opacity: 0.4, 'width': $(document).width(), 'height': $(document).height()});
+                    $('body').css({'overflow': 'hidden'});
+                    $('#ajax-loading-indicator').css({'display': 'block'});
+                }
+                $('#submit').click(pop);
+                /* Initialise datatables */
+
+                $('.open-modal').click(function() {
+                    //alert('hey');
+                    var term = $(this).data('id');
+                    var arr = document.getElementsByClassName(term);
+
+                    var m_values = new Array();
+                    m_values.length = 0;
+                    for (var i = 0; i < arr.length; i++) {
+                        m_values.push(arr[i].value);
+                    }
+
+                    //******assign the obtained value in the modal*****
+                    $.ajax({
+                        cache: false,
+                        type: 'POST',
+                        url: '/GMGR/index.php?r=site/diagram',
+                        data: {termId: term, arr_terms: m_values},
+                        success: function(data) {
+                            $('#modal-pedTree').html(data);
+
                         }
-                        $('#id-create-new').click(pop);
                     });
-                    //function for the loading indicator
-                    //************For opening a modal dialog***************
-                    $(document).ready(function() {
-                        var oTable = $('#model').dataTable({
-                            'bPaginate': false,
-                            'bSort': false,
-                            'bSearchable': false,
-                            'bScrollCollapse': true,
-                            'bPaginate': false
-                        }).columnFilter({sPlaceHolder: 'head:after',
-                            aoColumns: [{type: 'none'},
-                                {type: 'text'},
-                                {type: 'text'},
-                                {type: 'text'},
-                                {type: 'text'},
-                                {type: 'text'},
-                                {type: 'text'},
-                                {type: 'text'}
-                            ]
+                });
 
-                        });
-                        filterTable();
-                        //console.log('count: ' + oTable.fnSettings().fnRecordsDisplay());
-                    });
-                    function filterTable() {
 
-                        var elem = document.getElementById('filter');
 
+
+            });
+
+            function change() {
+                var cross = "<?php echo $cross; ?>";
+                var term = "<?php echo $m_term; ?>";
+                var cdate = "<?php echo $existing[$index][13]; ?>";
+                var elem = document.getElementById('filter');
+                if (cross === term) {
+                    if (elem.value == 'Show Germplasm that has date ' + cdate) {
                         elem.value = 'Show All';
                         iMax = $('#sToId').attr('value');
+                        $('#createNew').val("<?php echo $cross; ?>");
+                        // $('#id-submit').val("<input class='btn btn-primary' type='submit' value='Assign' id='submit'> <a href='#' class='btn' data-dismiss='modal'>Cancel</a>");
+                    } else {
+                        elem.value = 'Show Germplasm that has date ' + cdate;
+                        iMax = '';
 
-                        $.fn.dataTableExt.afnFiltering.push(
-                                function(oSettings, aData, iDataIndex) {
-                                    // 'date-range' is the id for my input
-                                    var dateRange = $('#sToId').attr('value');
-
-                                    // parse the range from a single field into min and max, remove ' - '
-                                    iMin = '';
-
-                                    // 4 here is the column where my dates are.
-                                    var iValue = aData[1];
-
-                                    if (iMax == '') {
-                                        return true;
-                                    }
-                                    var date1 = new Date(iValue);
-                                    var date2 = new Date(iMax);
-                                    var result = date1 - date2;
-                                    //console.log(date1 + '-' + date2 + '= ' + result);
-
-                                    //var f=dates.compare(iValue,iMax);
-                                    if (result === 0) {
-                                        return true;
-                                    } else if (result < 0) {
-                                        return true;
-                                    }
-                                    return false;
-
-
-                                }
-                        );
-                        //Update table
-                        oTable.fnDraw();
-                        if (oTable.fnSettings().fnRecordsDisplay() === 0) {
-                            //console.log('here ');
-                            // $('id-row-count').value();
-                            $('#id-row-count').textContent = 'The cross and its parents have matches from the database but does not match the specified date in the list. \n\
-                                                                              Choose from the matches or Create a new GID.';
-                            $('#id-create-new').show();
-                            $('#id-submit').hide();
-                            // $('#id-create-submit').hide();
-
-
-                        } else {
-                            $('#id-create-new').show();
-                            $('#id-submit').show();
-                            // $('#id-create-submit').show();
-                        }
-
-                        //Deleting the filtering funtion if we need the original table later.
                     }
-                    $(document).ready(function() {
-                        var pop = function() {
-                            $('#choose-frm').hide();
-                            $('#screen').css({opacity: 0.4, 'width': $(document).width(), 'height': $(document).height()});
-                            $('body').css({'overflow': 'hidden'});
-                            $('#ajax-loading-indicator').css({'display': 'block'});
-                        }
-                        $('#submit').click(pop);
-                        /* Initialise datatables */
-
-                        $('.open-modal').click(function() {
-                            //alert('hey');
-                            var term = $(this).data('id');
-                            var arr = document.getElementsByClassName(term);
-
-                            var m_values = new Array();
-                            m_values.length = 0;
-                            for (var i = 0; i < arr.length; i++) {
-                                m_values.push(arr[i].value);
-                            }
-
-                            //******assign the obtained value in the modal*****
-                            $.ajax({
-                                cache: false,
-                                type: 'POST',
-                                url: '/GMGR/index.php?r=site/diagram',
-                                data: {termId: term, arr_terms: m_values},
-                                success: function(data) {
-                                    $('#modal-pedTree').html(data);
-
-                                }
-                            });
-                        });
-
-
-
-
-                    });
-
-                    function change() {
-                        var cross = "<?php echo $cross; ?>";
-                        var term = "<?php echo $m_term; ?>";
-                        var cdate = "<?php echo $existing[$index][13]; ?>";
-                        var elem = document.getElementById('filter');
-                        if (cross === term) {
-                            if (elem.value == 'Show Germplasm that has date ' + cdate) {
-                                elem.value = 'Show All';
-                                iMax = $('#sToId').attr('value');
-                                $('#createNew').val("<?php echo $cross; ?>");
-                                // $('#id-submit').val("<input class='btn btn-primary' type='submit' value='Assign' id='submit'> <a href='#' class='btn' data-dismiss='modal'>Cancel</a>");
-                            } else {
-                                elem.value = 'Show Germplasm that has date ' + cdate;
-                                iMax = '';
-
-                            }
-                        } else {
-                            if (elem.value == 'Show Germplasm created before ' + cdate) {
-                                elem.value = 'Show All';
-                                iMax = $('#sToId').attr('value');
-                            } else {
-                                elem.value = 'Show Germplasm created before ' + cdate;
-                                iMax = '';
-                            }
-                        }
-                        $.fn.dataTableExt.afnFiltering.push(
-                                function(oSettings, aData, iDataIndex) {
-                                    // 'date-range' is the id for my input
-                                    var dateRange = $('#sToId').attr('value');
-
-                                    // parse the range from a single field into min and max, remove ' - '
-                                    iMin = '';
-
-                                    // 4 here is the column where my dates are.
-                                    var iValue = aData[1];
-
-                                    if (iMax == '') {
-                                        return true;
-                                    }
-                                    var date1 = new Date(iValue);
-                                    var date2 = new Date(iMax);
-                                    var result = date1 - date2;
-                                    //console.log(date1 + '-' + date2 + '= ' + result);
-
-                                    //var f=dates.compare(iValue,iMax);
-                                    if (result === 0) {
-                                        return true;
-                                    } else if (result < 0) {
-                                        return true;
-                                    }
-                                    return false;
-
-
-                                }
-                        );
-                        //Update table
-                        oTable.fnDraw();
-                        if (oTable.fnSettings().fnRecordsDisplay() === 0) {
-                            //console.log('here ');
-                            // $('id-row-count').value();
-                            $('#id-row-count').textContent = 'The cross and its parents have matches from the database but does not match the specified date in the list. \n\
-                                                                              Choose from the matches or Create a new GID.';
-                            $('#id-create-new').show();
-                            $('#id-submit').hide();
-                            //$('#id-create-submit').hide();
-
-                        } else {
-                            $('#id-create-new').show();
-                            $('#id-submit').show();
-                            // $('#id-create-submit').show();
-                        }
-
-                        //Deleting the filtering funtion if we need the original table later.
+                } else {
+                    if (elem.value == 'Show Germplasm created before ' + cdate) {
+                        elem.value = 'Show All';
+                        iMax = $('#sToId').attr('value');
+                    } else {
+                        elem.value = 'Show Germplasm created before ' + cdate;
+                        iMax = '';
                     }
-                    //************For opening a modal dialog***************
-                    /*$(document).on('click', '.open-modal', function() {
-                     //*****the term to be placed on the heading in the modal
-                     alert('hey');
-                     });*/
+                }
+                $.fn.dataTableExt.afnFiltering.push(
+                        function(oSettings, aData, iDataIndex) {
+                            // 'date-range' is the id for my input
+                            var dateRange = $('#sToId').attr('value');
+
+                            // parse the range from a single field into min and max, remove ' - '
+                            iMin = '';
+
+                            // 4 here is the column where my dates are.
+                            var iValue = aData[1];
+
+                            if (iMax == '') {
+                                return true;
+                            }
+                            var date1 = new Date(iValue);
+                            var date2 = new Date(iMax);
+                            var result = date1 - date2;
+                            //console.log(date1 + '-' + date2 + '= ' + result);
+
+                            //var f=dates.compare(iValue,iMax);
+                            if (result === 0) {
+                                return true;
+                            } else if (result < 0) {
+                                return true;
+                            }
+                            return false;
+
+
+                        }
+                );
+                //Update table
+                oTable.fnDraw();
+                if (oTable.fnSettings().fnRecordsDisplay() === 0) {
+                    //console.log('here ');
+                    // $('id-row-count').value();
+                    $('#id-row-count').textContent = 'The cross and its parents have matches from the database but does not match the specified date in the list. \n\
+                                                                              Choose from the matches or Create a new GID.';
+                    $('#id-create-new').show();
+                    $('#id-submit').hide();
+                    //$('#id-create-submit').hide();
+
+                } else {
+                    $('#id-create-new').show();
+                    $('#id-submit').show();
+                    // $('#id-create-submit').show();
+                }
+
+                //Deleting the filtering funtion if we need the original table later.
+            }
+            //************For opening a modal dialog***************
+            /*$(document).on('click', '.open-modal', function() {
+             //*****the term to be placed on the heading in the modal
+             alert('hey');
+             });*/
     </script>    
