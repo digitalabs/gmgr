@@ -1086,6 +1086,15 @@ class SiteController extends Controller {
             'centralDBForm' => $centralDBForm
         ));
     }
+       public function actionSettings_browser() {
+        $dbFormModel = new databaseForm;
+        $centralDBForm = new centralDBForm;
+
+        $this->render('settings_browser', array(
+            'dbFormModel' => $dbFormModel,
+            'centralDBForm' => $centralDBForm
+        ));
+    }
 
 }
 
