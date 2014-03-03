@@ -45,7 +45,7 @@
 
                         <fieldset>
                              <?php
-                           // echo CHtml::link('Check database settings', array('site/settings_browser'), array('id' => 'database_link'));
+                             echo CHtml::link('Check database settings', array('site/settings_browser'), array('id' => 'database_link'));
                             ?>
                             <legend>Upload File</legend>
                              <b>File Type:</b> Breeders Cross Histories &nbsp; &nbsp;
