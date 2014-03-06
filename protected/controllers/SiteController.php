@@ -361,7 +361,7 @@ class SiteController extends Controller {
 
                                 $location = $_POST['location'];
                                 $locationID = $location;
-                                $list = json_decode($_POST['list']);
+                                $list = unserialize(base64_decode($_POST['list']));
                             } else {
                                 //echo "no refresh";
                                 $location = $_POST['location'];
@@ -409,7 +409,7 @@ class SiteController extends Controller {
 
                             $location = $_POST['location'];
                             $locationID = $location;
-                            $list = json_decode($_POST['list']);
+                            $list = unserialize(base64_decode($_POST['list']));
                         }
                         $id = $list;
                         foreach ($id as $row) :
@@ -473,23 +473,21 @@ class SiteController extends Controller {
                 if (isset($_POST['next']) || isset($_POST['refresh'])) {
                     //echo "<br>Refresh!!!";
                     $locationID = $_POST['location'];
-                    $list = json_decode($_POST['list']);
-
-                    $locationID = $_POST['location'];
                     $list = unserialize(base64_decode($_POST['list']));
-                    ;
+                    
 
                     //echo "<br>list:<br>";
                     //print_r($list);
                 } else {
                     //echo "else here";
-                    $data = $_POST['list'];
+                    //$data = json_decode($_POST['list']);
+                    $list = unserialize(base64_decode($_POST['list']));
                     $locationID = $_POST['locationID'];
 
-                    $data = json_decode($data, true);
+                   // $data = json_decode($data, true);
 
                     $a = array(
-                        'list' => $data
+                        'list' => $list
                     );
 
                     $data = json_encode($a);
