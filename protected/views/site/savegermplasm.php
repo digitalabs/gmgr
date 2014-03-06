@@ -6,7 +6,9 @@
         if (isset($_POST['newGermplasmName'])) {
             $germplasm = $_POST['germplasmName'];
             $new = $_POST['newGermplasmName'];
-            $list_array = json_decode($_POST['list']);
+            //$list_array = json_decode($_POST['list']);
+             $list_array = unserialize(base64_decode($_POST['list']));
+            
 
             $output = callCurl($new, $list_array, $germplasm);
             var_dump($output);
@@ -41,7 +43,7 @@
         }
         echo "<input type='hidden' name='update' id='update' value='$updated'>";
         //echo "<input type='hidden' name='list' id='list' value='".$list_array."'>";
-        echo CHtml::hiddenField('list1', json_encode($list_array));
+        echo CHtml::hiddenField('list1', base64_encode(serialize($list_array)));
         echo CHtml::hiddenField('error1', $error);
         echo CHtml::hiddenField('gid1', $gid);
 
