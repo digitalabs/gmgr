@@ -5,7 +5,7 @@
         <input type="hidden" name="list" id="list" value="">
     </form>    
     <br>
-   
+
     <h3>Germplasm List</h3>
     <p >
         <i><strong>Note:</strong>&nbsp; 
@@ -59,7 +59,7 @@
 // echo "<div id='table1'>";
     $this->widget('ext.selgridview.BootSelGridView', array(
         'id' => 'pedigreeGrid',
-        'ajaxUpdate'=>true,
+        'ajaxUpdate' => true,
         'dataProvider' => $dataProvider,
         'beforeAjaxUpdate' => 'js:
                function (id, options) {
@@ -98,13 +98,12 @@
                         $fgid = $your_array;
 
                         return "" . CHtml::encode($data["female"]) . "" . "<span class='muted'>" . $fgid . "</span>";
-                    }
-                    else{
+                    } else {
                         $your_array = array();
                         $your_array = explode("#", CHtml::encode($data["fremarks"]));
                         $your_array = implode("<br />", $your_array);
                         $fremarks = $your_array;
-                        
+
                         return "<font style='color:#FF6600;'>" . CHtml::tag("span", array("title" => $fremarks, "class" => "tooltipster"), CHtml::encode($data["female"])) . "</font>";
                     }
                 },
@@ -121,13 +120,12 @@
                         $your_array = implode("<br />", $your_array);
                         $mgid = $your_array;
                         return "" . CHtml::encode($data["male"]) . "" . "<span class='muted'>" . $mgid . "</span>";
-                    }
-                    else{
+                    } else {
                         $your_array = array();
                         $your_array = explode("#", CHtml::encode($data["mremarks"]));
                         $your_array = implode("<br />", $your_array);
                         $mremarks = $your_array;
-                        
+
                         return "<font style='color:#FF6600; '>" . CHtml::tag("span", array("title" => $mremarks, "class" => "tooltipster"), CHtml::encode($data["male"])) . "</font>";
                     }
                 },
@@ -153,17 +151,20 @@
             try {
                 localStorage.removeItem("locationID");
                 localStorage.removeItem("list");
+                localStorage.removeItem("existing");
+                localStorage.removeItem("checked");
+                localStorage.removeItem("createdGID");
 
                 var list = <?php echo json_encode($list); ?>;
 
-                console.log(JSON.stringify(<?php echo json_encode($list); ?>));
+                // console.log(JSON.stringify(<?php echo json_encode($list); ?>));
                 document.getElementById('list').value = list;
-                localStorage.setItem('list', JSON.stringify(<?php echo json_encode($list); ?>));
+                localStorage.setItem('list', <?php echo json_encode(base64_encode(serialize($list))); ?>);
 
                 var locationID = document.getElementById('location').value;
-             
+
                 localStorage.setItem('locationID', locationID);
-               
+
                 storeLocal1();
             } catch (e) {
                 if (e === QUOTA_EXCEEDED_ERR) {
@@ -201,16 +202,16 @@
             $('body').css({'overflow': 'hidden'});
             $('#ajax-loading-indicator').css({'display': 'block'});
         }
-        $('#btnStandard').click(pop); 
-       
+        $('#btnStandard').click(pop);
+
         var server_method = '<?php echo $_SERVER['REQUEST_METHOD'] ?>';
-        if( server_method == 'GET'){
-                  window.location = '<?php echo Yii::app()->createUrl('site/importFileDisplay')?>';
+        if (server_method == 'GET') {
+            window.location = '<?php echo Yii::app()->createUrl('site/importFileDisplay') ?>';
         }
-     
+
     });
-    
-     
+
+
 </script>
 <?php
 $this->endWidget();

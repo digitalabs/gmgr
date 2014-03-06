@@ -312,7 +312,7 @@
         if ('localStorage' in window && window['localStorage'] != null) {
             try {
                 console.log(JSON.stringify(<?php echo json_encode($list); ?>));
-                localStorage.setItem('list', JSON.stringify(<?php echo json_encode($list); ?>));
+                localStorage.setItem('list', <?php echo json_encode(base64_encode(serialize($list))); ?>);
 				
 				//******get database settings
 				document.getElementById('local_db_name').value = localStorage.local_database_name;
