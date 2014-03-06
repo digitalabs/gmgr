@@ -48,12 +48,11 @@ if (count($final)) {
         endforeach;
 
         //  count all rows
-        if(isset($list)){
-           $row_count = count($list);
-        }   
-        else{ 
+        if (isset($list)) {
+            $row_count = count($list);
+        } else {
             $row_count = $_POST['row_count'];
-        }    
+        }
         /* END count all rows */
 
         /*
@@ -86,6 +85,7 @@ if (count($final)) {
 
             <link href="./assets/pnotify-1.2.0/jquery.pnotify.default.css" rel="stylesheet" type="text/css">
             <link href="./assets/pnotify-1.2.0/jquery.pnotify.default.icons.css" rel="stylesheet" type="text/css">
+            <!-- <link href="assets/GM_bootstrap.css" rel="stylesheet" type="text/css"> -->
 
             <div class="container" >
                 <div class="page-points">
@@ -98,19 +98,39 @@ if (count($final)) {
                                 <div class="area">
                             -->
                             <div id="data">
-                                <div class="panel panel-default" style="font-size: 11px;text-align: left;">
-                                    <div class="panel-heading">
-                                        <h3 style=" border-bottom: 0px solid #999; color:#666">Created GID for cross <font style="color:#e13300; "> <?php echo $pages[0][count($pages[0]) - 1][2]; ?></font></h3>
+                                <div class="panel panel-default" style="font-size: 11px;text-align: left;  background-color: #ffffff;">
+                                    <div class="panel-heading" style="border-top-color: #dddddd; padding: 5px 10px;
+                                        ">
+                                        <h3 style=" border-bottom: 0px solid #999; color:#666">Assign GID for cross <font style="color:#e13300; "> <?php echo $pages[0][count($pages[0]) - 1][2]; ?></font></h3>
                                     </div>
                                     <div class="panel-body">
-                                        <div class="bs-callout bs-callout-warning">
-                                            <div class="close" data-dismiss="alert">&times;</div>
-                                            <h4>Summary info</h4>
+                                        <div class="bs-callout bs-callout-warning" style="background-color: #f0f7fd; border-color: #d0e3f0; margin: 20px 0; padding: 10px 25px 10px 10px; border-left: 5px solid #eee; ">
+
+                                            <h5>Summary info</h5>
                                             <p>
                                                 <?php
-                                       $female_id = (int) $pages[0][0][0];
+                                                $female_id = (int) $pages[0][0][0];
                                                 $i = 0;
                                                 $male_id = $file_toArray->output_tree_json($pages); // get what ith element in the array is the male parent
+
+                                                foreach ($pages[0] as $r) : list($id, $nval, $term, $GID, $methodID, $method, $locID, $location, $gpid1, $gpid2, $newGID) = $r;
+                                                    if ($id == $fid . "/" . $mid) {
+
+                                                        if ($GID !== "NOT SET" && $GID !== "CHOOSE GID") {
+                                                            if ($newGID === "new") {
+                                                                echo "The cross <b>" . $term . "</b> has been added to the local database.
+															<br>";
+                                                            } else {
+                                                                echo "You have chosen an existing cross <b>" . $term . "</b> from the local or central database.<br>";
+                                                            }
+                                                        } else if ($GID == "NOT SET") {
+                                                            echo "Set <b>first</b> the GID(s) of the cross' female and/or male parent.<br>";
+                                                        } else if ($GID == "CHOOSE GID") {
+                                                            echo "Choose among existing cross names or create new GID.<br>";
+                                                        }
+                                                    }
+                                                endforeach;
+
                                                 foreach ($pages[0] as $r) : list($id, $nval, $term, $GID, $methodID, $method, $locID, $location, $gpid1, $gpid2, $newGID) = $r;
                                                     if ($i == 0) {
                                                         if ($GID === "CHOOSE GID") {
@@ -119,7 +139,7 @@ if (count($final)) {
                                                             } else {
                                                                 echo "The female parent <b>" . $term . "</b> has multiple matches in the database. Please choose a GID to set the GID(s) of the preceeding pedigree(s)<br>";
                                                             }
-                                                        } else {
+                                                        } else if ($GID !== "NOT SET") {
                                                             if ($newGID === "new") {
                                                                 echo "The female parent <b>" . $term . "</b> has been added to the local database.
 															<br>";
@@ -130,6 +150,8 @@ if (count($final)) {
                                                                     echo "The female parent <b>" . $term . "</b> has a single hit search from the local or central database. Sequentially, the preceeding line(s) is/are also set.<br>";
                                                                 }
                                                             }
+                                                        } else {
+                                                            echo "Set the pedigree line of female parent <b>" . $term . "</b>.<br>";
                                                         }
                                                     } else if ($i == $male_id) {
                                                         if ($GID === "CHOOSE GID") {
@@ -138,7 +160,7 @@ if (count($final)) {
                                                             } else {
                                                                 echo "The male parent <b>" . $term . "</b> has multiple matches in the database. Please choose a GID to set the GID(s) of the preceeding pedigree(s)<br>";
                                                             }
-                                                        } else {
+                                                        } else if ($GID !== "NOT SET") {
                                                             if ($newGID === "new") {
                                                                 echo "The male parent <b>" . $term . "</b> has been added to the local database.
 															<br>";
@@ -149,24 +171,19 @@ if (count($final)) {
                                                                     echo "The male parent <b>" . $term . "</b> has a single hit search from the local or central database. Sequentially, the preceeding line(s) is/are also set.<br>";
                                                                 }
                                                             }
+                                                        } else {
+                                                            echo "Set the pedigree line of male parent <b>" . $term . "</b>.<br>";
                                                         }
                                                     }$i++;
 
-                                                    if ($id == $fid . "/" . $mid) {
-                                                        if ($newGID === "new") {
-                                                            echo "The cross <b>" . $term . "</b> has been added to the local database.
-															<br>";
-                                                        } else {
-                                                            echo "The cross <b>" . $term . "</b> is already existing in the local or central database.<br>";
-                                                        }
-                                                    }
+
                                                 endforeach;
                                                 //}
                                                 ?>
                                             </p>
                                         </div>			
                                     </div>
-                                    <table class="table table-hover table-condensed">
+                                    <table class="table table-hover table-condensed ">
 
                                         <thead>
                                         <th></th>
@@ -206,7 +223,7 @@ if (count($final)) {
 
                                                 if ($newGID === "new") {
 
-                                                    echo "<td width='20px;'><span class='label label-important'>New</span></td>";
+                                                    echo "<td width='20px;'><span class='label label-success'>NEW</span></td>";
                                                 } else {
                                                     echo "<td width='20px;'><span></span></td>";
                                                 }
@@ -226,29 +243,22 @@ if (count($final)) {
                                                 $i++;
                                                 if ($GID === "CHOOSE GID") {
                                                     //echo "<td><a  data-toggle='modal' href='?term=" . $term . "&id=" . $id . "&pedigree=" . $nval . "&mid=" . $mid . "&fid=" . $fid . "&female=" . $female . "&male=" . $male . "#form-content' >Choose GID</a></td>";
-                                                    echo "<td><a  data-toggle='modal' href='#new-Modal' class='open-dialog' data-id='$term'>Choose GID</a></td>";
-                                                    echo "<input type='hidden' class='$term' name='m_id' id='m_id' value='$id'>";
-                                                    echo "<input type='hidden' class='$term' name='m_pedigree' id='m_pedigree' value='$nval'>";
-                                                    echo "<input type='hidden' class='$term' name='m_nval' id='m_val' value='$nval'>";
-                                                    echo "<input type='hidden' class='$term' name='m_mid' value='$mid'>";
-                                                    echo "<input type='hidden' class='$term' name='m_fid' value='$fid'>";
-                                                    echo "<input type='hidden' class='$term' name='m_female' value='$female'>";
-                                                    echo "<input type='hidden' class='$term' name='m_male' value='$male'>";
-                                                    echo "<input type='hidden' class='$term' name='list' value='" . base64_encode(serialize($list)) . "'>";
-                                                    echo "<input type='hidden' class='$term' name='createdGID' value='" . base64_encode(serialize($createdGID)) . "'>";
-                                                    echo "<input type='hidden' class='$term' name='existing' value='" . base64_encode(serialize($existing)) . "'>";
-                                                    echo "<input type='hidden' class='$term' name='checked' value='" . base64_encode(serialize($checked)) . "'>";
-                                                    echo "<input type='hidden' class='$term' name='locationID' value='" . $locationID . "'>";
-                                                    echo "<input type='hidden' class='$term' name='cross' value='" . $pages[0][count($pages[0])-1][2] . "'>";
-
-                                                    $m_term = $term;
-                                                    $m_id = $id;
-                                                    $m_pedigree = $nval;
-                                                    $m_nval = $nval;
-                                                    $m_mid = $mid;
-                                                    $m_fid = $fid;
-                                                    $m_female = $female;
-                                                    $m_male = $male;
+                                                    echo "<td><a  data-toggle='modal' href='#new-Modal' class='open-dialog' data-id='$term.$j'>Choose GID</a></td>";
+                                                    echo "<input type='hidden' class='$term.$j' name='m_id' id='m_id' value='$id'>";
+                                                    echo "<input type='hidden' class='$term.$j' name='m_pedigree' id='m_pedigree' value='$nval'>";
+                                                    echo "<input type='hidden' class='$term.$j' name='m_nval' id='m_val' value='$nval'>";
+                                                    echo "<input type='hidden' class='$term.$j' name='m_mid' value='$mid'>";
+                                                    echo "<input type='hidden' class='$term.$j' name='m_fid' value='$fid'>";
+                                                    echo "<input type='hidden' class='$term.$j' name='m_female' value='$female'>";
+                                                    echo "<input type='hidden' class='$term.$j' name='m_male' value='$male'>";
+                                                    echo "<input type='hidden' class='$term.$j' name='list' value='" . base64_encode(serialize($list)) . "'>";
+                                                    echo "<input type='hidden' class='$term.$j' name='createdGID' value='" . base64_encode(serialize($createdGID)) . "'>";
+                                                    echo "<input type='hidden' class='$term.$j' name='existing' value='" . base64_encode(serialize($existing)) . "'>";
+                                                    echo "<input type='hidden' class='$term.$j' name='checked' value='" . base64_encode(serialize($checked)) . "'>";
+                                                    echo "<input type='hidden' class='$term.$j' name='locationID' value='" . $locationID . "'>";
+                                                    echo "<input type='hidden' class='$term.$j' name='cross' value='" . $pages[0][count($pages[0]) - 1][2] . "'>";
+                                                    echo "<input type='hidden' class='$term.$j' name='term' id='term' value='$term'>";
+                                                    // echo $nval . "<br>";
                                                 } elseif ($GID === "DUPLICATE" || $GID === "NOT SET" || $GID === "Does not exist") {
                                                     if ($GID === "Does not exist") {
                                                         echo "<td><span class='label label-inverse'>" . $GID . "</span></td>";
@@ -294,6 +304,7 @@ if (count($final)) {
                                                     echo "<td>" . $locID . "&nbsp; <i>" . $location . "</i></td>";
                                                     echo '</tr>';
                                                 }
+                                                $j++;
                                             endforeach;
                                             ?>
                                         </tbody>
@@ -302,9 +313,9 @@ if (count($final)) {
                                     // print out the page numbers beneath the results
                                     //$pageNumbers = $pagination->getLinks2($_GET, $processed, $row_count, $not_standard);
                                     //echo "<br>row_count: ".$row_count;
-                                   // echo "<br>processed: ".$processed;
+                                    // echo "<br>processed: ".$processed;
                                     $pageNumbers = $pagination->getLinks2($_GET, $processed, $row_count);
-                                    echo " <div class='panel-footer'>";
+                                    echo " <div class='panel-footer' style='border-bottom-color: #dddddd; padding: 10px 15px;background-color: #f5f5f5;border-top: 1px solid #dddddd;border-bottom-right-radius: border-bottom-left-radius: 3px;'>";
                                     echo "<ul class='pager'>";
                                     echo $pageNumbers;
                                     echo '</ul>';
@@ -421,10 +432,11 @@ if (count($final)) {
                         echo CHtml::hiddenField('checked', '');
                         echo CHtml::hiddenField('existing', '');
                         echo CHtml::hiddenField('createdGID', '');
-                        if(isset($_POST['row_count'])){
-                           echo CHtml::hiddenField('row_count',$_POST['row_count']);
-                        }else    
-                              echo CHtml::hiddenField('row_count',$row_count);
+                        if (isset($_POST['row_count'])) {
+                            echo CHtml::hiddenField('row_count', $_POST['row_count']);
+                        }
+                        else
+                            echo CHtml::hiddenField('row_count', $row_count);
                         ?>
                     </div>
                     <!--  </div>
@@ -485,36 +497,46 @@ if (count($final)) {
 
 <script type="text/javascript" src="./assets/pnotify-1.2.0/jquery.pnotify.js"></script>
 <script type="text/javascript">
-  
-            function storeLocal() {
-                if ('localStorage' in window && window['localStorage'] != null) {
-                    try {
-                        console.log(JSON.stringify(<?php echo json_encode($list); ?>));
-                        console.log(JSON.stringify(<?php echo json_encode($createdGID); ?>));
-                        console.log(JSON.stringify(<?php echo json_encode($existing); ?>));
-                        localStorage.setItem('list', JSON.stringify(<?php echo json_encode($list); ?>));
-                        localStorage.setItem('createdGID', JSON.stringify(<?php echo json_encode($createdGID); ?>));
-                        localStorage.setItem('existing', JSON.stringify(<?php echo json_encode($existing); ?>));
-                        localStorage.setItem('checked', JSON.stringify(<?php echo json_encode($checked); ?>));
+
+    function storeLocal() {
+        if ('localStorage' in window && window['localStorage'] != null) {
+
+            localStorage.removeItem("list");
+            localStorage.removeItem("existing");
+
+            localStorage.removeItem("createdGID");
+            try {
+                //console.log(JSON.stringify(<?php //echo json_encode($list);     ?>));
+                //console.log(JSON.stringify(<?php //echo json_encode($createdGID);     ?>));
+                // console.log("existing: "+JSON.stringify(<?php echo base64_encode(serialize($existing)); ?> ));
+
+                localStorage.removeItem("list");
+                localStorage.removeItem("existing");
+
+                localStorage.removeItem("createdGID");
+                localStorage.setItem('list', <?php echo json_encode(base64_encode(serialize($list))); ?>);
+                localStorage.setItem('createdGID', <?php echo json_encode(base64_encode(serialize($createdGID))); ?>);
+                localStorage.setItem('existing', <?php echo json_encode(base64_encode(serialize($existing))); ?>);
+                localStorage.setItem('checked', <?php echo json_encode(base64_encode(serialize($checked))); ?>);
 
 
-                        document.getElementById('checked').value = localStorage.checked;
-                        document.getElementById('existing').value = localStorage.existing;
-                        document.getElementById('createdGID').value = localStorage.createdGID;
-                    } catch (exception) {
-                        if ((exception != QUOTA_EXCEEDED_ERR) &&
-                                (exception != NS_ERROR_DOM_QUOTA_REACHED)) {
-                            throw exception;
-                        }
-                    }
-                } else {
-                    alert('Cannot store user preferences as your browser do not support local storage');
+                document.getElementById('checked').value = localStorage.checked;
+                document.getElementById('existing').value = localStorage.existing;
+                document.getElementById('createdGID').value = localStorage.createdGID;
+            } catch (exception) {
+                if ((exception !== QUOTA_EXCEEDED_ERR) &&
+                        (exception !== NS_ERROR_DOM_QUOTA_REACHED)) {
+                    throw exception;
                 }
             }
-            window.addEventListener('storage', storageEventHandler, false);
-            function storageEventHandler(event) {
-                storeLocal();
-            }
+        } else {
+            alert('Cannot store user preferences as your browser do not support local storage');
+        }
+    }
+    window.addEventListener('storage', storageEventHandler, false);
+    function storageEventHandler(event) {
+        storeLocal();
+    }
 </script>
 <script type="text/javascript">
 
@@ -525,7 +547,7 @@ if (count($final)) {
                     text: to_process + "/" + row_count + " rows selected",
                     //text: ,
                     type: "info",
-                    hide: false,
+                    hide: true,
                     //shadow: false,
                     //opacity: .8
                     //nonblock: true,
@@ -537,7 +559,7 @@ if (count($final)) {
                     //text:,
 
                     type: "success",
-                    hide: false,
+                    hide: true,
                     //shadow: false,
                     //nonblock: true,
                     //nonblock_opacity: .2
@@ -547,7 +569,7 @@ if (count($final)) {
                     {
                         text: not_standard + " row(s) <br>" + "<b>not in standard form</b>",
                         type: "error",
-                        hide: false,
+                        hide: true,
                         //shadow: false,
                         //opacity: .8
                     });
@@ -562,19 +584,21 @@ if (count($final)) {
         //*****the term to be placed on the heading in the modal
 
         var term = $(this).data("id");
-        var arr = document.getElementsByClassName(term);
-
+        var arr = null;
+        arr = document.getElementsByClassName(term);
+        console.log("id: " + term);
         var m_values = new Array();
         m_values.length = 0;
         for (var i = 0; i < arr.length; i++) {
             m_values.push(arr[i].value);
         }
+        //console.log(m_values);
 
         //******assign the obtained value in the modal*****
         $.ajax({
             cache: false,
             type: 'POST',
-            url: '<?php echo Yii::app()->createUrl('site/chooseGID')?>',
+            url: '<?php echo Yii::app()->createUrl('site/chooseGID') ?>',
             data: {termId: term, arr_terms: m_values},
             success: function(data) {
                 $("#new-Modal").html(data);
