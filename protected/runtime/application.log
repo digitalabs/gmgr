@@ -2398,3 +2398,60 @@ in E:\xampp\htdocs\GMGR\index.php (13)
 2014/03/06 09:01:04 [warning] [application] Failed to set unsafe attribute "file" of "ImporterForm".
 in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (350)
 in E:\xampp\htdocs\GMGR\index.php (13)
+2014/03/06 10:47:03 [warning] [application] Failed to set unsafe attribute "file" of "ImporterForm".
+in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (350)
+in E:\xampp\htdocs\GMGR\index.php (13)
+2014/03/06 10:48:32 [error] [php] Invalid argument supplied for foreach() (E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php:391)
+Stack trace:
+#0 E:\xampp\htdocs\yii\framework\web\CController.php(286): SiteController->runAction()
+#1 E:\xampp\htdocs\yii\framework\web\CController.php(265): SiteController->runActionWithFilters()
+#2 E:\xampp\htdocs\yii\framework\web\CWebApplication.php(282): SiteController->run()
+#3 E:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#4 E:\xampp\htdocs\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#5 E:\xampp\htdocs\GMGR\index.php(13): CWebApplication->run()
+REQUEST_URI=/GMGR/index.php?r=site/importFileDisplay
+in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (391)
+in E:\xampp\htdocs\GMGR\index.php (13)
+2014/03/06 10:49:09 [warning] [application] Failed to set unsafe attribute "file" of "ImporterForm".
+in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (350)
+in E:\xampp\htdocs\GMGR\index.php (13)
+2014/03/06 10:50:39 [error] [php] Invalid argument supplied for foreach() (E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php:391)
+Stack trace:
+#0 E:\xampp\htdocs\yii\framework\web\CController.php(286): SiteController->runAction()
+#1 E:\xampp\htdocs\yii\framework\web\CController.php(265): SiteController->runActionWithFilters()
+#2 E:\xampp\htdocs\yii\framework\web\CWebApplication.php(282): SiteController->run()
+#3 E:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#4 E:\xampp\htdocs\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#5 E:\xampp\htdocs\GMGR\index.php(13): CWebApplication->run()
+REQUEST_URI=/GMGR/index.php?r=site/importFileDisplay
+in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (391)
+in E:\xampp\htdocs\GMGR\index.php (13)
+2014/03/06 14:36:00 [warning] [application] Failed to set unsafe attribute "file" of "ImporterForm".
+in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (350)
+in E:\xampp\htdocs\GMGR\index.php (13)
+2014/03/06 14:39:11 [error] [php] Invalid argument supplied for foreach() (E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php:391)
+Stack trace:
+#0 E:\xampp\htdocs\yii\framework\web\CController.php(286): SiteController->runAction()
+#1 E:\xampp\htdocs\yii\framework\web\CController.php(265): SiteController->runActionWithFilters()
+#2 E:\xampp\htdocs\yii\framework\web\CWebApplication.php(282): SiteController->run()
+#3 E:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#4 E:\xampp\htdocs\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#5 E:\xampp\htdocs\GMGR\index.php(13): CWebApplication->run()
+REQUEST_URI=/GMGR/index.php?r=site/importFileDisplay
+in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (391)
+in E:\xampp\htdocs\GMGR\index.php (13)
+2014/03/06 21:17:51 [warning] [application] Failed to set unsafe attribute "file" of "ImporterForm".
+in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (350)
+in E:\xampp\htdocs\GMGR\index.php (13)
+2014/03/06 21:46:05 [warning] [application] Failed to set unsafe attribute "file" of "ImporterForm".
+in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (350)
+in E:\xampp\htdocs\GMGR\index.php (13)
+2014/03/06 21:48:47 [warning] [application] Failed to set unsafe attribute "file" of "ImporterForm".
+in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (350)
+in E:\xampp\htdocs\GMGR\index.php (13)
+2014/03/06 21:49:59 [warning] [application] Failed to set unsafe attribute "file" of "ImporterForm".
+in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (350)
+in E:\xampp\htdocs\GMGR\index.php (13)
+2014/03/06 21:56:06 [warning] [application] Failed to set unsafe attribute "file" of "ImporterForm".
+in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (350)
+in E:\xampp\htdocs\GMGR\index.php (13)

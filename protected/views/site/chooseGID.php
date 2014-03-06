@@ -65,6 +65,8 @@
             if ($existing[$index][13] == 'not specified') {
                 echo 'The date of creation of the cross in the list uploaded is not specified. All candidate GID(s) will be shown.<br> Create NEW GID if what you are looking for do not exist.<br>
                 <br>';
+            }else{
+                echo "You can filter entries before ".$existing[$index][13]."<br>";
             }
             if (strcmp($existing[$index][13], $existing[$index][12]) == 0) {
                 echo ' There are multiple matches in the database having the exact female and male name values, and the date specified in the list uploaded matches the GIDs date of creation. Which GID do you want to use?<br><br>';
@@ -282,18 +284,25 @@
                             if (iMax == '') {
                                 return true;
                             }
+                            
+                            var date2_s="";
+                            if (date2.length==8){
+                                date2_s=IMax.charAt(0)+IMax.charAt(1)+IMax.charAt(2)+IMax.charAt(3)+"-"
+                                        +IMax.charAt(4)+IMax.charAt(5)+"-"
+                                        +IMax.charAt(6)+IMax.charAt(7);
+                                
+                            }else if (date2.length==4){
+                                date2_s=IMax.charAt(0)+IMax.charAt(1)+IMax.charAt(2)+IMax.charAt(3)+"-"
+                                        +"01-01";
+                            } else{
+                             date2_s=iMax;   
+                            }
+                            console.log(date2_s);
                             var date1 = new Date(iValue);
-                            var date2 = new Date(iMax);
+                            var date2 = new Date(date2_s);
                             date1.setHours(0, 0, 0, 0);
                             date2.setHours(0, 0, 0, 0);
                             var result = date1 - date2;
-                            var date2_s="";
-                            if (date2.length==8){
-                                date2_s=
-                                console.log(s.charAt(i));
-                            
-                            
-                            }
                             //console.log("a: " + iMax + " date2: " + date2);
                             //console.log("b: " + iValue + " date1: " + date1);
 
@@ -411,9 +420,21 @@
 
                             if (iMax == '') {
                                 return true;
+                            }var date2_s="";
+                            if (date2.length==8){
+                                date2_s=IMax.charAt(0)+IMax.charAt(1)+IMax.charAt(2)+IMax.charAt(3)+"-"
+                                        +IMax.charAt(4)+IMax.charAt(5)+"-"
+                                        +IMax.charAt(6)+IMax.charAt(7);
+                                
+                            }else if (date2.length==4){
+                                date2_s=IMax.charAt(0)+IMax.charAt(1)+IMax.charAt(2)+IMax.charAt(3)+"-"
+                                        +"01-01";
+                            } else{
+                             date2_s=iMax;   
                             }
+                            console.log(date2_s);
                             var date1 = new Date(iValue);
-                            var date2 = new Date(iMax);
+                            var date2 = new Date(date2_s);
                             date1.setHours(0, 0, 0, 0);
                             date2.setHours(0, 0, 0, 0);
                             var result = date1 - date2;
