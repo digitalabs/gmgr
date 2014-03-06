@@ -11,7 +11,8 @@
         <a class='close' data-dismiss='modal'>&times;</a>
         <?php
         if (isset($_POST['termId'])) {
-            $m_term = $_POST['termId'];
+            $termArray = $_POST['arr_terms'];
+            $m_term = $termArray[13];
         } else {
             $m_term = '';
         }
@@ -37,6 +38,9 @@
         $locationID = $termArray[11];
         // print_r($existing);
         $cross = $termArray[12];
+       // echo "<br>theParent: ".$m_nval."<br>";
+        //echo "<br>termArr: "."<br>";
+        //print_r($termArray);
     }
 
     if (count($existing) !== 0) {
@@ -48,6 +52,7 @@
 
             </div>
             <?php
+            $index=0;
             for ($j = 0; $j < count($existing); $j++) {
                 if ($m_term === $existing[$j][11] && $existing[$j][0] === $m_id) {
                     $index = $j;
@@ -100,6 +105,8 @@
 
                 <tbody>
                     <?php
+                    $gpid2_nval="";
+                    $gpid1_nval="";
                     for ($j = 0; $j < count($existing); $j++) {
                         /* echo 'm_term: '.$m_term."<br>";
                           echo 'existing[j][1]: '.$existing[$j][1]."<br>";
@@ -251,14 +258,14 @@
 
                 });
                 filterTable();
-                //console.log('count: ' + oTable.fnSettings().fnRecordsDisplay());
+                ////console.log('count: ' + oTable.fnSettings().fnRecordsDisplay());
             });
             function filterTable() {
 
                 var elem = document.getElementById('filter');
 
                 elem.value = 'Show All';
-                iMax = $('#sToId').attr('value');
+                iMax = $('#sToId').val();
 
                 $.fn.dataTableExt.afnFiltering.push(
                         function(oSettings, aData, iDataIndex) {
@@ -269,21 +276,31 @@
                             iMin = '';
 
                             // 4 here is the column where my dates are.
-                            var iValue = aData[1];
+                            var iValue = aData[2];
+
 
                             if (iMax == '') {
                                 return true;
                             }
                             var date1 = new Date(iValue);
                             var date2 = new Date(iMax);
+                            date1.setHours(0,0,0,0);
+                            date2.setHours(0,0,0,0);
                             var result = date1 - date2;
-                            //console.log(date1 + '-' + date2 + '= ' + result);
+                            //console.log("a: " + iMax + " date2: " + date2);
+                            //console.log("b: " + iValue + " date1: " + date1);
+
+                            //console.log("<br>0 " + new Date("1985"));
+                            console.log(date1 + '-' + date2 + '= ' + result);
 
                             //var f=dates.compare(iValue,iMax);
-                            if (result === 0) {
-                                return true;
-                            } else if (result < 0) {
-                                return true;
+                             if (result === 0) {
+                             return true;
+                             } else if (result < 0) {
+                                if (iValue !== "0") {
+
+                                    return true;
+                                }
                             }
                             return false;
 
@@ -293,7 +310,7 @@
                 //Update table
                 oTable.fnDraw();
                 if (oTable.fnSettings().fnRecordsDisplay() === 0) {
-                    //console.log('here ');
+                    ////console.log('here ');
                     // $('id-row-count').value();
                     $('#id-row-count').textContent = 'The cross and its parents have matches from the database but does not match the specified date in the list. \n\
                                                                               Choose from the matches or Create a new GID.';
@@ -357,7 +374,7 @@
                 if (cross === term) {
                     if (elem.value == 'Show Germplasm that has date ' + cdate) {
                         elem.value = 'Show All';
-                        iMax = $('#sToId').attr('value');
+                        iMax = "" + $('#sToId').attr('value');
                         $('#createNew').val("<?php echo $cross; ?>");
                         // $('#id-submit').val("<input class='btn btn-primary' type='submit' value='Assign' id='submit'> <a href='#' class='btn' data-dismiss='modal'>Cancel</a>");
                     } else {
@@ -368,7 +385,7 @@
                 } else {
                     if (elem.value == 'Show Germplasm created before ' + cdate) {
                         elem.value = 'Show All';
-                        iMax = $('#sToId').attr('value');
+                        iMax = "" + $('#sToId').attr('value');
                     } else {
                         elem.value = 'Show Germplasm created before ' + cdate;
                         iMax = '';
@@ -383,21 +400,26 @@
                             iMin = '';
 
                             // 4 here is the column where my dates are.
-                            var iValue = aData[1];
+                            var iValue = aData[2];
 
                             if (iMax == '') {
                                 return true;
                             }
                             var date1 = new Date(iValue);
                             var date2 = new Date(iMax);
+                            date1.setHours(0,0,0,0);
+                            date2.setHours(0,0,0,0);
                             var result = date1 - date2;
                             //console.log(date1 + '-' + date2 + '= ' + result);
 
                             //var f=dates.compare(iValue,iMax);
-                            if (result === 0) {
-                                return true;
-                            } else if (result < 0) {
-                                return true;
+                             if (result === 0) {
+                             return true;
+                             } else if (result < 0) {
+                                if (iValue !== "0") {
+
+                                    return true;
+                                }
                             }
                             return false;
 
@@ -407,7 +429,7 @@
                 //Update table
                 oTable.fnDraw();
                 if (oTable.fnSettings().fnRecordsDisplay() === 0) {
-                    //console.log('here ');
+                    ////console.log('here ');
                     // $('id-row-count').value();
                     $('#id-row-count').textContent = 'The cross and its parents have matches from the database but does not match the specified date in the list. \n\
                                                                               Choose from the matches or Create a new GID.';

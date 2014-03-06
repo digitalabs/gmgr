@@ -12,15 +12,39 @@
             alert('Cannot store user preferences as your browser do not support local storage');
         }
     }
-    function storeLocal2() {
+    function storeLocal_process() {
         if ('localStorage' in window && window['localStorage'] !== null) {
             try {
+                //   localStorage.removeItem("list");
+                //  localStorage.removeItem("existing");
+
+                //localStorage.removeItem("createdGID");
                 document.getElementById('location').value = localStorage.locationID;
                 document.getElementById('checked').value = localStorage.checked;
                 document.getElementById('existing').value = localStorage.existing;
                 document.getElementById('createdGID').value = localStorage.createdGID;
                 document.getElementById('list').value = localStorage.list;
-                document.forms["importFileDisplay-rfrsh"].submit();
+                document.forms["process-id"].submit();
+            } catch (e) {
+            }
+        } else {
+            alert('Cannot store user preferences as your browser do not support local storage');
+        }
+    }
+    function storeLocal_refresh() {
+        if ('localStorage' in window && window['localStorage'] !== null) {
+            try {
+                //   localStorage.removeItem("list");
+                //  localStorage.removeItem("existing");
+
+                //localStorage.removeItem("createdGID");
+                console.log("existing: " + localStorage.existing);
+                document.getElementById('location-refresh').value = localStorage.locationID;
+                document.getElementById('checked-refresh').value = localStorage.checked;
+                document.getElementById('existing-refresh').value = localStorage.existing;
+                document.getElementById('createdGID-refresh').value = localStorage.createdGID;
+                document.getElementById('list-refresh').value = localStorage.list;
+                document.forms["refresh-id"].submit();
             } catch (e) {
             }
         } else {
@@ -464,6 +488,11 @@ class SiteController extends Controller {
                     //echo "<br>Refresh!!!";
                     $locationID = $_POST['location'];
                     $list = json_decode($_POST['list']);
+
+                    $locationID = $_POST['location'];
+                    $list = unserialize(base64_decode($_POST['list']));
+                    ;
+
                     //echo "<br>list:<br>";
                     //print_r($list);
                 } else {
@@ -784,21 +813,26 @@ class SiteController extends Controller {
                         $rows = $list;
                     } elseif (isset($_POST['process'])) {
                         //echo "here 1";
+                        $createdGID = unserialize(base64_decode($_POST['createdGID']));
+                        $existing = unserialize(base64_decode($_POST['existing']));
+                        $list = unserialize(base64_decode($_POST['list']));
+                        $checked = unserialize(base64_decode($_POST['checked']));
+
                         $locationID = $_POST['location'];
-                        $checked = json_decode($_POST['checked'], true);
-                        $createdGID = json_decode($_POST['createdGID'], true);
-                        $existing = json_decode($_POST['existing'], true);
+                        //$checked = json_decode($_POST['checked'], true);
+                        //$createdGID = json_decode($_POST['createdGID'], true);
+                        //$existing = json_decode($_POST['existing'], true);
                         $unselected = $file_toArray->get_unselected_rows($checked, $list);
                         $standardized = $file_toArray->checkIf_standardize($unselected, $list);
-                       // echo "checked: ";
-                       // print_r($checked);
-                        $checked_all=array();
-                        for($i=0;$i<count($checked);$i++){
-                            $checked_all[$i]=$checked[$i];
+                        // echo "checked: ";
+                        // print_r($checked);
+                        $checked_all = array();
+                        for ($i = 0; $i < count($checked); $i++) {
+                            $checked_all[$i] = $checked[$i];
                         }
-                        $j=count($checked_all);
-                        for($i=0;$i<count($unselected);$i++){
-                            $checked_all[$j]=$unselected[$i];
+                        $j = count($checked_all);
+                        for ($i = 0; $i < count($unselected); $i++) {
+                            $checked_all[$j] = $unselected[$i];
                             $j++;
                         }
                         $checked = $standardized;
@@ -835,8 +869,8 @@ class SiteController extends Controller {
                         $createdGID = $output['createdGID'];
                         $list = $output['list'];
                         $existing = $output['existingTerm'];
-                        $checked=$checked_all;
-                        
+                        $checked = $checked_all;
+
                         //echo "<br>standardized ";
                         //print_r($standardized);
                         //echo "<br>checked ";
@@ -959,10 +993,10 @@ class SiteController extends Controller {
                 } else {
                     //echo "<br><br><br> no curl";
                     $locationID = $_POST['location'];
-                    $createdGID = json_decode($_POST['createdGID']);
-                    $existing = json_decode($_POST['existing']);
-                    $list = json_decode($_POST['list']);
-                    $checked = json_decode($_POST['checked']);
+                    $createdGID = unserialize(base64_decode($_POST['createdGID']));
+                    $existing = unserialize(base64_decode($_POST['existing']));
+                    $list = unserialize(base64_decode($_POST['list']));
+                    $checked = unserialize(base64_decode($_POST['checked']));
                     $rows = $list;
                 }
                 if (count($rows)) {
@@ -1009,29 +1043,31 @@ class SiteController extends Controller {
                 //header("Location: " . $values['path'] . "?" . $values['query'] . "");
                 ?>
                 <html>
-                    <body onload="storeLocal2()">
-                        <form action="<?php echo $values['path'] . "?" . $values['query']; ?>" method="post" id='importFileDisplay-rfrsh'>
+                    <body onload="storeLocal_process();">
+                        <form action="<?php echo $values['path'] . "?" . $values['query']; ?>" method="post" id='process-id'>
                             <input type="hidden" name="process" value="true">
                             <input type="hidden" id ="location" name="location" value="">
                             <input type="hidden" id="list" name="list" value="">
-                            <input type="hidden" id="existing" name="existing" value="">
                             <input type="hidden" id="createdGID" name="createdGID" value="">
                             <input type="hidden" id="checked" name="checked" value="">
+                            <input type="hidden" id="existing" name="existing" value="">
                         </form>  
                     </body>
                 </html>
                 <?php
             } else {    // when page is refreshed
+               // echo "page refreshed" . "<br>";
+                // print_r($existing);
                 ?>
                 <html>
-                    <body onload="storeLocal2()">
-                        <form action="" method="post" id='importFileDisplay-rfrsh'>
+                    <body onload="storeLocal_refresh();">
+                        <form action="" method="post" id='refresh-id'>
                             <input type="hidden" name="refresh" value="true">
-                            <input type="hidden" id ="location" name="location" value="">
-                            <input type="hidden" id="list" name="list" value="">
-                            <input type="hidden" id="existing" name="existing" value="">
-                            <input type="hidden" id="createdGID" name="createdGID" value="">
-                            <input type="hidden" id="checked" name="checked" value="">
+                            <input type="hidden" id ="location-refresh" name="location" value="">
+                            <input type="hidden" id="list-refresh" name="list" value="">
+                            <input type="hidden" id="createdGID-refresh" name="createdGID" value="">
+                            <input type="hidden" id="checked-refresh" name="checked" value="">
+                            <input type="hidden" id="existing-refresh" name="existing" value="">
                         </form>  
                     </body>
                 </html>
