@@ -758,9 +758,11 @@ class SiteController extends Controller {
             if (isset($_POST['locationID']) || isset($_POST['location']) || isset($_POST['process'])) {
 
                 if ((isset($_POST['Germplasm']['gid']) && ($_POST['Germplasm']['gid'] != '')) || isset($_POST['process'])) {
-                    $data = $_POST['list'];
+                   // $data = $_POST['list'];
 
-                    $list = json_decode($data, true);
+                    //$list = json_decode($data, true);
+                  $list=unserialize(base64_decode($_POST['list']));
+                    //$list=unserialize(base64_decode($_POST['list']));
 
                     if (!empty($_POST['Germplasm']['gid'])) {
                         //echo "here 0";
