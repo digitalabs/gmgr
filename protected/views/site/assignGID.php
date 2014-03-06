@@ -340,6 +340,7 @@ if (count($final)) {
                             'dataProvider' => $GdataProvider,
                             'filter' => $filtersForm,
                             'enablePagination' => true,
+                            'ajaxUpdate' => true,
                             'beforeAjaxUpdate' => 'js:
 					function (id, options) {
 						options.data = {
@@ -425,13 +426,13 @@ if (count($final)) {
                         ?>
 
                         <?php
-                        echo CHtml::hiddenField('list', json_encode($list));
-                        echo CHtml::hiddenField('rows', json_encode($list));
+                        echo CHtml::hiddenField('list', base64_encode(serialize($list)));
+                        echo CHtml::hiddenField('rows', base64_encode(serialize($list)));
                         echo CHtml::hiddenField('location', $locationID);
                         echo CHtml::hiddenField('locationID', $locationID);
-                        echo CHtml::hiddenField('checked', '');
-                        echo CHtml::hiddenField('existing', '');
-                        echo CHtml::hiddenField('createdGID', '');
+                        echo CHtml::hiddenField('checked', base64_encode(serialize($checked)));
+                        echo CHtml::hiddenField('existing', base64_encode(serialize($existing)));
+                        echo CHtml::hiddenField('createdGID', base64_encode(serialize($createdGID)));
                         if (isset($_POST['row_count'])) {
                             echo CHtml::hiddenField('row_count', $_POST['row_count']);
                         }
