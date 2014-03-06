@@ -153,24 +153,30 @@ class SiteController extends Controller {
 
             // if ($dbFormModel->validate() && $centralDBForm->validate()) {
             //local database
+            $local_db_host = $_POST['databaseForm']['host'];
             $local_db_name = $_POST['databaseForm']['database_name'];
             $local_db_port = $_POST['databaseForm']['port_name'];
             $local_db_username = $_POST['databaseForm']['database_username'];
-
+            $local_db_password = $_POST['databaseForm']['database_password'];
 
             //central database
+            $central_db_host = $_POST['centralDBForm']['host'];
             $central_db_name = $_POST['centralDBForm']['database_name'];
             $central_db_port = $_POST['centralDBForm']['port_name'];
             $central_db_username = $_POST['centralDBForm']['database_username'];
-
+            $central_db_password = $_POST['centralDBForm']['database_password'];
 
             $database_details = array(
+                'local_db_host' => $local_db_host,
                 'local_db_name' => $local_db_name,
                 'local_db_port' => $local_db_port,
                 'local_db_username' => $local_db_username,
+                'local_db_password' => $local_db_password,
+                'central_host'=> $central_db_host,
                 'central_db_name' => $central_db_name,
                 'central_db_port' => $central_db_port,
-                'central_db_username' => $central_db_username
+                'central_db_username' => $central_db_username,
+                'central_db_password' => $central_db_password    
             );
             $data = json_encode($database_details);
 
@@ -178,23 +184,31 @@ class SiteController extends Controller {
             $this->render('login', array('model' => $model, 'database_details' => $database_details));
         } else {
             //local database
+            $local_db_host = '';
             $local_db_name = '';
             $local_db_port = '';
             $local_db_username = '';
+            $local_db_password = '';
 
 
             //central database
+            $central_db_host = '';
             $central_db_name = '';
             $central_db_port = '';
             $central_db_username = '';
+            $central_db_password = '';
 
             $database_details = array(
+                'local_db_host' => $local_db_host,
                 'local_db_name' => $local_db_name,
                 'local_db_port' => $local_db_port,
                 'local_db_username' => $local_db_username,
+                'local_db_password' => $local_db_password,
+                'central_host'=> $central_db_host,
                 'central_db_name' => $central_db_name,
                 'central_db_port' => $central_db_port,
-                'central_db_username' => $central_db_username
+                'central_db_username' => $central_db_username,
+                'central_db_password' => $central_db_password    
             );
             $this->render('login', array('model' => $model, 'database_details' => $database_details));
         }
