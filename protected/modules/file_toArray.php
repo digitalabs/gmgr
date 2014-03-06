@@ -52,38 +52,52 @@ class file_toArray {
         // echo "cross: ".$column_cross . "<br>";
 
         $fr = fread($f, filesize($filePath));
+
         fclose($f);
-        $lines = array();
-        $lines = explode("\n", $fr); // IMPORTANT the delimiter here just the "new line" \n 
         $dataString = array();
         //echo $column_date . "<br>";
-        for ($i = 0; $i < count($lines); $i++) {
-            $cells = array();
-            $cells = explode(",", $lines[$i]); // use the cell/row delimiter ;
-            //print_r($cells);
-            //echo "<br>";
+        echo "<br><br><br>";
+        $f = fopen($filePath, "r");
+        $lines = array();
+        $i=0;
+        while (($result = fgetcsv($f)) !== false) {
+            
+            if (array(null) !== $result && $i>0) { // ignore blank lines
+                //$lines="";
+                $cells = $result;
+                //$cells = array();
+                //$cells = explode(",", $lines[$i]); // use the cell/row delimiter ;
+                //print_r($cells);
+                //echo "<br>";
+                $cross = "";
+                $female = "";
+                $male = "";
+                $date = "";
+                for ($k = 0; $k < count($cells) ; $k++) {
 
-            for ($k = 0; $k < count($cells) - 1; $k++) {
-
-                if ($k == $column_cross) {
-                    $cross = $cells[$k];
-                } elseif ($k == $column_female) {
-                    $female = $cells[$k];
-                } elseif ($k == $column_male) {
-                    $male = $cells[$k];
-                } elseif ($k == $column_date) {
-                    $date = $cells[$k];
+                    if ($k == $column_cross) {
+                        $cross = $cells[$k];
+                    } elseif ($k == $column_female) {
+                        $female = $cells[$k];
+                    } elseif ($k == $column_male) {
+                        $male = $cells[$k];
+                    } elseif ($k == $column_date) {
+                        $date = $cells[$k];
+                    }
+                }// for k end
+                array_push($dataString, $cross);
+                array_push($dataString, $female);
+                array_push($dataString, $male);
+                if ($column_date == -1 || empty($date)) {
+                    array_push($dataString, "not specified");
+                } else {
+                    array_push($dataString, $date);
                 }
-            }// for k end
-            array_push($dataString, $cross);
-            array_push($dataString, $female);
-            array_push($dataString, $male);
-            if ($column_date == -1 || empty($date)) {
-                array_push($dataString, "not specified");
-            } else {
-                array_push($dataString, $date);
             }
+            $i++;
         }
+        fclose($f);
+       
         return $dataString;
     }
 
