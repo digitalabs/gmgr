@@ -33,7 +33,7 @@ class file_toArray {
         $column_male = -1;
         $column_cross = -1;
         $column_date = -1;
-        for ($i = 0; $i < count($header) - 1; $i++) {
+        for ($i = 0; $i < count($header); $i++) {
 
 
             if (preg_match("/female/i", $header[$i], $output_array) == 1) {

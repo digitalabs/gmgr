@@ -2280,3 +2280,6 @@ REQUEST_URI=/GMGR/index.php?ajax=germplasmList&r=site%2FassignGID
 in E:\xampp\htdocs\GMGR\protected\modules\file_toArray.php (323)
 in E:\xampp\htdocs\GMGR\protected\views\site\assignGID.php (114)
 in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (1027)
+2014/03/06 06:41:58 [warning] [application] Failed to set unsafe attribute "file" of "ImporterForm".
+in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (350)
+in E:\xampp\htdocs\GMGR\index.php (13)
