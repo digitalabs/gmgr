@@ -155,12 +155,12 @@
                 localStorage.removeItem("checked");
                 localStorage.removeItem("createdGID");
 
-                var list = <?php echo json_encode($list); ?>;
+                //var list = <?php echo json_encode($list); ?>;
 
-                // console.log(JSON.stringify(<?php echo json_encode($list); ?>));
-                document.getElementById('list').value = list;
+                // console.log(JSON.stringify(<?php //echo json_encode($list);  ?>));
+
                 localStorage.setItem('list', <?php echo json_encode(base64_encode(serialize($list))); ?>);
-
+                document.getElementById('list').value = localStorage.list;
                 var locationID = document.getElementById('location').value;
 
                 localStorage.setItem('locationID', locationID);
