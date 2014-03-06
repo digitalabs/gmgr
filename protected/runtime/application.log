@@ -2379,3 +2379,22 @@ in E:\xampp\htdocs\GMGR\index.php (13)
 2014/03/06 08:01:06 [warning] [application] Failed to set unsafe attribute "file" of "ImporterForm".
 in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (350)
 in E:\xampp\htdocs\GMGR\index.php (13)
+2014/03/06 08:18:08 [warning] [application] Failed to set unsafe attribute "file" of "ImporterForm".
+in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (350)
+in E:\xampp\htdocs\GMGR\index.php (13)
+2014/03/06 08:46:47 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "output]".' in E:\xampp\htdocs\yii\framework\web\CController.php:483
+Stack trace:
+#0 E:\xampp\htdocs\yii\framework\web\CController.php(270): CController->missingAction('output]')
+#1 E:\xampp\htdocs\yii\framework\web\CWebApplication.php(282): CController->run('output]')
+#2 E:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('site/output]')
+#3 E:\xampp\htdocs\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#4 E:\xampp\htdocs\GMGR\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/GMGR/index.php?r=site/output]
+---
+2014/03/06 08:47:57 [warning] [application] Failed to set unsafe attribute "file" of "ImporterForm".
+in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (350)
+in E:\xampp\htdocs\GMGR\index.php (13)
+2014/03/06 09:01:04 [warning] [application] Failed to set unsafe attribute "file" of "ImporterForm".
+in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (350)
+in E:\xampp\htdocs\GMGR\index.php (13)

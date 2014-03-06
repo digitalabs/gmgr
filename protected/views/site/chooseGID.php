@@ -38,7 +38,7 @@
         $locationID = $termArray[11];
         // print_r($existing);
         $cross = $termArray[12];
-       // echo "<br>theParent: ".$m_nval."<br>";
+        // echo "<br>theParent: ".$m_nval."<br>";
         //echo "<br>termArr: "."<br>";
         //print_r($termArray);
     }
@@ -52,7 +52,7 @@
 
             </div>
             <?php
-            $index=0;
+            $index = 0;
             for ($j = 0; $j < count($existing); $j++) {
                 if ($m_term === $existing[$j][11] && $existing[$j][0] === $m_id) {
                     $index = $j;
@@ -105,8 +105,8 @@
 
                 <tbody>
                     <?php
-                    $gpid2_nval="";
-                    $gpid1_nval="";
+                    $gpid2_nval = "";
+                    $gpid1_nval = "";
                     for ($j = 0; $j < count($existing); $j++) {
                         /* echo 'm_term: '.$m_term."<br>";
                           echo 'existing[j][1]: '.$existing[$j][1]."<br>";
@@ -284,19 +284,26 @@
                             }
                             var date1 = new Date(iValue);
                             var date2 = new Date(iMax);
-                            date1.setHours(0,0,0,0);
-                            date2.setHours(0,0,0,0);
+                            date1.setHours(0, 0, 0, 0);
+                            date2.setHours(0, 0, 0, 0);
                             var result = date1 - date2;
+                            var date2_s="";
+                            if (date2.length==8){
+                                date2_s=
+                                console.log(s.charAt(i));
+                            
+                            
+                            }
                             //console.log("a: " + iMax + " date2: " + date2);
                             //console.log("b: " + iValue + " date1: " + date1);
 
                             //console.log("<br>0 " + new Date("1985"));
                             console.log(date1 + '-' + date2 + '= ' + result);
 
-                            //var f=dates.compare(iValue,iMax);
-                             if (result === 0) {
-                             return true;
-                             } else if (result < 0) {
+                            //var f=date2.charAt(0)dates.compare(iValue,iMax);
+                            if (result === 0) {
+                                return true;
+                            } else if (result > 0) {
                                 if (iValue !== "0") {
 
                                     return true;
@@ -407,15 +414,15 @@
                             }
                             var date1 = new Date(iValue);
                             var date2 = new Date(iMax);
-                            date1.setHours(0,0,0,0);
-                            date2.setHours(0,0,0,0);
+                            date1.setHours(0, 0, 0, 0);
+                            date2.setHours(0, 0, 0, 0);
                             var result = date1 - date2;
                             //console.log(date1 + '-' + date2 + '= ' + result);
 
                             //var f=dates.compare(iValue,iMax);
-                             if (result === 0) {
-                             return true;
-                             } else if (result < 0) {
+                            if (result === 0) {
+                                return true;
+                            } else if (result > 0) {
                                 if (iValue !== "0") {
 
                                     return true;
