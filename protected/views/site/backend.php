@@ -39,6 +39,8 @@
                     <fieldset>
                         <legend>Local Database</legend>
                         <?php
+                        $dbFormModel->host = '127.0.0.1';
+                        echo $form->textFieldRow($dbFormModel,'host');
                         $dbFormModel->database_name = 'local';
                         echo $form->textFieldRow($dbFormModel, 'database_name');
                         $dbFormModel->port_name = '3306';
@@ -52,6 +54,8 @@
                     <fieldset>
                         <legend>Central Database</legend>
                         <?php
+                        $centralDBForm->host = '127.0.0.1';
+                        echo $form->textFieldRow($centralDBForm,'host');
                         $centralDBForm->database_name = 'central';
                         echo $form->textFieldRow($centralDBForm, 'database_name');
                         $centralDBForm->port_name = '3306';

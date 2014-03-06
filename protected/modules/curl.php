@@ -134,23 +134,31 @@ class curl {
 				else $selhis = '0';
 				
             //database settings
+            $local_db_host = Yii::app()->request->getParam('local_db_host');
             $local_db_name = Yii::app()->request->getParam('local_db_name');
             $local_db_port = Yii::app()->request->getParam('local_db_port');
             $local_db_username = Yii::app()->request->getParam('local_db_username');
+            $local_db_password = Yii::app()->request->getParam('local_db_password');
+            $central_db_host = Yii::app()->request->getParam('central_db_host');
             $central_db_name = Yii::app()->request->getParam('central_db_name');
             $central_db_port = Yii::app()->request->getParam('central_db_port');
             $central_db_username = Yii::app()->request->getParam('central_db_username');
+            $central_db_password = Yii::app()->request->getParam('central_db_password');
 
             $a = array(
                 'GID' => $gid,
                 'LEVEL' => $level,
-				'SEL'   => $selhis,
+		'SEL'   => $selhis,
+                'local_db_host' =>$local_db_host,
                 'local_db_name' => $local_db_name,
                 'local_db_port' => $local_db_port,
                 'local_db_username' => $local_db_username,
+                'local_db_password' => $local_db_password,
+                'central_db_host' => $central_db_host,
                 'central_db_name' => $central_db_name,
                 'central_db_port' => $central_db_port,
-                'central_db_username' => $central_db_username
+                'central_db_username' => $central_db_username,
+                'central_db_password' => $central_db_password
             );
 
 
@@ -190,23 +198,31 @@ class curl {
 				else $selhis = '0';
 				
             //database settings
+            $local_db_host = Yii::app()->request->getParam('local_db_host');
             $local_db_name = Yii::app()->request->getParam('local_db_name');
             $local_db_port = Yii::app()->request->getParam('local_db_port');
             $local_db_username = Yii::app()->request->getParam('local_db_username');
+            $local_db_password = Yii::app()->request->getParam('local_db_password');
+            $central_db_host = Yii::app()->request->getParam('central_db_host');
             $central_db_name = Yii::app()->request->getParam('central_db_name');
             $central_db_port = Yii::app()->request->getParam('central_db_port');
             $central_db_username = Yii::app()->request->getParam('central_db_username');
-
+            $central_db_password = Yii::app()->request->getParam('central_db_password');
+            
             $a = array(
                 'GID' => $gid,
                 'LEVEL' => $level,
-				'SEL' =>$selhis,
+		'SEL' =>$selhis,
+                'local_db_host' =>$local_db_host,
                 'local_db_name' => $local_db_name,
                 'local_db_port' => $local_db_port,
                 'local_db_username' => $local_db_username,
+                'local_db_password' => $local_db_password,
+                'central_db_host' => $central_db_host,
                 'central_db_name' => $central_db_name,
                 'central_db_port' => $central_db_port,
-                'central_db_username' => $central_db_username
+                'central_db_username' => $central_db_username,
+                'central_db_password' => $central_db_password
             );
             $data = json_encode($a);
 
