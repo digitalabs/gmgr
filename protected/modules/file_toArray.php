@@ -45,7 +45,7 @@ class file_toArray {
             if (preg_match("/cross/i", $header[$i], $output_array) == 1) {
                 $column_cross = $i;
             }
-            if (preg_match("/date/i", $header[$i], $output_array) == 1) {
+            if (preg_match("/date/i", $header[$i], $output_array) == 1 || preg_match("/year/i", $header[$i], $output_array) == 1) {
                 $column_date = $i;
             }
         }
