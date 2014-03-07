@@ -287,12 +287,12 @@
                             
                             var date2_s="";
                             if (iMax.length===8){
-                                date2_s=IMax.charAt(0)+IMax.charAt(1)+IMax.charAt(2)+IMax.charAt(3)+"-"
-                                        +IMax.charAt(4)+IMax.charAt(5)+"-"
-                                        +IMax.charAt(6)+IMax.charAt(7);
+                                date2_s=iMax.charAt(0)+iMax.charAt(1)+iMax.charAt(2)+iMax.charAt(3)+"-"
+                                        +iMax.charAt(4)+iMax.charAt(5)+"-"
+                                        +iMax.charAt(6)+iMax.charAt(7);
                                 
                             }else if (iMax.length===4){
-                                date2_s=IMax.charAt(0)+IMax.charAt(1)+IMax.charAt(2)+IMax.charAt(3)+"-"
+                                date2_s=iMax.charAt(0)+iMax.charAt(1)+iMax.charAt(2)+iMax.charAt(3)+"-"
                                         +"01-01";
                             } else{
                              date2_s=iMax;   
@@ -422,12 +422,12 @@
                                 return true;
                             }var date2_s="";
                             if (iMax.length==8){
-                                date2_s=IMax.charAt(0)+IMax.charAt(1)+IMax.charAt(2)+IMax.charAt(3)+"-"
-                                        +IMax.charAt(4)+IMax.charAt(5)+"-"
-                                        +IMax.charAt(6)+IMax.charAt(7);
+                                date2_s=iMax.charAt(0)+iMax.charAt(1)+iMax.charAt(2)+iMax.charAt(3)+"-"
+                                        +iMax.charAt(4)+iMax.charAt(5)+"-"
+                                        +iMax.charAt(6)+iMax.charAt(7);
                                 
                             }else if (iMax.length==4){
-                                date2_s=IMax.charAt(0)+IMax.charAt(1)+IMax.charAt(2)+IMax.charAt(3)+"-"
+                                date2_s=iMax.charAt(0)+iMax.charAt(1)+iMax.charAt(2)+iMax.charAt(3)+"-"
                                         +"01-01";
                             } else{
                              date2_s=iMax;   
