@@ -172,7 +172,7 @@ class SiteController extends Controller {
                 'local_db_port' => $local_db_port,
                 'local_db_username' => $local_db_username,
                 'local_db_password' => $local_db_password,
-                'central_host'=> $central_db_host,
+                'central_db_host'=> $central_db_host,
                 'central_db_name' => $central_db_name,
                 'central_db_port' => $central_db_port,
                 'central_db_username' => $central_db_username,
@@ -204,7 +204,7 @@ class SiteController extends Controller {
                 'local_db_port' => $local_db_port,
                 'local_db_username' => $local_db_username,
                 'local_db_password' => $local_db_password,
-                'central_host'=> $central_db_host,
+                'central_db_host'=> $central_db_host,
                 'central_db_name' => $central_db_name,
                 'central_db_port' => $central_db_port,
                 'central_db_username' => $central_db_username,
@@ -779,12 +779,17 @@ class SiteController extends Controller {
                         $checked = $standardized;
 
                         //database settings
+                        $local_db_host = Yii::app()->request->getParam('local_db_host');
                         $local_db_name = Yii::app()->request->getParam('local_db_name');
                         $local_db_port = Yii::app()->request->getParam('local_db_port');
                         $local_db_username = Yii::app()->request->getParam('local_db_username');
+                        $local_db_password = Yii::app()->request->getParam('local_db_password');
+                        
+                        $central_db_host = Yii::app()->request->getParam('$central_db_host');
                         $central_db_name = Yii::app()->request->getParam('central_db_name');
                         $central_db_port = Yii::app()->request->getParam('central_db_port');
                         $central_db_username = Yii::app()->request->getParam('central_db_username');
+                        $central_db_password = Yii::app()->request->getParam('central_db_password');
 
                         $a = array(
                             'list' => $list,
@@ -792,12 +797,16 @@ class SiteController extends Controller {
                             'existingTerm' => array(),
                             'locationID' => $locationID,
                             'userID' => Yii::app()->user->id,
+                            'local_db_host' => $local_db_host,
                             'local_db_name' => $local_db_name,
                             'local_db_port' => $local_db_port,
                             'local_db_username' => $local_db_username,
+                            'local_db_password' => $local_db_password,
+                            'central_db_host'=> $central_db_host,
                             'central_db_name' => $central_db_name,
                             'central_db_port' => $central_db_port,
-                            'central_db_username' => $central_db_username
+                            'central_db_username' => $central_db_username,
+                            'central_db_password' => $central_db_password   
                         );
 
                         $data = json_encode($a);
@@ -838,13 +847,17 @@ class SiteController extends Controller {
                         $checked = $standardized;
 
                         //database settings
+                        $local_db_host = Yii::app()->request->getParam('local_db_host');
                         $local_db_name = Yii::app()->request->getParam('local_db_name');
                         $local_db_port = Yii::app()->request->getParam('local_db_port');
                         $local_db_username = Yii::app()->request->getParam('local_db_username');
+                        $local_db_password = Yii::app()->request->getParam('local_db_password');
+                        
+                        $central_db_host = Yii::app()->request->getParam('$central_db_host');
                         $central_db_name = Yii::app()->request->getParam('central_db_name');
                         $central_db_port = Yii::app()->request->getParam('central_db_port');
                         $central_db_username = Yii::app()->request->getParam('central_db_username');
-
+                        $central_db_password = Yii::app()->request->getParam('central_db_password');
 
                         $a = array(
                             'list' => $list,
@@ -853,12 +866,16 @@ class SiteController extends Controller {
                             'createdGID' => $createdGID,
                             'locationID' => $locationID,
                             'userID' => Yii::app()->user->id,
+                           'local_db_host' => $local_db_host,
                             'local_db_name' => $local_db_name,
                             'local_db_port' => $local_db_port,
                             'local_db_username' => $local_db_username,
+                            'local_db_password' => $local_db_password,
+                            'central_db_host'=> $central_db_host,
                             'central_db_name' => $central_db_name,
                             'central_db_port' => $central_db_port,
-                            'central_db_username' => $central_db_username
+                            'central_db_username' => $central_db_username,
+                            'central_db_password' => $central_db_password
                         );
 
                         $data = json_encode($a);
@@ -949,18 +966,28 @@ class SiteController extends Controller {
                     $output = $file_toArray->updateGID_createdGID($term, $pedigree, $id, $choose, $fid, $mid, $female, $male, $createdGID, $existing, $list, $userID, $theParent);
                     $output['cdate'] = $cdate;
 
+                    $local_db_host = Yii::app()->request->getParam('local_db_host');
                     $local_db_name = Yii::app()->request->getParam('local_db_name');
                     $local_db_port = Yii::app()->request->getParam('local_db_port');
                     $local_db_username = Yii::app()->request->getParam('local_db_username');
+                    $local_db_password = Yii::app()->request->getParam('local_db_password');
+
+                    $central_db_host = Yii::app()->request->getParam('$central_db_host');
                     $central_db_name = Yii::app()->request->getParam('central_db_name');
                     $central_db_port = Yii::app()->request->getParam('central_db_port');
                     $central_db_username = Yii::app()->request->getParam('central_db_username');
+                    $central_db_password = Yii::app()->request->getParam('central_db_password');
+                    
+                    $output['local_db_host'] = $local_db_host;
                     $output['local_db_name'] = $local_db_name;
                     $output['local_db_port'] = $local_db_port;
                     $output['local_db_username'] = $local_db_username;
+                    $output['local_db_password'] = $local_db_password;
+                    $output['central_db_host'] = $central_db_host;
                     $output['central_db_name'] = $central_db_name;
                     $output['central_db_port'] = $central_db_port;
                     $output['central_db_username'] = $central_db_username;
+                    $output['central_db_password'] = $central_db_password;
                     /*     echo "choose: ".$cross;
                       echo ": ".$term."<br>";
 
