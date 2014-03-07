@@ -1,5 +1,5 @@
 <body onload='storeLocal()'>
-  
+
     <div class="container">
 
 
@@ -19,7 +19,9 @@
             ?>
             <h1>Please Sign In</h1>
             <p class="note">Fields with <span class="required">*</span> are required.</p>
-
+            <?php
+            echo CHtml::link('Check database settings', array('site/backend'), array('id' => 'database_link'));
+            ?>   
             <div class="row">
                 <?php $model->username = 'GUEST'; ?>
                 <?php echo $form->labelEx($model, 'username'); ?>
@@ -35,7 +37,7 @@
                 <?php echo $form->passwordField($model, 'password'); ?>
                 <?php echo $form->error($model, 'password'); ?>
 
-           
+
             </div>
 
             <div class="row buttons">
@@ -71,7 +73,7 @@
                     localStorage.setItem('local_database_port', local_db_port);
                     localStorage.setItem('local_database_username', local_db_username);
                     localStorage.setItem('local_database_password', local_db_password);
-                    localStorage.setItem('central_database_host',central_db_host);
+                    localStorage.setItem('central_database_host', central_db_host);
                     localStorage.setItem('central_database_name', central_db_name);
                     localStorage.setItem('central_database_port', central_db_port);
                     localStorage.setItem('central_database_username', central_db_username);
