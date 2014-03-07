@@ -281,17 +281,17 @@
                             var iValue = aData[2];
 
 
-                            if (iMax == '') {
+                            if (iMax === '') {
                                 return true;
                             }
                             
                             var date2_s="";
-                            if (date2.length==8){
+                            if (iMax.length===8){
                                 date2_s=IMax.charAt(0)+IMax.charAt(1)+IMax.charAt(2)+IMax.charAt(3)+"-"
                                         +IMax.charAt(4)+IMax.charAt(5)+"-"
                                         +IMax.charAt(6)+IMax.charAt(7);
                                 
-                            }else if (date2.length==4){
+                            }else if (iMax.length===4){
                                 date2_s=IMax.charAt(0)+IMax.charAt(1)+IMax.charAt(2)+IMax.charAt(3)+"-"
                                         +"01-01";
                             } else{
@@ -421,12 +421,12 @@
                             if (iMax == '') {
                                 return true;
                             }var date2_s="";
-                            if (date2.length==8){
+                            if (iMax.length==8){
                                 date2_s=IMax.charAt(0)+IMax.charAt(1)+IMax.charAt(2)+IMax.charAt(3)+"-"
                                         +IMax.charAt(4)+IMax.charAt(5)+"-"
                                         +IMax.charAt(6)+IMax.charAt(7);
                                 
-                            }else if (date2.length==4){
+                            }else if (iMax.length==4){
                                 date2_s=IMax.charAt(0)+IMax.charAt(1)+IMax.charAt(2)+IMax.charAt(3)+"-"
                                         +"01-01";
                             } else{
