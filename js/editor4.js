@@ -296,6 +296,7 @@ function drawChart2(node) {
 				.attr("class", "name")
                 .attr("dx", -19)
                 .attr("dy", -5)
+                .limit('6','#left')
                 .text(node.name)
 				.attr("transform", function(d) {
 					 return "rotate(90)" 
