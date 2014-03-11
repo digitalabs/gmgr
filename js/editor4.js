@@ -298,7 +298,7 @@ function drawChart2(node) {
                 .attr("dy", -5)
                 .text(node.name)
 				.attr("transform", function(d) {
-					return "rotate(90)" 
+					 return "rotate(90)" 
 				})
 				.on("click", function(d,i) { click(node); })
 				.on("mouseup", legendclick )
