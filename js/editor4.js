@@ -296,8 +296,9 @@ function drawChart2(node) {
 				.attr("class", "name")
                 .attr("dx", -19)
                 .attr("dy", -5)
+                .attr("text-overflow","ellipsis")
                 //.limit('6','#left')
-                .attr("limit","6")
+                //.attr("limit","6")
                 .text(node.name)
 				.attr("transform", function(d) {
 					 return "rotate(90)" 
