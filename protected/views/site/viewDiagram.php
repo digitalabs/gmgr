@@ -73,7 +73,18 @@ if (isset($_GET['searchBtn'])) {
         <br>
         <div class="form-horizontal" style="visibility: hidden; padding-left: 15px;">
             <input disabled="true" title="This feature is a work in progress" placeholder="All" style="width:50px;height:30px;" value=" " id="maxStep" type="number" name="maxStep" min="1" max="100"> 
-
+            <?php
+            echo CHtml::hiddenField('local_db_host', '');
+            echo CHtml::hiddenField('local_db_name', '');
+            echo CHtml::hiddenField('local_db_port', '');
+            echo CHtml::hiddenField('local_db_username', '');
+            echo CHtml::hiddenField('local_db_password', '');
+            echo CHtml::hiddenField('central_db_host', '');
+            echo CHtml::hiddenField('central_db_name', '');
+            echo CHtml::hiddenField('central_db_port', '');
+            echo CHtml::hiddenField('central_db_username', '');
+            echo CHtml::hiddenField('central_db_password', '');
+            ?>
             <small><a data-toggle="tooltip" title="By default, a regular pedigree for a particular germplasm is created up to the certain number of known parents. You can, however, choose to show a smaller number of parental generations (steps), or to choose all." data-placement="right">Maximum Steps</a></small>
         </div>
         <!--<div style="margin-left:20px;visibility:hidden;">
@@ -281,130 +292,134 @@ echo CHtml::hiddenField('central_db_username', '');
 <script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/svgenie.js"></script>
 <script type="text/javascript">
 
-    function Scrolldown() {
-    window.scroll(0,2760); 
-    }
+                        function Scrolldown() {
+                            window.scroll(0, 2760);
+                        }
 
-    window.onload = Scrolldown;
+                        window.onload = Scrolldown;
 
-    document.getElementById('inputGID').value = $.localStorage('GID');
-    document.getElementById('maxStep').value = $.localStorage('level');
+                        document.getElementById('inputGID').value = $.localStorage('GID');
+                        document.getElementById('maxStep').value = $.localStorage('level');
 
-    function info()
-    {
-    //document.getElementById('egid').value = document.getElementById('gid').value;
-    $.localStorage('EGID', jQuery("input#hidGID").val());
-    $.localStorage('NAME', jQuery("input#hidname").val());
-    $.localStorage('METHOD', jQuery("input#hidmethod").val());
-    $.localStorage('MTYPE', jQuery("input#hidmtype").val());
-    $.localStorage('DATE', jQuery("input#hiddate").val());
-    $.localStorage('CTY', jQuery("input#hidcountry").val());
-    $.localStorage('LOC', jQuery("input#hidloc").val());
-    $.localStorage('CNAME', jQuery("input#hidcname").val());
-    $.localStorage('REF', jQuery("input#hidref").val());
-    $.localStorage('GPID1', jQuery("input#hidgpid1").val());
-    $.localStorage('GPID2', jQuery("input#hidgpid2").val());
+                        function info()
+                        {
+                            //document.getElementById('egid').value = document.getElementById('gid').value;
+                            $.localStorage('EGID', jQuery("input#hidGID").val());
+                            $.localStorage('NAME', jQuery("input#hidname").val());
+                            $.localStorage('METHOD', jQuery("input#hidmethod").val());
+                            $.localStorage('MTYPE', jQuery("input#hidmtype").val());
+                            $.localStorage('DATE', jQuery("input#hiddate").val());
+                            $.localStorage('CTY', jQuery("input#hidcountry").val());
+                            $.localStorage('LOC', jQuery("input#hidloc").val());
+                            $.localStorage('CNAME', jQuery("input#hidcname").val());
+                            $.localStorage('REF', jQuery("input#hidref").val());
+                            $.localStorage('GPID1', jQuery("input#hidgpid1").val());
+                            $.localStorage('GPID2', jQuery("input#hidgpid2").val());
 
-    document.getElementById('egid').value = $.localStorage('EGID');
-    document.getElementById('ename').value = $.localStorage('NAME');
-    document.getElementById('emethod').value = $.localStorage('METHOD');
-    document.getElementById('emtype').value = $.localStorage('MTYPE');
-    document.getElementById('edate').value = $.localStorage('DATE');
-    document.getElementById('ecountry').value = $.localStorage('CTY');
-    document.getElementById('eloc').value = $.localStorage('LOC');
-    document.getElementById('ecname').value = $.localStorage('CNAME');
-    document.getElementById('eref').value = $.localStorage('REF');
-    document.getElementById('egpid1').value = $.localStorage('GPID1');
-    document.getElementById('egpid2').value = $.localStorage('GPID2');
-    }
+                            document.getElementById('egid').value = $.localStorage('EGID');
+                            document.getElementById('ename').value = $.localStorage('NAME');
+                            document.getElementById('emethod').value = $.localStorage('METHOD');
+                            document.getElementById('emtype').value = $.localStorage('MTYPE');
+                            document.getElementById('edate').value = $.localStorage('DATE');
+                            document.getElementById('ecountry').value = $.localStorage('CTY');
+                            document.getElementById('eloc').value = $.localStorage('LOC');
+                            document.getElementById('ecname').value = $.localStorage('CNAME');
+                            document.getElementById('eref').value = $.localStorage('REF');
+                            document.getElementById('egpid1').value = $.localStorage('GPID1');
+                            document.getElementById('egpid2').value = $.localStorage('GPID2');
+                        }
 
-    function clik()
-    {
-    $.localStorage('GID', jQuery("input#inputGID").val());
-    $.localStorage('level', jQuery("input#maxStep").val());
+                        function clik()
+                        {
+                            $.localStorage('GID', jQuery("input#inputGID").val());
+                            $.localStorage('level', jQuery("input#maxStep").val());
 
-    //******get database settings
-    document.getElementById('local_db_name').value = localStorage.local_database_name;
-    document.getElementById('local_db_port').value = localStorage.local_database_port;
-    document.getElementById('local_db_username').value = localStorage.local_database_username;
-    document.getElementById('central_db_name').value = localStorage.central_database_name;
-    document.getElementById('central_db_port').value = localStorage.central_database_port;
-    document.getElementById('central_db_username').value = localStorage.central_database_username;
-    }
+                            //******get database settings
+                            document.getElementById('local_db_host').value = localStorage.local_database_host;
+                            document.getElementById('local_db_name').value = localStorage.local_database_name;
+                            document.getElementById('local_db_port').value = localStorage.local_database_port;
+                            document.getElementById('local_db_username').value = localStorage.local_database_username;
+                            document.getElementById('local_db_password').value = localStorage.local_database_password;
+                            document.getElementById('central_db_host').value = localStorage.central_database_host;
+                            document.getElementById('central_db_name').value = localStorage.central_database_name;
+                            document.getElementById('central_db_port').value = localStorage.central_database_port;
+                            document.getElementById('central_db_username').value = localStorage.central_database_username;
+                            document.getElementById('central_db_password').value = localStorage.central_database_password;
+                        }
 
-    function conceal() {      
-    if(document.getElementById('benefits').style.display=='block') {
-    document.getElementById('benefits').style.display='none';
-    document.getElementById('opener').style.display='block';
-    }
-    }  
+                        function conceal() {
+                            if (document.getElementById('benefits').style.display == 'block') {
+                                document.getElementById('benefits').style.display = 'none';
+                                document.getElementById('opener').style.display = 'block';
+                            }
+                        }
 
-    function conceal2() {      
-    if(document.getElementById('benefits2').style.display=='block') {
-    document.getElementById('benefits2').style.display='none';
-    document.getElementById('opener2').style.display='block';
-    }
-    }
+                        function conceal2() {
+                            if (document.getElementById('benefits2').style.display == 'block') {
+                                document.getElementById('benefits2').style.display = 'none';
+                                document.getElementById('opener2').style.display = 'block';
+                            }
+                        }
 
-    function show() {
-    document.getElementById('benefits2').style.display='none';
-    document.getElementById('opener2').style.display='block';
-    if(document.getElementById('benefits').style.display=='none') {
-    document.getElementById('benefits').style.display='block';
-    document.getElementById('opener').style.display='none';
-    }
-    }
+                        function show() {
+                            document.getElementById('benefits2').style.display = 'none';
+                            document.getElementById('opener2').style.display = 'block';
+                            if (document.getElementById('benefits').style.display == 'none') {
+                                document.getElementById('benefits').style.display = 'block';
+                                document.getElementById('opener').style.display = 'none';
+                            }
+                        }
 
-    function show2() {
-    document.getElementById('benefits').style.display='none';
-    document.getElementById('opener').style.display='block';
-    if(document.getElementById('benefits2').style.display=='none') {
-    document.getElementById('benefits2').style.display='block';
-    document.getElementById('opener2').style.display='none';
-    }
-    }
+                        function show2() {
+                            document.getElementById('benefits').style.display = 'none';
+                            document.getElementById('opener').style.display = 'block';
+                            if (document.getElementById('benefits2').style.display == 'none') {
+                                document.getElementById('benefits2').style.display = 'block';
+                                document.getElementById('opener2').style.display = 'none';
+                            }
+                        }
 
-    function capture() {
-    $('#graph').html2canvas({
-    onrendered: function (svg) {
-    //Set hidden field's value to image data (base-64 string)
-    $('#img_val').val(svg.toDataURL("image/png"));
-    //Submit the form manually
-    document.getElementById("myForm").submit();
-    }
-    });
-    } 
+                        function capture() {
+                            $('#graph').html2canvas({
+                                onrendered: function(svg) {
+                                    //Set hidden field's value to image data (base-64 string)
+                                    $('#img_val').val(svg.toDataURL("image/png"));
+                                    //Submit the form manually
+                                    document.getElementById("myForm").submit();
+                                }
+                            });
+                        }
 
-    function validate()
-    {
-    var tmp = document.getElementById('maxStep').value;
-    var tmp2 = document.getElementById('inputGID').value;
-    
-    }
-   
-    window.onclick = function(){
-    svgenie.save( document.getElementById('graphDiv'), { name:"this.png" } ); 
-    }
+                        function validate()
+                        {
+                            var tmp = document.getElementById('maxStep').value;
+                            var tmp2 = document.getElementById('inputGID').value;
 
-    function zoomings(optionSel)
-    {
-    var OptionSelected = optionSel.selectedIndex;
-    var val = optionSel.options[OptionSelected].text;
-    var div = document.getElementById ("graphDiv");
-    div.style.zoom = val;
-    }
+                        }
 
-    $(document).ready(function() {
-    var pop = function(){
-    $('#screen').css({ opacity: 0.4, 'width':$(document).width(),'height':$(document).height()});
-    $('body').css({'overflow':'hidden'});
-    $('#ajax-loading-indicator').css({'display': 'block'});
-    }
-    $('#searchBtn').click(pop);
-    $('#updateBtn').click(pop);
-    $('#save').click(pop);
+                        window.onclick = function() {
+                            svgenie.save(document.getElementById('graphDiv'), {name: "this.png"});
+                        }
 
-    });
+                        function zoomings(optionSel)
+                        {
+                            var OptionSelected = optionSel.selectedIndex;
+                            var val = optionSel.options[OptionSelected].text;
+                            var div = document.getElementById("graphDiv");
+                            div.style.zoom = val;
+                        }
+
+                        $(document).ready(function() {
+                            var pop = function() {
+                                $('#screen').css({opacity: 0.4, 'width': $(document).width(), 'height': $(document).height()});
+                                $('body').css({'overflow': 'hidden'});
+                                $('#ajax-loading-indicator').css({'display': 'block'});
+                            }
+                            $('#searchBtn').click(pop);
+                            $('#updateBtn').click(pop);
+                            $('#save').click(pop);
+
+                        });
 
 
 <?php

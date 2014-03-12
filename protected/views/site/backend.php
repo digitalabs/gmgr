@@ -62,8 +62,8 @@
                         echo $form->textFieldRow($centralDBForm, 'port_name');
                         $centralDBForm->database_username = Yii::app()->user->name;
                         echo $form->textFieldRow($centralDBForm, 'database_username');
-                        $dbFormModel->database_password = '';
-                        echo $form->passwordFieldRow($dbFormModel, 'database_password');
+                        $centralDBForm->database_password = '';
+                        echo $form->passwordFieldRow($centralDBForm, 'database_password');
                         ?>
                     </fieldset>
                     <div>
