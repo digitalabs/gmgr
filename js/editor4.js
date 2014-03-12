@@ -302,7 +302,7 @@ function drawChart2(node) {
                 .attr("overflow","hidden")
                 //.limit('6','#left')
                 //.attr("limit","6")
-                .text(node.name)
+                .text(node.name2)
 				.attr("transform", function(d) {
 					 return "rotate(90)" 
 				})
