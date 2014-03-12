@@ -568,8 +568,8 @@ class SiteController extends Controller {
 
                     $list = $curl->standardize($data);
                 }
-                echo "<br>list:<br>";
-                print_r($list);
+               // echo "<br>list:<br>";
+               // print_r($list);
                 foreach ($list as $row) :
 //list($GID, $nval, $female, $fid, $fremarks, $fgid, $male, $mid, $mremarks, $mgid) = $row;
                     list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male, $date) = $row;

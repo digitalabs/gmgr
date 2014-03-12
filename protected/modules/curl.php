@@ -33,7 +33,7 @@ class curl {
 
         $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
-        echo "<br><br><br><br>HTTP CODE ERROR: " . $code . "<br>".$_SERVER['HTTP_REFERER'];
+        //echo "<br><br><br><br>HTTP CODE ERROR: " . $code . "<br>".$_SERVER['HTTP_REFERER'];
         /*  //echo $jsonText;
           echo "<br> cURL: WELCOME! ".$response."</outercode>";
           echo '<br>RESULT: '.print_r($response,1);
