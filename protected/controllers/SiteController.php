@@ -130,36 +130,36 @@ class SiteController extends Controller {
         $dbFormModel = new databaseForm;
         $centralForm = new centralDBForm;
 
-        // if it is ajax validation request
+// if it is ajax validation request
         if (isset($_POST['ajax']) && $_POST['ajax'] === 'login-form') {
             echo CActiveForm::validate($model);
             Yii::app()->end();
         }
 
-        // collect user input data
+// collect user input data
         if (isset($_POST['LoginForm'])) {
             $model->attributes = $_POST['LoginForm'];
-            // validate user input and redirect to the previous page if valid
+// validate user input and redirect to the previous page if valid
             if ($model->validate() && $model->login()) {
-                // $this->redirect(Yii::app()->user->returnUrl);
+// $this->redirect(Yii::app()->user->returnUrl);
                 $this->redirect(array('/site/importer'));
             } else {
                 $this->redirect(Yii::app()->baseUrl);
             }
         }
 
-        //****backend details
+//****backend details
         if (isset($_POST['databaseForm']) && isset($_POST['centralDBForm'])) {
 
-            // if ($dbFormModel->validate() && $centralDBForm->validate()) {
-            //local database
+// if ($dbFormModel->validate() && $centralDBForm->validate()) {
+//local database
             $local_db_host = $_POST['databaseForm']['host'];
             $local_db_name = $_POST['databaseForm']['database_name'];
             $local_db_port = $_POST['databaseForm']['port_name'];
             $local_db_username = $_POST['databaseForm']['database_username'];
             $local_db_password = $_POST['databaseForm']['database_password'];
 
-            //central database
+//central database
             $central_db_host = $_POST['centralDBForm']['host'];
             $central_db_name = $_POST['centralDBForm']['database_name'];
             $central_db_port = $_POST['centralDBForm']['port_name'];
@@ -172,18 +172,18 @@ class SiteController extends Controller {
                 'local_db_port' => $local_db_port,
                 'local_db_username' => $local_db_username,
                 'local_db_password' => $local_db_password,
-                'central_host'=> $central_db_host,
+                'central_host' => $central_db_host,
                 'central_db_name' => $central_db_name,
                 'central_db_port' => $central_db_port,
                 'central_db_username' => $central_db_username,
-                'central_db_password' => $central_db_password    
+                'central_db_password' => $central_db_password
             );
             $data = json_encode($database_details);
 
-            // }
+// }
             $this->render('login', array('model' => $model, 'database_details' => $database_details));
         } else {
-            //local database
+//local database
             $local_db_host = '';
             $local_db_name = '';
             $local_db_port = '';
@@ -191,7 +191,7 @@ class SiteController extends Controller {
             $local_db_password = '';
 
 
-            //central database
+//central database
             $central_db_host = '';
             $central_db_name = '';
             $central_db_port = '';
@@ -204,11 +204,11 @@ class SiteController extends Controller {
                 'local_db_port' => $local_db_port,
                 'local_db_username' => $local_db_username,
                 'local_db_password' => $local_db_password,
-                'central_host'=> $central_db_host,
+                'central_host' => $central_db_host,
                 'central_db_name' => $central_db_name,
                 'central_db_port' => $central_db_port,
                 'central_db_username' => $central_db_username,
-                'central_db_password' => $central_db_password    
+                'central_db_password' => $central_db_password
             );
             $this->render('login', array('model' => $model, 'database_details' => $database_details));
         }
@@ -301,11 +301,11 @@ class SiteController extends Controller {
 
             $uploaded = false;
 
-            //Collect user input form
+//Collect user input form
             if (isset($_POST['ImporterForm'])) {
-                //$importedFile->attributes = $_POST['ImporterForm'];
+//$importedFile->attributes = $_POST['ImporterForm'];
                 if ($importedFile->validate()) {
-                    //  if(!empty($_FILES['ImporterForm']['file'])){
+//  if(!empty($_FILES['ImporterForm']['file'])){
                     $file = CUploadedFile::getInstance($importedFile, 'file');
 
                     static $filePath;
@@ -346,10 +346,10 @@ class SiteController extends Controller {
             if (isset($this->browserSession)) {
 
                 if (isset($_POST['ImporterForm'])) {
-                    //print_r($_POST['ImporterForm']);
+//print_r($_POST['ImporterForm']);
                     $importedFile->attributes = $_POST['ImporterForm'];
                     if ($importedFile->validate()) {
-                        //  if(!empty($_FILES['ImporterForm']['file'])){
+//  if(!empty($_FILES['ImporterForm']['file'])){
                         $file = CUploadedFile::getInstance($importedFile, 'file');
 
                         static $filePath;
@@ -358,9 +358,9 @@ class SiteController extends Controller {
                         $filePath = $dir . '/' . $importedFile->file;
 
                         if (file_exists($newName)) {
-                            //  unlink($dir . '/' . $newName);
+//  unlink($dir . '/' . $newName);
                         }
-                        //***check if file is not null
+//***check if file is not null
                         if (isset($file)) {
                             $file = $importedFile->file;
                             $importedFile->file->saveAs($dir . '/' . $file);
@@ -377,7 +377,7 @@ class SiteController extends Controller {
                                 $locationID = $location;
                                 $list = unserialize(base64_decode($_POST['list']));
                             } else {
-                                //echo "no refresh";
+//echo "no refresh";
                                 $location = $_POST['location'];
                                 $locationID = $location;
                                 $json = new json('');
@@ -427,7 +427,7 @@ class SiteController extends Controller {
                         }
                         $id = $list;
                         foreach ($id as $row) :
-                            //list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male, $date) = $row;
+//list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male, $date) = $row;
                             list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male, $date) = $row;
                             $arr[] = array('id' => CJSON::encode(array($fid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date' => $date);
                         endforeach;
@@ -480,25 +480,21 @@ class SiteController extends Controller {
         Yii::app()->session['username'] = Yii::app()->user->id;
         $this->browserSession = Yii::app()->session['username'];
         $model2 = new LoginForm;
-        //static $locationID, $list;
+//static $locationID, $list;
         if (isset($this->browserSession)) {
             if (isset($_POST['locationID']) || isset($_POST['location'])) {
-                //echo "<br>enter here"; 
+//echo "<br>enter here"; 
                 if (isset($_POST['next']) || isset($_POST['refresh'])) {
-                    //echo "<br>Refresh!!!";
+//echo "<br>Refresh!!!";
                     $locationID = $_POST['location'];
                     $list = unserialize(base64_decode($_POST['list']));
-                    
-
-                    //echo "<br>list:<br>";
-                    //print_r($list);
                 } else {
-                    //echo "else here";
-                    //$data = json_decode($_POST['list']);
+//echo "else here";
+//$data = json_decode($_POST['list']);
                     $list = unserialize(base64_decode($_POST['list']));
                     $locationID = $_POST['locationID'];
 
-                   // $data = json_decode($data, true);
+// $data = json_decode($data, true);
 
                     $a = array(
                         'list' => $list
@@ -508,8 +504,10 @@ class SiteController extends Controller {
 
                     $list = $curl->standardize($data);
                 }
+                echo "<br>list:<br>";
+                print_r($list);
                 foreach ($list as $row) :
-                    //list($GID, $nval, $female, $fid, $fremarks, $fgid, $male, $mid, $mremarks, $mgid) = $row;
+//list($GID, $nval, $female, $fid, $fremarks, $fgid, $male, $mid, $mremarks, $mgid) = $row;
                     list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male, $date) = $row;
                     $arr[] = array('id' => CJSON::encode(array($fid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date' => $date);
                     if ((strcmp(($fremarks), "in standardized format")) != 0 || (strcmp(($mremarks), "in standardized format")) != 0) {
@@ -531,9 +529,9 @@ class SiteController extends Controller {
                             'pageSize' => 5,
                     )));
                     $not_standard_size = count($notStandard);
-                    // echo "<br>this:" . $not_standard_size;
+// echo "<br>this:" . $not_standard_size;
                 }
-                //get array data and create dataProvider
+//get array data and create dataProvider
                 $filteredData = $filtersForm->filter($arr);
 
                 $dataProvider = new CArrayDataProvider($filteredData, array(
@@ -541,7 +539,7 @@ class SiteController extends Controller {
                         'pageSize' => 5,
                 )));
 
-                //renders the data-browser
+//renders the data-browser
                 if (isset($nonStandardize)) {
                     $this->render('output', array(
                         'filtersForm' => $filtersForm,
@@ -563,7 +561,7 @@ class SiteController extends Controller {
                 }
             }
 
-            //***This condition is loaded when refresh or browser-back is pressed
+//***This condition is loaded when refresh or browser-back is pressed
             else {
                 ?>
                 <html>
@@ -739,6 +737,50 @@ class SiteController extends Controller {
         }
     }
 
+    public function actionAssignGID2() {
+        Yii::import('application.modules.file_toArray');
+        Yii::import('application.modules.json');
+        Yii::import('application.modules.curl');
+        Yii::import('application.modules.model');
+        $file_toArray = new file_toArray();
+        $curl = new curl();
+        $model = new model();
+        if (isset($_POST['locationID']) || isset($_POST['location']) || isset($_POST['process'])) {
+            
+        } else {
+            $createdGID = Array
+                (
+                0 => Array(0 => "0", 1 => "IR 88888-21-2-UBN 2-2*2/IR06H101A", 2 => "IR 88888-21-2-UBN 2-2*2/IR06H101A", 3 => "NOT SET", 4 => "N/A", 5 => "N/A", 6 => "N/A", 7 => "N/A", 8 => "N/A", 9 => "N/A", 10 => "false", 11 => "20140224", 12 => "N/A"),
+                1 => Array(0 => "0", 1 => "IR 88888-21-2-UBN 2-2*2/IR06H101A", 2 => "IR 88888-21-2-UBN 2-2/IR06H101A", 3 => "NOT SET", 4 => "N/A", 5 => "N/A", 6 => "N/A", 7 => "N/A", 8 => "N/A", 9 => "N/A", 10 => "false", 11 => "20140224", 12 => "N/A"),
+                2 => Array(0 => "0", 1 => "IR 88888-21-2-UBN 2-2*2/IR06H101A", 2 => "IR 88888-21-2-UBN 2-2", 3 => "NOT SET", 4 => "N/A", 5 => "N/A", 6 => "N/A", 7 => "N/A", 8 => "N/A", 9 => "N/A", 10 => "false", 11 => "20140224", 12 => "N/A"),
+                3 => Array(0 => "0", 1 => "IR 88888-21-2-UBN 2-2*2/IR06H101A", 2 => "IR 88888-21-2-UBN 2", 3 => "NOT SET", 4 => "N/A", 5 => "N/A", 6 => "N/A", 7 => "N/A", 8 => "N/A", 9 => "N/A", 10 => "false", 11 => "20140224", 12 => "N/A"),
+                4 => Array(0 => "0", 1 => "IR 88888-21-2-UBN 2-2*2/IR06H101A", 2 => "IR 88888-21-2", 3 => "NOT SET", 4 => "N/A", 5 => "N/A", 6 => "N/A", 7 => "N/A", 8 => "N/A", 9 => "N/A", 10 => "false", 11 => "20140224", 12 => "N/A"),
+                5 => Array(0 => "0", 1 => "IR 88888-21-2-UBN 2-2*2/IR06H101A", 2 => "IR 88888-21", 3 => "CHOOSE GID", 4 => "N/A", 5 => "N/A", 6 => "N/A", 7 => "N/A", 8 => "N/A", 9 => "N/A", 10 => "false", 11 => "20140224", 12 => "N/A"),
+                6 => Array(0 => "0", 1 => "IR 88888-21-2-UBN 2-2*2/IR06H101A", 2 => "IR 88888", 3 => "NOT SET", 4 => "N/A", 5 => "N/A", 6 => "N/A", 7 => "N/A", 8 => "N/A", 9 => "N/A", 10 => "false", 11 => "20140224", 12 => "N/A"),
+                7 => Array(0 => "0", 1 => "IR 88888-21-2-UBN 2-2*2/IR06H101A", 2 => "IR06H101A", 3 => "CHOOSE GID", 4 => "N/A", 5 => "N/A", 6 => "N/A", 7 => "N/A", 8 => "N/A", 9 => "N/A", 10 => "false", 11 => "20140224", 12 => "N/A"),
+                8 => Array(0 => "1", 1 => "Sample2", 2 => "Sample2", 3 => "CHOOSE GID", 4 => "N/A", 5 => "N/A", 6 => "N/A", 7 => "N/A", 8 => "N/A", 9 => "N/A", 10 => "false", 11 => "20140224", 12 => "N/A"),
+                9 => Array(0 => "0/1", 1 => "IR 88888-21-2-UBN 2-2*2/IR06H101A/Sample2", 2 => "SampleA", 3 => "NOT SET", 4 => "N/A", 5 => "N/A", 6 => "N/A", 7 => "N/A", 8 => "N/A", 9 => "N/A", 10 => "false", 11 => "20140224", 12 => "N/A"),
+                10 => Array(0 => "2", 1 => "IR 88888-UBN 3-4B-897", 2 => "IR 88888-UBN 3-4B-897", 3 => "NOT SET", 4 => "N/A", 5 => "N/A", 6 => "N/A", 7 => "N/A", 8 => "N/A", 9 => "N/A", 10 => "false", 11 => "2001112", 12 => "N/A"),
+                11 => Array(0 => "2", 1 => "IR 88888-UBN 3-4B-897", 2 => "IR 88888-UBN 3-4B", 3 => "NOT SET", 4 => "N/A", 5 => "N/A", 6 => "N/A", 7 => "N/A", 8 => "N/A", 9 => "N/A", 10 => "false", 11 => "2001112", 12 => "N/A"),
+                12 => Array(0 => "2", 1 => "IR 88888-UBN 3-4B-897", 2 => "IR 88888-UBN 3", 3 => "NOT SET", 4 => "N/A", 5 => "N/A", 6 => "N/A", 7 => "N/A", 8 => "N/A", 9 => "N/A", 10 => "false", 11 => "2001112", 12 => "N/A"),
+                13 => Array(0 => "2", 1 => "IR 88888-UBN 3-4B-897", 2 => "IR 88888", 3 => "CHOOSE GID", 4 => "N/A", 5 => "N/A", 6 => "N/A", 7 => "N/A", 8 => "N/A", 9 => "N/A", 10 => "false", 11 => "2001112", 12 => "N/A"),
+                14 => Array(0 => "3", 1 => "IR 64-64-4B", 2 => "IR 64-64-4B", 3 => "NOT SET", 4 => "N/A", 5 => "N/A", 6 => "N/A", 7 => "N/A", 8 => "N/A", 9 => "N/A", 10 => "false", 11 => "2001112", 12 => "N/A"),
+                15 => Array(0 => "3", 1 => "IR 64-64-4B", 2 => "IR 64-64", 3 => "NOT SET", 4 => "N/A", 5 => "N/A", 6 => "N/A", 7 => "N/A", 8 => "N/A", 9 => "N/A", 10 => "false", 11 => "2001112", 12 => "N/A"),
+                16 => Array(0 => "3", 1 => "IR 64-64-4B", 2 => "IR 64", 3 => "CHOOSE GID", 4 => "N/A", 5 => "N/A", 6 => "N/A", 7 => "N/A", 8 => "N/A", 9 => "N/A", 10 => "false", 11 => "2001112", 12 => "N/A"),
+                17 => Array(0 => "2/3", 1 => "IR 88888-UBN 3-4B-897/IR 64-64-4B", 2 => "Sample1", 3 => "NOT SET", 4 => "N/A", 5 => "N/A", 6 => "N/A", 7 => "N/A", 8 => "N/A", 9 => "N/A", 10 => "false", 11 => "2001112", 12 => "N/A")
+            );
+            print_r($createdGID);
+            $i=0;
+            foreach ($createdGID as $i => $row) : list($row1) = $row;
+                        $arr2[] = array('id' => $i+1);
+
+                    endforeach;
+            $this->render('assignGID2', array(
+                    'createdGID' => $arr2
+                ));
+        }
+    }
+
     public function actionAssignGID() {
         Yii::app()->session['username'] = Yii::app()->user->id;
         $this->browserSession = Yii::app()->session['username'];
@@ -758,14 +800,13 @@ class SiteController extends Controller {
             if (isset($_POST['locationID']) || isset($_POST['location']) || isset($_POST['process'])) {
 
                 if ((isset($_POST['Germplasm']['gid']) && ($_POST['Germplasm']['gid'] != '')) || isset($_POST['process'])) {
-                   // $data = $_POST['list'];
-
-                    //$list = json_decode($data, true);
-                  $list=unserialize(base64_decode($_POST['list']));
-                    //$list=unserialize(base64_decode($_POST['list']));
+// $data = $_POST['list'];
+//$list = json_decode($data, true);
+                    $list = unserialize(base64_decode($_POST['list']));
+//$list=unserialize(base64_decode($_POST['list']));
 
                     if (!empty($_POST['Germplasm']['gid'])) {
-                        //echo "here 0";
+//echo "here 0";
                         $selected = $_POST['Germplasm']['gid'];
                         $idArr = explode(',', $selected);
                         foreach ($idArr as $index => $id) {
@@ -778,7 +819,7 @@ class SiteController extends Controller {
 
                         $checked = $standardized;
 
-                        //database settings
+//database settings
                         $local_db_name = Yii::app()->request->getParam('local_db_name');
                         $local_db_port = Yii::app()->request->getParam('local_db_port');
                         $local_db_username = Yii::app()->request->getParam('local_db_username');
@@ -812,20 +853,20 @@ class SiteController extends Controller {
 
                         $rows = $list;
                     } elseif (isset($_POST['process'])) {
-                        //echo "here 1";
+//echo "here 1";
                         $createdGID = unserialize(base64_decode($_POST['createdGID']));
                         $existing = unserialize(base64_decode($_POST['existing']));
                         $list = unserialize(base64_decode($_POST['list']));
                         $checked = unserialize(base64_decode($_POST['checked']));
 
                         $locationID = $_POST['location'];
-                        //$checked = json_decode($_POST['checked'], true);
-                        //$createdGID = json_decode($_POST['createdGID'], true);
-                        //$existing = json_decode($_POST['existing'], true);
+//$checked = json_decode($_POST['checked'], true);
+//$createdGID = json_decode($_POST['createdGID'], true);
+//$existing = json_decode($_POST['existing'], true);
                         $unselected = $file_toArray->get_unselected_rows($checked, $list);
                         $standardized = $file_toArray->checkIf_standardize($unselected, $list);
-                        // echo "checked: ";
-                        // print_r($checked);
+// echo "checked: ";
+// print_r($checked);
                         $checked_all = array();
                         for ($i = 0; $i < count($checked); $i++) {
                             $checked_all[$i] = $checked[$i];
@@ -837,7 +878,7 @@ class SiteController extends Controller {
                         }
                         $checked = $standardized;
 
-                        //database settings
+//database settings
                         $local_db_name = Yii::app()->request->getParam('local_db_name');
                         $local_db_port = Yii::app()->request->getParam('local_db_port');
                         $local_db_username = Yii::app()->request->getParam('local_db_username');
@@ -871,10 +912,10 @@ class SiteController extends Controller {
                         $existing = $output['existingTerm'];
                         $checked = $checked_all;
 
-                        //echo "<br>standardized ";
-                        //print_r($standardized);
-                        //echo "<br>checked ";
-                        //print_r($checked_all);
+//echo "<br>standardized ";
+//print_r($standardized);
+//echo "<br>checked ";
+//print_r($checked_all);
 
                         $rows = $list;
                     }
@@ -991,13 +1032,14 @@ class SiteController extends Controller {
                     $rows = $list;
                     $existing = $output['existingTerm'];
                 } else {
-                    //echo "<br><br><br> no curl";
+//echo "<br><br><br> no curl";
                     $locationID = $_POST['location'];
                     $createdGID = unserialize(base64_decode($_POST['createdGID']));
                     $existing = unserialize(base64_decode($_POST['existing']));
                     $list = unserialize(base64_decode($_POST['list']));
                     $checked = unserialize(base64_decode($_POST['checked']));
                     $rows = $list;
+                    print_r($createdGID);
                 }
                 if (count($rows)) {
                     foreach ($rows as $i => $row) : list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male, $date) = $row;
@@ -1008,9 +1050,9 @@ class SiteController extends Controller {
                 if (isset($_GET['FilterPedigreeForm']))
                     $filtersForm->filters = $_GET['FilterPedigreeForm'];
 
-                //get array data and create dataProvider
+//get array data and create dataProvider
                 $filteredData = $filtersForm->filter($arr2);
-                //DataProvider for the lower table, Germplasm List
+//DataProvider for the lower table, Germplasm List
                 $GdataProvider = new CArrayDataProvider($filteredData, array(
                     'keyField' => 'id',
                     'pagination' => array(
@@ -1026,7 +1068,7 @@ class SiteController extends Controller {
                     'createdGID' => $createdGID
                 ));
             } elseif (isset($_GET['yes'])) {//to process the remaining entries
-                //echo "<br><br><br>yes page";
+//echo "<br><br><br>yes page";
                 $url = $model->curPageURL();
                 $values = parse_url($url);
                 $query = explode('&', $values['query']);
@@ -1039,8 +1081,8 @@ class SiteController extends Controller {
                 $query = implode('&', $append);
                 $values['query'] = $query;
                 $url = $values['scheme'] . '://' . $values['host'] . '/' . $values['path'] . '?' . $values['query'];
-                //echo $values['path'] . "?" . $values['query'];
-                //header("Location: " . $values['path'] . "?" . $values['query'] . "");
+//echo $values['path'] . "?" . $values['query'];
+//header("Location: " . $values['path'] . "?" . $values['query'] . "");
                 ?>
                 <html>
                     <body onload="storeLocal_process();">
@@ -1056,8 +1098,8 @@ class SiteController extends Controller {
                 </html>
                 <?php
             } else {    // when page is refreshed
-               // echo "page refreshed" . "<br>";
-                // print_r($existing);
+// echo "page refreshed" . "<br>";
+// print_r($existing);
                 ?>
                 <html>
                     <body onload="storeLocal_refresh();">
@@ -1084,7 +1126,7 @@ class SiteController extends Controller {
         $model2 = new LoginForm;
 
         if (isset($this->browserSession)) {
-            $this->render('chooseGID');
+            $this->renderPartial('chooseGID');
         } else {
             $this->render('login', array('model' => $model2));
         }
@@ -1136,7 +1178,8 @@ class SiteController extends Controller {
             'centralDBForm' => $centralDBForm
         ));
     }
-       public function actionSettings_browser() {
+
+    public function actionSettings_browser() {
         $dbFormModel = new databaseForm;
         $centralDBForm = new centralDBForm;
 

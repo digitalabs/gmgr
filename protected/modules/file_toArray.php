@@ -17,7 +17,7 @@ class file_toArray {
     }
 
     public function uploadedFile($filePath) {
-
+header('Content-Type: text/html; charset=utf-8');
         $f = fopen($filePath, "r");
 
         //get headers
@@ -59,10 +59,10 @@ class file_toArray {
         echo "<br><br><br>";
         $f = fopen($filePath, "r");
         $lines = array();
-        $i=0;
+        $i = 0;
         while (($result = fgetcsv($f)) !== false) {
-            
-            if (array(null) !== $result && $i>0) { // ignore blank lines
+
+            if (array(null) !== $result && $i > 0) { // ignore blank lines
                 //$lines="";
                 $cells = $result;
                 //$cells = array();
@@ -73,7 +73,7 @@ class file_toArray {
                 $female = "";
                 $male = "";
                 $date = "";
-                for ($k = 0; $k < count($cells) ; $k++) {
+                for ($k = 0; $k < count($cells); $k++) {
 
                     if ($k == $column_cross) {
                         $cross = $cells[$k];
@@ -85,19 +85,21 @@ class file_toArray {
                         $date = $cells[$k];
                     }
                 }// for k end
-                array_push($dataString, $cross);
-                array_push($dataString, $female);
-                array_push($dataString, $male);
-                if ($column_date == -1 || empty($date)) {
-                    array_push($dataString, "not specified");
-                } else {
-                    array_push($dataString, $date);
+                if ($cross !== "" || $female !== "" || $male !== "") {
+                    array_push($dataString, $cross);
+                    array_push($dataString, $female);
+                    array_push($dataString, $male);
+                    if ($column_date == -1 || empty($date)) {
+                        array_push($dataString, "not specified");
+                    } else {
+                        array_push($dataString, $date);
+                    }
                 }
             }
             $i++;
         }
         fclose($f);
-       
+
         return $dataString;
     }
 

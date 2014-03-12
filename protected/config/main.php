@@ -62,7 +62,7 @@ return array(
 /*
         // uncomment the following to use a MySQL database
          'db'=>array(
-          'connectionString' => 'mysql:host=localhost;dbname=central6',
+          'connectionString' => 'mysql:host=localhost;dbname=central',
           'emulatePrepare' => true,
           'username' => 'root',
           'password' => '',
@@ -81,7 +81,7 @@ return array(
           'enableProfiling' => true,
           'enableParamLogging'=>true,
           ),
-         
+        
         'errorHandler' => array(
             // use 'site/error' action to display errors
             'errorAction' => 'site/error',

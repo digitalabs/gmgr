@@ -19,10 +19,11 @@ class curl {
 
     public function exec($url, $data) {
         $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        // set some cURL options
+        $result = curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        $result = curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        $result = curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $result = curl_setopt($ch, CURLOPT_HTTPHEADER, array(
             'Content-Type: application/json',
             'Content-Length: ' . strlen($data))
         );
@@ -30,18 +31,59 @@ class curl {
         //echo "<br>here yeah: ".$result."<br>";
         $output = json_decode($result, true);
 
-        //$code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        /* echo "<br>HTTP CODE ERROR: ".$code ."<br>";
-          //echo $jsonText;
+        $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        echo "<br><br><br><br>HTTP CODE ERROR: " . $code . "<br>".$_SERVER['HTTP_REFERER'];
+        /*  //echo $jsonText;
           echo "<br> cURL: WELCOME! ".$response."</outercode>";
           echo '<br>RESULT: '.print_r($response,1);
           echo "<br> END</outercode>"; */
 
-        //if($code != 200){
-        //     header("Location: /GMGR/index.php?r=site/contactUs");
-        //}
+        if (!curl_errno($ch)) {
+            //
+          //  echo "<br><br>could not connect to tomcat server";
+        }
+
+        if (empty($result)) {
+            // some kind of an error happened
+           // die(curl_error($ch));
+           $values = parse_url($_SERVER['HTTP_REFERER']);
+                $query = explode('&', $values['query']);
+
+                for ($i = 0; $i < count($query); $i++) {
+                    if ('yes=1' != $query[$i]) {
+                        $append[] = $query[$i];
+                    }
+                }
+                $query = implode('&', $append);
+                $values['query'] = $query;
+                $url = $values['scheme'] . '://' . $values['host'] . '/' . $values['path'] . '?' . $values['query'];
+                echo "<br>".'"Location:'+ $values['path'] . '?' . $values['query']+'"';
+            header('"Location:'+ $values['path'] . '?' . $values['query']+'"');
+           // header("Location: /GMGR/index.php?r=site/contactUs");
+            die();
+             curl_close($ch); // close cURL handler
+             
+        } else {
+            $info = curl_getinfo($ch);
+            curl_close($ch); // close cURL handler
+
+            if (empty($info['http_code'])) {
+                die("No HTTP code was returned");
+            } else {
+                // load the HTTP codes
+               /* $http_codes = parse_ini_file("path/to/the/ini/file/I/pasted/above");
+
+                // echo results
+                echo "The server responded: <br />";
+                echo $info['http_code'] . " " . $http_codes[$info['http_code']];
+                * 
+                */
+            }
+             return $output;
+        }
         //print_r($output);
-        return $output;
+       
     }
 
     public function createNew($data) {
@@ -123,46 +165,46 @@ class curl {
     }
 
     public function searchGID() {
-	      $gid = $_POST['inputGID'];
-			echo '<br/>gid:';
-			print_r($gid);
-            $level = $_POST['maxStep'];
-			if(isset($_POST['cbox']))
-			{
-				 $selhis = '1';
-			}
-				else $selhis = '0';
-				
-            //database settings
-            $local_db_host = Yii::app()->request->getParam('local_db_host');
-            $local_db_name = Yii::app()->request->getParam('local_db_name');
-            $local_db_port = Yii::app()->request->getParam('local_db_port');
-            $local_db_username = Yii::app()->request->getParam('local_db_username');
-            $local_db_password = Yii::app()->request->getParam('local_db_password');
-            $central_db_host = Yii::app()->request->getParam('central_db_host');
-            $central_db_name = Yii::app()->request->getParam('central_db_name');
-            $central_db_port = Yii::app()->request->getParam('central_db_port');
-            $central_db_username = Yii::app()->request->getParam('central_db_username');
-            $central_db_password = Yii::app()->request->getParam('central_db_password');
+        $gid = $_POST['inputGID'];
+        echo '<br/>gid:';
+        print_r($gid);
+        $level = $_POST['maxStep'];
+        if (isset($_POST['cbox'])) {
+            $selhis = '1';
+        }
+        else
+            $selhis = '0';
 
-            $a = array(
-                'GID' => $gid,
-                'LEVEL' => $level,
-		'SEL'   => $selhis,
-                'local_db_host' =>$local_db_host,
-                'local_db_name' => $local_db_name,
-                'local_db_port' => $local_db_port,
-                'local_db_username' => $local_db_username,
-                'local_db_password' => $local_db_password,
-                'central_db_host' => $central_db_host,
-                'central_db_name' => $central_db_name,
-                'central_db_port' => $central_db_port,
-                'central_db_username' => $central_db_username,
-                'central_db_password' => $central_db_password
-            );
+        //database settings
+        $local_db_host = Yii::app()->request->getParam('local_db_host');
+        $local_db_name = Yii::app()->request->getParam('local_db_name');
+        $local_db_port = Yii::app()->request->getParam('local_db_port');
+        $local_db_username = Yii::app()->request->getParam('local_db_username');
+        $local_db_password = Yii::app()->request->getParam('local_db_password');
+        $central_db_host = Yii::app()->request->getParam('central_db_host');
+        $central_db_name = Yii::app()->request->getParam('central_db_name');
+        $central_db_port = Yii::app()->request->getParam('central_db_port');
+        $central_db_username = Yii::app()->request->getParam('central_db_username');
+        $central_db_password = Yii::app()->request->getParam('central_db_password');
+
+        $a = array(
+            'GID' => $gid,
+            'LEVEL' => $level,
+            'SEL' => $selhis,
+            'local_db_host' => $local_db_host,
+            'local_db_name' => $local_db_name,
+            'local_db_port' => $local_db_port,
+            'local_db_username' => $local_db_username,
+            'local_db_password' => $local_db_password,
+            'central_db_host' => $central_db_host,
+            'central_db_name' => $central_db_name,
+            'central_db_port' => $central_db_port,
+            'central_db_username' => $central_db_username,
+            'central_db_password' => $central_db_password
+        );
 
 
-            $data = json_encode($a);
+        $data = json_encode($a);
 
         $url = "http://172.29.4.99:8083/ws/standardization/term/searchGID";
 
@@ -186,45 +228,44 @@ class curl {
         return $try;
     }
 
-
     public function showDiagram($in, $max) {
-            
-			$gid = $in;//$_GET['inputGID'];
-            $level = $max;//$_GET['maxStep'];
-			if(isset($_POST['cbox']))
-			{
-				 $selhis = '1';
-			}
-				else $selhis = '0';
-				
-            //database settings
-            $local_db_host = Yii::app()->request->getParam('local_db_host');
-            $local_db_name = Yii::app()->request->getParam('local_db_name');
-            $local_db_port = Yii::app()->request->getParam('local_db_port');
-            $local_db_username = Yii::app()->request->getParam('local_db_username');
-            $local_db_password = Yii::app()->request->getParam('local_db_password');
-            $central_db_host = Yii::app()->request->getParam('central_db_host');
-            $central_db_name = Yii::app()->request->getParam('central_db_name');
-            $central_db_port = Yii::app()->request->getParam('central_db_port');
-            $central_db_username = Yii::app()->request->getParam('central_db_username');
-            $central_db_password = Yii::app()->request->getParam('central_db_password');
-            
-            $a = array(
-                'GID' => $gid,
-                'LEVEL' => $level,
-		'SEL' =>$selhis,
-                'local_db_host' =>$local_db_host,
-                'local_db_name' => $local_db_name,
-                'local_db_port' => $local_db_port,
-                'local_db_username' => $local_db_username,
-                'local_db_password' => $local_db_password,
-                'central_db_host' => $central_db_host,
-                'central_db_name' => $central_db_name,
-                'central_db_port' => $central_db_port,
-                'central_db_username' => $central_db_username,
-                'central_db_password' => $central_db_password
-            );
-            $data = json_encode($a);
+
+        $gid = $in; //$_GET['inputGID'];
+        $level = $max; //$_GET['maxStep'];
+        if (isset($_POST['cbox'])) {
+            $selhis = '1';
+        }
+        else
+            $selhis = '0';
+
+        //database settings
+        $local_db_host = Yii::app()->request->getParam('local_db_host');
+        $local_db_name = Yii::app()->request->getParam('local_db_name');
+        $local_db_port = Yii::app()->request->getParam('local_db_port');
+        $local_db_username = Yii::app()->request->getParam('local_db_username');
+        $local_db_password = Yii::app()->request->getParam('local_db_password');
+        $central_db_host = Yii::app()->request->getParam('central_db_host');
+        $central_db_name = Yii::app()->request->getParam('central_db_name');
+        $central_db_port = Yii::app()->request->getParam('central_db_port');
+        $central_db_username = Yii::app()->request->getParam('central_db_username');
+        $central_db_password = Yii::app()->request->getParam('central_db_password');
+
+        $a = array(
+            'GID' => $gid,
+            'LEVEL' => $level,
+            'SEL' => $selhis,
+            'local_db_host' => $local_db_host,
+            'local_db_name' => $local_db_name,
+            'local_db_port' => $local_db_port,
+            'local_db_username' => $local_db_username,
+            'local_db_password' => $local_db_password,
+            'central_db_host' => $central_db_host,
+            'central_db_name' => $central_db_name,
+            'central_db_port' => $central_db_port,
+            'central_db_username' => $central_db_username,
+            'central_db_password' => $central_db_password
+        );
+        $data = json_encode($a);
 
         $url = "http://172.29.4.99:8083/ws/standardization/term/searchGID";
         $this->exec($url, $data);
