@@ -27,7 +27,7 @@ var realWidth = window.innerWidth;
 var realHeight = window.innerHeight;
 var margin = {top: 950, right: 50, bottom: 200, left: 1500},
 	m = [100, 500, 100, 500],     
-    width = 2000 - margin.left - margin.right,
+    width = 5000 - margin.left - margin.right,
     height = 5050 - margin.top - margin.bottom,
     h = realHeight -m[0] -m[2],
 	rectW = 200,
@@ -54,7 +54,7 @@ var customNodes = new Array(),
 		 'transform':'rotate(270deg)'
 	});
 	
-    tmpNodes = d3.layout.tree().size([1300, 500]).nodes(data)
+    tmpNodes = d3.layout.tree().size([1300, 800]).nodes(data)
 				 //.on("click", click)	;//;
 	
 					
@@ -350,11 +350,8 @@ function drawChart2(node) {
                     .attr("transform", "translate(" + (txtW+10) + ",0)")
 					.attr("cx", -30);
 			//}
-					
         }
-		
 		//}
-		
     });
 }
 
