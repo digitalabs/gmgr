@@ -4,6 +4,10 @@ svg {
 
 .node {
   cursor: pointer;
+  text-overflow: ellipsis;
+	width: 10px;
+	white-space: nowrap;
+	overflow: hidden;
 }
 
 .circle {
