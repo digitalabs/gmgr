@@ -25,7 +25,7 @@ var data = (function () {
 		
 var realWidth = window.innerWidth;
 var realHeight = window.innerHeight;
-var margin = {top: 950, right: 50, bottom: 200, left: 1500},
+var margin = {top: 950, right: 50, bottom: 200, left: 500},
 	m = [100, 500, 100, 500],     
     width = 5000 - margin.left - margin.right,
     height = 5050 - margin.top - margin.bottom,
