@@ -85,7 +85,9 @@ header('Content-Type: text/html; charset=utf-8');
                         $date = $cells[$k];
                     }
                 }// for k end
-                if ($cross !== "" || $female !== "" || $male !== "") {
+                if ($cross !== "" && $female !== "" && $male !== "") {
+                    //echo "cross: ".$cross;
+                    //echo "<br>female: ".$cross;
                     array_push($dataString, $cross);
                     array_push($dataString, $female);
                     array_push($dataString, $male);
