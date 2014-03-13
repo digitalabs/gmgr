@@ -311,8 +311,10 @@
 
                             //var f=date2.charAt(0)dates.compare(iValue,iMax);
                             if (result === 0) {
-                                return true;
-                            } else if (result > 0) {
+                               if (iValue !== "0") {
+                                    return true;
+                                }
+                            } else if (result < 0) {
                                 if (iValue !== "0") {
 
                                     return true;
@@ -442,10 +444,11 @@
 
                             //var f=dates.compare(iValue,iMax);
                             if (result === 0) {
-                                return true;
-                            } else if (result > 0) {
                                 if (iValue !== "0") {
-
+                                    return true;
+                                }
+                            } else if (result < 0) {
+                                if (iValue !== "0") {
                                     return true;
                                 }
                             }
