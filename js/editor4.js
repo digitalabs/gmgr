@@ -307,12 +307,11 @@ function drawChart2(node) {
 					 return "rotate(90)" 
 				})
 				.on("click", function(d,i) { click(node); })
-                .on("mouseover", function (d) {
-                    d3.select(this).select('text')
-                      .text(function(d){
-                        return d.name2;
-                        })
-                })
+                //.on("mouseover", function (d) { d3.select(this).select("text")
+                //                                  .text(function(d){
+                //                                            return d.name2;
+                 //                                       })
+                 //                })
 				.on("mouseup", legendclick )
 				setTimeout(function () {
         //drawLegend();
