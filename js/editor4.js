@@ -306,7 +306,7 @@ function drawChart2(node) {
 				.attr("transform", function(d) {
 					 return "rotate(90)" 
 				})
-				.on("click", function(d,i) { click(node); })
+				.on("click", function(d,i) { click(node); .attr("fill", "red"); })
 				.on("mouseup", legendclick )
 				setTimeout(function () {
         //drawLegend();
