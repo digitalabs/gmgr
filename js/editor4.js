@@ -25,9 +25,9 @@ var data = (function () {
 		
 var realWidth = window.innerWidth;
 var realHeight = window.innerHeight;
-var margin = {top: 950, right: 50, bottom: 200, left: 500},
+var margin = {top: 500, right: 50, bottom: 200, left: 500},
 	m = [100, 500, 100, 500],     
-    width = 5000 - margin.left - margin.right,
+    width = 10000 - margin.left - margin.right,
     height = 10050 - margin.top - margin.bottom,
     h = realHeight -m[0] -m[2],
 	rectW = 200,
@@ -54,7 +54,7 @@ var customNodes = new Array(),
 		 'transform':'rotate(270deg)'
 	});
 	
-    tmpNodes = d3.layout.tree().size([1300, 800]).nodes(data)
+    tmpNodes = d3.layout.tree().size([1300, 1000]).nodes(data)
 				 //.on("click", click)	;//;
 	
 					
@@ -62,7 +62,7 @@ var customNodes = new Array(),
     depencencyChart = d3.select("#graphDiv").append("svg:svg")
 			//.data(d3.entries(orientation))
             .attr("width", 10000)
-            .attr("height", 7500)
+            .attr("height", 10000)
             .append("svg:g")
 			.attr("class","drawarea")
 			.attr("transform", "translate(1000, 900)")
