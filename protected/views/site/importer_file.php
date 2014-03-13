@@ -136,18 +136,28 @@
 
             if ('localStorage' in window && window['localStorage'] != null) {
                 try {
-                                 //******get database settings
-                document.getElementById('local_db_host').value = localStorage.local_database_host;
-                document.getElementById('local_db_name').value = localStorage.local_database_name;
-                document.getElementById('local_db_port').value = localStorage.local_database_port;
-                document.getElementById('local_db_username').value = localStorage.local_database_username;
-                document.getElementById('local_db_password').value = localStorage.local_database_password;
-                document.getElementById('central_db_host').value = localStorage.central_database_host;
-                document.getElementById('central_db_name').value = localStorage.central_database_name;
-                document.getElementById('central_db_port').value = localStorage.central_database_port;
-                document.getElementById('central_db_username').value = localStorage.central_database_username;
-                document.getElementById('central_db_password').value = localStorage.central_database_password;
+                    var local_db_host = '<?php echo $database_details['local_db_host'] ?>';
+                    var local_db_name = '<?php echo $database_details['local_db_name'] ?>';
+                    var local_db_port = '<?php echo $database_details['local_db_port'] ?>';
+                    var local_db_username = '<?php echo $database_details['local_db_username'] ?>';
+                    var local_db_password = '<?php echo $database_details['local_db_password'] ?>';
 
+                    var central_db_host = '<?php echo $database_details['central_db_host'] ?>';
+                    var central_db_name = '<?php echo $database_details['central_db_name'] ?>';
+                    var central_db_port = '<?php echo $database_details['central_db_port'] ?>';
+                    var central_db_username = '<?php echo $database_details['central_db_username'] ?>';
+                    var central_db_password = '<?php echo $database_details['central_db_password'] ?>';
+
+                    localStorage.setItem('local_database_host', local_db_host);
+                    localStorage.setItem('local_database_name', local_db_name);
+                    localStorage.setItem('local_database_port', local_db_port);
+                    localStorage.setItem('local_database_username', local_db_username);
+                    localStorage.setItem('local_database_password', local_db_password);
+                    localStorage.setItem('central_database_host', central_db_host);
+                    localStorage.setItem('central_database_name', central_db_name);
+                    localStorage.setItem('central_database_port', central_db_port);
+                    localStorage.setItem('central_database_username', central_db_username);
+                    localStorage.setItem('central_database_password', central_db_password);
 
                 } catch (e) {
                     if (e === QUOTA_EXCEEDED_ERR) {
