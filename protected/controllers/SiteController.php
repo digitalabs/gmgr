@@ -1130,7 +1130,7 @@ class SiteController extends Controller {
                     $list = unserialize(base64_decode($_POST['list']));
                     $checked = unserialize(base64_decode($_POST['checked']));
                     $rows = $list;
-                    print_r($createdGID);
+                   // print_r($createdGID);
                 }
                 if (count($rows)) {
                     foreach ($rows as $i => $row) : list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male, $date) = $row;
