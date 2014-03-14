@@ -25,10 +25,10 @@ var data = (function () {
 		
 var realWidth = window.innerWidth;
 var realHeight = window.innerHeight;
-var margin = {top: 500, right: 50, bottom: 200, left: 500},
+var margin = {top: 950, right: 50, bottom: 200, left: 1500},
 	m = [100, 500, 100, 500],     
-    width = 10000 - margin.left - margin.right,
-    height = 10050 - margin.top - margin.bottom,
+    width = 2000 - margin.left - margin.right,
+    height = 5050 - margin.top - margin.bottom,
     h = realHeight -m[0] -m[2],
 	rectW = 200,
     rectH = 100,
@@ -54,7 +54,7 @@ var customNodes = new Array(),
 		 'transform':'rotate(270deg)'
 	});
 	
-    tmpNodes = d3.layout.tree().size([1300, 1000]).nodes(data)
+    tmpNodes = d3.layout.tree().size([1300, 500]).nodes(data)
 				 //.on("click", click)	;//;
 	
 					
@@ -62,7 +62,7 @@ var customNodes = new Array(),
     depencencyChart = d3.select("#graphDiv").append("svg:svg")
 			//.data(d3.entries(orientation))
             .attr("width", 10000)
-            .attr("height", 10000)
+            .attr("height", 7500)
             .append("svg:g")
 			.attr("class","drawarea")
 			.attr("transform", "translate(1000, 900)")
@@ -189,7 +189,7 @@ function drawChart(ms) {
 		cnt++;
         var nodeSVG = depencencyChart.append("svg:g")
                 .attr("transform", "translate(" + node.x + "," + node.y + ")")
-				//.enter()
+				.enter()
 				.append("g")
 				//.on("click",click)
 				
@@ -296,22 +296,11 @@ function drawChart2(node) {
 				.attr("class", "name")
                 .attr("dx", -19)
                 .attr("dy", -5)
-                .attr("text-overflow","ellipsis")
-                .attr("width", "6px")
-                .attr("white-space","nowrap")
-                .attr("overflow","hidden")
-                //.limit('6','#left')
-                //.attr("limit","6")
-                .text(node.name2)
+                .text(node.name)
 				.attr("transform", function(d) {
-					 return "rotate(90)" 
+					return "rotate(90)" 
 				})
 				.on("click", function(d,i) { click(node); })
-                //.on("mouseover", function (d) { d3.select(this).select("text")
-                //                                  .text(function(d){
-                //                                            return d.name2;
-                 //                                       })
-                 //                })
 				.on("mouseup", legendclick )
 				setTimeout(function () {
         //drawLegend();
@@ -355,8 +344,11 @@ function drawChart2(node) {
                     .attr("transform", "translate(" + (txtW+10) + ",0)")
 					.attr("cx", -30);
 			//}
+					
         }
+		
 		//}
+		
     });
 }
 
