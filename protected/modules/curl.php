@@ -97,7 +97,7 @@ class curl {
                     // curl_close($ch); // close cURL handler
                     //header('Location:' + $url +'');
                     //echo "<script> window.setTimeout(function(){ window.location.href ='" . $url . "';}, 10000); </script>";
-                    //echo "<script> window.location.replace('/GMGR/index.php?r=site/contactUs') </script>";
+                    echo "<script> window.location.replace('/GMGR/index.php?r=site/contactUs') </script>";
                     die();
                     curl_close($ch);
                 }
