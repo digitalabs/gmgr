@@ -153,6 +153,11 @@ class SiteController extends Controller {
         if (isset($_POST['databaseForm']) && isset($_POST['centralDBForm'])) {
 
 // if ($dbFormModel->validate() && $centralDBForm->validate()) {
+            $path = dirname(__FILE__) . '/../../json_files/database.json';
+
+            if (file_exists($path)) {
+                unlink(dirname(__FILE__) . "/../../json_files/database.json");
+            }
 //local database
             $local_db_host = $_POST['databaseForm']['host'];
             $local_db_name = $_POST['databaseForm']['database_name'];
@@ -191,7 +196,11 @@ class SiteController extends Controller {
 // }
             $this->render('login', array('model' => $model, 'database_details' => $database_details));
         } else {
+            $path = dirname(__FILE__) . '/../../json_files/database.json';
 
+            if (file_exists($path)) {
+                unlink(dirname(__FILE__) . "/../../json_files/database.json");
+            }
 //local database
             $local_db_host = '';
             $local_db_name = '';
@@ -403,6 +412,7 @@ class SiteController extends Controller {
             ));
         }
     }
+
     //2nd importer, a data browser which contains upated database settings
     public function actionImporter_file() {
 
@@ -513,6 +523,7 @@ class SiteController extends Controller {
             ));
         }
     }
+
     public function actionImportFileDisplay() {
 
         Yii::import('application.modules.file_toArray');
@@ -1284,7 +1295,7 @@ class SiteController extends Controller {
                     $list = unserialize(base64_decode($_POST['list']));
                     $checked = unserialize(base64_decode($_POST['checked']));
                     $rows = $list;
-                   // print_r($createdGID);
+                    // print_r($createdGID);
                 }
                 if (count($rows)) {
                     foreach ($rows as $i => $row) : list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male, $date) = $row;

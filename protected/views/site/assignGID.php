@@ -714,7 +714,4 @@ if (count($final)) {
         $('#dataConfirmModal').modal({show: true});
         return false;
     });
-
-
-
 </script>

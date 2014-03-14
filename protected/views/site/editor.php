@@ -72,7 +72,7 @@ if (isset($_GET['searchBtn'])) {
         <!--<div style="padding-left:5px;padding-right:5px;"><hr></div>-->
         <br>
         <div class="form-horizontal" style="padding-left: 15px;">
-            <input title="This feature is a work in progress" placeholder="All" style="width:50px;height:30px;" value=" " id="maxStep" type="number" name="maxStep" min="1" max="100"> 
+            <input title="This feature is a work in progress" placeholder="All" style="width:50px;height:30px;" value="2" id="maxStep" type="number" name="maxStep" min="1" max="100"> 
             <?php
             echo CHtml::hiddenField('local_db_host', '');
             echo CHtml::hiddenField('local_db_name', '');
