@@ -1,4 +1,5 @@
-<body onload="storeLocal()">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<body onload="storeLocal();">
     <form action="" method="post" id='importFileDisplay-rfrsh'>
         <input type="hidden" name="refresh" value="true">
         <input type="hidden" name="location" id="location" value="<?php echo $locationID; ?>">

@@ -1,3 +1,4 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src='./js/jquery-1.4.4.min.js' type='text/javascript'></script>
 <script src='./js/jquery.dataTables.js' type='text/javascript'></script>
 <script src='./js/jquery.dataTables.columnFilter.js' type='text/javascript'></script>

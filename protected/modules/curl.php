@@ -105,63 +105,63 @@ class curl {
     }
 
     public function createNew($data) {
-        //http://172.29.4.99:8083/ws/standardization/term/parse
-        $url = "http://172.29.4.99:8083/ws/standardization/term/createNew";
+        //http://localhost:8080/ws/standardization/term/parse
+        $url = "http://localhost:8080/ws/standardization/term/createNew";
         //echo "<br>here";
         return $this->exec($url, $data);
     }
 
     public function updateGermplasmName($data) {
-        //http://172.29.4.99:8083/ws/standardization/term/parse
-        $url = "http://172.29.4.99:8083/ws/standardization/term/updateGermplasmName";
+        //http://localhost:8080/ws/standardization/term/parse
+        $url = "http://localhost:8080/ws/standardization/term/updateGermplasmName";
         //echo "<br>here";
         return $this->exec($url, $data);
     }
 
     public function parse($data) {
-        //http://172.29.4.99:8083/ws/standardization/term/parse
-        $url = "http://172.29.4.99:8083/ws/standardization/term/post";
+        //http://localhost:8080/ws/standardization/term/parse
+        $url = "http://localhost:8080/ws/standardization/term/post";
 
         return $this->exec($url, $data);
     }
 
     public function standardize($data) {
-        $url = "http://172.29.4.99:8083/ws/standardization/term/standardize2";
+        $url = "http://localhost:8080/ws/standardization/term/standardize2";
         return $this->exec($url, $data);
     }
 
     public function createGID($data) {
-        $url = "http://172.29.4.99:8083/ws/standardization/term/createGID2";
+        $url = "http://localhost:8080/ws/standardization/term/createGID2";
         return $this->exec($url, $data);
     }
 
     public function createGID2($data) {
-        $url = "http://172.29.4.99:8083/ws/standardization/term/createGID3";
+        $url = "http://localhost:8080/ws/standardization/term/createGID3";
         return $this->exec($url, $data);
     }
 
     public function chooseGID($data) {
-        $url = "http://172.29.4.99:8083/ws/standardization/term/chooseGID2";
+        $url = "http://localhost:8080/ws/standardization/term/chooseGID2";
         return $this->exec($url, $data);
     }
 
     public function updateMethod($data) {
-        $url = "http://172.29.4.99:8083/ws/standardization/term/updateMethod";
+        $url = "http://localhost:8080/ws/standardization/term/updateMethod";
         return $this->exec($url, $data);
     }
 
     public function chooseGID_cross($data) {
-        $url = "http://172.29.4.99:8083/ws/standardization/term/chooseGID_cross";
+        $url = "http://localhost:8080/ws/standardization/term/chooseGID_cross";
         return $this->exec($url, $data);
     }
 
     public function editGermplasmName($data) {
-        $url = "http://172.29.4.99:8083/ws/standardization/term/checkEditedString";
+        $url = "http://localhost:8080/ws/standardization/term/checkEditedString";
         return $this->exec($url, $data);
     }
 
     public function show_germplasm_details() {
-        $url = "http://172.29.4.99:8083/ws/standardization/term/show_germplasm_details";
+        $url = "http://localhost:8080/ws/standardization/term/show_germplasm_details";
         $this->exec($url);
 
         $gid = $_POST['hidGID'];
@@ -224,7 +224,7 @@ class curl {
 
         $data = json_encode($a);
 
-        $url = "http://172.29.4.99:8083/ws/standardization/term/searchGID";
+        $url = "http://localhost:8080/ws/standardization/term/searchGID";
 
         $this->exec($url, $data);
 
@@ -285,7 +285,7 @@ class curl {
         );
         $data = json_encode($a);
 
-        $url = "http://172.29.4.99:8083/ws/standardization/term/searchGID";
+        $url = "http://localhost:8080/ws/standardization/term/searchGID";
         $this->exec($url, $data);
 
         //$ch = curl_init();
@@ -309,7 +309,7 @@ class curl {
     }
 
     public function editGermplasm($data) {
-        $url = "http://172.29.4.99:8083/ws/standardization/term/editGermplasm";
+        $url = "http://localhost:8080/ws/standardization/term/editGermplasm";
 
         $this->exec($url, $data);
 

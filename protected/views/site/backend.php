@@ -45,7 +45,7 @@
                         echo $form->textFieldRow($dbFormModel, 'database_name');
                         $dbFormModel->port_name = '3306';
                         echo $form->textFieldRow($dbFormModel, 'port_name');
-                        $dbFormModel->database_username = Yii::app()->user->name;
+                        $dbFormModel->database_username = 'root';//Yii::app()->user->name;
                         echo $form->textFieldRow($dbFormModel, 'database_username');
                         $dbFormModel->database_password = '';
                         echo $form->passwordFieldRow($dbFormModel, 'database_password');
@@ -60,7 +60,7 @@
                         echo $form->textFieldRow($centralDBForm, 'database_name');
                         $centralDBForm->port_name = '3306';
                         echo $form->textFieldRow($centralDBForm, 'port_name');
-                        $centralDBForm->database_username = Yii::app()->user->name;
+                        $centralDBForm->database_username = 'root';//Yii::app()->user->name;
                         echo $form->textFieldRow($centralDBForm, 'database_username');
                         $centralDBForm->database_password = '';
                         echo $form->passwordFieldRow($centralDBForm, 'database_password');

@@ -53,7 +53,7 @@
 <script type='text/javascript'>
     function storeLocal() {
         if (<?php echo isset($database_details); ?>) {
-
+      
             if ('localStorage' in window && window['localStorage'] != null) {
                 try {
                     var local_db_host = '<?php echo $database_details['local_db_host'] ?>';

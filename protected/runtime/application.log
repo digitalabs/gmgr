@@ -4076,3 +4076,6 @@ in E:\xampp\htdocs\GMGR\index.php (13)
 2014/03/14 02:19:07 [warning] [application] Failed to set unsafe attribute "file" of "ImporterForm".
 in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (414)
 in E:\xampp\htdocs\GMGR\index.php (13)
+2014/03/14 03:36:09 [warning] [application] Failed to set unsafe attribute "file" of "ImporterForm".
+in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (538)
+in E:\xampp\htdocs\GMGR\index.php (13)

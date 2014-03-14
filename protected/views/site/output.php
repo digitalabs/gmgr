@@ -1,5 +1,7 @@
 <!--div to grey out the screen while loading indicator is on-->
+
 <body onload="storeLocal()">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <div id='screen'>
     </div>
@@ -167,13 +169,10 @@
                             return "" . CHtml::encode($data["female"]) . "" . "<span class='muted'>" . $fgid . "</span>";
                         } else {
                             //return "<font style='color:#FF6600; font-weight:bold;'>".CHtml::encode($data["female"])."</font>";
-
-
                             echo "<input type='hidden' class='" . $data["female"] . "' name='female' value='" . $data["female"] . "'>";
                             echo "<input type='hidden' class='" . $data["female"] . "' name='fremarks' value='" . $data["fremarks"] . "'>";
                             return "<div class='j'><font style='color:#FF6600; font-weight:bold;'>" . CHtml::link(CHtml::encode($data["female"]), '#', array('id' => 'open-modal', 'title' => CHtml::encode($data["fremarks"]), 'class' => 'tooltipster', 'data-toggle' => 'modal', 'data-target' => '#editGermplasmNameModal', 'data-id' => $data["female"])) . "</font></div>";
 
-                            //echo CHtml::hiddenField('hiddenFid',CHtml::encode($data["female"]));
                         }
                     },
                 ),
@@ -215,7 +214,17 @@
             echo CHtml::hiddenField('list', base64_encode(serialize($list)));
             echo CHtml::hiddenField('location', $locationID);
             echo CHtml::hiddenField('locationID', $locationID);
-
+            echo CHtml::hiddenField('local_db_host', '');
+            echo CHtml::hiddenField('local_db_name', '');
+            echo CHtml::hiddenField('local_db_port', '');
+            echo CHtml::hiddenField('local_db_username', '');
+            echo CHtml::hiddenField('local_db_password', '');
+            echo CHtml::hiddenField('central_db_host', '');
+            echo CHtml::hiddenField('central_db_name', '');
+            echo CHtml::hiddenField('central_db_port', '');
+            echo CHtml::hiddenField('central_db_username', '');
+            echo CHtml::hiddenField('central_db_password', '');
+            
             $url = Yii::app()->createUrl('site/assignGID');
             $this->widget('bootstrap.widgets.TbButton', array(
                 'type' => 'primary',
@@ -253,18 +262,6 @@
                 'form' => 'assign-gid-form',
                     //'onclick' => 'js: alert("hello");',
             ));
-            ?>
-            <!--
-             <input type="hidden" id ="list1" name="list1" value="">
-             <input type="hidden" id ="location1" name="location" value="">
-            -->
-            <?php
-            echo CHtml::hiddenField('local_db_name', '');
-            echo CHtml::hiddenField('local_db_port', '');
-            echo CHtml::hiddenField('local_db_username', '');
-            echo CHtml::hiddenField('central_db_name', '');
-            echo CHtml::hiddenField('central_db_port', '');
-            echo CHtml::hiddenField('central_db_username', '');
             ?>
         </div>
         <br/>
@@ -313,12 +310,16 @@
                 localStorage.setItem('list', <?php echo json_encode(base64_encode(serialize($list))); ?>);
 
                 //******get database settings
+                document.getElementById('local_db_host').value = localStorage.local_database_host;
                 document.getElementById('local_db_name').value = localStorage.local_database_name;
                 document.getElementById('local_db_port').value = localStorage.local_database_port;
                 document.getElementById('local_db_username').value = localStorage.local_database_username;
+                document.getElementById('local_db_password').value = localStorage.local_database_password;
+                document.getElementById('central_db_host').value = localStorage.central_database_host;
                 document.getElementById('central_db_name').value = localStorage.central_database_name;
                 document.getElementById('central_db_port').value = localStorage.central_database_port;
                 document.getElementById('central_db_username').value = localStorage.central_database_username;
+                document.getElementById('central_db_password').value = localStorage.central_database_password;
 
             } catch (e) {
                 if (e === QUOTA_EXCEEDED_ERR) {

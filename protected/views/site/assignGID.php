@@ -1,3 +1,4 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!--div to grey out the screen while loading indicator is on-->
 <div id='screen'>
 </div>
@@ -100,7 +101,7 @@ if (count($final)) {
                             <div id="data">
                                 <div class="panel panel-default" style="font-size: 11px;text-align: left;  background-color: #ffffff;">
                                     <div class="panel-heading" style="border-top-color: #dddddd; padding: 5px 10px;
-                                        ">
+                                         ">
                                         <h3 style=" border-bottom: 0px solid #999; color:#666">Assign GID for cross <font style="color:#e13300; "> <?php echo $pages[0][count($pages[0]) - 1][2]; ?></font></h3>
                                     </div>
                                     <div class="panel-body">
@@ -183,6 +184,7 @@ if (count($final)) {
                                             </p>
                                         </div>			
                                     </div>
+                                    <!--Start of the first table which contains the selected germplasm and its details-->
                                     <table class="table table-hover table-condensed ">
 
                                         <thead>
@@ -314,12 +316,23 @@ if (count($final)) {
                                     //$pageNumbers = $pagination->getLinks2($_GET, $processed, $row_count, $not_standard);
                                     //echo "<br>row_count: ".$row_count;
                                     // echo "<br>processed: ".$processed;
+
+
                                     $pageNumbers = $pagination->getLinks2($_GET, $processed, $row_count);
                                     echo " <div class='panel-footer' style='border-bottom-color: #dddddd; padding: 10px 15px;background-color: #f5f5f5;border-top: 1px solid #dddddd;border-bottom-right-radius: border-bottom-left-radius: 3px;'>";
                                     echo "<ul class='pager'>";
                                     echo $pageNumbers;
                                     echo '</ul>';
                                     echo "</div>";
+
+                                    /* $pagination2 = '';
+                                      if(count($pages) > 1){
+                                      $pagination2 .='<ul class="paginate">';
+                                      for($i=1; $i<count($pages);$i++){
+                                      $pagination2 .= '<li><a href="#" class="paginate_click" id="'.$i.'-page">'.$i.'</a></li>';
+                                      }
+                                      $pagination2 .= '</ul>';
+                                      } */
                                 }
                             }
                             ?>
@@ -433,6 +446,16 @@ if (count($final)) {
                         echo CHtml::hiddenField('checked', base64_encode(serialize($checked)));
                         echo CHtml::hiddenField('existing', base64_encode(serialize($existing)));
                         echo CHtml::hiddenField('createdGID', base64_encode(serialize($createdGID)));
+                        echo CHtml::hiddenField('local_db_host', '');
+                        echo CHtml::hiddenField('local_db_name', '');
+                        echo CHtml::hiddenField('local_db_port', '');
+                        echo CHtml::hiddenField('local_db_username', '');
+                        echo CHtml::hiddenField('local_db_password', '');
+                        echo CHtml::hiddenField('central_db_host', '');
+                        echo CHtml::hiddenField('central_db_name', '');
+                        echo CHtml::hiddenField('central_db_port', '');
+                        echo CHtml::hiddenField('central_db_username', '');
+                        echo CHtml::hiddenField('central_db_password', '');
                         if (isset($_POST['row_count'])) {
                             echo CHtml::hiddenField('row_count', $_POST['row_count']);
                         }
@@ -498,7 +521,14 @@ if (count($final)) {
 
 <script type="text/javascript" src="./assets/pnotify-1.2.0/jquery.pnotify.js"></script>
 <script type="text/javascript">
+    $(document).ready(function() {
 
+       // storeLocal();
+
+        $(".paginate_click").click(function(e) {
+
+        });
+    });
     function storeLocal() {
         if ('localStorage' in window && window['localStorage'] != null) {
 
@@ -507,8 +537,8 @@ if (count($final)) {
 
             localStorage.removeItem("createdGID");
             try {
-                //console.log(JSON.stringify(<?php //echo json_encode($list);     ?>));
-                //console.log(JSON.stringify(<?php //echo json_encode($createdGID);     ?>));
+                //console.log(JSON.stringify(<?php //echo json_encode($list);      ?>));
+                //console.log(JSON.stringify(<?php //echo json_encode($createdGID);      ?>));
                 // console.log("existing: "+JSON.stringify(<?php echo base64_encode(serialize($existing)); ?> ));
 
                 localStorage.removeItem("list");
@@ -524,6 +554,18 @@ if (count($final)) {
                 document.getElementById('checked').value = localStorage.checked;
                 document.getElementById('existing').value = localStorage.existing;
                 document.getElementById('createdGID').value = localStorage.createdGID;
+
+                //******get database settings
+                document.getElementById('local_db_host').value = localStorage.local_database_host;
+                document.getElementById('local_db_name').value = localStorage.local_database_name;
+                document.getElementById('local_db_port').value = localStorage.local_database_port;
+                document.getElementById('local_db_username').value = localStorage.local_database_username;
+                document.getElementById('local_db_password').value = localStorage.local_database_password;
+                document.getElementById('central_db_host').value = localStorage.central_database_host;
+                document.getElementById('central_db_name').value = localStorage.central_database_name;
+                document.getElementById('central_db_port').value = localStorage.central_database_port;
+                document.getElementById('central_db_username').value = localStorage.central_database_username;
+                document.getElementById('central_db_password').value = localStorage.central_database_password;
             } catch (exception) {
                 if ((exception !== QUOTA_EXCEEDED_ERR) &&
                         (exception !== NS_ERROR_DOM_QUOTA_REACHED)) {
@@ -536,7 +578,7 @@ if (count($final)) {
     }
     window.addEventListener('storage', storageEventHandler, false);
     function storageEventHandler(event) {
-        storeLocal();
+        //storeLocal();
     }
 </script>
 <script type="text/javascript">

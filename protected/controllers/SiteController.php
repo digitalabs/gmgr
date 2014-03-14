@@ -12,6 +12,7 @@
             alert('Cannot store user preferences as your browser do not support local storage');
         }
     }
+
     function storeLocal_process() {
         if ('localStorage' in window && window['localStorage'] !== null) {
             try {
@@ -180,9 +181,17 @@ class SiteController extends Controller {
             );
             $data = json_encode($database_details);
 
+            $file = dirname(__FILE__) . '/../../json_files/database.json';
+
+            $file_handle = fopen($file, 'w');
+
+            fwrite($file_handle, $data);
+
+            fclose($file_handle);
 // }
             $this->render('login', array('model' => $model, 'database_details' => $database_details));
         } else {
+
 //local database
             $local_db_host = '';
             $local_db_name = '';
@@ -385,10 +394,125 @@ class SiteController extends Controller {
                 }
             }
         } else {
-            $this->render('login', array('model' => $model2));
+            $dbFormModel = new databaseForm;
+            $centralDBForm = new centralDBForm;
+
+            $this->render('backend', array(
+                'dbFormModel' => $dbFormModel,
+                'centralDBForm' => $centralDBForm
+            ));
         }
     }
+    //2nd importer, a data browser which contains upated database settings
+    public function actionImporter_file() {
 
+        $model = new ImporterForm;
+        Yii::app()->session['username'] = Yii::app()->user->id;
+        $this->browserSession = Yii::app()->session['username'];
+        $model2 = new LoginForm;
+        $dir = dirname(__FILE__) . '/../../uploadedFiles/';
+
+        if (isset($this->browserSession)) {
+
+            $model = new ImporterForm;
+            $dbFormModel = new databaseForm;
+            $centralDBForm = new centralDBForm;
+
+            $uploaded = false;
+
+//Collect user input form
+            if (isset($_POST['ImporterForm'])) {
+//$importedFile->attributes = $_POST['ImporterForm'];
+                if ($importedFile->validate()) {
+//  if(!empty($_FILES['ImporterForm']['file'])){
+                    $file = CUploadedFile::getInstance($importedFile, 'file');
+
+                    static $filePath;
+
+                    $importedFile->file = $file;
+                    $filePath = $dir . '/' . $importedFile->file;
+                }
+            } else {
+                /* $this->render('importer', array(
+                  'model' => $model,
+                  'dbFormModel' => $dbFormModel,
+                  'centralDBForm' => $centralDBForm,
+                  )); */
+                //****backend details
+                if (isset($_POST['databaseForm']) && isset($_POST['centralDBForm'])) {
+
+                    // if ($dbFormModel->validate() && $centralDBForm->validate()) {
+                    //local database
+                    $local_db_host = $_POST['databaseForm']['host'];
+                    $local_db_name = $_POST['databaseForm']['database_name'];
+                    $local_db_port = $_POST['databaseForm']['port_name'];
+                    $local_db_username = $_POST['databaseForm']['database_username'];
+                    $local_db_password = $_POST['databaseForm']['database_password'];
+
+                    //central database
+                    $central_db_host = $_POST['centralDBForm']['host'];
+                    $central_db_name = $_POST['centralDBForm']['database_name'];
+                    $central_db_port = $_POST['centralDBForm']['port_name'];
+                    $central_db_username = $_POST['centralDBForm']['database_username'];
+                    $central_db_password = $_POST['centralDBForm']['database_password'];
+
+                    $database_details = array(
+                        'local_db_host' => $local_db_host,
+                        'local_db_name' => $local_db_name,
+                        'local_db_port' => $local_db_port,
+                        'local_db_username' => $local_db_username,
+                        'local_db_password' => $local_db_password,
+                        'central_db_host' => $central_db_host,
+                        'central_db_name' => $central_db_name,
+                        'central_db_port' => $central_db_port,
+                        'central_db_username' => $central_db_username,
+                        'central_db_password' => $central_db_password
+                    );
+                    $data = json_encode($database_details);
+
+                    // }
+                    $this->render('importer_file', array('model' => $model, 'database_details' => $database_details));
+                } else {
+                    //local database
+                    $local_db_host = '';
+                    $local_db_name = '';
+                    $local_db_port = '';
+                    $local_db_username = '';
+                    $local_db_password = '';
+
+
+                    //central database
+                    $central_db_host = '';
+                    $central_db_name = '';
+                    $central_db_port = '';
+                    $central_db_username = '';
+                    $central_db_password = '';
+
+                    $database_details = array(
+                        'local_db_host' => $local_db_host,
+                        'local_db_name' => $local_db_name,
+                        'local_db_port' => $local_db_port,
+                        'local_db_username' => $local_db_username,
+                        'local_db_password' => $local_db_password,
+                        'central_db_host' => $central_db_host,
+                        'central_db_name' => $central_db_name,
+                        'central_db_port' => $central_db_port,
+                        'central_db_username' => $central_db_username,
+                        'central_db_password' => $central_db_password
+                    );
+                    $this->render('importer_file', array('model' => $model, 'database_details' => $database_details));
+                }
+            }
+        } else {
+            $dbFormModel = new databaseForm;
+            $centralDBForm = new centralDBForm;
+
+            $this->render('backend', array(
+                'dbFormModel' => $dbFormModel,
+                'centralDBForm' => $centralDBForm
+            ));
+        }
+    }
     public function actionImportFileDisplay() {
 
         Yii::import('application.modules.file_toArray');
@@ -529,7 +653,13 @@ class SiteController extends Controller {
                 }
             }
         } else {
-            $this->render('login', array('model' => $model2));
+            $dbFormModel = new databaseForm;
+            $centralDBForm = new centralDBForm;
+
+            $this->render('backend', array(
+                'dbFormModel' => $dbFormModel,
+                'centralDBForm' => $centralDBForm
+            ));
         }
     }
 
@@ -549,7 +679,7 @@ class SiteController extends Controller {
             if (isset($_POST['locationID']) || isset($_POST['location'])) {
 //echo "<br>enter here"; 
                 if (isset($_POST['next']) || isset($_POST['refresh'])) {
-//echo "<br>Refresh!!!";
+                    echo "<br>Refresh!!!";
                     $locationID = $_POST['location'];
                     $list = unserialize(base64_decode($_POST['list']));
                 } else {
@@ -568,8 +698,8 @@ class SiteController extends Controller {
 
                     $list = $curl->standardize($data);
                 }
-               // echo "<br>list:<br>";
-               // print_r($list);
+                // echo "<br>list:<br>";
+                // print_r($list);
                 foreach ($list as $row) :
 //list($GID, $nval, $female, $fid, $fremarks, $fgid, $male, $mid, $mremarks, $mgid) = $row;
                     list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male, $date) = $row;
@@ -641,7 +771,13 @@ class SiteController extends Controller {
                 <?php
             }
         } else {
-            $this->render('login', array('model' => $model2));
+            $dbFormModel = new databaseForm;
+            $centralDBForm = new centralDBForm;
+
+            $this->render('backend', array(
+                'dbFormModel' => $dbFormModel,
+                'centralDBForm' => $centralDBForm
+            ));
         }
     }
 
@@ -714,7 +850,13 @@ class SiteController extends Controller {
             }
             $this->renderPartial('editGermplasm', array('model' => $model));
         } else {
-            $this->render('login', array('model' => $model2));
+            $dbFormModel = new databaseForm;
+            $centralDBForm = new centralDBForm;
+
+            $this->render('backend', array(
+                'dbFormModel' => $dbFormModel,
+                'centralDBForm' => $centralDBForm
+            ));
         }
     }
 
@@ -729,7 +871,13 @@ class SiteController extends Controller {
 //<!----*******************************************-->
             $this->renderPartial('savegermplasm');
         } else {
-            $this->render('login', array('model' => $model2));
+            $dbFormModel = new databaseForm;
+            $centralDBForm = new centralDBForm;
+
+            $this->render('backend', array(
+                'dbFormModel' => $dbFormModel,
+                'centralDBForm' => $centralDBForm
+            ));
         }
     }
 
@@ -797,7 +945,13 @@ class SiteController extends Controller {
                 <?php
             }
         } else {
-            $this->render('login', array('model' => $model2));
+            $dbFormModel = new databaseForm;
+            $centralDBForm = new centralDBForm;
+
+            $this->render('backend', array(
+                'dbFormModel' => $dbFormModel,
+                'centralDBForm' => $centralDBForm
+            ));
         }
     }
 
@@ -890,7 +1044,7 @@ class SiteController extends Controller {
                         $local_db_username = Yii::app()->request->getParam('local_db_username');
                         $local_db_password = Yii::app()->request->getParam('local_db_password');
 
-                        $central_db_host = Yii::app()->request->getParam('$central_db_host');
+                        $central_db_host = Yii::app()->request->getParam('central_db_host');
                         $central_db_name = Yii::app()->request->getParam('central_db_name');
                         $central_db_port = Yii::app()->request->getParam('central_db_port');
                         $central_db_username = Yii::app()->request->getParam('central_db_username');
@@ -958,7 +1112,7 @@ class SiteController extends Controller {
                         $local_db_username = Yii::app()->request->getParam('local_db_username');
                         $local_db_password = Yii::app()->request->getParam('local_db_password');
 
-                        $central_db_host = Yii::app()->request->getParam('$central_db_host');
+                        $central_db_host = Yii::app()->request->getParam('central_db_host');
                         $central_db_name = Yii::app()->request->getParam('central_db_name');
                         $central_db_port = Yii::app()->request->getParam('central_db_port');
                         $central_db_username = Yii::app()->request->getParam('central_db_username');
@@ -1077,7 +1231,7 @@ class SiteController extends Controller {
                     $local_db_username = Yii::app()->request->getParam('local_db_username');
                     $local_db_password = Yii::app()->request->getParam('local_db_password');
 
-                    $central_db_host = Yii::app()->request->getParam('$central_db_host');
+                    $central_db_host = Yii::app()->request->getParam('central_db_host');
                     $central_db_name = Yii::app()->request->getParam('central_db_name');
                     $central_db_port = Yii::app()->request->getParam('central_db_port');
                     $central_db_username = Yii::app()->request->getParam('central_db_username');
@@ -1207,7 +1361,13 @@ class SiteController extends Controller {
                 <?php
             }
         } else {
-            $this->render('login', array('model' => $model2));
+            $dbFormModel = new databaseForm;
+            $centralDBForm = new centralDBForm;
+
+            $this->render('backend', array(
+                'dbFormModel' => $dbFormModel,
+                'centralDBForm' => $centralDBForm
+            ));
         }
     }
 
@@ -1219,7 +1379,13 @@ class SiteController extends Controller {
         if (isset($this->browserSession)) {
             $this->renderPartial('chooseGID');
         } else {
-            $this->render('login', array('model' => $model2));
+            $dbFormModel = new databaseForm;
+            $centralDBForm = new centralDBForm;
+
+            $this->render('backend', array(
+                'dbFormModel' => $dbFormModel,
+                'centralDBForm' => $centralDBForm
+            ));
         }
     }
 
