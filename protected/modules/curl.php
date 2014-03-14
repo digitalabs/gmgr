@@ -51,7 +51,7 @@ class curl {
         //$url=$values['path'] . '?' . $values['query'];
         echo "<br>location:" . '"Location:' + $values['path'] . '?' . $values['query'] + '"';
         $code = $code + "";
-        echo "<br> code: " . $code . "<br>";
+        // echo "<br> code: " . $code . "<br>";
         if (empty($result)) {
             // some kind of an error happened
             // die(curl_error($ch));
@@ -61,7 +61,7 @@ class curl {
 
             if ($code === 200 || $code === 201) {
                 
-            }else{
+            } else {
                 //echo "die. empty result" . $url;
                 curl_close($ch); // close cURL handler
                 // header('Location:' + $url +'');
@@ -92,8 +92,8 @@ class curl {
                  */
                 if ($code === 200 || $code === 201) {
                     
-                }else{
-                    echo "die. not 200 ";
+                } else {
+                    //echo "die. not 200 ";
                     // curl_close($ch); // close cURL handler
                     //header('Location:' + $url +'');
                     //echo "<script> window.setTimeout(function(){ window.location.href ='" . $url . "';}, 10000); </script>";
