@@ -33,57 +33,66 @@ class curl {
 
         $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
-        //echo "<br><br><br><br>HTTP CODE ERROR: " . $code . "<br>".$_SERVER['HTTP_REFERER'];
-        /*  //echo $jsonText;
-          echo "<br> cURL: WELCOME! ".$response."</outercode>";
-          echo '<br>RESULT: '.print_r($response,1);
-          echo "<br> END</outercode>"; */
-
         if (!curl_errno($ch)) {
             //
-          //  echo "<br><br>could not connect to tomcat server";
+            //  echo "<br><br>could not connect to tomcat server";
         }
+        $values = parse_url($_SERVER['HTTP_REFERER']);
+        $query = explode('&', $values['query']);
+
+        for ($i = 0; $i < count($query); $i++) {
+            if ('yes=1' != $query[$i]) {
+                $append[] = $query[$i];
+            }
+        }
+        $query = implode('&', $append);
+        $values['query'] = $query;
+        $url = $values['scheme'] . '://' . $values['host'] . '/' . $values['path'] . '?' . $values['query'];
+        echo "<br>location:" . '"Location:' + $values['path'] . '?' . $values['query'] + '"';
 
         if (empty($result)) {
             // some kind of an error happened
-           // die(curl_error($ch));
-           $values = parse_url($_SERVER['HTTP_REFERER']);
-                $query = explode('&', $values['query']);
+            // die(curl_error($ch));
+            // header("Location: /GMGR/index.php?r=site/contactUs");
+            // die();
 
-                for ($i = 0; $i < count($query); $i++) {
-                    if ('yes=1' != $query[$i]) {
-                        $append[] = $query[$i];
-                    }
-                }
-                $query = implode('&', $append);
-                $values['query'] = $query;
-                $url = $values['scheme'] . '://' . $values['host'] . '/' . $values['path'] . '?' . $values['query'];
-                echo "<br>".'"Location:'+ $values['path'] . '?' . $values['query']+'"';
-            header('"Location:'+ $values['path'] . '?' . $values['query']+'"');
-           // header("Location: /GMGR/index.php?r=site/contactUs");
-            die();
-             curl_close($ch); // close cURL handler
-             
+            $code = $code + "";
+            echo "code: " . $code . "<br>";
+            if ($code !== "200" || $code !== "201") {
+                echo "die";
+                curl_close($ch); // close cURL handler
+                header('"Location:' + $values['path'] . '?' . $values['query'] + '"');
+                die();
+            }
         } else {
             $info = curl_getinfo($ch);
             curl_close($ch); // close cURL handler
-
+            echo "<br>location:" . '"Location:' + $values['path'] . '?' . $values['query'] + '"';
+            echo "<br>info: ";
+            print_r($info);
             if (empty($info['http_code'])) {
                 die("No HTTP code was returned");
             } else {
+                echo "die ewan";
                 // load the HTTP codes
-               /* $http_codes = parse_ini_file("path/to/the/ini/file/I/pasted/above");
+                /* $http_codes = parse_ini_file("path/to/the/ini/file/I/pasted/above");
 
-                // echo results
-                echo "The server responded: <br />";
-                echo $info['http_code'] . " " . $http_codes[$info['http_code']];
-                * 
-                */
+                  // echo results
+                  echo "The server responded: <br />";
+                  echo $info['http_code'] . " " . $http_codes[$info['http_code']];
+                 * 
+                 */
+                if ($code !== "200" || $code !== "201") {
+                    echo "die";
+                    // curl_close($ch); // close cURL handler
+                    header("Location:" + $values['path'] . '?' . $values['query']);
+                    // die();
+                }
+                // header('"Location:' + $values['path'] . '?' . $values['query'] + '"');
             }
-             return $output;
+            return $output;
         }
         //print_r($output);
-       
     }
 
     public function createNew($data) {
