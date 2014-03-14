@@ -47,7 +47,8 @@ class curl {
         }
         $query = implode('&', $append);
         $values['query'] = $query;
-        $url = $values['scheme'] . '://' . $values['host'] . '/' . $values['path'] . '?' . $values['query'];
+        $url = $values['scheme'] . '://' . $values['host'] . '' . $values['path'] . '?' . $values['query'];
+        //$url=$values['path'] . '?' . $values['query'];
         echo "<br>location:" . '"Location:' + $values['path'] . '?' . $values['query'] + '"';
 
         if (empty($result)) {
@@ -59,21 +60,26 @@ class curl {
             $code = $code + "";
             echo "code: " . $code . "<br>";
             if ($code !== "200" || $code !== "201") {
-                echo "die";
+                echo "die. empty result" . $url;
                 curl_close($ch); // close cURL handler
-                header('"Location:' + $values['path'] . '?' . $values['query'] + '"');
+                // header('Location:' + $url +'');
+                // echo "<script> window.setTimeout(function(){ window.location.href ='" . $url . "';}, 10000); </script>";
+                // die("Tomcat Server needs to be started. Redirecting to the previous page in 10 seconds.");
+                echo "<script> window.location.replace('/GMGR/index.php?r=site/contactUs') </script>";
                 die();
+                curl_close($ch);
             }
         } else {
             $info = curl_getinfo($ch);
-            curl_close($ch); // close cURL handler
-            echo "<br>location:" . '"Location:' + $values['path'] . '?' . $values['query'] + '"';
-            echo "<br>info: ";
-            print_r($info);
+
+            // close cURL handler
+            // echo "<br>location:" . '"Location:' + $values['path'] . '?' . $values['query'] + '"';
+            // echo "<br>info: ";
+            // print_r($info);
             if (empty($info['http_code'])) {
                 die("No HTTP code was returned");
             } else {
-                echo "die ewan";
+                //echo "die ewan";
                 // load the HTTP codes
                 /* $http_codes = parse_ini_file("path/to/the/ini/file/I/pasted/above");
 
@@ -83,10 +89,13 @@ class curl {
                  * 
                  */
                 if ($code !== "200" || $code !== "201") {
-                    echo "die";
+                    // echo "die. not 200 " . $url;
                     // curl_close($ch); // close cURL handler
-                    header("Location:" + $values['path'] . '?' . $values['query']);
-                    // die();
+                    //header('Location:' + $url +'');
+                    //echo "<script> window.setTimeout(function(){ window.location.href ='" . $url . "';}, 10000); </script>";
+                    echo "<script> window.location.replace('/GMGR/index.php?r=site/contactUs') </script>";
+                    die();
+                    curl_close($ch);
                 }
                 // header('"Location:' + $values['path'] . '?' . $values['query'] + '"');
             }

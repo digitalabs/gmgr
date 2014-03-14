@@ -1,9 +1,9 @@
 <?php
  echo "<br><br>";
 $this->widget('bootstrap.widgets.TbHeroUnit', array(
-    'heading' => 'Hello!',
+    'heading' => 'You should not be here.',
 ));
 ?> 
-<p>Error in connecting to Web Service.Please contact administrator.</p>
+<p>Cannot connect to Tomcat Server.Please contact administrator.</p>
 
 <?php //$this->endWidget(); ?>

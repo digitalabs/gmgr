@@ -3967,3 +3967,112 @@ Stack trace:
 REQUEST_URI=/GMGR/index.php?pagea=2&r=site%2FassignGID
 in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (1145)
 in E:\xampp\htdocs\GMGR\index.php (13)
+2014/03/13 22:05:24 [error] [php] Undefined variable: arr2 (E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php:1145)
+Stack trace:
+#0 E:\xampp\htdocs\yii\framework\web\CController.php(286): SiteController->runAction()
+#1 E:\xampp\htdocs\yii\framework\web\CController.php(265): SiteController->runActionWithFilters()
+#2 E:\xampp\htdocs\yii\framework\web\CWebApplication.php(282): SiteController->run()
+#3 E:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#4 E:\xampp\htdocs\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#5 E:\xampp\htdocs\GMGR\index.php(13): CWebApplication->run()
+REQUEST_URI=/GMGR/index.php?r=site/assignGID
+in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (1145)
+in E:\xampp\htdocs\GMGR\index.php (13)
+2014/03/13 22:08:47 [error] [php] Undefined variable: arr2 (E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php:1145)
+Stack trace:
+#0 E:\xampp\htdocs\yii\framework\web\CController.php(286): SiteController->runAction()
+#1 E:\xampp\htdocs\yii\framework\web\CController.php(265): SiteController->runActionWithFilters()
+#2 E:\xampp\htdocs\yii\framework\web\CWebApplication.php(282): SiteController->run()
+#3 E:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#4 E:\xampp\htdocs\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#5 E:\xampp\htdocs\GMGR\index.php(13): CWebApplication->run()
+REQUEST_URI=/GMGR/index.php?pagea=5&r=site%2FassignGID
+in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (1145)
+in E:\xampp\htdocs\GMGR\index.php (13)
+2014/03/14 01:26:12 [warning] [application] Failed to set unsafe attribute "file" of "ImporterForm".
+in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (414)
+in E:\xampp\htdocs\GMGR\index.php (13)
+2014/03/14 01:26:55 [warning] [application] Failed to set unsafe attribute "file" of "ImporterForm".
+in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (414)
+in E:\xampp\htdocs\GMGR\index.php (13)
+2014/03/14 01:28:12 [warning] [application] Failed to set unsafe attribute "file" of "ImporterForm".
+in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (414)
+in E:\xampp\htdocs\GMGR\index.php (13)
+2014/03/14 01:35:23 [warning] [application] Failed to set unsafe attribute "file" of "ImporterForm".
+in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (414)
+in E:\xampp\htdocs\GMGR\index.php (13)
+2014/03/14 01:40:23 [warning] [application] Failed to set unsafe attribute "file" of "ImporterForm".
+in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (414)
+in E:\xampp\htdocs\GMGR\index.php (13)
+2014/03/14 01:44:33 [warning] [application] Failed to set unsafe attribute "file" of "ImporterForm".
+in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (414)
+in E:\xampp\htdocs\GMGR\index.php (13)
+2014/03/14 01:44:34 [error] [php] curl_error(): 53 is not a valid cURL handle resource (E:\xampp\htdocs\GMGR\protected\modules\curl.php:93)
+Stack trace:
+#0 E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php(450): curl->parse()
+#1 E:\xampp\htdocs\yii\framework\web\actions\CInlineAction.php(49): SiteController->actionImportFileDisplay()
+#2 E:\xampp\htdocs\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#3 E:\xampp\htdocs\yii\framework\web\CController.php(286): SiteController->runAction()
+#4 E:\xampp\htdocs\yii\framework\web\CController.php(265): SiteController->runActionWithFilters()
+#5 E:\xampp\htdocs\yii\framework\web\CWebApplication.php(282): SiteController->run()
+#6 E:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#7 E:\xampp\htdocs\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#8 E:\xampp\htdocs\GMGR\index.php(13): CWebApplication->run()
+REQUEST_URI=/GMGR/index.php?r=site/importFileDisplay
+in E:\xampp\htdocs\GMGR\protected\modules\curl.php (93)
+in E:\xampp\htdocs\GMGR\protected\modules\curl.php (120)
+in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (450)
+2014/03/14 01:45:05 [warning] [application] Failed to set unsafe attribute "file" of "ImporterForm".
+in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (414)
+in E:\xampp\htdocs\GMGR\index.php (13)
+2014/03/14 01:45:06 [error] [php] curl_error(): 53 is not a valid cURL handle resource (E:\xampp\htdocs\GMGR\protected\modules\curl.php:93)
+Stack trace:
+#0 E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php(450): curl->parse()
+#1 E:\xampp\htdocs\yii\framework\web\actions\CInlineAction.php(49): SiteController->actionImportFileDisplay()
+#2 E:\xampp\htdocs\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#3 E:\xampp\htdocs\yii\framework\web\CController.php(286): SiteController->runAction()
+#4 E:\xampp\htdocs\yii\framework\web\CController.php(265): SiteController->runActionWithFilters()
+#5 E:\xampp\htdocs\yii\framework\web\CWebApplication.php(282): SiteController->run()
+#6 E:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#7 E:\xampp\htdocs\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#8 E:\xampp\htdocs\GMGR\index.php(13): CWebApplication->run()
+REQUEST_URI=/GMGR/index.php?r=site/importFileDisplay
+in E:\xampp\htdocs\GMGR\protected\modules\curl.php (93)
+in E:\xampp\htdocs\GMGR\protected\modules\curl.php (120)
+in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (450)
+2014/03/14 01:45:45 [warning] [application] Failed to set unsafe attribute "file" of "ImporterForm".
+in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (414)
+in E:\xampp\htdocs\GMGR\index.php (13)
+2014/03/14 01:46:31 [warning] [application] Failed to set unsafe attribute "file" of "ImporterForm".
+in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (414)
+in E:\xampp\htdocs\GMGR\index.php (13)
+2014/03/14 01:47:39 [warning] [application] Failed to set unsafe attribute "file" of "ImporterForm".
+in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (414)
+in E:\xampp\htdocs\GMGR\index.php (13)
+2014/03/14 01:51:19 [warning] [application] Failed to set unsafe attribute "file" of "ImporterForm".
+in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (414)
+in E:\xampp\htdocs\GMGR\index.php (13)
+2014/03/14 01:51:51 [warning] [application] Failed to set unsafe attribute "file" of "ImporterForm".
+in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (414)
+in E:\xampp\htdocs\GMGR\index.php (13)
+2014/03/14 01:52:31 [warning] [application] Failed to set unsafe attribute "file" of "ImporterForm".
+in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (414)
+in E:\xampp\htdocs\GMGR\index.php (13)
+2014/03/14 01:53:17 [warning] [application] Failed to set unsafe attribute "file" of "ImporterForm".
+in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (414)
+in E:\xampp\htdocs\GMGR\index.php (13)
+2014/03/14 01:53:55 [warning] [application] Failed to set unsafe attribute "file" of "ImporterForm".
+in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (414)
+in E:\xampp\htdocs\GMGR\index.php (13)
+2014/03/14 01:56:48 [warning] [application] Failed to set unsafe attribute "file" of "ImporterForm".
+in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (414)
+in E:\xampp\htdocs\GMGR\index.php (13)
+2014/03/14 01:57:23 [warning] [application] Failed to set unsafe attribute "file" of "ImporterForm".
+in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (414)
+in E:\xampp\htdocs\GMGR\index.php (13)
+2014/03/14 01:58:51 [warning] [application] Failed to set unsafe attribute "file" of "ImporterForm".
+in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (414)
+in E:\xampp\htdocs\GMGR\index.php (13)
+2014/03/14 02:19:07 [warning] [application] Failed to set unsafe attribute "file" of "ImporterForm".
+in E:\xampp\htdocs\GMGR\protected\controllers\SiteController.php (414)
+in E:\xampp\htdocs\GMGR\index.php (13)
