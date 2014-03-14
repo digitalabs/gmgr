@@ -189,7 +189,7 @@ function drawChart(ms) {
 		cnt++;
         var nodeSVG = depencencyChart.append("svg:g")
                 .attr("transform", "translate(" + node.x + "," + node.y + ")")
-				.enter()
+				//.enter()
 				.append("g")
 				//.on("click",click)
 				
