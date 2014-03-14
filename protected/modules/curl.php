@@ -67,7 +67,7 @@ class curl {
                 // header('Location:' + $url +'');
                 // echo "<script> window.setTimeout(function(){ window.location.href ='" . $url . "';}, 10000); </script>";
                 // die("Tomcat Server needs to be started. Redirecting to the previous page in 10 seconds.");
-                echo "<script> window.location.replace('/GMGR/index.php?r=site/contactUs') </script>";
+                echo "<script> window.location.replace('/gmgr/index.php?r=site/contactUs') </script>";
                 die();
                 curl_close($ch);
             }
@@ -97,7 +97,7 @@ class curl {
                     // curl_close($ch); // close cURL handler
                     //header('Location:' + $url +'');
                     //echo "<script> window.setTimeout(function(){ window.location.href ='" . $url . "';}, 10000); </script>";
-                    echo "<script> window.location.replace('/GMGR/index.php?r=site/contactUs') </script>";
+                    echo "<script> window.location.replace('/gmgr/index.php?r=site/contactUs') </script>";
                     die();
                     curl_close($ch);
                 }
