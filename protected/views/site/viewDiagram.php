@@ -162,7 +162,7 @@ if (isset($_GET['searchBtn'])) {
                     </div> 
                 </form>
 
-                <div style="position:fixed;bottom:30px;vertical-align:top;text-align: left"><a style="color: white; text-decoration: none;"><img src='images/legend.gif' width="185px" height="100px"></a></div> 
+                <!--<div style="position:fixed;bottom:30px;vertical-align:top;text-align: left"><a style="color: white; text-decoration: none;"><img src='images/legend.gif' width="185px" height="100px"></a></div> -->
             </div>   
     </div>  
 
