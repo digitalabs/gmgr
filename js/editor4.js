@@ -86,10 +86,10 @@ var customNodes = new Array(),
     //align nodes.
     updateNodesXOffset()
 
-    if(ms==""||ms==" "||ms=="All")
+   // if(ms==""||ms==" "||ms=="All")
 		drawChart2();
-	else
-		drawChart(ms);
+	//else
+	//	drawChart(ms);
 	
 	function collapse(data) {
         if (data.children) {
