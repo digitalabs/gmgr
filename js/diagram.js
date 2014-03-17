@@ -13,7 +13,7 @@ var data = (function () {
     $.ajax({
         'async': false,
         'global': false,
-        'url': '/../gmgr/json_files/diagram.json', 
+        'url': '/../gmgr/json_files/diagram.json', //"/../gmgr/json_files/treePHP.json",
         'dataType': "json",
         'success': function (data) {
             jason = data;
@@ -22,13 +22,13 @@ var data = (function () {
     return jason;
 })(); 
 
-
+		
 var realWidth = window.innerWidth;
 var realHeight = window.innerHeight;
-var margin = {top: 950, right: 50, bottom: 200, left: 1500},
+var margin = {top: 500, right: 50, bottom: 200, left: 500},
 	m = [100, 500, 100, 500],     
-    width = 2000 - margin.left - margin.right,
-    height = 5050 - margin.top - margin.bottom,
+    width = 10000 - margin.left - margin.right,
+    height = 10050 - margin.top - margin.bottom,
     h = realHeight -m[0] -m[2],
 	rectW = 200,
     rectH = 100,
@@ -43,8 +43,7 @@ var customNodes = new Array(),
         depencencyChart;
 		
 //function graph2() {
-	//var ms = document.getElementById('maxStep').value;
-	var ms = '';//'<?php echo $_GET["maxStep"] ?>';
+	var ms = document.getElementById('maxStep').value;
 	//alert(ms);
 	
 	$('#graphDiv').css({
@@ -55,7 +54,7 @@ var customNodes = new Array(),
 		 'transform':'rotate(270deg)'
 	});
 	
-    tmpNodes = d3.layout.tree().size([1300, 500]).nodes(data)
+    tmpNodes = d3.layout.tree().size([1300, 1000]).nodes(data)
 				 //.on("click", click)	;//;
 	
 					
@@ -63,7 +62,7 @@ var customNodes = new Array(),
     depencencyChart = d3.select("#graphDiv").append("svg:svg")
 			//.data(d3.entries(orientation))
             .attr("width", 10000)
-            .attr("height", 7500)
+            .attr("height", 10000)
             .append("svg:g")
 			.attr("class","drawarea")
 			.attr("transform", "translate(1000, 900)")
@@ -87,10 +86,10 @@ var customNodes = new Array(),
     //align nodes.
     updateNodesXOffset()
 
-    if(ms==""||ms==" "||ms=="All")
+   // if(ms==""||ms==" "||ms=="All")
 		drawChart2();
-	else
-		drawChart(ms);
+	//else
+	//	drawChart(ms);
 	
 	function collapse(data) {
         if (data.children) {
@@ -246,7 +245,7 @@ function drawChart(ms) {
                     .data(links)
                     .enter().insert("svg:path", "g")
                     .attr("class", function(d) {
-                return d.warning === "true" ? "link warning" : "link"
+                return d.warning === "true" ? "link" : "link"
             })
                     .attr("d", customSpline)
 				
@@ -297,11 +296,22 @@ function drawChart2(node) {
 				.attr("class", "name")
                 .attr("dx", -19)
                 .attr("dy", -5)
-                .text(node.name)
+                .attr("text-overflow","ellipsis")
+                .attr("width", "6px")
+                .attr("white-space","nowrap")
+                .attr("overflow","hidden")
+                //.limit('6','#left')
+                //.attr("limit","6")
+                .text(node.name2)
 				.attr("transform", function(d) {
-					return "rotate(90)" 
+					 return "rotate(90)" 
 				})
 				.on("click", function(d,i) { click(node); })
+                //.on("mouseover", function (d) { d3.select(this).select("text")
+                //                                  .text(function(d){
+                //                                            return d.name2;
+                 //                                       })
+                 //                })
 				.on("mouseup", legendclick )
 				setTimeout(function () {
         //drawLegend();
@@ -332,7 +342,7 @@ function drawChart2(node) {
                     .data(links)
                     .enter().insert("svg:path", "g")
                     .attr("class", function(d) {
-						return d.warning === "true" ? "link warning" : "link"
+						return d.warning === "true" ? "link" : "link"
 					})
                     .attr("d", customSpline)
 					//.on("click",click(node))
@@ -345,11 +355,8 @@ function drawChart2(node) {
                     .attr("transform", "translate(" + (txtW+10) + ",0)")
 					.attr("cx", -30);
 			//}
-					
         }
-		
 		//}
-		
     });
 }
 
@@ -434,33 +441,41 @@ function click(d)
 	if(d.name2==undefined)document.getElementById('nt3').innerHTML = "---";
 	else document.getElementById('nt3').innerHTML = d.ntype2;
     
-    document.getElementById('ns1').innerHTML = "1";
-	document.getElementById('ns2').innerHTML = "1";
-	if(d.name2==undefined)document.getElementById('ns3').innerHTML = "1";
-	else document.getElementById('ns3').innerHTML = "1";
+    document.getElementById('ns1').innerHTML = d.nstat0;
+	document.getElementById('ns2').innerHTML = d.nstat1;
+	if(d.name2==undefined)document.getElementById('ns3').innerHTML = d.nstat2;
+	else document.getElementById('ns3').innerHTML = d.nstat2;
     
 	document.getElementById('d1').innerHTML = d.dates0;
 	document.getElementById('d2').innerHTML = d.dates1;
 	if(d.name2==undefined)document.getElementById('d3').innerHTML = "---";
 	else document.getElementById('d3').innerHTML = d.dates2;
 	
-	document.getElementById('av1').innerHTML = d.aval0;
-	document.getElementById('av2').innerHTML = d.aval1;
+	if(d.aval0==undefined)document.getElementById('av1').innerHTML = "---";
+    else document.getElementById('av1').innerHTML = d.aval0;
+	if(d.aval1==undefined)document.getElementById('av2').innerHTML = "---";
+    else document.getElementById('av2').innerHTML = d.aval1;
 	if(d.aval2==undefined)document.getElementById('av3').innerHTML = "---";
 	else document.getElementById('av3').innerHTML = d.aval2;
     
-    document.getElementById('an1').innerHTML = d.aname0;
-	document.getElementById('an2').innerHTML = d.aname1;
+    if(d.aval0==undefined)document.getElementById('an1').innerHTML = "---";
+    else document.getElementById('an1').innerHTML = d.aname0;
+	if(d.aval1==undefined)document.getElementById('an2').innerHTML = "---";
+    else document.getElementById('an2').innerHTML = d.aname1;
 	if(d.aval2==undefined)document.getElementById('an3').innerHTML = "---";
 	else document.getElementById('an3').innerHTML = d.aname2;
     
-    document.getElementById('ad1').innerHTML = d.ades0;
-	document.getElementById('ad2').innerHTML = d.ades1;
+    if(d.aval0==undefined)document.getElementById('ad1').innerHTML = "---";
+    else document.getElementById('ad1').innerHTML = d.ades0;
+	if(d.aval1==undefined)document.getElementById('ad2').innerHTML = "---";
+    else document.getElementById('ad2').innerHTML = d.ades1;
 	if(d.aval2==undefined)document.getElementById('ad3').innerHTML = "---";
 	else document.getElementById('ad3').innerHTML = d.ades2;
 	
-	document.getElementById('adt1').innerHTML = d.adate0;
-	document.getElementById('adt2').innerHTML = d.adate1;
+	if(d.adt0==undefined)document.getElementById('adt1').innerHTML = "---";
+    else document.getElementById('adt1').innerHTML = d.adate0;
+	if(d.adt1==undefined)document.getElementById('adt2').innerHTML = "---";
+    else document.getElementById('adt2').innerHTML = d.adate1;
 	if(d.adt2==undefined)document.getElementById('adt3').innerHTML = "---";
 	else document.getElementById('adt3').innerHTML = d.adate2;
 
