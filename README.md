@@ -31,7 +31,7 @@ __________________________
 
 	**_GMGR_** is built to make it as easy as possible to install open source software. 
 	The installers completely automate the process of installing and configuring all of the software 
-	needed for the application, so you can have everything up and running in just a few clicks.
+	needed for the application, so you can have everything up and running in just a few clicks. 
 	
   
   - Independent
