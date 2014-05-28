@@ -1,5 +1,5 @@
 					
-  ####Genealogy Manager 
+  #### Genealogy Manager
 		
   **OVERVIEW**
   
@@ -23,7 +23,7 @@
   considered resources, and these resources are accessed using Uniform Resource Identifiers (_URIs_), 
   typically links on the web.
   
-  You can learn more about the Jersey RESTful Web Services in Java **[here](https://jersey.java.net) **
+  You can learn more about the Jersey RESTful Web Services in Java **[here](https://jersey.java.net). **
  
   **FEATURES**
   
@@ -32,6 +32,7 @@
 	**_GMGR_** is built to make it as easy as possible to install open source software. 
 	The installers completely automate the process of installing and configuring all of the software 
 	needed for the application, so you can have everything up and running in just a few clicks.
+	
   
   - Independent
 
@@ -39,6 +40,7 @@
 	with any software already installed on your local machine. For example, you can
 	upgrade your system's Apache Tomcat without fear of 'breaking' your
 	**_GMGR_** application.
+	
 	
   - Integrated
 
@@ -55,7 +57,7 @@
   **DOWNLOAD**
   
   - The GMGR (.zip) package, contains the Apache installer, the JDK installer and the GMGR 
-    application installer can be downloaded **[here](http://23.23.218.31/documentation/index.php/for-users/2-uncategorised/55-download-gmanager) **
+    application installer can be downloaded **[here](http://23.23.218.31/documentation/index.php/for-users/2-uncategorised/55-download-gmanager). **
   
   **INSTALLATION**
   
@@ -63,11 +65,13 @@
     project, apache for tomcat, and SQL dump files for the MySQL database. It also contains the
 	_Pedigree Importer_ and the _Pedigree Viewer_ web-based application.
 	
-	It can be downloaded **[here](http://http://23.23.218.31/documentation/index.php/for-users/2-uncategorised/55-download-gmanager) **
+	It can be downloaded **[here](http://http://23.23.218.31/documentation/index.php/for-users/2-uncategorised/55-download-gmanager). **
+	
 	
   - You can unpack the downloaded package using a decompression tool (i.e. WinRAR or &-zip).
   
-	It can be downloaded **[here](http://www.win-rar.org) ** and **[here](http://www.7-zip.org/) **
+	It can be downloaded **[here](http://www.win-rar.org) ** and **[here](http://www.7-zip.org/). **
+	
 	
   - The downloaded installer will be named something similar to:
     
@@ -83,10 +87,10 @@
 	   * Open the JDK-Installer folder
 	   * Access you environment variables and set/add the following:
 	   
-		 set JAVA_HOME=“C:\Program Files (x86)\Java\jdk1.6.0_10” 
-		 set JRE_HOME=%JAVA_HOME%\jre 
-		 set CLASSPATH=%JAVA_HOME%\bin;%CLASSPATH% 
-		 set PATH=%JAVA_HOME%\bin;%JRE_HOME%\bin;%PATH% 
+		> set JAVA_HOME=“C:\Program Files (x86)\Java\jdk1.6.0_10” 
+		> set JRE_HOME=%JAVA_HOME%\jre 
+		> set CLASSPATH=%JAVA_HOME%\bin;%CLASSPATH% 
+		> set PATH=%JAVA_HOME%\bin;%JRE_HOME%\bin;%PATH% 
 		 
     3. Make sure MySQL process is up and running.
 	
@@ -125,12 +129,15 @@
     * COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL - Version 1.1)
     * GNU General Public License (GPL - Version 2, June 1991) 
 
+	
   - Apache Tomcat Server
     * All software produced by The Apache Software Foundation or any of 
 	   its projects or subjects is licensed according to the terms of 
 	   Apache License, Version 2.0 (current).
+	   
 
   - PHP and related libraries are distributed under the PHP License v3.01,
 	which is located [here](http://www.php.net/license/3_01.txt)
+	
 	
   - _curl_ is distributed under the Curl License, which is located [here](http://curl.haxx.se/docs/copyright.html)
