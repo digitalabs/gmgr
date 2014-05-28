@@ -1,5 +1,4 @@
-					
-  #### Genealogy Manager
+  **Genealogy Manager**
 		
   **OVERVIEW**
   
@@ -86,13 +85,13 @@
 	2. Java 6 JDK
 	   * Open the JDK-Installer folder
 	   * Access you environment variables and set/add the following:
-	   
-		> set JAVA_HOME=“C:\Program Files (x86)\Java\jdk1.6.0_10” 
-		> set JRE_HOME=%JAVA_HOME%\jre 
-		> set CLASSPATH=%JAVA_HOME%\bin;%CLASSPATH% 
-		> set PATH=%JAVA_HOME%\bin;%JRE_HOME%\bin;%PATH% 
-		 
-    3. Make sure MySQL process is up and running.
+
+           > * set JAVA_HOME=“C:\Program Files (x86)\Java\jdk1.6.0_10”
+	       > * set JRE_HOME=%JAVA_HOME%\jre
+	       > * set CLASSPATH=%JAVA_HOME%\bin;%CLASSPATH%
+	       > * set PATH=%JAVA_HOME%\bin;%JRE_HOME%\bin;%PATH%
+
+       3. Make sure MySQL process is up and running.
 	
   **USING THE APPLICATION**
   
