@@ -1,5 +1,5 @@
-					
-					       Genealogy Manager 
+﻿					
+					   Genealogy Manager 
 				          ===================
 		
   OVERVIEW
@@ -51,7 +51,7 @@
   - To install the GMGR application you will need:
   
     ** Apache installer (XAMPP)
-	** Java 6 JDK
+    ** Java 6 JDK
 	
   DOWNLOAD
   
@@ -64,7 +64,7 @@
   
   - The GMGR application is distributed as a compressed (zip) package containing the executable version of the 
     project, apache for tomcat, and SQL dump files for the MySQL database. It also contains the
-	Pedigree Importer and the Pedigree Viewer web-based application.
+    Pedigree Importer and the Pedigree Viewer web-based application.
 	
 	It can be downloaded from: 
 	
