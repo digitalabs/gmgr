@@ -1,6 +1,6 @@
 					
-					       Genealogy Manager 
-				          ===================
+  ####Genealogy Manager 
+  ===================
 		
   OVERVIEW
   
