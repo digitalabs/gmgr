@@ -1,4 +1,5 @@
-  **Genealogy Manager**
+# **Genealogy Manager** #
+__________________________
 		
   **OVERVIEW**
   
