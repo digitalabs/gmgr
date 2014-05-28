@@ -77,7 +77,7 @@ __________________________
     
 	> GMGR-Installer.zip
 	
-  - To use the software, the following must e properly installed and configured:
+  - To use the software, the following must be properly installed and configured:
   
 	1. Apache (_XAMPP_)
 	   * Open the Apache-Installer folder
