@@ -2,7 +2,7 @@
   ####Genealogy Manager 
   ===================
 		
-  OVERVIEW
+  **OVERVIEW**
   
   The Geanealogy Manager (GMGR) application is a web-based software composed of the Pedigree Import
   tool and the Pedigree Viewer tool. 
