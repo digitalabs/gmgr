@@ -1,21 +1,20 @@
-# **Genealogy Manager** #
+# **Genealogy Manager for Rice Nomenclature** #
 __________________________
 		
   **OVERVIEW**
   
-  The Geanealogy Manager (**_GMGR_**) application is a web-based software composed of the _Pedigree Import_
-  tool and the _Pedigree Viewer_ tool. 
+  The Genealogy Manager (**_GMGR_**) application is a web-based software composed of the _Pedigree Import_
+  tool and the _Pedigree Viewer_ tool developed for databases that follow Rice Nomenclature. 
   
-  The _Pedigree Import_ tool was created to help bulk load or import breeders' cross histories into the
-  **GMS** database. This tool aims to make it easier, on a web-based platform, display germplasm origin
-  information and other names and attributes for the germplasm. 
+  The _Pedigree Import_ tool was created to aid the bulk loading or importing of breeders' cross histories into the
+  **IRIS GMS** database. This tool aims to make it easier, on a web-based platform, to display germplasm origin,
+  names, and attributes for the germplasm. 
   
-  The _Pedigree Viewer_ is a we-based tool which aims to display a diagram and/or a graphical 
+  The _Pedigree Viewer_ is a web-based tool which displays a diagram and/or a graphical 
   representation of germplasm relationships.
   
-  The **_GMGR_** application accesses the Integrated Breeding Program Databases 
-  (_IBP_) through the Middleware API, which consists of managers corresponding to 
-  different systems. In order to reuse the methods of the IBP middleware, RESTful
+  The **_GMGR_** application accesses the Integrated Breeding Program Databases for Rice
+  (_IBP_) through the Middleware API. In order to reuse the methods of the IBP middleware, RESTful
   web services in java were created using the Jersey toolkit, an open source framework
   for developing RESTful Web Services in Java. 
   
@@ -27,16 +26,16 @@ __________________________
  
   **FEATURES**
   
-  - Easy to Install
+  - GUI-based installation
 
-	**_GMGR_** is built to make it as easy as possible to install open source software. 
-	The installers completely automate the process of installing and configuring all of the software 
-	needed for the application, so you can have everything up and running in just a few clicks. 
+	With **_GMGR_** installer it is possible to install open source software. 
+	The installers automates the process of installing and configuring the software 
+	needed for the application. 
 	
   
   - Independent
 
-	**_GMGR_** is completely self-contained, and therefore do not interfere
+	**_GMGR_** is self-contained, and therefore do not interfere
 	with any software already installed on your local machine. For example, you can
 	upgrade your system's Apache Tomcat without fear of 'breaking' your
 	**_GMGR_** application.
@@ -45,7 +44,7 @@ __________________________
   - Integrated
 
 	By the time you click the 'finish' button on the installer, the whole stack
-	will be integrated, configured and ready to go. 
+	will be integrated and configured. 
 	
   **REQUIREMENTS**
   
@@ -116,12 +115,6 @@ __________________________
 	* username            (default is _gmgruser_)
 	* password            (default is _gmgrpass_)
 
-  **CONTACTS**
-  
-  - For more information, please contact the developers:  
-    * Joanie C. Antonio <j.antonio@irri.org>
-    * Nikki G. Carumba <n.carumba@irri.org>
-    * Kelly John D. Mahipus <k.mahipus@irri.org>
 		
   **LICENSES**
 
