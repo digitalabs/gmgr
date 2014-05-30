@@ -105,8 +105,6 @@ __________________________
 	
   **DATABASE CONFIGURATION**
   
-  - On the login page, click the link '_Database Configuration_'
-  
   - For both local and central databases specify the following:
   
 	* host                (default is _localhost_)
