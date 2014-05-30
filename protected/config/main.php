@@ -43,49 +43,9 @@ return array(
         'bootstrap' => array('class' => 'ext.bootstrap.components.Bootstrap',
             'responsiveCss' => true,
         ),
-        /*'user' => array(
-            // enable cookie-based authentication
-            'allowAutoLogin' => true,
-
-
-           // 'class'=>'WebUser',
-        ),
-        // uncomment the following to enable URLs in path-format
-        /*
-          'urlManager'=>array(
-          'urlFormat'=>'path',
-          'rules'=>array(
-          '<controller:\w+>/<id:\d+>'=>'<controller>/view',
-          '<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
-          '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
-          ),
-          ),
-         */
-
-        // uncomment the following to use a MySQL database
-
+  
           'db' => require(dirname(__FILE__) . '/db.php'),
-         /*'db'=>array(
-          'connectionString' => 'mysql:host=localhost;dbname=central6',
-          'emulatePrepare' => true,
-          'username' => 'root',
-          'password' => '',
-          'charset' => 'utf8',
-          'enableProfiling' => true,
-           'enableParamLogging'=>true,   
-          ),*/
-         
-        /*  'db'=>array(
-          'class'=>'CDbConnection',
-          'connectionString' => 'mysql:host=127.0.0.1;port=3306;dbname=iris_mysiam_20121002',
-          'emulatePrepare' => true,
-          'username' => 'datasourceuser',
-          'password' => 'ici$rule$',
-          'charset' => 'utf8',
-          'enableProfiling' => true,
-          'enableParamLogging'=>true,
-          ),
-        */
+ 
         'errorHandler' => array(
             // use 'site/error' action to display errors
             'errorAction' => 'site/error',
@@ -97,17 +57,11 @@ return array(
                     'class' => 'CFileLogRoute',
                     'levels' => 'error, warning',
                 ),
-            // uncomment the following to show log messages on web pages
-            /*
-              array(
-              'class'=>'CWebLogRoute',
-              ),
-             */
+      
             ),
         ),
     ),
-    // application-level parameters that can be accessed
-    // using Yii::app()->params['paramName']
+   
     'params' => array(
         // this is used in contact page
         'defaultPageSize' => 10,

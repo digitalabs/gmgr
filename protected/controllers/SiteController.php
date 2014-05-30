@@ -1,5 +1,8 @@
 <script>
-
+   /**
+    * This function gets the value of location and list stored in the local storage.
+    * @author Nikki Carumba <n.carumba@irri.org>
+    * */
     function storeLocal1() {
         if ('localStorage' in window && window['localStorage'] !== null) {
             try {
@@ -12,14 +15,14 @@
             alert('Cannot store user preferences as your browser do not support local storage');
         }
     }
-
+    /**
+     * Loads the value of location<String>, json encrypted values of checked,existing, createdGID, and list stored in the
+     * local storage.
+     * @author Nikki Carumba <n.carumba@irri.org>
+     * */
     function storeLocal_process() {
         if ('localStorage' in window && window['localStorage'] !== null) {
             try {
-                //   localStorage.removeItem("list");
-                //  localStorage.removeItem("existing");
-
-                //localStorage.removeItem("createdGID");
                 document.getElementById('location').value = localStorage.locationID;
                 document.getElementById('checked').value = localStorage.checked;
                 document.getElementById('existing').value = localStorage.existing;
@@ -35,10 +38,6 @@
     function storeLocal_refresh() {
         if ('localStorage' in window && window['localStorage'] !== null) {
             try {
-                //   localStorage.removeItem("list");
-                //  localStorage.removeItem("existing");
-
-                //localStorage.removeItem("createdGID");
                 console.log("existing: " + localStorage.existing);
                 document.getElementById('location-refresh').value = localStorage.locationID;
                 document.getElementById('checked-refresh').value = localStorage.checked;
@@ -83,13 +82,12 @@ class SiteController extends Controller {
      * when an action is not explicitly requested by users.
      */
     public function actionIndex() {
-// renders the view file 'protected/views/site/index.php'
-// using the default layout 'protected/views/layouts/main.php'
-//* This is the action to handle external exceptions.
+
         $this->render('index');
     }
 
     /**
+     * This action is invoked when error occurs.
      */
     public function actionError() {
         if ($error = Yii::app()->errorHandler->error) {
@@ -125,24 +123,28 @@ class SiteController extends Controller {
 
     /**
      * Displays the login page
+     * This action renders the login data-browser.
+     * Uses LoginForm to collect user input, these inputs are then validated and 
+     * redirects to the importer page if valid. This action also includes the 
+     * database configuration settings if provided and writes it into a json file.
+     * If none, then the database settings are set to null/empty and the default 
+     * database will be used instead.
+     * @author Joanie Antonio <j.antonio@irri.org>
      */
     public function actionLogin() {
         $model = new LoginForm;
         $dbFormModel = new databaseForm;
         $centralForm = new centralDBForm;
 
-// if it is ajax validation request
         if (isset($_POST['ajax']) && $_POST['ajax'] === 'login-form') {
             echo CActiveForm::validate($model);
             Yii::app()->end();
         }
 
-// collect user input data
         if (isset($_POST['LoginForm'])) {
             $model->attributes = $_POST['LoginForm'];
-// validate user input and redirect to the previous page if valid
             if ($model->validate() && $model->login()) {
-// $this->redirect(Yii::app()->user->returnUrl);
+
                 $this->redirect(array('/site/importer'));
             } else {
                 $this->redirect(Yii::app()->baseUrl);
@@ -152,7 +154,7 @@ class SiteController extends Controller {
 //****backend details
         if (isset($_POST['databaseForm']) && isset($_POST['centralDBForm'])) {
 
-// if ($dbFormModel->validate() && $centralDBForm->validate()) {
+
             $path = dirname(__FILE__) . '/../../json_files/database.json';
 
             if (file_exists($path)) {
@@ -193,7 +195,7 @@ class SiteController extends Controller {
             fwrite($file_handle, $data);
 
             fclose($file_handle);
-// }
+
             $this->render('login', array('model' => $model, 'database_details' => $database_details));
         } else {
             $path = dirname(__FILE__) . '/../../json_files/database.json';
@@ -239,7 +241,13 @@ class SiteController extends Controller {
         Yii::app()->user->logout();
         $this->redirect(Yii::app()->homeUrl);
     }
-
+    
+    /**
+     * This action renders the pedigree viewer. It includes connection to the 
+     * web service using a method searchGID in curl. The return of this method 
+     * is used in displaying a pedigree diagram of a germplasm. 
+     * @author Kelly John Mahipus <k.mahipus@irri.org>
+     */
     public function actionEditor() {
 
         $model = new ImporterForm;
@@ -271,7 +279,10 @@ class SiteController extends Controller {
 
         $this->render('editor');
     }
-
+    /**
+     * Returns a pedigree diagram of a specific germplasm 
+     * @author Kelly John Mahipus <k.mahipus@irri.org>
+     */
     public function actionViewDiagram() {
 
         $model = new ImporterForm;
@@ -302,7 +313,11 @@ class SiteController extends Controller {
 
         $this->render('viewDiagram');
     }
-
+    /**
+     * This action renders the importer browser which allows users to upload
+     * breeders cross history list and select a location.
+     * @author Joanie Antonio <j.antonio@irri.org>
+     */
     public function actionImporter() {
 
         $model = new ImporterForm;
@@ -319,11 +334,10 @@ class SiteController extends Controller {
 
             $uploaded = false;
 
-//Collect user input form
             if (isset($_POST['ImporterForm'])) {
-//$importedFile->attributes = $_POST['ImporterForm'];
+
                 if ($importedFile->validate()) {
-//  if(!empty($_FILES['ImporterForm']['file'])){
+
                     $file = CUploadedFile::getInstance($importedFile, 'file');
 
                     static $filePath;
@@ -332,15 +346,10 @@ class SiteController extends Controller {
                     $filePath = $dir . '/' . $importedFile->file;
                 }
             } else {
-                /* $this->render('importer', array(
-                  'model' => $model,
-                  'dbFormModel' => $dbFormModel,
-                  'centralDBForm' => $centralDBForm,
-                  )); */
+            
                 //****backend details
                 if (isset($_POST['databaseForm']) && isset($_POST['centralDBForm'])) {
 
-                    // if ($dbFormModel->validate() && $centralDBForm->validate()) {
                     //local database
                     $local_db_host = $_POST['databaseForm']['host'];
                     $local_db_name = $_POST['databaseForm']['database_name'];
@@ -369,7 +378,7 @@ class SiteController extends Controller {
                     );
                     $data = json_encode($database_details);
 
-                    // }
+                   
                     $this->render('importer', array('model' => $model, 'database_details' => $database_details));
                 } else {
                     //local database
@@ -413,7 +422,7 @@ class SiteController extends Controller {
         }
     }
 
-    //2nd importer, a data browser which contains upated database settings
+    //2nd importer, a data browser which contains updated database settings
     public function actionImporter_file() {
 
         $model = new ImporterForm;
@@ -430,11 +439,11 @@ class SiteController extends Controller {
 
             $uploaded = false;
 
-//Collect user input form
+
             if (isset($_POST['ImporterForm'])) {
-//$importedFile->attributes = $_POST['ImporterForm'];
+
                 if ($importedFile->validate()) {
-//  if(!empty($_FILES['ImporterForm']['file'])){
+
                     $file = CUploadedFile::getInstance($importedFile, 'file');
 
                     static $filePath;
@@ -443,15 +452,10 @@ class SiteController extends Controller {
                     $filePath = $dir . '/' . $importedFile->file;
                 }
             } else {
-                /* $this->render('importer', array(
-                  'model' => $model,
-                  'dbFormModel' => $dbFormModel,
-                  'centralDBForm' => $centralDBForm,
-                  )); */
+              
                 //****backend details
                 if (isset($_POST['databaseForm']) && isset($_POST['centralDBForm'])) {
 
-                    // if ($dbFormModel->validate() && $centralDBForm->validate()) {
                     //local database
                     $local_db_host = $_POST['databaseForm']['host'];
                     $local_db_name = $_POST['databaseForm']['database_name'];
@@ -480,7 +484,6 @@ class SiteController extends Controller {
                     );
                     $data = json_encode($database_details);
 
-                    // }
                     $this->render('importer_file', array('model' => $model, 'database_details' => $database_details));
                 } else {
                     //local database
@@ -523,7 +526,10 @@ class SiteController extends Controller {
             ));
         }
     }
-
+    /**
+     * This action returns a table of the uploaded germplasm
+     * @author Joanie Antonio <j.antonio@irri.org>
+     */
     public function actionImportFileDisplay() {
 
         Yii::import('application.modules.file_toArray');
@@ -545,10 +551,10 @@ class SiteController extends Controller {
             if (isset($this->browserSession)) {
 
                 if (isset($_POST['ImporterForm'])) {
-//print_r($_POST['ImporterForm']);
+
                     $importedFile->attributes = $_POST['ImporterForm'];
                     if ($importedFile->validate()) {
-//  if(!empty($_FILES['ImporterForm']['file'])){
+
                         $file = CUploadedFile::getInstance($importedFile, 'file');
 
                         static $filePath;
@@ -557,9 +563,9 @@ class SiteController extends Controller {
                         $filePath = $dir . '/' . $importedFile->file;
 
                         if (file_exists($newName)) {
-//  unlink($dir . '/' . $newName);
+
                         }
-//***check if file is not null
+
                         if (isset($file)) {
                             $file = $importedFile->file;
                             $importedFile->file->saveAs($dir . '/' . $file);
@@ -576,7 +582,6 @@ class SiteController extends Controller {
                                 $locationID = $location;
                                 $list = unserialize(base64_decode($_POST['list']));
                             } else {
-//echo "no refresh";
                                 $location = $_POST['location'];
                                 $locationID = $location;
                                 $json = new json('');
@@ -626,7 +631,6 @@ class SiteController extends Controller {
                         }
                         $id = $list;
                         foreach ($id as $row) :
-//list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male, $date) = $row;
                             list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male, $date) = $row;
                             $arr[] = array('id' => CJSON::encode(array($fid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date' => $date);
                         endforeach;
@@ -673,7 +677,10 @@ class SiteController extends Controller {
             ));
         }
     }
-
+    /**
+     * This action renders the display for the separate standardized and 
+     * non-standardized germplasm.
+     */
     public function actionOutput() {
 
         $filtersForm = new FilterPedigreeForm;
@@ -685,21 +692,18 @@ class SiteController extends Controller {
         Yii::app()->session['username'] = Yii::app()->user->id;
         $this->browserSession = Yii::app()->session['username'];
         $model2 = new LoginForm;
-//static $locationID, $list;
+
         if (isset($this->browserSession)) {
             if (isset($_POST['locationID']) || isset($_POST['location'])) {
-//echo "<br>enter here"; 
+
                 if (isset($_POST['next']) || isset($_POST['refresh'])) {
-                    echo "<br>Refresh!!!";
+                    
                     $locationID = $_POST['location'];
                     $list = unserialize(base64_decode($_POST['list']));
                 } else {
-//echo "else here";
-//$data = json_decode($_POST['list']);
+
                     $list = unserialize(base64_decode($_POST['list']));
                     $locationID = $_POST['locationID'];
-
-// $data = json_decode($data, true);
 
                     $a = array(
                         'list' => $list
@@ -709,10 +713,9 @@ class SiteController extends Controller {
 
                     $list = $curl->standardize($data);
                 }
-                // echo "<br>list:<br>";
-                // print_r($list);
+           
                 foreach ($list as $row) :
-//list($GID, $nval, $female, $fid, $fremarks, $fgid, $male, $mid, $mremarks, $mgid) = $row;
+
                     list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male, $date) = $row;
                     $arr[] = array('id' => CJSON::encode(array($fid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks, 'date' => $date);
                     if ((strcmp(($fremarks), "in standardized format")) != 0 || (strcmp(($mremarks), "in standardized format")) != 0) {
@@ -734,9 +737,9 @@ class SiteController extends Controller {
                             'pageSize' => 5,
                     )));
                     $not_standard_size = count($notStandard);
-// echo "<br>this:" . $not_standard_size;
+
                 }
-//get array data and create dataProvider
+
                 $filteredData = $filtersForm->filter($arr);
 
                 $dataProvider = new CArrayDataProvider($filteredData, array(
@@ -811,13 +814,9 @@ class SiteController extends Controller {
 
                 CHtml::hiddenField('hiddenMid', $mid);
                 CHtml::hiddenField('hiddenFid', $fid);
-                /* For reference, pls do not delete
-                 * developer: J.Antonio */
-// $arr[] = array('id'=>CJSON::encode(array('nval'=>$nval,'gid'=>$GID,'female'=>$female,'male'=>$male,'fgid'=>$fgid,'mgid'=>$mgid,'fremarks'=>$fremarks,'mremarks'=>$mremarks)),'nval'=>$nval,'gid'=>$GID,'female'=>$female,'male'=>$male,'fgid'=>$fgid,'mgid'=>$mgid,'fremarks'=>$fremarks,'mremarks'=>$mremarks);
+          
                 $arr[] = array('id' => CJSON::encode(array($fid)), 'nval' => $nval, 'gid' => $GID, 'female' => $female, 'male' => $male, 'fgid' => $fgid, 'mgid' => $mgid, 'fremarks' => $fremarks, 'mremarks' => $mremarks);
 
-//$arr[] = array('id'=>$i+1,'nval'=>$nval,'gid'=>$GID,'female'=>$female,'male'=>$male,'mgid'=>$mgid,'fremarks'=>$fremarks);
-// $arr[] = array('id'=>$i+1,'nval'=>$nval,'gid'=>$GID,'female'=>$female,'male'=>$male,'mgid'=>$mgid,'fgid'=>$fgid,'fremarks'=>$fremarks,'mremarks'=>$mremarks);
             endforeach;
 
 
@@ -842,7 +841,7 @@ class SiteController extends Controller {
             $this->render('login', array('model' => $model2));
         }
     }
-
+  
     public function actionEditGermplasm() {
 
         Yii::app()->session['username'] = Yii::app()->user->id;
@@ -852,7 +851,7 @@ class SiteController extends Controller {
         if (isset($this->browserSession)) {
 
             $model = new editGermplasmForm;
-//print_r($model);
+
             if (isset($_POST['editGermplasmForm'])) {
                 $model->attributes = $_POST['editGermplasmForm'];
                 if ($model->validate()) {
@@ -877,9 +876,9 @@ class SiteController extends Controller {
         $model2 = new LoginForm;
 
         if (isset($this->browserSession)) {
-//<!---*******Notifications for any page changes******-->
+
             Yii::app()->user->setFlash('success', array('title' => 'Edit Successful!', 'text' => 'You successfully edited parent.'));
-//<!----*******************************************-->
+
             $this->renderPartial('savegermplasm');
         } else {
             $dbFormModel = new databaseForm;
@@ -1029,13 +1028,12 @@ class SiteController extends Controller {
             if (isset($_POST['locationID']) || isset($_POST['location']) || isset($_POST['process'])) {
 
                 if ((isset($_POST['Germplasm']['gid']) && ($_POST['Germplasm']['gid'] != '')) || isset($_POST['process'])) {
-// $data = $_POST['list'];
-//$list = json_decode($data, true);
+
                     $list = unserialize(base64_decode($_POST['list']));
-//$list=unserialize(base64_decode($_POST['list']));
+
 
                     if (!empty($_POST['Germplasm']['gid'])) {
-//echo "here 0";
+
                         $selected = $_POST['Germplasm']['gid'];
                         $idArr = explode(',', $selected);
                         foreach ($idArr as $index => $id) {
@@ -1091,20 +1089,17 @@ class SiteController extends Controller {
 
                         $rows = $list;
                     } elseif (isset($_POST['process'])) {
-//echo "here 1";
+
                         $createdGID = unserialize(base64_decode($_POST['createdGID']));
                         $existing = unserialize(base64_decode($_POST['existing']));
                         $list = unserialize(base64_decode($_POST['list']));
                         $checked = unserialize(base64_decode($_POST['checked']));
 
                         $locationID = $_POST['location'];
-//$checked = json_decode($_POST['checked'], true);
-//$createdGID = json_decode($_POST['createdGID'], true);
-//$existing = json_decode($_POST['existing'], true);
+
                         $unselected = $file_toArray->get_unselected_rows($checked, $list);
                         $standardized = $file_toArray->checkIf_standardize($unselected, $list);
-// echo "checked: ";
-// print_r($checked);
+
                         $checked_all = array();
                         for ($i = 0; $i < count($checked); $i++) {
                             $checked_all[$i] = $checked[$i];
@@ -1158,10 +1153,6 @@ class SiteController extends Controller {
                         $existing = $output['existingTerm'];
                         $checked = $checked_all;
 
-//echo "<br>standardized ";
-//print_r($standardized);
-//echo "<br>checked ";
-//print_r($checked_all);
 
                         $rows = $list;
                     }
@@ -1258,14 +1249,10 @@ class SiteController extends Controller {
                     $output['central_db_port'] = $central_db_port;
                     $output['central_db_username'] = $central_db_username;
                     $output['central_db_password'] = $central_db_password;
-                    /*     echo "choose: ".$cross;
-                      echo ": ".$term."<br>";
-
-                      echo "r: ".$r;
-                     * */
+                
                     $r = strcmp($term, $cross);
                     if ($r === 0) {
-                        echo "<br>choose gid for cross";
+                        //echo "<br>choose gid for cross";
                         $output["female"] = $female;
                         $output["male"] = $male;
                         $output["female_id"] = $fid;
@@ -1288,14 +1275,12 @@ class SiteController extends Controller {
                     $rows = $list;
                     $existing = $output['existingTerm'];
                 } else {
-//echo "<br><br><br> no curl";
                     $locationID = $_POST['location'];
                     $createdGID = unserialize(base64_decode($_POST['createdGID']));
                     $existing = unserialize(base64_decode($_POST['existing']));
                     $list = unserialize(base64_decode($_POST['list']));
                     $checked = unserialize(base64_decode($_POST['checked']));
                     $rows = $list;
-                    // print_r($createdGID);
                 }
                 if (count($rows)) {
                     foreach ($rows as $i => $row) : list($GID, $nval, $fid, $fremarks, $fgid, $female, $mid, $mremarks, $mgid, $male, $date) = $row;
@@ -1324,7 +1309,7 @@ class SiteController extends Controller {
                     'createdGID' => $createdGID
                 ));
             } elseif (isset($_GET['yes'])) {//to process the remaining entries
-//echo "<br><br><br>yes page";
+
                 $url = $model->curPageURL();
                 $values = parse_url($url);
                 $query = explode('&', $values['query']);
@@ -1337,8 +1322,7 @@ class SiteController extends Controller {
                 $query = implode('&', $append);
                 $values['query'] = $query;
                 $url = $values['scheme'] . '://' . $values['host'] . '/' . $values['path'] . '?' . $values['query'];
-//echo $values['path'] . "?" . $values['query'];
-//header("Location: " . $values['path'] . "?" . $values['query'] . "");
+
                 ?>
                 <html>
                     <body onload="storeLocal_process();">
@@ -1354,8 +1338,6 @@ class SiteController extends Controller {
                 </html>
                 <?php
             } else {    // when page is refreshed
-// echo "page refreshed" . "<br>";
-// print_r($existing);
                 ?>
                 <html>
                     <body onload="storeLocal_refresh();">
@@ -1458,4 +1440,3 @@ class SiteController extends Controller {
     }
 
 }
-
