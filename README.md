@@ -115,6 +115,16 @@ __________________________
 	* username            (default is _gmgruser_)
 	* password            (default is _gmgrpass_)
 
+  - The database connection settings are configured in GMGR/json_files/database. json file and on the local storage. 
+    If the file is not present/empty and the database settings stored in the local storage is empty, the automatic database 
+    to use is the “ iris_mysiam_20121002” in the vm-mugi server.
+
+  - How to configure the Database (GMGR)
+    
+    1. Click the link “check database settings” found in the login data-browser.              
+    2. Confirm that the host, database and port name for both local and central are correct.
+    3. Enter the database username and password.
+    4. Make sure the fields contain the correct settings. Click the “submit” button to create/configure the database connection.
 		
   **LICENSES**
 
